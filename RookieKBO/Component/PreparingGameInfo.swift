@@ -9,19 +9,7 @@ import SwiftUI
 
 struct PreparingGameInfo: View {
     
-    @Environment(MatchUseCase.self) private var matchUseCase
-    
-    private var preparingGameInfo: Match {
-        matchUseCase.state.PreparingGame ?? Match(
-            startDateTime: Date(),
-            state: State.PREPARE,
-            homeTeam: Team(name: "SSG", image: " "),
-            awayTeam: Team(name: "KIA", image: " "),
-            place: "인천 ssg랜더스필드",
-            scoreBoard: []
-        )
-    }
-    
+    let preparingGameInfo: Match
     
     var body: some View {
         
@@ -59,15 +47,27 @@ struct PreparingGameInfo: View {
                 }
             }
         }
-            .padding(.horizontal, 32)
-            .padding(.vertical, 16)
+        .padding(.horizontal, 32)
+        .padding(.vertical, 16)
         // TODO: 색깔 수정
-            .background(Color.gray)
-            .cornerRadius(14)
+        .background(Color.gray)
+        .cornerRadius(14)
     }
 }
 
 #Preview {
-    PreparingGameInfo()
-        .environment(PreviewHelper.mockMatchUseCase)
+    PreparingGameInfo(preparingGameInfo: Match(
+        startDateTime: Date(),
+        state: State.PREPARE,
+        homeTeam: Team(name: "SSG", image: " "),
+        awayTeam: Team(name: "KIA", image: " "),
+        place: "인천 ssg랜더스필드",
+        scoreBoard: []
+    ))
 }
+
+/*
+// 오늘 경기의 예정 경기 표현
+CancelGameInfo(preparingGameInfo: matchUseCase.state.PreparingGame ?? exampleMatch)
+*/
+

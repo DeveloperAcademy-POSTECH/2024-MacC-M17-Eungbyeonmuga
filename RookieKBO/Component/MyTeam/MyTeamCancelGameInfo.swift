@@ -1,5 +1,5 @@
 //
-//  CancelGameInfo.swift
+//  MyTeamCancelGameInfo.swift
 //  RookieKBO
 //
 //  Created by crownjoe on 10/7/24.
@@ -7,27 +7,58 @@
 
 import SwiftUI
 
-struct CancelGameInfo: View {
+struct MyTeamCancelGameInfo: View {
     let cancelGameInfo: Match
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            
+            HStack(spacing: 0) {
+                Text("오늘 취소된 경기")
+                    .padding(.leading, 24)
+                
+                Spacer()
+            }
+            .padding(.bottom, 48)
+            
+            TeamInfo(cancelGameInfo: cancelGameInfo)
+                .padding(.horizontal, 56)
+                .padding(.bottom, 45)
+            
+            Text("우천 취소")
+                .padding(.bottom, 8)
+            
+            Text("\(cancelGameInfo.place)")
+                .padding(.bottom, 56)
+            
+        }
+        .padding(.top, 24)
+        .background(Color.gray)
+        .cornerRadius(14)
+    }
+}
 
+private struct TeamInfo: View {
+    let cancelGameInfo: Match
+    
     var body: some View {
         HStack(spacing: 0) {
-            VStack(spacing: 8) {
+            VStack(spacing: 16) {
                 Image("\(cancelGameInfo.awayTeam.image)")
-                    .frame(width: 32, height: 32)
+                    .frame(width: 72, height: 72)
                 
                 Text("\(cancelGameInfo.awayTeam.name)")
             }
             
             Spacer()
             
-            Text("우천 취소")
+            Text("VS")
             
             Spacer()
             
-            VStack(spacing: 8) {
+            VStack(spacing: 16) {
                 Image("\(cancelGameInfo.homeTeam.image)")
-                    .frame(width: 32, height: 32)
+                    .frame(width: 72, height: 72)
                 
                 HStack(spacing: 2) {
                     Text("\(cancelGameInfo.homeTeam.name)")
@@ -35,21 +66,17 @@ struct CancelGameInfo: View {
                     Text("홈")
                         .foregroundStyle(.black)
                         .padding(.horizontal, 3)
-                        .padding(.vertical, 1)
+                        .padding(.vertical, 2)
                         .background(Color.yellow)
                         .cornerRadius(99)
                 }
             }
         }
-        .padding(.horizontal, 32)
-        .padding(.vertical, 16)
-        .background(Color.gray)
-        .cornerRadius(14)
     }
 }
 
 #Preview {
-    CancelGameInfo(
+    MyTeamCancelGameInfo(
         cancelGameInfo: Match(
             startDateTime: Date(),
             state: State.CANCEL,
@@ -61,7 +88,3 @@ struct CancelGameInfo: View {
     )
 }
 
-/*
-// 오늘 경기의 취소 경기 표현
-CancelGameInfo(cancelGameInfo: matchUseCase.state.CancelGame ?? exampleMatch)
-*/
