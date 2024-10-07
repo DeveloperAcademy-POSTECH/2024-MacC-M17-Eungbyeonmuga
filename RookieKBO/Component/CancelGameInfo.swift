@@ -1,5 +1,5 @@
 //
-//  PreparingGameInfo.swift
+//  CancelGameInfo.swift
 //  RookieKBO
 //
 //  Created by crownjoe on 10/7/24.
@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct PreparingGameInfo: View {
+struct CancelGameInfo: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
     
-    private var preparingGameInfo: Match {
-        matchUseCase.state.PreparingGame ?? Match(
+    private var cancelGameInfo: Match {
+        matchUseCase.state.CancelGame ?? Match(
             startDateTime: Date(),
-            state: State.PREPARE,
+            state: State.CANCEL,
             homeTeam: Team(name: "SSG", image: " "),
             awayTeam: Team(name: "KIA", image: " "),
             place: "인천 ssg랜더스필드",
@@ -27,28 +27,24 @@ struct PreparingGameInfo: View {
         
         HStack(spacing: 0) {
             VStack(spacing: 8) {
-                Image("\(preparingGameInfo.awayTeam.image)")
+                Image("\(cancelGameInfo.awayTeam.image)")
                     .frame(width: 32, height: 32)
                 
-                Text("\(preparingGameInfo.awayTeam.name)")
+                Text("\(cancelGameInfo.awayTeam.name)")
             }
             
             Spacer()
             
-            VStack(spacing: 4) {
-                Text("\(preparingGameInfo.startDateTime.toTimeString())")
-                
-                Text("\(preparingGameInfo.place)")
-            }
+            Text("우천 취소")
             
             Spacer()
             
-            VStack(spacing: 2) {
-                Image("\(preparingGameInfo.awayTeam.image)")
+            VStack(spacing: 8) {
+                Image("\(cancelGameInfo.awayTeam.image)")
                     .frame(width: 32, height: 32)
                 
                 HStack(spacing: 2) {
-                    Text("\(preparingGameInfo.homeTeam.name)")
+                    Text("\(cancelGameInfo.homeTeam.name)")
                     
                     Text("홈")
                         .foregroundStyle(.black)
@@ -59,15 +55,15 @@ struct PreparingGameInfo: View {
                 }
             }
         }
-            .padding(.horizontal, 32)
-            .padding(.vertical, 16)
-        // TODO: 색깔 수정
-            .background(Color.gray)
-            .cornerRadius(14)
+        .padding(.horizontal, 32)
+        .padding(.vertical, 16)
+    // TODO: 색깔 수정
+        .background(Color.gray)
+        .cornerRadius(14)
     }
 }
 
 #Preview {
-    PreparingGameInfo()
+    CancelGameInfo()
         .environment(PreviewHelper.mockMatchUseCase)
 }
