@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		DF20BB802CAED5DC00F88298 /* RookieKBO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RookieKBO.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF20BB802CAED5DC00F88298 /* RookieKBO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = RookieKBO.app; path = "/Users/choseyeon/Apple/MacC-RookieKBO/RookieKBO/build/Debug-iphoneos/RookieKBO.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,7 +29,7 @@
 			path = RookieKBO;
 			sourceTree = "<group>";
 		};
-		DF473B452CB3D4DB00FE9E06 /* Component */ = {
+		DF473B7C2CB41AB500FE9E06 /* Component */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Component;
 			sourceTree = "<group>";
@@ -51,17 +51,8 @@
 			isa = PBXGroup;
 			children = (
 				DF20BB822CAED5DC00F88298 /* RookieKBO */,
-				DF20BB812CAED5DC00F88298 /* Products */,
-				DF473B452CB3D4DB00FE9E06 /* Component */,
+				DF473B7C2CB41AB500FE9E06 /* Component */,
 			);
-			sourceTree = "<group>";
-		};
-		DF20BB812CAED5DC00F88298 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				DF20BB802CAED5DC00F88298 /* RookieKBO.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -81,7 +72,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				DF20BB822CAED5DC00F88298 /* RookieKBO */,
-				DF473B452CB3D4DB00FE9E06 /* Component */,
+				DF473B7C2CB41AB500FE9E06 /* Component */,
 			);
 			name = RookieKBO;
 			packageProductDependencies = (
@@ -115,7 +106,7 @@
 			mainGroup = DF20BB772CAED5DC00F88298;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = DF20BB812CAED5DC00F88298 /* Products */;
+			productRefGroup = DF20BB772CAED5DC00F88298;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
