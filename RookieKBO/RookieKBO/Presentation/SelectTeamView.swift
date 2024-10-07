@@ -10,6 +10,7 @@ import SwiftUI
 struct SelectTeamView: View {
     var body: some View {
         HeaderView()
+        SelectTeamListView()
     }
 }
 
@@ -30,6 +31,31 @@ private struct HeaderView: View {
             Spacer()
         }
         .padding()
+    }
+}
+
+// MARK: - SelectTeamListView
+
+private struct SelectTeamListView: View {
+    
+    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    
+    var body: some View {
+        ScrollView{
+            LazyVGrid(columns: columns) {
+                ForEach(0..<11) { index in // TODO: 0..<11 대신 팀으로 변경
+                    Button {
+                        print("\(index) 번째 팀")
+                    } label: {
+                        RoundedRectangle(cornerRadius: 16) // TODO: 팀 이미지, 팀 명으로 변경
+                            .frame(width: .infinity, height: 172)
+                            .foregroundColor(.gray)
+                    }
+                    .padding(8)
+                }
+            }
+            .padding(8)
+        }
     }
 }
 
