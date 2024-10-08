@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		DF20BB802CAED5DC00F88298 /* RookieKBO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = RookieKBO.app; path = "/Users/choseyeon/Apple/MacC-RookieKBO/RookieKBO/build/Debug-iphoneos/RookieKBO.app"; sourceTree = "<absolute>"; };
+		DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RookieKBO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -52,6 +52,7 @@
 			children = (
 				DF20BB822CAED5DC00F88298 /* RookieKBO */,
 				DF473B7C2CB41AB500FE9E06 /* Component */,
+				DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,7 +79,7 @@
 			packageProductDependencies = (
 			);
 			productName = RookieKBO;
-			productReference = DF20BB802CAED5DC00F88298 /* RookieKBO.app */;
+			productReference = DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

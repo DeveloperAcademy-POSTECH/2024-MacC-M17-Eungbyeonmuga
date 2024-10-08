@@ -12,7 +12,7 @@ import Foundation
 #if DEBUG
 enum PreviewHelper {
     static let mockMatchUseCase = MatchUseCase(
-        matchService: StubMatchService()
+        matchService: MatchServiceImpl()
     )
 }
 #endif

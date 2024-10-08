@@ -9,4 +9,5 @@ import Foundation
 
 protocol MatchServiceInterface {
     func fetchMatch()
+    func calculateScore(for match: Match, team: HomeAndAway) -> Int
 }

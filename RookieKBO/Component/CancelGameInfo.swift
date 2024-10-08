@@ -17,11 +17,13 @@ struct CancelGameInfo: View {
                     .frame(width: 32, height: 32)
                 
                 Text("\(cancelGameInfo.awayTeam.name)")
+                    .font(.Caption.caption2)
             }
             
             Spacer()
             
             Text("우천 취소")
+                .font(.Body.body2)
             
             Spacer()
             
@@ -31,8 +33,10 @@ struct CancelGameInfo: View {
                 
                 HStack(spacing: 2) {
                     Text("\(cancelGameInfo.homeTeam.name)")
+                        .font(.Caption.caption2)
                     
                     Text("홈")
+                        .font(.Caption.caption3)
                         .foregroundStyle(.black)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)

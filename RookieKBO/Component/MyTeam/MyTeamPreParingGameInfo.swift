@@ -15,6 +15,7 @@ struct MyTeamPreParingGameInfo: View {
             
             HStack(spacing: 0) {
                 Text("오늘 예정된 경기")
+                    .font(.Head.head4)
                     .padding(.leading, 24)
                 
                 Spacer()
@@ -26,9 +27,11 @@ struct MyTeamPreParingGameInfo: View {
                 .padding(.bottom, 45)
             
             Text("\(preparingGameInfo.startDateTime.toTimeString())")
+                .font(.Head.head1)
                 .padding(.bottom, 8)
             
             Text("\(preparingGameInfo.place)")
+                .font(.Body.body2)
                 .padding(.bottom, 56)
             
         }
@@ -48,6 +51,7 @@ private struct TeamInfo: View {
                     .frame(width: 72, height: 72)
                 
                 Text("\(preparingGameInfo.awayTeam.name)")
+                    .font(.Head.head2)
             }
             
             Spacer()
@@ -62,8 +66,10 @@ private struct TeamInfo: View {
                 
                 HStack(spacing: 2) {
                     Text("\(preparingGameInfo.homeTeam.name)")
+                        .font(.Head.head2)
                     
                     Text("홈")
+                        .font(.Body.body5)
                         .foregroundStyle(.black)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 2)

@@ -1,22 +1,22 @@
 //
-//  PlayingGameInfo.swift
+//  EndGameInfo.swift
 //  RookieKBO
 //
-//  Created by crownjoe on 10/7/24.
+//  Created by crownjoe on 10/8/24.
 //
 
 import SwiftUI
 
-struct PlayingGameInfo: View {
+struct EndGameInfo: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
     
-    let playingGameInfo: Match
+    let endGameInfo: Match
     
     var body: some View {
         VStack(spacing: 20) {
-            GameInfo(playingGameInfo: playingGameInfo)
-            ScoreBoardView(match: playingGameInfo, inning: .nine)
+            GameInfo(endGameInfo: endGameInfo)
+            ScoreBoardView(match: endGameInfo, inning: .nine)
         }
         .padding(.all, 16)
         .background(Color.gray)
@@ -28,49 +28,57 @@ private struct GameInfo: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
     
-    let playingGameInfo: Match
+    let endGameInfo: Match
     
     var body: some View {
         HStack(spacing: 0) {
             VStack(spacing: 8) {
-                Image("\(playingGameInfo.awayTeam.image)")
+                Image("\(endGameInfo.awayTeam.image)")
                     .frame(width: 32, height: 32)
                 
-                Text("\(playingGameInfo.awayTeam.name)")
+                Text("\(endGameInfo.awayTeam.name)")
                     .font(.Caption.caption2)
             }
             .padding(.trailing, 16)
             
-            let awayScore = matchUseCase.calculateScore(for: playingGameInfo, team: .AWAY)
+            let awayScore = matchUseCase.calculateScore(for: endGameInfo, team: .AWAY)
+            
+            let homeScore = matchUseCase.calculateScore(for: endGameInfo, team: .HOME)
             
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle2)
                 .padding(.vertical, 8)
-                .padding(.horizontal, 7)
+                .padding(.leading, 12)
+                .padding(.trailing, 11)
             
-            Spacer()
+            let awayResult = matchUseCase.getResult(for: awayScore, otherScore: homeScore)
             
-            let inningText = matchUseCase.calculateInningText(for: playingGameInfo)
+            let homeResult = matchUseCase.getResult(for: homeScore, otherScore: awayScore)
             
-            Text(inningText)
+            Text("\(awayResult)")
                 .font(.Body.body2)
+                .padding(.leading, 16)
             
             Spacer()
             
-            let homeScore = matchUseCase.calculateScore(for: playingGameInfo, team: .HOME)
+            Text("\(homeResult)")
+                .font(.Body.body2)
+                .padding(.trailing, 16)
+            
+            
             
             Text("\(homeScore)")
                 .font(.CustomTitle.customTitle2)
                 .padding(.vertical, 8)
-                .padding(.horizontal, 7)
-                .padding(.trailing, 16)
+                .padding(.leading, 12)
+                .padding(.trailing, 11)
             
             VStack(spacing: 8) {
-                Image("\(playingGameInfo.homeTeam.image)")
+                Image("\(endGameInfo.homeTeam.image)")
                     .frame(width: 32, height: 32)
                 
                 HStack(spacing: 2) {
-                    Text("\(playingGameInfo.homeTeam.name)")
+                    Text("\(endGameInfo.homeTeam.name)")
                         .font(.Caption.caption2)
                     
                     Text("홈")
@@ -89,8 +97,8 @@ private struct GameInfo: View {
 
 
 #Preview {
-    PlayingGameInfo(
-        playingGameInfo: Match(
+    EndGameInfo(
+        endGameInfo: Match(
             startDateTime: Date(),
             state: State.CANCEL,
             homeTeam: Team(name: "SSG", image: " "),

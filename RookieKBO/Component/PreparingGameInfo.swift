@@ -19,14 +19,17 @@ struct PreparingGameInfo: View {
                     .frame(width: 32, height: 32)
                 
                 Text("\(preparingGameInfo.awayTeam.name)")
+                    .font(.Caption.caption2)
             }
             
             Spacer()
             
             VStack(spacing: 4) {
                 Text("\(preparingGameInfo.startDateTime.toTimeString())")
+                    .font(.Body.body2)
                 
                 Text("\(preparingGameInfo.place)")
+                    .font(.Caption.caption2)
             }
             
             Spacer()
@@ -37,8 +40,10 @@ struct PreparingGameInfo: View {
                 
                 HStack(spacing: 2) {
                     Text("\(preparingGameInfo.homeTeam.name)")
+                        .font(.Caption.caption2)
                     
                     Text("홈")
+                        .font(.Caption.caption3)
                         .foregroundStyle(.black)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
@@ -47,9 +52,9 @@ struct PreparingGameInfo: View {
                 }
             }
         }
+        // TODO: 색깔 수정
         .padding(.horizontal, 32)
         .padding(.vertical, 16)
-        // TODO: 색깔 수정
         .background(Color.gray)
         .cornerRadius(14)
     }

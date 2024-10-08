@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ScoreBoardView: View {
     
+    // TODO: 변경
     enum Inning {
         case nine
         case ten
@@ -15,8 +16,8 @@ struct ScoreBoardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             InningInfo(inning: inning)
-            TeamBoard(inning: inning, match: match, isHomeTeam: true)
             TeamBoard(inning: inning, match: match, isHomeTeam: false)
+            TeamBoard(inning: inning, match: match, isHomeTeam: true)
         }
     }
 }
@@ -54,6 +55,7 @@ private struct InningInfo: View {
                 .font(.Caption.caption2)
                 .frame(width: 13)
         }
+        // TODO: 색깔 수정
         .padding(.vertical, 5)
         .padding(.horizontal, 16)
         .background(Color.red)
