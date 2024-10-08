@@ -2,6 +2,8 @@ import SwiftUI
 
 struct ScoreBoardView: View {
     
+    @Environment(MatchUseCase.self) private var matchUseCase
+    
     // TODO: 변경
     enum Inning {
         case nine
@@ -91,6 +93,8 @@ private struct InningInfo: View {
 
 private struct TeamBoard: View {
     
+    @Environment(MatchUseCase.self) private var matchUseCase
+    
     let inning: ScoreBoardView.Inning
     let match: Match
     let isHomeTeam: Bool
@@ -108,8 +112,10 @@ private struct TeamBoard: View {
             
             ForEach(scoreBoard, id: \.id) { score in
                 HStack(spacing: paddingAmount) {
-                    ForEach(score.scores, id: \.self) { scoreValue in
-                        Text("\(scoreValue)")
+                    let adjustedScores =
+                    matchUseCase.adjustScores(score.scores)
+                    ForEach(adjustedScores, id: \.self) { scoreValue in
+                        Text(scoreValue)
                             .font(.Caption.caption2)
                             .frame(width: 13)
                     }
@@ -164,8 +170,9 @@ private struct TeamBoard: View {
         awayTeam: Team(name: "KIA", image: " "),
         place: "인천 SSG 랜더스 필드",
         scoreBoard: [
-            ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 5, scores: [1, 1, 1, 0, 0, 0, 0, 0, 0]),
-            ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 0, 0])
+            ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 5, scores: [1, 1, 1, 0, 0]),
+            ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 1, 2])
         ]
     ), inning: .nine)
+    .environment(PreviewHelper.mockMatchUseCase)
 }

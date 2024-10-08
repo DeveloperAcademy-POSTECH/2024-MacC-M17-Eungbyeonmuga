@@ -65,32 +65,19 @@ extension MatchUseCase {
     func calculateScore(for match: Match, team: HomeAndAway) -> Int {
         matchService.calculateScore(for: match, team: team)
     }
-
+    
     /// 승, 패 계산하는 함수
     func getResult(for teamScore: Int, otherScore: Int) -> String {
-            if teamScore > otherScore {
-                return "승"
-            } else if teamScore < otherScore {
-                return "패"
-            } else {
-                return "무" 
-            }
-        }
+        matchService.getResult(for: teamScore, otherScore: otherScore)
+    }
     
     /// 이닝 계산하는 함수
     func calculateInningText(for match: Match) -> String {
-        guard let homeScoreBoard = match.scoreBoard?.first(where: { $0.homeAndAway == .HOME }),
-              let awayScoreBoard = match.scoreBoard?.first(where: { $0.homeAndAway == .AWAY }) else {
-            return "이닝 정보 없음"
-        }
-        
-        let homeInningCount = homeScoreBoard.scores.count
-        let awayInningCount = awayScoreBoard.scores.count
-        
-        if homeInningCount == awayInningCount {
-            return "\(homeInningCount)회 말"
-        } else {
-            return "\(awayInningCount)회 초"
-        }
+        matchService.calculateInningText(for: match)
+    }
+    
+    // 점수 배열을 조정하는 메소드
+    func adjustScores(_ scores: [Int]) -> [String] {
+        matchService.adjustScores(scores)
     }
 }
