@@ -39,6 +39,8 @@ struct MyTeamCancelGameInfo: View {
     }
 }
 
+// MARK: - TeamInfo
+
 private struct TeamInfo: View {
     let cancelGameInfo: Match
     

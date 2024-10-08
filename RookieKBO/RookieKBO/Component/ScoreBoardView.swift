@@ -4,7 +4,6 @@ struct ScoreBoardView: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
     
-    // TODO: 변경
     enum Inning {
         case nine
         case ten
@@ -12,8 +11,24 @@ struct ScoreBoardView: View {
         case twelve
     }
     
+    var inning: Inning {
+            let maxScoresCount = match.scoreBoard?.map { $0.scores.count }.max() ?? 0
+            
+            switch maxScoresCount {
+            case 0...9:
+                return .nine
+            case 10:
+                return .ten
+            case 11:
+                return .eleven
+            case 12:
+                return .twelve
+            default:
+                return .nine
+            }
+        }
+    
     let match: Match
-    let inning: Inning
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
@@ -21,9 +36,10 @@ struct ScoreBoardView: View {
             TeamBoard(inning: inning, match: match, isHomeTeam: false)
             TeamBoard(inning: inning, match: match, isHomeTeam: true)
         }
-        .background(Color.blue)
     }
 }
+
+// MARK: - InningInfo
 
 private struct InningInfo: View {
     let inning: ScoreBoardView.Inning
@@ -34,13 +50,11 @@ private struct InningInfo: View {
                 .frame(width: 24)
                 .font(.Caption.caption2)
                 .padding(.trailing, 8)
-                .background(Color.white)
             
             ForEach(1...inningCount, id: \.self) { inningNumber in
                 Text("\(inningNumber)")
                     .font(.Caption.caption2)
                     .frame(maxWidth: .infinity)
-                    .background(Color.white)
             }
             .padding(.trailing, trailingPadding)
             
@@ -63,7 +77,6 @@ private struct InningInfo: View {
                 .font(.Caption.caption2)
                 .frame(maxWidth: .infinity)
         }
-        // TODO: 색깔 수정
         .padding(.vertical, 5)
         .padding(.horizontal, 16)
         .background(Color.red)
@@ -97,6 +110,8 @@ private struct InningInfo: View {
     }
 }
 
+// MARK: - TeamBoard
+
 private struct TeamBoard: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
@@ -124,7 +139,6 @@ private struct TeamBoard: View {
                             .font(.Caption.caption2)
                             .frame(maxWidth: .infinity)
                     }
-                    .background(Color.white)
                 .padding(.trailing, paddingAmount)
             }
             
@@ -175,9 +189,9 @@ private struct TeamBoard: View {
         awayTeam: Team(name: "KIA", image: " "),
         place: "인천 SSG 랜더스 필드",
         scoreBoard: [
-            ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 5, scores: [1, 1, 1, 0, 0]),
+            ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 5, scores: [1, 1, 1, 0, 0, ]),
             ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 1, 2])
         ]
-    ), inning: .nine)
+    ))
     .environment(PreviewHelper.mockMatchUseCase)
 }

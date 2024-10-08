@@ -27,7 +27,7 @@ struct MyTeamEndGameInfo: View {
             GameScore(endGameInfo: endGameInfo)
                 .padding(.bottom, 24)
             
-            ScoreBoardView(match: endGameInfo, inning: .nine)
+            ScoreBoardView(match: endGameInfo)
                 .padding(.horizontal, 16)
             
         }
@@ -36,6 +36,8 @@ struct MyTeamEndGameInfo: View {
         .cornerRadius(14)
     }
 }
+
+// MARK: - TeamInfo
 
 private struct TeamInfo: View {
     let endGameInfo: Match

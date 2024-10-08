@@ -29,11 +29,6 @@
 			path = RookieKBO;
 			sourceTree = "<group>";
 		};
-		DF473B7C2CB41AB500FE9E06 /* Component */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Component;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +46,6 @@
 			isa = PBXGroup;
 			children = (
 				DF20BB822CAED5DC00F88298 /* RookieKBO */,
-				DF473B7C2CB41AB500FE9E06 /* Component */,
 				DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */,
 			);
 			sourceTree = "<group>";
@@ -73,7 +67,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				DF20BB822CAED5DC00F88298 /* RookieKBO */,
-				DF473B7C2CB41AB500FE9E06 /* Component */,
 			);
 			name = RookieKBO;
 			packageProductDependencies = (

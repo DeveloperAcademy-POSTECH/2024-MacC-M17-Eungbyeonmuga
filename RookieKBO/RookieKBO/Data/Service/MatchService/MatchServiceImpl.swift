@@ -10,7 +10,7 @@ import Foundation
 final class MatchServiceImpl: MatchServiceInterface {
     
     func fetchMatch() {
-        // 서버에서 경기 받아오기
+        // 경기 받아오기
     }
     
     func calculateScore(for match: Match, team: HomeAndAway) -> Int {
@@ -40,19 +40,20 @@ final class MatchServiceImpl: MatchServiceInterface {
         let awayInningCount = awayScoreBoard.scores.count
         
         if homeInningCount == awayInningCount {
-            return "\(homeInningCount)회말"
+            return "\(homeInningCount)회 말"
         } else {
-            return "\(awayInningCount)회초"
+            return "\(awayInningCount)회 초"
         }
     }
     
-    // TODO: 이닝 관리
     func adjustScores(_ scores: [Int]) -> [String] {
         var adjustedScores = scores.map { "\($0)" }
-        let missingCount = 9 - adjustedScores.count
-        if missingCount > 0 {
+        
+        if adjustedScores.count < 9 {
+            let missingCount = 9 - adjustedScores.count
             adjustedScores += Array(repeating: "-", count: missingCount)
         }
+        
         return adjustedScores
     }
 }

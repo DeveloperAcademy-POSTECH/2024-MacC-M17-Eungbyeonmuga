@@ -27,7 +27,7 @@ struct MyTeamPlayingGameInfo: View {
             GameScore(playingGameInfo: playingGameInfo)
                 .padding(.bottom, 24)
             
-            ScoreBoardView(match: playingGameInfo, inning: .nine)
+            ScoreBoardView(match: playingGameInfo)
                 .padding(.horizontal, 16)
             
         }
@@ -36,6 +36,8 @@ struct MyTeamPlayingGameInfo: View {
         .cornerRadius(14)
     }
 }
+
+// MARK: - TeamInfo
 
 private struct TeamInfo: View {
     let playingGameInfo: Match
@@ -78,6 +80,8 @@ private struct TeamInfo: View {
         .padding(.horizontal, 56)
     }
 }
+
+// MARK: - GameScore
 
 private struct GameScore: View {
     @Environment(MatchUseCase.self) private var matchUseCase
