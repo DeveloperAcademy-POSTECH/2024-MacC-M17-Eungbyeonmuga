@@ -32,16 +32,20 @@ private struct GameInfo: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            VStack(spacing: 8) {
+            VStack(spacing: 5) {
                 Image("\(playingGameInfo.awayTeam.image)")
-                    .frame(width: 32, height: 32)
+                    .frame(width: 48, height: 48)
                 
                 Text("\(playingGameInfo.awayTeam.name)")
-                    .font(.Caption.caption2)
+                    .font(.Caption.caption1)
             }
             .padding(.trailing, 16)
             
             let awayScore = matchUseCase.calculateScore(for: playingGameInfo, team: .AWAY)
+            
+            let homeScore = matchUseCase.calculateScore(for: playingGameInfo, team: .HOME)
+            
+            let inningText = matchUseCase.calculateInningText(for: playingGameInfo)
             
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle2)
@@ -50,14 +54,10 @@ private struct GameInfo: View {
             
             Spacer()
             
-            let inningText = matchUseCase.calculateInningText(for: playingGameInfo)
-            
             Text(inningText)
                 .font(.Body.body2)
             
             Spacer()
-            
-            let homeScore = matchUseCase.calculateScore(for: playingGameInfo, team: .HOME)
             
             Text("\(homeScore)")
                 .font(.CustomTitle.customTitle2)
@@ -65,16 +65,16 @@ private struct GameInfo: View {
                 .padding(.horizontal, 7)
                 .padding(.trailing, 16)
             
-            VStack(spacing: 8) {
+            VStack(spacing: 5) {
                 Image("\(playingGameInfo.homeTeam.image)")
-                    .frame(width: 32, height: 32)
+                    .frame(width: 48, height: 48)
                 
                 HStack(spacing: 2) {
                     Text("\(playingGameInfo.homeTeam.name)")
-                        .font(.Caption.caption2)
+                        .font(.Caption.caption1)
                     
                     Text("홈")
-                        .font(.Caption.caption3)
+                        .font(.Caption.caption2)
                         .foregroundStyle(.black)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
@@ -83,7 +83,6 @@ private struct GameInfo: View {
                 }
             }
         }
-        .padding(.horizontal, 32)
     }
 }
 

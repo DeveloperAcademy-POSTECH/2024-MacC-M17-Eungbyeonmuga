@@ -40,12 +40,13 @@ final class MatchServiceImpl: MatchServiceInterface {
         let awayInningCount = awayScoreBoard.scores.count
         
         if homeInningCount == awayInningCount {
-            return "\(homeInningCount)회 말"
+            return "\(homeInningCount)회말"
         } else {
-            return "\(awayInningCount)회 초"
+            return "\(awayInningCount)회초"
         }
     }
     
+    // TODO: 이닝 관리
     func adjustScores(_ scores: [Int]) -> [String] {
         var adjustedScores = scores.map { "\($0)" }
         let missingCount = 9 - adjustedScores.count

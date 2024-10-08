@@ -16,11 +16,12 @@ struct ScoreBoardView: View {
     let inning: Inning
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
             InningInfo(inning: inning)
             TeamBoard(inning: inning, match: match, isHomeTeam: false)
             TeamBoard(inning: inning, match: match, isHomeTeam: true)
         }
+        .background(Color.blue)
     }
 }
 
@@ -33,29 +34,34 @@ private struct InningInfo: View {
                 .frame(width: 24)
                 .font(.Caption.caption2)
                 .padding(.trailing, 8)
+                .background(Color.white)
             
             ForEach(1...inningCount, id: \.self) { inningNumber in
                 Text("\(inningNumber)")
                     .font(.Caption.caption2)
-                    .frame(width: 13)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white)
             }
             .padding(.trailing, trailingPadding)
             
             Text("R")
                 .font(.Caption.caption2)
-                .frame(width: 13)
+                .frame(maxWidth: .infinity)
                 .padding(.trailing, trailingPadding)
+            
             Text("H")
                 .font(.Caption.caption2)
-                .frame(width: 13)
+                .frame(maxWidth: .infinity)
                 .padding(.trailing, trailingPadding)
+            
             Text("E")
                 .font(.Caption.caption2)
-                .frame(width: 13)
+                .frame(maxWidth: .infinity)
                 .padding(.trailing, trailingPadding)
+            
             Text("B")
                 .font(.Caption.caption2)
-                .frame(width: 13)
+                .frame(maxWidth: .infinity)
         }
         // TODO: 색깔 수정
         .padding(.vertical, 5)
@@ -111,37 +117,36 @@ private struct TeamBoard: View {
                 .padding(.trailing, 8)
             
             ForEach(scoreBoard, id: \.id) { score in
-                HStack(spacing: paddingAmount) {
                     let adjustedScores =
                     matchUseCase.adjustScores(score.scores)
                     ForEach(adjustedScores, id: \.self) { scoreValue in
                         Text(scoreValue)
                             .font(.Caption.caption2)
-                            .frame(width: 13)
+                            .frame(maxWidth: .infinity)
                     }
-                }
+                    .background(Color.white)
                 .padding(.trailing, paddingAmount)
             }
             
             if let firstScoreBoard = scoreBoard.first {
                 Text("\(firstScoreBoard.runs)")
-                    .frame(width: 13)
                     .font(.Caption.caption2)
+                    .frame(maxWidth: .infinity)
                     .padding(.trailing, paddingAmount)
                 
                 Text("\(firstScoreBoard.hits)")
-                    .frame(width: 13)
                     .font(.Caption.caption2)
+                    .frame(maxWidth: .infinity)
                     .padding(.trailing, paddingAmount)
                 
                 Text("\(firstScoreBoard.errors)")
-                    .frame(width: 13)
                     .font(.Caption.caption2)
+                    .frame(maxWidth: .infinity)
                     .padding(.trailing, paddingAmount)
                 
                 Text("\(firstScoreBoard.balls)")
-                    .frame(width: 13)
                     .font(.Caption.caption2)
+                    .frame(maxWidth: .infinity)
             }
         }
         .padding(.vertical, 5)

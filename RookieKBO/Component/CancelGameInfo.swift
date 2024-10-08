@@ -9,31 +9,38 @@ import SwiftUI
 
 struct CancelGameInfo: View {
     let cancelGameInfo: Match
-
+    
     var body: some View {
         HStack(spacing: 0) {
-            VStack(spacing: 8) {
+            VStack(spacing: 5) {
                 Image("\(cancelGameInfo.awayTeam.image)")
-                    .frame(width: 32, height: 32)
+                    .frame(width: 48, height: 48)
                 
                 Text("\(cancelGameInfo.awayTeam.name)")
-                    .font(.Caption.caption2)
+                    .font(.Caption.caption1)
             }
             
             Spacer()
             
-            Text("우천 취소")
-                .font(.Body.body2)
+            VStack(spacing: 4) {
+                Text("우천 취소")
+                    .font(.Body.body2)
+                
+                Text("\(cancelGameInfo.place)")
+                    .font(.Caption.caption2)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
+            }
             
             Spacer()
             
-            VStack(spacing: 8) {
+            VStack(spacing: 5) {
                 Image("\(cancelGameInfo.homeTeam.image)")
-                    .frame(width: 32, height: 32)
+                    .frame(width: 48, height: 48)
                 
                 HStack(spacing: 2) {
                     Text("\(cancelGameInfo.homeTeam.name)")
-                        .font(.Caption.caption2)
+                        .font(.Caption.caption1)
                     
                     Text("홈")
                         .font(.Caption.caption3)
@@ -64,8 +71,3 @@ struct CancelGameInfo: View {
         )
     )
 }
-
-/*
-// 오늘 경기의 취소 경기 표현
-CancelGameInfo(cancelGameInfo: matchUseCase.state.CancelGame ?? exampleMatch)
-*/

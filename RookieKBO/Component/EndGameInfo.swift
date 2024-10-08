@@ -32,12 +32,12 @@ private struct GameInfo: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            VStack(spacing: 8) {
+            VStack(spacing: 5) {
                 Image("\(endGameInfo.awayTeam.image)")
-                    .frame(width: 32, height: 32)
+                    .frame(width: 48, height: 48)
                 
                 Text("\(endGameInfo.awayTeam.name)")
-                    .font(.Caption.caption2)
+                    .font(.Caption.caption1)
             }
             .padding(.trailing, 16)
             
@@ -45,15 +45,15 @@ private struct GameInfo: View {
             
             let homeScore = matchUseCase.calculateScore(for: endGameInfo, team: .HOME)
             
+            let awayResult = matchUseCase.getResult(for: awayScore, otherScore: homeScore)
+            
+            let homeResult = matchUseCase.getResult(for: homeScore, otherScore: awayScore)
+            
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle2)
                 .padding(.vertical, 8)
                 .padding(.leading, 12)
                 .padding(.trailing, 11)
-            
-            let awayResult = matchUseCase.getResult(for: awayScore, otherScore: homeScore)
-            
-            let homeResult = matchUseCase.getResult(for: homeScore, otherScore: awayScore)
             
             Text("\(awayResult)")
                 .font(.Body.body2)
@@ -65,24 +65,22 @@ private struct GameInfo: View {
                 .font(.Body.body2)
                 .padding(.trailing, 16)
             
-            
-            
             Text("\(homeScore)")
                 .font(.CustomTitle.customTitle2)
                 .padding(.vertical, 8)
                 .padding(.leading, 12)
                 .padding(.trailing, 11)
             
-            VStack(spacing: 8) {
+            VStack(spacing: 5) {
                 Image("\(endGameInfo.homeTeam.image)")
-                    .frame(width: 32, height: 32)
+                    .frame(width: 48, height: 48)
                 
                 HStack(spacing: 2) {
                     Text("\(endGameInfo.homeTeam.name)")
-                        .font(.Caption.caption2)
+                        .font(.Caption.caption1)
                     
                     Text("홈")
-                        .font(.Caption.caption3)
+                        .font(.Caption.caption2)
                         .foregroundStyle(.black)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
@@ -91,7 +89,6 @@ private struct GameInfo: View {
                 }
             }
         }
-        .padding(.horizontal, 32)
     }
 }
 

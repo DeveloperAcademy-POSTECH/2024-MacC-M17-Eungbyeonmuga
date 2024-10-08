@@ -12,7 +12,6 @@ struct MyTeamCancelGameInfo: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            
             HStack(spacing: 0) {
                 Text("오늘 취소된 경기")
                     .font(.Head.head4)
@@ -23,7 +22,6 @@ struct MyTeamCancelGameInfo: View {
             .padding(.bottom, 48)
             
             TeamInfo(cancelGameInfo: cancelGameInfo)
-                .padding(.horizontal, 56)
                 .padding(.bottom, 45)
             
             Text("우천 취소")
@@ -57,6 +55,7 @@ private struct TeamInfo: View {
             Spacer()
             
             Text("VS")
+                .font(.Head.head3)
             
             Spacer()
             
@@ -64,20 +63,21 @@ private struct TeamInfo: View {
                 Image("\(cancelGameInfo.homeTeam.image)")
                     .frame(width: 72, height: 72)
                 
-                HStack(spacing: 2) {
+                HStack(spacing: 6) {
                     Text("\(cancelGameInfo.homeTeam.name)")
                         .font(.Head.head2)
                     
                     Text("홈")
                         .font(.Body.body5)
                         .foregroundStyle(.black)
-                        .padding(.horizontal, 3)
+                        .padding(.horizontal, 5)
                         .padding(.vertical, 2)
                         .background(Color.yellow)
                         .cornerRadius(99)
                 }
             }
         }
+        .padding(.horizontal, 56)
     }
 }
 
@@ -93,4 +93,3 @@ private struct TeamInfo: View {
         )
     )
 }
-

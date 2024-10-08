@@ -12,14 +12,13 @@ struct PreparingGameInfo: View {
     let preparingGameInfo: Match
     
     var body: some View {
-        
         HStack(spacing: 0) {
-            VStack(spacing: 8) {
+            VStack(spacing: 5) {
                 Image("\(preparingGameInfo.awayTeam.image)")
-                    .frame(width: 32, height: 32)
+                    .frame(width: 48, height: 48)
                 
                 Text("\(preparingGameInfo.awayTeam.name)")
-                    .font(.Caption.caption2)
+                    .font(.Caption.caption1)
             }
             
             Spacer()
@@ -30,17 +29,19 @@ struct PreparingGameInfo: View {
                 
                 Text("\(preparingGameInfo.place)")
                     .font(.Caption.caption2)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
             }
             
             Spacer()
             
-            VStack(spacing: 2) {
+            VStack(spacing: 5) {
                 Image("\(preparingGameInfo.awayTeam.image)")
-                    .frame(width: 32, height: 32)
+                    .frame(width: 48, height: 48)
                 
                 HStack(spacing: 2) {
                     Text("\(preparingGameInfo.homeTeam.name)")
-                        .font(.Caption.caption2)
+                        .font(.Caption.caption1)
                     
                     Text("홈")
                         .font(.Caption.caption3)
@@ -52,7 +53,6 @@ struct PreparingGameInfo: View {
                 }
             }
         }
-        // TODO: 색깔 수정
         .padding(.horizontal, 32)
         .padding(.vertical, 16)
         .background(Color.gray)
@@ -70,9 +70,3 @@ struct PreparingGameInfo: View {
         scoreBoard: []
     ))
 }
-
-/*
-// 오늘 경기의 예정 경기 표현
-CancelGameInfo(preparingGameInfo: matchUseCase.state.PreparingGame ?? exampleMatch)
-*/
-
