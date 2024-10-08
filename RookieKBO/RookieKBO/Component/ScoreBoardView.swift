@@ -4,29 +4,29 @@ struct ScoreBoardView: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
     
-    enum Inning {
-        case nine
-        case ten
-        case eleven
-        case twelve
+    enum Inning: Int {
+        case nine = 9
+        case ten = 10
+        case eleven = 11
+        case twelve = 12
     }
     
     var inning: Inning {
-            let maxScoresCount = match.scoreBoard?.map { $0.scores.count }.max() ?? 0
-            
-            switch maxScoresCount {
-            case 0...9:
-                return .nine
-            case 10:
-                return .ten
-            case 11:
-                return .eleven
-            case 12:
-                return .twelve
-            default:
-                return .nine
-            }
+        let maxScoresCount = match.scoreBoard?.map { $0.scores.count }.max() ?? 0
+        
+        switch maxScoresCount {
+        case 0...9:
+            return .nine
+        case 10:
+            return .ten
+        case 11:
+            return .eleven
+        case 12:
+            return .twelve
+        default:
+            return .nine
         }
+    }
     
     let match: Match
     
@@ -132,13 +132,13 @@ private struct TeamBoard: View {
                 .padding(.trailing, 8)
             
             ForEach(scoreBoard, id: \.id) { score in
-                    let adjustedScores =
-                    matchUseCase.adjustScores(score.scores)
-                    ForEach(adjustedScores, id: \.self) { scoreValue in
-                        Text(scoreValue)
-                            .font(.Caption.caption2)
-                            .frame(maxWidth: .infinity)
-                    }
+                let adjustedScores =
+                matchUseCase.adjustScores(score.scores, inning: inning)
+                ForEach(adjustedScores, id: \.self) { scoreValue in
+                    Text(scoreValue)
+                        .font(.Caption.caption2)
+                        .frame(maxWidth: .infinity)
+                }
                 .padding(.trailing, paddingAmount)
             }
             
@@ -189,8 +189,8 @@ private struct TeamBoard: View {
         awayTeam: Team(name: "KIA", image: " "),
         place: "인천 SSG 랜더스 필드",
         scoreBoard: [
-            ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 5, scores: [1, 1, 1, 0, 0, ]),
-            ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 1, 2])
+            ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 5, scores: [1, 1, 1, 0, 0, 1, 1, 1, 0, 0 ]),
+            ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 1, 2, 0, 0, 0, 1, 1, 1 ])
         ]
     ))
     .environment(PreviewHelper.mockMatchUseCase)

@@ -77,7 +77,7 @@ extension MatchUseCase {
     }
     
     // 점수 배열을 조정하는 메소드
-    func adjustScores(_ scores: [Int]) -> [String] {
-        matchService.adjustScores(scores)
+    func adjustScores(_ scores: [Int], inning: ScoreBoardView.Inning) -> [String] {
+        matchService.adjustScores(scores, inning: inning)
     }
 }

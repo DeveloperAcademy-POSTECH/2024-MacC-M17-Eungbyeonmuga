@@ -46,11 +46,11 @@ final class MatchServiceImpl: MatchServiceInterface {
         }
     }
     
-    func adjustScores(_ scores: [Int]) -> [String] {
+    func adjustScores(_ scores: [Int], inning: ScoreBoardView.Inning) -> [String] {
         var adjustedScores = scores.map { "\($0)" }
         
-        if adjustedScores.count < 9 {
-            let missingCount = 9 - adjustedScores.count
+        if adjustedScores.count < inning.rawValue {
+            let missingCount = inning.rawValue - adjustedScores.count
             adjustedScores += Array(repeating: "-", count: missingCount)
         }
         
