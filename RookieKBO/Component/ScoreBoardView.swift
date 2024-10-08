@@ -34,21 +34,25 @@ private struct InningInfo: View {
             ForEach(1...inningCount, id: \.self) { inningNumber in
                 Text("\(inningNumber)")
                     .font(.Caption.caption2)
-                    .frame(width: 5)
+                    .frame(width: 13)
             }
             .padding(.trailing, trailingPadding)
             
             Text("R")
                 .font(.Caption.caption2)
+                .frame(width: 13)
                 .padding(.trailing, trailingPadding)
             Text("H")
                 .font(.Caption.caption2)
+                .frame(width: 13)
                 .padding(.trailing, trailingPadding)
             Text("E")
                 .font(.Caption.caption2)
+                .frame(width: 13)
                 .padding(.trailing, trailingPadding)
             Text("B")
                 .font(.Caption.caption2)
+                .frame(width: 13)
         }
         .padding(.vertical, 5)
         .padding(.horizontal, 16)
@@ -72,13 +76,13 @@ private struct InningInfo: View {
     private var trailingPadding: CGFloat {
         switch inning {
         case .nine:
-            return 15
+            return 8
         case .ten:
-            return 13
+            return 6
         case .eleven:
-            return 12
+            return 5
         case .twelve:
-            return 10
+            return 3
         }
     }
 }
@@ -105,7 +109,7 @@ private struct TeamBoard: View {
                     ForEach(score.scores, id: \.self) { scoreValue in
                         Text("\(scoreValue)")
                             .font(.Caption.caption2)
-                            .frame(width: 7)
+                            .frame(width: 13)
                     }
                 }
                 .padding(.trailing, paddingAmount)
@@ -113,18 +117,22 @@ private struct TeamBoard: View {
             
             if let firstScoreBoard = scoreBoard.first {
                 Text("\(firstScoreBoard.runs)")
+                    .frame(width: 13)
                     .font(.Caption.caption2)
                     .padding(.trailing, paddingAmount)
                 
                 Text("\(firstScoreBoard.hits)")
+                    .frame(width: 13)
                     .font(.Caption.caption2)
                     .padding(.trailing, paddingAmount)
                 
                 Text("\(firstScoreBoard.errors)")
+                    .frame(width: 13)
                     .font(.Caption.caption2)
                     .padding(.trailing, paddingAmount)
                 
                 Text("\(firstScoreBoard.balls)")
+                    .frame(width: 13)
                     .font(.Caption.caption2)
             }
         }
@@ -135,13 +143,13 @@ private struct TeamBoard: View {
     private var paddingAmount: CGFloat {
         switch inning {
         case .nine:
-            return 14
+            return 8
         case .ten:
-            return 12
+            return 6
         case .eleven:
-            return 11
+            return 5
         case .twelve:
-            return 9
+            return 3
         }
     }
 }
