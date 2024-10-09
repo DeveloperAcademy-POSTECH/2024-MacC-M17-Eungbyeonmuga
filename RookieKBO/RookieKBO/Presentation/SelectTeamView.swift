@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SelectTeamView: View {
     
-    @EnvironmentObject private var selectTeamUseCase: SelectTeamUseCase
+    @StateObject private var selectTeamUseCase = SelectTeamUseCase()
     
     var body: some View {
         ZStack{
@@ -21,6 +21,7 @@ struct SelectTeamView: View {
                 StartTeam()
             }
         }
+        .environmentObject(selectTeamUseCase)
     }
 }
 
@@ -30,11 +31,9 @@ private struct HeaderView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 18) {
-                Image("TitleLogo")
+                Image("TitleLogo") // TODO: Image -> Text로 변경
                     .resizable()
                     .frame(width: 150, height: 40)
-//                Text("루키크보")
-//                    .font(.CustomTitle.customTitle1)
                 
                 Text("응원하는 구단을 선택하세요!\n우리 팀의 정보를 먼저 확인할 수 있어요.")
                     .font(.Head.head4)
@@ -70,30 +69,47 @@ private struct SelectTeamListView: View {
                         ZStack{
                             VStack {
                                 HStack{
-                                    Text(team.name)
+                                    let teamNameParts = team.name.split(separator: " ")
+                                    
+                                    Group{
+                                        if teamNameParts[0] == "전체" {
+                                            Text(team.name)
+                                                .foregroundColor(.black)
+                                        } else {
+                                            Text(teamNameParts[0])
+                                                .foregroundColor(.black)
+                                            
+                                            Text(teamNameParts[1])
+                                                .foregroundColor(.black.opacity(0.5))
+                                        }
+                                    }.font(.Head.head2)
+                                    
                                     Spacer()
                                 }
-                                .padding(.init(top: 16, leading: 32, bottom: 0, trailing: 0))
+                                .padding(.init(top: 12, leading: 20, bottom: 0, trailing: 0))
                                 Spacer()
                             }
                             
                             Image(team.image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
+                                .opacity(0.5)
                                 .frame(width: 170, height: 150)
-                                .offset(x: 36, y: 10)
+                                .offset(x: 36, y: 16)
+                                .clipShape(RoundedRectangle(cornerRadius: 18))
                                 .clipped()
                             
                             RoundedRectangle(cornerRadius: 18)
                                 .fill(.clear)
-                                .stroke(.gray, lineWidth: 5)
+                                .stroke(Color.selectTeamStroke, lineWidth: 5)
                                 .frame(width: 172, height: 150)
                         }
                     }
-                    .padding(.vertical, 4)
+                    .padding(.vertical, 6)
                 }
             }
-            .padding(8)
+            .padding(4)
+            .padding(.horizontal, 4)
         }
     }
 }
@@ -122,5 +138,4 @@ private struct StartTeam: View {
 
 #Preview {
     SelectTeamView()
-        .environmentObject(SelectTeamUseCase())
 }
