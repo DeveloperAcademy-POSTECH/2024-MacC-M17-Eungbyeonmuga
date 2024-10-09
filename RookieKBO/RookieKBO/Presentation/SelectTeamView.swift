@@ -58,13 +58,7 @@ private struct SelectTeamListView: View {
             LazyVGrid(columns: columns) {
                 ForEach(selectTeamUseCase.teams) { team in
                     Button {
-                        if selectTeamUseCase.selectedTeam == team {
-                            selectTeamUseCase.isSelectButtonPresented.toggle()
-                            selectTeamUseCase.selectedTeam = nil
-                        } else {
-                            selectTeamUseCase.isSelectButtonPresented = true
-                            selectTeamUseCase.selectedTeam = team
-                        }
+                        selectTeamUseCase.selectTeam(for: team)
                     } label: {
                         ZStack{
                             // 배경색 변경

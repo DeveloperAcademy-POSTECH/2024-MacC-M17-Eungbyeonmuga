@@ -28,3 +28,17 @@ final class SelectTeamUseCase : ObservableObject {
             Team(name: "전체 구단", image: "All_under")]
     }
 }
+extension SelectTeamUseCase {
+    
+    // MARK: - selectAction
+    
+    func selectTeam(for team: Team) {
+        if selectedTeam == team {
+            isSelectButtonPresented.toggle()
+            selectedTeam = nil
+        } else {
+            isSelectButtonPresented = true
+            selectedTeam = team
+        }
+    }
+}
