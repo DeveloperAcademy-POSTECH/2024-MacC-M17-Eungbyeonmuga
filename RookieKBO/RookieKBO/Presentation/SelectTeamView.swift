@@ -29,13 +29,15 @@ struct SelectTeamView: View {
 private struct HeaderView: View {
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 24) {
-                Text("루키크보")
-                    .font(.CustomTitle.customTitle1)
+            VStack(alignment: .leading, spacing: 18) {
+                Image("TitleLogo")
+                    .resizable()
+                    .frame(width: 150, height: 40)
+//                Text("루키크보")
+//                    .font(.CustomTitle.customTitle1)
                 
                 Text("응원하는 구단을 선택하세요!\n우리 팀의 정보를 먼저 확인할 수 있어요.")
-                    .font(.Body.body1)
-                    .lineSpacing(12)
+                    .font(.Head.head4)
             }
             
             Spacer()
@@ -71,25 +73,24 @@ private struct SelectTeamListView: View {
                                     Text(team.name)
                                     Spacer()
                                 }
-                                .padding(.init(top: 8, leading: 32, bottom: 0, trailing: 0))
+                                .padding(.init(top: 16, leading: 32, bottom: 0, trailing: 0))
                                 Spacer()
                             }
                             
-                            Image(systemName:"pencil.circle.fill") // TODO: team.image로 변경
+                            Image(team.image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .frame(width: 150, height: 150)
-                                .padding(.init(top: 30, leading: 50, bottom: 0, trailing: 0))
+                                .frame(width: 170, height: 150)
+                                .offset(x: 36, y: 10)
+                                .clipped()
+                            
+                            RoundedRectangle(cornerRadius: 18)
+                                .fill(.clear)
+                                .stroke(.gray, lineWidth: 5)
+                                .frame(width: 172, height: 150)
                         }
-                        .frame(width: 172, height: 172)
-                        .clipped()
-                        .background(RoundedRectangle(cornerRadius: 18)
-                            .fill(Color.white)
-                            .stroke(.gray, lineWidth: 5))
-                        
-                        
                     }
-                    .padding(8)
+                    .padding(.vertical, 4)
                 }
             }
             .padding(8)
