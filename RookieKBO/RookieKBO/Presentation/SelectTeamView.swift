@@ -58,17 +58,25 @@ private struct SelectTeamListView: View {
             LazyVGrid(columns: columns) {
                 ForEach(selectTeamUseCase.teams) { team in
                     Button {
-                        print("\(team) 번째 팀")
                         if selectTeamUseCase.selectedTeam == team {
                             selectTeamUseCase.isSelectButtonPresented.toggle()
+                            selectTeamUseCase.selectedTeam = nil
                         } else {
                             selectTeamUseCase.isSelectButtonPresented = true
                             selectTeamUseCase.selectedTeam = team
                         }
                     } label: {
                         ZStack{
+                            // 배경색 변경
+                            RoundedRectangle(cornerRadius: 18)
+                                .fill(
+                                    selectTeamUseCase.selectedTeam == nil ? Color.white : (selectTeamUseCase.selectedTeam! == team ? Color.white : Color.selectTeamBackground)
+                                )
+                                .frame(width: 172, height: 150)
+                            
                             VStack {
                                 HStack{
+                                    // 글자 색 구분
                                     let teamNameParts = team.name.split(separator: " ")
                                     
                                     Group{
@@ -78,7 +86,6 @@ private struct SelectTeamListView: View {
                                         } else {
                                             Text(teamNameParts[0])
                                                 .foregroundColor(.black)
-                                            
                                             Text(teamNameParts[1])
                                                 .foregroundColor(.black.opacity(0.5))
                                         }
@@ -93,16 +100,25 @@ private struct SelectTeamListView: View {
                             Image(team.image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .opacity(0.5)
+                                .opacity(selectTeamUseCase.selectedTeam == team ? 1 : 0.5)
                                 .frame(width: 170, height: 150)
                                 .offset(x: 36, y: 16)
                                 .clipShape(RoundedRectangle(cornerRadius: 18))
                                 .clipped()
                             
-                            RoundedRectangle(cornerRadius: 18)
-                                .fill(.clear)
-                                .stroke(Color.selectTeamStroke, lineWidth: 5)
-                                .frame(width: 172, height: 150)
+                            // 테두리 변경
+                            if selectTeamUseCase.selectedTeam == team {
+                                RoundedRectangle(cornerRadius: 18)
+                                    .stroke(
+                                        LinearGradient.primaryGradient,
+                                        lineWidth: 5
+                                    )
+                                    .frame(width: 172, height: 150)
+                            } else {
+                                RoundedRectangle(cornerRadius: 18)
+                                    .stroke(Color.selectTeamStroke, lineWidth: 5)
+                                    .frame(width: 172, height: 150)
+                            }
                         }
                     }
                     .padding(.vertical, 6)
@@ -110,6 +126,7 @@ private struct SelectTeamListView: View {
             }
             .padding(4)
             .padding(.horizontal, 4)
+            .padding(.bottom, 80)
         }
     }
 }
@@ -124,15 +141,30 @@ private struct StartTeam: View {
         VStack {
             Spacer()
             Button {
-                print(selectTeamUseCase.selectedTeam ?? "선택 안함")
+                print(selectTeamUseCase.selectedTeam ?? "선택 안함") // TODO: 선택 팀 저장 & 화면 이동
             } label: {
                 Text("루키크보 시작하기")
+                    .font(.Head.head3)
                     .frame(width: 361, height: 54)
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 16)
-                        .fill(.gray))
+                        .fill(LinearGradient.primaryGradient))
             }
+            .padding()
         }
+    }
+}
+
+extension LinearGradient {
+    static var primaryGradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(stops: [
+                .init(color: Color.primaryColor1, location: 0.0),
+                .init(color: Color.primaryColor2, location: 1.0)
+            ]),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
     }
 }
 
