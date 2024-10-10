@@ -38,7 +38,7 @@ private struct GameInfo: View {
                 Image("\(endGameInfo.awayTeam.image)")
                     .frame(width: 48, height: 48)
                 
-                Text("\(endGameInfo.awayTeam.name)")
+                Text("\(endGameInfo.awayTeam.name.firstWord())")
                     .font(.Caption.caption1)
             }
             .padding(.trailing, 16)
@@ -78,7 +78,7 @@ private struct GameInfo: View {
                     .frame(width: 48, height: 48)
                 
                 HStack(spacing: 2) {
-                    Text("\(endGameInfo.homeTeam.name)")
+                    Text("\(endGameInfo.homeTeam.name.firstWord())")
                         .font(.Caption.caption1)
                     
                     Text("홈")

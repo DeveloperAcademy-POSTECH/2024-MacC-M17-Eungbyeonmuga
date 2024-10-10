@@ -17,7 +17,7 @@ struct CancelGameInfo: View {
                 Image("\(cancelGameInfo.awayTeam.image)")
                     .frame(width: 48, height: 48)
                 
-                Text("\(cancelGameInfo.awayTeam.name)")
+                Text("\(cancelGameInfo.awayTeam.name.firstWord())")
                     .font(.Caption.caption1)
             }
             
@@ -40,7 +40,7 @@ struct CancelGameInfo: View {
                     .frame(width: 48, height: 48)
                 
                 HStack(spacing: 2) {
-                    Text("\(cancelGameInfo.homeTeam.name)")
+                    Text("\(cancelGameInfo.homeTeam.name.firstWord())")
                         .font(.Caption.caption1)
                     
                     Text("홈")

@@ -147,7 +147,7 @@ private struct TeamBoard: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            Text(isHomeTeam ? match.homeTeam.name : match.awayTeam.name)
+            Text(isHomeTeam ? match.homeTeam.name.firstWord() : match.awayTeam.name.firstWord())
                 .frame(width: 24)
                 .font(.Caption.caption2)
                 .padding(.trailing, 8)
