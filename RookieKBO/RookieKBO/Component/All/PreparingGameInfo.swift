@@ -61,12 +61,5 @@ struct PreparingGameInfo: View {
 }
 
 #Preview {
-    PreparingGameInfo(preparingGameInfo: Match(
-        startDateTime: Date(),
-        state: State.PREPARE,
-        homeTeam: Team(name: "SSG", image: " "),
-        awayTeam: Team(name: "KIA", image: " "),
-        place: "인천 ssg랜더스필드",
-        scoreBoard: []
-    ))
+    PreparingGameInfo(preparingGameInfo: MockDataBuilder.mockMatch)
 }

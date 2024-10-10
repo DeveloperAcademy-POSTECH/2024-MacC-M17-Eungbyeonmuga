@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyTeamEndGameInfo: View {
+    
     let endGameInfo: Match
     
     var body: some View {
@@ -122,17 +123,7 @@ private struct GameScore: View {
 
 #Preview {
     MyTeamEndGameInfo(
-        endGameInfo: Match(
-            startDateTime: Date(),
-            state: State.CANCEL,
-            homeTeam: Team(name: "SSG", image: " "),
-            awayTeam: Team(name: "KIA", image: " "),
-            place: "인천 ssg랜더스필드",
-            scoreBoard: [
-                ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 2, 1]),
-                ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 1, 0, 0])
-            ]
-        )
+        endGameInfo: MockDataBuilder.mockMatch
     )
     .environment(PreviewHelper.mockMatchUseCase)
 }

@@ -9,6 +9,9 @@ struct ScoreBoardView: View {
         case ten = 10
         case eleven = 11
         case twelve = 12
+        case thirteen = 13
+        case fourteen = 14
+        case fifteen = 15
     }
     
     var inning: Inning {
@@ -23,6 +26,12 @@ struct ScoreBoardView: View {
             return .eleven
         case 12:
             return .twelve
+        case 13:
+            return .thirteen
+        case 14:
+            return .fourteen
+        case 15:
+            return .fifteen
         default:
             return .nine
         }
@@ -93,6 +102,12 @@ private struct InningInfo: View {
             return 11
         case .twelve:
             return 12
+        case .thirteen:
+            return 13
+        case .fourteen:
+            return 14
+        case .fifteen:
+            return 15
         }
     }
     
@@ -106,6 +121,12 @@ private struct InningInfo: View {
             return 5
         case .twelve:
             return 3
+        case .thirteen:
+            return 2
+        case .fourteen:
+            return 1
+        case .fifteen:
+            return 0
         }
     }
 }
@@ -177,21 +198,18 @@ private struct TeamBoard: View {
             return 5
         case .twelve:
             return 3
+        case .thirteen:
+            return 2
+        case .fourteen:
+            return 1
+        case .fifteen:
+            return 0
         }
     }
 }
 
 #Preview {
-    ScoreBoardView(match: Match(
-        startDateTime: Date(),
-        state: State.CANCEL,
-        homeTeam: Team(name: "SSG", image: " "),
-        awayTeam: Team(name: "KIA", image: " "),
-        place: "인천 SSG 랜더스 필드",
-        scoreBoard: [
-            ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 5, scores: [1, 1, 1, 0, 0, 1, 1, 1, 0, 0 ]),
-            ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 1, 2, 0, 0, 0, 1, 1, 1 ])
-        ]
-    ))
+    ScoreBoardView(match: MockDataBuilder.mockMatch
+    )
     .environment(PreviewHelper.mockMatchUseCase)
 }

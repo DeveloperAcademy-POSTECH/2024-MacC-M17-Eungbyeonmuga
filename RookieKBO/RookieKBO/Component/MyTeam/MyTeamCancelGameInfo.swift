@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyTeamCancelGameInfo: View {
+    
     let cancelGameInfo: Match
     
     var body: some View {
@@ -85,13 +86,6 @@ private struct TeamInfo: View {
 
 #Preview {
     MyTeamCancelGameInfo(
-        cancelGameInfo: Match(
-            startDateTime: Date(),
-            state: State.CANCEL,
-            homeTeam: Team(name: "SSG", image: " "),
-            awayTeam: Team(name: "KIA", image: " "),
-            place: "인천 ssg랜더스필드",
-            scoreBoard: []
-        )
+        cancelGameInfo: MockDataBuilder.mockMatch
     )
 }
