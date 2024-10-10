@@ -1,5 +1,5 @@
 //
-//  State.swift
+//  GameState.swift
 //  RookieKBO
 //
 //  Created by kyungsoolee on 10/7/24.
