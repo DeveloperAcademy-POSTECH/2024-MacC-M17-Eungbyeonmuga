@@ -7,11 +7,30 @@
 
 import SwiftUI
 
+typealias Background = Color.Background
+typealias Brand = Color.Brand
+typealias GrayScale = Color.GrayScale
+typealias TextLabel = Color.TextLabel
+
 extension Color {
     
-    static let selectTeamStroke = Color("Stroke1")
-    static let selectTeamBackground = Color("Background1")
+    enum Background {
+        static let first = Color(.first)
+    }
     
-    static let primaryColor1 = Color("Primary1")
-    static let primaryColor2 = Color("Primary2")
+    enum Brand {
+        static let primary1 = Color(.primary1)
+        static let primary2 = Color(.primary2)
+    }
+    
+    enum GrayScale {
+        static let stroke = Color(.stroke)
+        static let unselectBackground = Color(.unselectBackground)
+    }
+    
+    enum TextLabel {
+        static let main = Color(.main)
+        static let sub1 = Color(.sub1)
+    }
+    
 }

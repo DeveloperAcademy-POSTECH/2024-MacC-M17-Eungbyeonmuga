@@ -12,8 +12,11 @@ struct SelectTeamView: View {
     @StateObject private var selectTeamUseCase = SelectTeamUseCase()
     
     var body: some View {
-        ZStack{
-            VStack{
+        ZStack {
+            Color(Background.first)
+                .ignoresSafeArea()
+            
+            VStack(spacing: 8) {
                 HeaderView()
                 SelectTeamListView()
             }
@@ -29,14 +32,16 @@ struct SelectTeamView: View {
 
 private struct HeaderView: View {
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 18) {
-                Image("TitleLogo") // TODO: Image -> Text로 변경
+                // TODO: Image -> Text로 변경
+                Image("titleLogo")
                     .resizable()
                     .frame(width: 150, height: 40)
                 
                 Text("응원하는 구단을 선택하세요!\n우리 팀의 정보를 먼저 확인할 수 있어요.")
                     .font(.Head.head4)
+                    .foregroundColor(.TextLabel.main)
             }
             
             Spacer()
@@ -54,34 +59,34 @@ private struct SelectTeamListView: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
-        ScrollView{
+        ScrollView {
             LazyVGrid(columns: columns) {
-                ForEach(selectTeamUseCase.teams) { team in
+                ForEach(selectTeamUseCase.state.teams) { team in
                     Button {
                         selectTeamUseCase.selectTeam(for: team)
                     } label: {
-                        ZStack{
+                        ZStack {
                             // 배경색 변경
                             RoundedRectangle(cornerRadius: 18)
                                 .fill(
-                                    selectTeamUseCase.selectedTeam == nil ? Color.white : (selectTeamUseCase.selectedTeam! == team ? Color.white : Color.selectTeamBackground)
+                                    selectTeamUseCase.state.selectedTeam == nil ? Color.white : (selectTeamUseCase.state.selectedTeam == team ? Color.white : Color.GrayScale.unselectBackground)
                                 )
                                 .frame(width: 172, height: 150)
                             
-                            VStack {
-                                HStack{
+                            VStack(spacing: 0) {
+                                HStack(spacing: 0) {
                                     // 글자 색 구분
                                     let teamNameParts = team.name.split(separator: " ")
                                     
                                     Group{
                                         if teamNameParts[0] == "전체" {
                                             Text(team.name)
-                                                .foregroundColor(.black)
+                                                .foregroundColor(.TextLabel.main)
                                         } else {
                                             Text(teamNameParts[0])
-                                                .foregroundColor(.black)
-                                            Text(teamNameParts[1])
-                                                .foregroundColor(.black.opacity(0.5))
+                                                .foregroundColor(.TextLabel.main)
+                                            Text(" " + teamNameParts[1])
+                                                .foregroundColor(.TextLabel.sub1)
                                         }
                                     }.font(.Head.head2)
                                     
@@ -94,14 +99,14 @@ private struct SelectTeamListView: View {
                             Image(team.image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .opacity(selectTeamUseCase.selectedTeam == team ? 1 : 0.5)
+                                .opacity(selectTeamUseCase.state.selectedTeam == team ? 1 : 0.5)
                                 .frame(width: 170, height: 150)
                                 .offset(x: 36, y: 16)
                                 .clipShape(RoundedRectangle(cornerRadius: 18))
                                 .clipped()
                             
                             // 테두리 변경
-                            if selectTeamUseCase.selectedTeam == team {
+                            if selectTeamUseCase.state.selectedTeam == team {
                                 RoundedRectangle(cornerRadius: 18)
                                     .stroke(
                                         LinearGradient.primaryGradient,
@@ -110,7 +115,7 @@ private struct SelectTeamListView: View {
                                     .frame(width: 172, height: 150)
                             } else {
                                 RoundedRectangle(cornerRadius: 18)
-                                    .stroke(Color.selectTeamStroke, lineWidth: 5)
+                                    .stroke(Color.GrayScale.stroke, lineWidth: 5)
                                     .frame(width: 172, height: 150)
                             }
                         }
@@ -132,10 +137,11 @@ private struct StartTeam: View {
     @EnvironmentObject var selectTeamUseCase: SelectTeamUseCase
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Spacer()
             Button {
-                print(selectTeamUseCase.selectedTeam ?? "선택 안함") // TODO: 선택 팀 저장 & 화면 이동
+                // TODO: 선택 팀 저장 & 화면 이동
+                print(selectTeamUseCase.state.selectedTeam ?? "선택 안함")
             } label: {
                 Text("루키크보 시작하기")
                     .font(.Head.head3)
