@@ -10,6 +10,7 @@ import SwiftUI
 struct SelectTeamView: View {
     
     @StateObject private var selectTeamUseCase = SelectTeamUseCase()
+    @State private var isSelectButtonPresented: Bool = false
     
     var body: some View {
         ZStack {
@@ -18,9 +19,9 @@ struct SelectTeamView: View {
             
             VStack(spacing: 8) {
                 HeaderView()
-                SelectTeamListView()
+                SelectTeamListView(isSelectButtonPresented: $isSelectButtonPresented)
             }
-            if selectTeamUseCase.isSelectButtonPresented {
+            if isSelectButtonPresented {
                 StartTeam()
             }
         }
@@ -55,6 +56,7 @@ private struct HeaderView: View {
 private struct SelectTeamListView: View {
     
     @EnvironmentObject private var selectTeamUseCase: SelectTeamUseCase
+    @Binding var isSelectButtonPresented: Bool
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
@@ -63,7 +65,8 @@ private struct SelectTeamListView: View {
             LazyVGrid(columns: columns) {
                 ForEach(selectTeamUseCase.state.teams) { team in
                     Button {
-                        selectTeamUseCase.selectTeam(for: team)
+                        selectTeamUseCase.toggleSelectedTeam(team)
+                        isSelectButtonPresented = selectTeamUseCase.state.selectedTeam != nil
                     } label: {
                         ZStack {
                             // 배경색 변경

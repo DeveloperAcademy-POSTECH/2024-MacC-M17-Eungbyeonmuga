@@ -9,8 +9,7 @@ import Foundation
 
 final class SelectTeamUseCase : ObservableObject {
     
-    @Published var state: State
-    @Published var isSelectButtonPresented: Bool = false
+    private(set) var state: State
     
     init() {
         self.state = State(
@@ -45,14 +44,13 @@ extension SelectTeamUseCase {
 
 extension SelectTeamUseCase {
     
-    /// 선택한 팀을 반영하는 함수
-    func selectTeam(for team: Team) {
+    // 선택한 응원 팀 토글 함수
+    func toggleSelectedTeam(_ team: Team) {
         if state.selectedTeam == team {
-            isSelectButtonPresented.toggle()
             state.selectedTeam = nil
         } else {
-            isSelectButtonPresented = true
             state.selectedTeam = team
         }
+        objectWillChange.send()
     }
 }
