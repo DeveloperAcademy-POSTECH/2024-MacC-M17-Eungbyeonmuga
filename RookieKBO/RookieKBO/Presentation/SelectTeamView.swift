@@ -56,7 +56,10 @@ private struct HeaderView: View {
 private struct SelectTeamListView: View {
     
     @EnvironmentObject private var selectTeamUseCase: SelectTeamUseCase
+    
     @Binding var isSelectButtonPresented: Bool
+    
+    @State var selectedTeam: Team?
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
@@ -65,14 +68,19 @@ private struct SelectTeamListView: View {
             LazyVGrid(columns: columns) {
                 ForEach(selectTeamUseCase.state.teams) { team in
                     Button {
+                        if selectedTeam == team {
+                            selectedTeam = nil
+                        } else {
+                            selectedTeam = team
+                        }
                         selectTeamUseCase.toggleSelectedTeam(team)
-                        isSelectButtonPresented = selectTeamUseCase.state.selectedTeam != nil
+                        isSelectButtonPresented = selectedTeam != nil
                     } label: {
                         ZStack {
                             // 배경색 변경
                             RoundedRectangle(cornerRadius: 18)
                                 .fill(
-                                    selectTeamUseCase.state.selectedTeam == nil ? Color.white : (selectTeamUseCase.state.selectedTeam == team ? Color.white : Color.GrayScale.unselectBackground)
+                                    selectedTeam == nil ? Color.white : (selectedTeam == team ? Color.white : Color.GrayScale.unselectBackground)
                                 )
                                 .frame(width: 172, height: 150)
                             
@@ -102,14 +110,14 @@ private struct SelectTeamListView: View {
                             Image(team.image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .opacity(selectTeamUseCase.state.selectedTeam == team ? 1 : 0.5)
+                                .opacity(selectedTeam == team ? 1 : 0.5)
                                 .frame(width: 170, height: 150)
                                 .offset(x: 36, y: 16)
                                 .clipShape(RoundedRectangle(cornerRadius: 18))
                                 .clipped()
                             
                             // 테두리 변경
-                            if selectTeamUseCase.state.selectedTeam == team {
+                            if selectedTeam == team {
                                 RoundedRectangle(cornerRadius: 18)
                                     .stroke(
                                         LinearGradient.primaryGradient,
