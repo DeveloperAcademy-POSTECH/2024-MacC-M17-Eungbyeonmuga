@@ -43,6 +43,7 @@ private struct HeaderView: View {
                 Text("응원하는 구단을 선택하세요!\n우리 팀의 정보를 먼저 확인할 수 있어요.")
                     .font(.Head.head4)
                     .foregroundColor(.TextLabel.main)
+                    .lineSpacing(8)
             }
             
             Spacer()
@@ -131,11 +132,10 @@ private struct SelectTeamListView: View {
                             }
                         }
                     }
-                    .padding(.vertical, 6)
+                    .padding(.vertical, 4)
                 }
             }
-            .padding(4)
-            .padding(.horizontal, 4)
+            .padding(.horizontal)
             .padding(.bottom, 80)
         }
     }
