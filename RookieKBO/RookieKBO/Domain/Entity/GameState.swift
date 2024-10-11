@@ -1,5 +1,5 @@
 //
-//  State.swift
+//  GameState.swift
 //  RookieKBO
 //
 //  Created by kyungsoolee on 10/7/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum State: Codable, CaseIterable {
+enum GameState: Codable, CaseIterable {
     case PREPARE
     case PLAYING
     case END

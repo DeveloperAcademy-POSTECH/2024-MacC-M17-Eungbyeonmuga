@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		DF20BB802CAED5DC00F88298 /* RookieKBO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RookieKBO.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RookieKBO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -46,16 +46,8 @@
 			isa = PBXGroup;
 			children = (
 				DF20BB822CAED5DC00F88298 /* RookieKBO */,
-				DF20BB812CAED5DC00F88298 /* Products */,
+				DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */,
 			);
-			sourceTree = "<group>";
-		};
-		DF20BB812CAED5DC00F88298 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				DF20BB802CAED5DC00F88298 /* RookieKBO.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,7 +72,7 @@
 			packageProductDependencies = (
 			);
 			productName = RookieKBO;
-			productReference = DF20BB802CAED5DC00F88298 /* RookieKBO.app */;
+			productReference = DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -108,7 +100,7 @@
 			mainGroup = DF20BB772CAED5DC00F88298;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = DF20BB812CAED5DC00F88298 /* Products */;
+			productRefGroup = DF20BB772CAED5DC00F88298;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -268,7 +260,7 @@
 				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RookieKBO/Info.plist;
+				INFOPLIST_FILE = RookieKBO/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -298,7 +290,7 @@
 				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RookieKBO/Info.plist;
+				INFOPLIST_FILE = RookieKBO/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

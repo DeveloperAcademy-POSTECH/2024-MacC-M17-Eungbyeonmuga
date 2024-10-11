@@ -10,16 +10,16 @@ import Foundation
 struct Match: Codable, Identifiable, Equatable {
     var id: UUID
     var startDateTime: Date
-    var state: State
+    var gameState: GameState
     var homeTeam: Team
     var awayTeam: Team
     var place: String
-    var scoreBoard: [ScoreBoard]
+    var scoreBoard: [ScoreBoard]?
     
-    init(startDateTime: Date, state: State, homeTeam: Team, awayTeam: Team, place: String, scoreBoard: [ScoreBoard]) {
+    init(startDateTime: Date, gameState: GameState, homeTeam: Team, awayTeam: Team, place: String, scoreBoard: [ScoreBoard]) {
         self.id = UUID()
         self.startDateTime = startDateTime
-        self.state = state
+        self.gameState = gameState
         self.homeTeam = homeTeam
         self.awayTeam = awayTeam
         self.place = place
