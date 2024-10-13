@@ -53,4 +53,10 @@ extension SelectTeamUseCase {
             state.selectedTeam = team
         }
     }
+    
+    /// 선택한 응원 팀 UserDefaults에 반영
+    func setTeamToUserDefaults() {
+        UserDefaults.standard.removeObject(forKey: "selectTeam")
+        UserDefaults.standard.set(state.selectedTeam?.name, forKey: "selectTeam")
+    }
 }
