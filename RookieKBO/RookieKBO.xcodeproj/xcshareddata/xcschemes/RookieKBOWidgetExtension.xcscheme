@@ -68,15 +68,6 @@
             ReferencedContainer = "container:RookieKBO.xcodeproj">
          </BuildableReference>
       </RemoteRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DF20BB7F2CAED5DC00F88298"
-            BuildableName = "RookieKBO.app"
-            BlueprintName = "RookieKBO"
-            ReferencedContainer = "container:RookieKBO.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "_XCWidgetKind"
@@ -91,6 +82,16 @@
          <EnvironmentVariable
             key = "_XCWidgetFamily"
             value = "systemMedium"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "_XCWidgetKind"
+            value = "RookieKBOWidget"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "_XCWidgetKind"
+            value = "RookieKBOWidget"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
