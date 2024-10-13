@@ -8,107 +8,259 @@
 import WidgetKit
 import SwiftUI
 
-// 위젯 업데이트 로직
 struct Provider: AppIntentTimelineProvider {
-    // 위젯 초기 상태, 네트워크 요청시 요청이 완료되기 전까지 보여줄 기본 데이터
-    // 데이터를 불러올 때 초기에 로딩이 발생하는 경우에만
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
-    }
-
-    // 위젯 갤러리에 샘플로 보여지는 부분, 미리보기
-    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: configuration)
+        SimpleEntry(date: Date(), selectedTeam: SelectTeamAppIntent())
     }
     
-    // 정의한 타임라인에 맞게 업데이트해서 보여지는 내용
-    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
+    func snapshot(for configuration: SelectTeamAppIntent, in context: Context) async -> SimpleEntry {
+        SimpleEntry(date: Date(), selectedTeam: configuration)
+    }
+    
+    func timeline(for configuration: SelectTeamAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
         var entries: [SimpleEntry] = []
-
-        // 진행중일 때 -> 변화가 있을 때만
-        // 예정 시간 지났을 때
-        // 경기 끝났을 때
+        
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
+            let entry = SimpleEntry(date: entryDate, selectedTeam: configuration)
             entries.append(entry)
         }
-
+        
         return Timeline(entries: entries, policy: .atEnd)
-        // policy : 이 타입이 위젯에 새로운 타임라인을 제공해주는 시기(리로드 시점)지정
-        //.atEnd 현재 주어진 타임라인이 마지막일 때 새로운 타임라인 요청
-        //.after 해당 시점 후에 새로운 타임라인 요청
-        //.never 더 이상 요청하지 않을 때
     }
 }
 
-// 위젯 데이터 관리
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let configuration: ConfigurationAppIntent
+    let selectedTeam: SelectTeamAppIntent
     var match: Match?
+    
 }
 
-// 위젯 뷰
 struct RookieKBOWidgetEntryView : View {
+    
     var entry: Provider.Entry
-
+    var currentMatch: Match? { entry.match }
+    
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 14) {
-                VStack(spacing: 8) {
-                    Image("\(entry.match?.awayTeam.image ?? "")")
-                        .frame(width: 40, height: 40)
-                    
-                    Text("\(entry.match?.awayTeam.name.firstWord() ??  "")")
-                        .font(.Caption.caption1)
-                }
+        ZStack {
+            Image("배경")
             
-                Text("VS")
-                    .font(.Caption.caption2)
+            if currentMatch?.gameState == .CANCEL.self {
+                CancelGameView(entry: entry)
+            }
+            
+            else if currentMatch?.gameState == .END.self {
+                EndGameView(entry: entry)
+            }
+            
+            else if currentMatch?.gameState == .PLAYING.self {
+                PlayingGameView(entry: entry)
+            }
+            
+            else if currentMatch?.gameState == .PREPARE {
+                PreParingGameView(entry: entry)
+            }
+            else {
+                NoGamesView()
+            }
+        }
+    }
+}
 
-                VStack(spacing: 8) {
-                    Image("\(entry.match?.homeTeam.image ?? "")")
-                        .frame(width: 40, height: 40)
+// MARK: - GameInfoView
+
+private struct GameInfoView: View {
+    var entry: Provider.Entry
+    var currentMatch: Match? { entry.match }
+    
+    var body: some View {
+        HStack(spacing: 14) {
+            VStack(spacing: 8) {
+                Image("\(currentMatch?.awayTeam.image ?? "")")
+                    .frame(width: 40, height: 40)
+                
+                Text("\(currentMatch?.awayTeam.name.firstWord() ??  "")")
+                    .font(.Caption.caption1)
+            }
+            
+            Text("VS")
+                .font(.Caption.caption2)
+            
+            VStack(spacing: 8) {
+                Image("\(currentMatch?.homeTeam.image ?? "")")
+                    .frame(width: 40, height: 40)
+                
+                HStack(spacing: 2) {
+                    Text("\(currentMatch?.homeTeam.name.firstWord() ??  "")")
+                        .font(.Caption.caption1)
                     
-                    HStack(spacing: 2) {
-                        Text("\(entry.match?.homeTeam.name.firstWord() ??  "")")
-                            .font(.Caption.caption1)
-                        
-                        Text("홈")
-                            .font(.Caption.caption2)
-                            .foregroundStyle(.black)
-                            .padding(.horizontal, 3)
-                            .padding(.vertical, 1)
-                            .background(Color.yellow)
-                            .cornerRadius(99)
-                    }
+                    Text("홈")
+                        .font(.Caption.caption2)
+                        .foregroundStyle(.black)
+                        .padding(.horizontal, 3)
+                        .padding(.vertical, 1)
+                        .background(Color.yellow)
+                        .cornerRadius(99)
                 }
             }
+        }
+    }
+}
+
+// MARK: - PlayingGameView
+
+private struct PlayingGameView: View {
+    var entry: Provider.Entry
+    var currentMatch: Match? { entry.match }
+    
+    var body: some View {
+        GameInfoView(entry: entry)
             .padding(.bottom, 14)
+        
+        // TODO: nil 값 처리
+        let awayScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockMatch, team: .AWAY)
+        
+        let homeScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockMatch, team: .HOME)
+        
+        let inningText = calculateInningText(for: entry.match ?? MockDataBuilder.mockMatch)
+        
+        HStack(spacing: 0) {
+            Text("\(awayScore)")
+                .font(.CustomTitle.customTitle1)
+                .padding(.trailing, 13)
             
-            Text("우천 취소")
+            Text("\(inningText)")
+                .font(.Caption.caption1)
+                .padding(.trailing, 14)
             
-            Text("\(entry.match?.startDateTime.toTimeString() ?? "")")
+            Text("\(homeScore)")
+                .font(.CustomTitle.customTitle1)
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+        .background(Color.pink)
+        .cornerRadius(14)
+    }
+}
+
+// MARK: - PreParingGameView
+
+private struct PreParingGameView: View {
+    var entry: Provider.Entry
+    var currentMatch: Match? { entry.match }
+    
+    var body: some View {
+        GameInfoView(entry: entry)
+            .padding(.bottom, 14)
+        
+        if let startDateTime = currentMatch?.startDateTime, Calendar.current.isDate(startDateTime, inSameDayAs: Date.today) {
             
-            Text("\(entry.match?.startDateTime.formattedString() ?? "")")
+            Text("\(currentMatch?.startDateTime.toTimeString() ?? "")")
                 .font(.Body.body2)
                 .padding(.bottom, 4)
             
-            Text("\(entry.match?.place ?? "")")
+            Text("\(currentMatch?.place ?? "")")
                 .font(.Caption.caption2)
             
+        } else {
+            Text("\(currentMatch?.startDateTime.formattedString() ?? "")")
+                .font(.Body.body2)
+                .padding(.bottom, 4)
+            
+            Text("\(currentMatch?.place ?? "")")
+                .font(.Caption.caption2)
         }
     }
 }
 
-struct RookieKBOWidget: Widget {
-    let kind: String = "RookieKBOWidget"
+// MARK: - EndGameView
 
+private struct EndGameView: View {
+    var entry: Provider.Entry
+    var currentMatch: Match? { entry.match }
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            GameInfoView(entry: entry)
+                .padding(.bottom, 14)
+            
+            // TODO: nil 값 처리
+            let awayScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockMatch, team: .AWAY)
+            
+            let homeScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockMatch, team: .HOME)
+            
+            let awayResult = getResult(for: awayScore, otherScore: homeScore)
+            
+            let homeResult = getResult(for: homeScore, otherScore: awayScore)
+            
+            HStack(spacing: 0) {
+                Text("\(awayScore)")
+                    .font(.CustomTitle.customTitle1)
+                    .padding(.trailing, 11)
+                
+                Text("\(awayResult)")
+                    .font(.Body.body2)
+                    .padding(.trailing, 10)
+                
+                Text("\(homeResult)")
+                    .font(.Body.body2)
+                    .padding(.trailing, 12)
+                
+                Text("\(homeScore)")
+                    .font(.CustomTitle.customTitle1)
+            }
+        }
+    }
+}
+
+// MARK: - CancelGameView
+
+private struct CancelGameView: View {
+    var entry: Provider.Entry
+    var currentMatch: Match? { entry.match }
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            GameInfoView(entry: entry)
+                .padding(.bottom, 14)
+            
+            Text("우천 취소")
+                .font(.Body.body2)
+                .padding(.bottom, 4)
+            
+            Text("\(currentMatch?.place ?? "")")
+                .font(.Caption.caption2)
+        }
+    }
+}
+
+// MARK: - NoGamesView
+
+private struct NoGamesView: View {
+    var body: some View {
+        VStack(alignment: .center, spacing: 0) {
+            
+            // TODO: 이미지 처리
+            Circle()
+                .frame(width: 55, height: 55)
+                .padding(.bottom, 15)
+            
+            Text("예정된 경기가 \n없어요!")
+                .font(.Body.body1)
+                .multilineTextAlignment(.center)
+        }
+    }
+}
+
+
+struct RookieKBOWidget: Widget {
+    let kind: String = "choseyeon.RookieKBO.RookieKBOWidget"
+    
     var body: some WidgetConfiguration {
         
-        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
+        AppIntentConfiguration(kind: kind, intent: SelectTeamAppIntent.self, provider: Provider()) { entry in
             RookieKBOWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
@@ -138,20 +290,59 @@ extension SelectTeamAppIntent {
         intent.selectedTeam = .lotteType
         return intent
     }
+    
+    fileprivate static var samsungType: SelectTeamAppIntent {
+        let intent = SelectTeamAppIntent()
+        intent.selectedTeam = .samsungType
+        return intent
+    }
+    
+    fileprivate static var doosanType: SelectTeamAppIntent {
+        let intent = SelectTeamAppIntent()
+        intent.selectedTeam = .doosanType
+        return intent
+    }
+    
+    fileprivate static var kiaType: SelectTeamAppIntent {
+        let intent = SelectTeamAppIntent()
+        intent.selectedTeam = .kiaType
+        return intent
+    }
+    
+    fileprivate static var kiwoomType: SelectTeamAppIntent {
+        let intent = SelectTeamAppIntent()
+        intent.selectedTeam = .kiwoomType
+        return intent
+    }
+    
+    fileprivate static var hanhwaType: SelectTeamAppIntent {
+        let intent = SelectTeamAppIntent()
+        intent.selectedTeam = .hanhwaType
+        return intent
+    }
+    
+    fileprivate static var ktType: SelectTeamAppIntent {
+        let intent = SelectTeamAppIntent()
+        intent.selectedTeam = .ktType
+        return intent
+    }
+    
+    fileprivate static var ncType: SelectTeamAppIntent {
+        let intent = SelectTeamAppIntent()
+        intent.selectedTeam = .ncType
+        return intent
+    }
+    
+    fileprivate static var allType: SelectTeamAppIntent {
+        let intent = SelectTeamAppIntent()
+        intent.selectedTeam = .allType
+        return intent
+    }
 }
 
-//#Preview(as: .systemSmall) {
-//    RookieKBOWidget()
-//} timeline: {
-//    SimpleEntry(date: .now, configuration: .ssgType, match: Match(
-//        startDateTime: Date(),
-//        gameState: GameState.CANCEL,
-//        homeTeam: Team(name: "SSG 랜더스", image: " "),
-//        awayTeam: Team(name: "KIA 타이거즈", image: " "),
-//        place: "인천 SSG랜더스필드",
-//        scoreBoard: [
-//            ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 1, 0 ]),
-//            ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 1, 1])
-//        ]
-//    ))
-//}
+#Preview(as: .systemSmall) {
+    RookieKBOWidget()
+} timeline: {
+    SimpleEntry(date: .now, selectedTeam: .ssgType, match: nil
+    )
+}

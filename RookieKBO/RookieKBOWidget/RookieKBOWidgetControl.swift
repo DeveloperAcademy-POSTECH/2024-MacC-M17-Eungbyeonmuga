@@ -10,7 +10,7 @@ import SwiftUI
 import WidgetKit
 
 struct RookieKBOWidgetControl: ControlWidget {
-    static let kind: String = "RookieKBOWidget"
+    static let kind: String = "choseyeon.RookieKBO.RookieKBOWidget"
 
     var body: some ControlWidgetConfiguration {
         AppIntentControlConfiguration(

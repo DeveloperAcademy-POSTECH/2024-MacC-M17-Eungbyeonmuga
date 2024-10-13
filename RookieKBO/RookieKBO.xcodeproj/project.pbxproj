@@ -54,7 +54,7 @@
 		DFC005BB2CB8D410007C96BE /* Exceptions for "RookieKBOWidget" folder in "RookieKBOWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Widget/Info.plist,
 			);
 			target = DFC0059F2CB8D40F007C96BE /* RookieKBOWidgetExtension */;
 		};
@@ -467,7 +467,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RookieKBOWidget/Info.plist;
+				INFOPLIST_FILE = RookieKBOWidget/Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RookieKBOWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -494,7 +494,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RookieKBOWidget/Info.plist;
+				INFOPLIST_FILE = RookieKBOWidget/Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RookieKBOWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
