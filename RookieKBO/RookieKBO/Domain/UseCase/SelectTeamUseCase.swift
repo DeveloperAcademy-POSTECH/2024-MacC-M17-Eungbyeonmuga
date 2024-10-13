@@ -7,7 +7,8 @@
 
 import Foundation
 
-final class SelectTeamUseCase : ObservableObject {
+@Observable
+final class SelectTeamUseCase {
     
     private(set) var state: State
     

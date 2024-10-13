@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SelectTeamView: View {
     
-    @StateObject private var selectTeamUseCase = SelectTeamUseCase()
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @State private var isSelectButtonPresented: Bool = false
     
     var body: some View {
@@ -25,7 +25,6 @@ struct SelectTeamView: View {
                 StartTeam()
             }
         }
-        .environmentObject(selectTeamUseCase)
     }
 }
 
@@ -56,7 +55,7 @@ private struct HeaderView: View {
 
 private struct SelectTeamListView: View {
     
-    @EnvironmentObject private var selectTeamUseCase: SelectTeamUseCase
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     @Binding var isSelectButtonPresented: Bool
     
@@ -145,7 +144,7 @@ private struct SelectTeamListView: View {
 
 private struct StartTeam: View {
     
-    @EnvironmentObject var selectTeamUseCase: SelectTeamUseCase
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     var body: some View {
         VStack(spacing: 0) {
@@ -168,4 +167,5 @@ private struct StartTeam: View {
 
 #Preview {
     SelectTeamView()
+        .environment(SelectTeamUseCase())
 }
