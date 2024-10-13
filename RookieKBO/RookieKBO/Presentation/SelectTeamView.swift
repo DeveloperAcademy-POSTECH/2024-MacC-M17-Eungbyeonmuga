@@ -161,7 +161,7 @@ private struct StartTeam: View {
             Spacer()
             Button {
                 // TODO: 화면 이동
-                selectTeamUseCase.setTeamToUserDefaults()
+                selectTeamUseCase.updateUserDefaultsTeam()
             } label: {
                 Text("루키크보 시작하기")
                     .font(.Head.head3)
@@ -177,5 +177,5 @@ private struct StartTeam: View {
 
 #Preview {
     SelectTeamView()
-        .environment(SelectTeamUseCase())
+        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
 }

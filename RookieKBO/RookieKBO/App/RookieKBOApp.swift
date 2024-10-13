@@ -12,7 +12,7 @@ struct RookieKBOApp: App {
     var body: some Scene {
         WindowGroup {
             SelectTeamView()
-                .environment(SelectTeamUseCase())
+                .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
         }
     }
 }
