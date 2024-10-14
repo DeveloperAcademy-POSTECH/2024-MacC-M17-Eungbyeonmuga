@@ -17,10 +17,11 @@ struct SelectTeamAppIntent: WidgetConfigurationIntent {
 }
 
 enum SelectTeamType: String, AppEnum {
-    case ssgType, lgType, lotteType, samsungType, doosanType, kiaType, kiwoomType, hanhwaType, ktType, ncType, allType
+    case allType, ssgType, lgType, lotteType, samsungType, doosanType, kiaType, kiwoomType, hanhwaType, ktType, ncType
     
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Team Type"
     static var caseDisplayRepresentations: [SelectTeamType : DisplayRepresentation] = [
+        .allType: "전체",
         .ssgType: "SSG 랜더스",
         .lgType: "LG 트윈스",
         .lotteType: "롯데 자이언츠",
@@ -31,6 +32,5 @@ enum SelectTeamType: String, AppEnum {
         .hanhwaType: "한화 이글스",
         .ktType: "KT 위즈",
         .ncType: "NC 다이노스",
-        .allType: "전체"
     ]
 }

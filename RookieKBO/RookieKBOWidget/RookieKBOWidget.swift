@@ -45,7 +45,12 @@ struct RookieKBOWidgetEntryView : View {
     
     var body: some View {
         ZStack {
-            Image("배경")
+            Image(.imgWidgetssg)
+                .resizable()
+                .scaledToFill()
+                .containerBackground(for: .widget) {
+                    NoGamesView()
+                }
             
             if currentMatch?.gameState == .CANCEL.self {
                 CancelGameView(entry: entry)
@@ -273,6 +278,12 @@ struct RookieKBOWidget: Widget {
 
 extension SelectTeamAppIntent {
     
+    fileprivate static var allType: SelectTeamAppIntent {
+        let intent = SelectTeamAppIntent()
+        intent.selectedTeam = .allType
+        return intent
+    }
+    
     fileprivate static var ssgType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .ssgType
@@ -330,12 +341,6 @@ extension SelectTeamAppIntent {
     fileprivate static var ncType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .ncType
-        return intent
-    }
-    
-    fileprivate static var allType: SelectTeamAppIntent {
-        let intent = SelectTeamAppIntent()
-        intent.selectedTeam = .allType
         return intent
     }
 }
