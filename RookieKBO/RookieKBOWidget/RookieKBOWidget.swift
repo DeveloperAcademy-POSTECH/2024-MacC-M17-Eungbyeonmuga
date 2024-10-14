@@ -9,21 +9,46 @@ import WidgetKit
 import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), selectedTeam: SelectTeamAppIntent())
+    func placeholder(in context: Context) -> WidgetEntry {
+        WidgetEntry(date: Date(), selectedTeam: SelectTeamAppIntent())
     }
     
-    func snapshot(for configuration: SelectTeamAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), selectedTeam: configuration)
+    func snapshot(for configuration: SelectTeamAppIntent, in context: Context) async -> WidgetEntry {
+        WidgetEntry(date: Date(), selectedTeam: configuration)
     }
     
-    func timeline(for configuration: SelectTeamAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-        var entries: [SimpleEntry] = []
+    //    func timeline(for configuration: SelectTeamAppIntent, in context: Context) async -> Timeline<WidgetEntry> {
+    //            var entries: [WidgetEntry] = []
+    //
+    //            let currentDate = Date()
+    //
+    //            // UserDefaults에서 선택된 팀을 가져옵니다.
+    //            let selectedTeam = getSelectTeam()
+    //
+    //            // SelectTeamAppIntent를 생성
+    //            let intent = SelectTeamAppIntent(selectedTeam: selectedTeam)
+    //
+    //            for hourOffset in 0 ..< 5 {
+    //                let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
+    //                let entry = WidgetEntry(date: entryDate, selectedTeam: intent)
+    //                entries.append(entry)
+    //            }
+    //
+    //            return Timeline(entries: entries, policy: .atEnd)
+    //        }
+    
+    func timeline(for configuration: SelectTeamAppIntent, in context: Context) async -> Timeline<WidgetEntry> {
+        var entries: [WidgetEntry] = []
+        
+        let selectedTeamType = getSelectTeam()
+        let selectedTeamAppIntent = SelectTeamAppIntent.from(selectTeamType: selectedTeamType)
+        
+        print(selectedTeamAppIntent)
         
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, selectedTeam: configuration)
+            let entry = WidgetEntry(date: entryDate, selectedTeam: selectedTeamAppIntent)
             entries.append(entry)
         }
         
@@ -31,10 +56,10 @@ struct Provider: AppIntentTimelineProvider {
     }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct WidgetEntry: TimelineEntry {
     let date: Date
-    let selectedTeam: SelectTeamAppIntent
-    var match: Match?
+    var selectedTeam: SelectTeamAppIntent
+    var match: Match? = MockDataBuilder.mockMatch
     
 }
 
@@ -45,12 +70,30 @@ struct RookieKBOWidgetEntryView : View {
     
     var body: some View {
         ZStack {
-            Image(.imgWidgetssg)
-                .resizable()
-                .scaledToFill()
-                .containerBackground(for: .widget) {
-                    NoGamesView()
-                }
+            switch entry.selectedTeam.selectedTeam {
+            case .ssgType:
+                BackgroundView(image: "imgWidgetssg")
+            case .lgType:
+                BackgroundView(image: "imgWidgetlg")
+            case .lotteType:
+                BackgroundView(image: "imgWidgetlotte")
+            case .samsungType:
+                BackgroundView(image: "imgWidgetsamsung")
+            case .doosanType:
+                BackgroundView(image: "imgWidgetdoosan")
+            case .kiaType:
+                BackgroundView(image: "imgWidgetkia")
+            case .kiwoomType:
+                BackgroundView(image: "imgWidgetkiwoom")
+            case .hanhwaType:
+                BackgroundView(image: "imgWidgethanhwa")
+            case .ktType:
+                BackgroundView(image: "imgWidgetkt")
+            case .ncType:
+                BackgroundView(image: "imgWidgetnc")
+            case .allType:
+                BackgroundView(image: "")
+            }
             
             if currentMatch?.gameState == .CANCEL.self {
                 CancelGameView(entry: entry)
@@ -68,11 +111,23 @@ struct RookieKBOWidgetEntryView : View {
                 PreParingGameView(entry: entry)
             }
             else {
-                NoGamesView()
+                NoGamesView(entry: entry)
             }
         }
     }
 }
+
+// MARK: - BackgroundView
+
+private func BackgroundView(image: String) -> some View {
+    Image("\(image)")
+        .resizable()
+        .scaledToFill()
+        .containerBackground(for: .widget) {
+            // 추가 옵션
+        }
+}
+
 
 // MARK: - GameInfoView
 
@@ -244,6 +299,8 @@ private struct CancelGameView: View {
 // MARK: - NoGamesView
 
 private struct NoGamesView: View {
+    var entry: Provider.Entry
+    
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             
@@ -348,6 +405,5 @@ extension SelectTeamAppIntent {
 #Preview(as: .systemSmall) {
     RookieKBOWidget()
 } timeline: {
-    SimpleEntry(date: .now, selectedTeam: .ssgType, match: nil
-    )
+    WidgetEntry(date: .now, selectedTeam: .ssgType, match: MockDataBuilder.mockMatch)
 }

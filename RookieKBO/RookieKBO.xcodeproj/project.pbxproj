@@ -41,6 +41,7 @@
 		DFC005A02CB8D40F007C96BE /* RookieKBOWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RookieKBOWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC005A22CB8D40F007C96BE /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		DFC005A42CB8D40F007C96BE /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		DFCEC5702CBCA6A5009E91A7 /* RookieKBOWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RookieKBOWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -75,6 +76,7 @@
 				"Helper/Helper+PretendardFont.swift",
 				"Helper/Helper+Preview.swift",
 				"Helper/Helper+StringFormatter.swift",
+				"Helper/Helper+UserDefaults.swift",
 				"Resource/Fonts/Pretendard-Black.ttf",
 				"Resource/Fonts/Pretendard-Bold.ttf",
 				"Resource/Fonts/Pretendard-ExtraBold.ttf",
@@ -132,6 +134,7 @@
 		DF20BB772CAED5DC00F88298 = {
 			isa = PBXGroup;
 			children = (
+				DFCEC5702CBCA6A5009E91A7 /* RookieKBOWidgetExtension.entitlements */,
 				DF20BB822CAED5DC00F88298 /* RookieKBO */,
 				DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */,
 				DFC005A02CB8D40F007C96BE /* RookieKBOWidgetExtension.appex */,
@@ -403,10 +406,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RookieKBO/RookieKBO.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RookieKBO/Preview Content\"";
-				DEVELOPMENT_TEAM = VQLS72LDQP;
+				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RookieKBO/App/Info.plist;
@@ -433,10 +437,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RookieKBO/RookieKBO.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RookieKBO/Preview Content\"";
-				DEVELOPMENT_TEAM = VQLS72LDQP;
+				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RookieKBO/App/Info.plist;
@@ -463,6 +468,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = RookieKBOWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4QMNM64P9Z;
@@ -490,6 +496,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = RookieKBOWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4QMNM64P9Z;

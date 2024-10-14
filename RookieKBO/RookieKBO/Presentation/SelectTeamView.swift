@@ -32,7 +32,7 @@ struct SelectTeamView: View {
 
 private struct HeaderView: View {
     
-    let currentSelectTeam = UserDefaults.standard.string(forKey: "selectTeam") ?? "없음"
+    let currentSelectTeam = UserDefaults.shared.string(forKey: "selectTeam") ?? "없음"
     
     var body: some View {
         HStack(spacing: 0) {
