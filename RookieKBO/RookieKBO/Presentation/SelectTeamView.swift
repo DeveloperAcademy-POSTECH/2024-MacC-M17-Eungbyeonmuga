@@ -38,7 +38,6 @@ private struct HeaderView: View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 18) {
                 if currentSelectTeam == "없음" {
-                    // TODO: Image -> Text로 변경
                     Image("titleLogo")
                         .resizable()
                         .frame(width: 150, height: 40)
@@ -48,10 +47,16 @@ private struct HeaderView: View {
                         .foregroundColor(.TextLabel.main)
                         .lineSpacing(8)
                 } else {
-                    Text("지금 '\(currentSelectTeam)' 응원하고 계시네요!\n응원 팀을 변경할 수도 있어요.")
-                        .font(.Head.head4)
-                        .foregroundColor(.TextLabel.main)
-                        .lineSpacing(8)
+                    Group {
+                        if currentSelectTeam == "전체 구단" {
+                            Text("지금 '\(currentSelectTeam)'을 응원하고 계시네요!\n응원 팀을 변경할 수도 있어요.")
+                        } else {
+                            Text("지금 '\(currentSelectTeam)'를 응원하고 계시네요!\n응원 팀을 변경할 수도 있어요.")
+                        }
+                    }
+                    .font(.Head.head4)
+                    .foregroundColor(.TextLabel.main)
+                    .lineSpacing(8)
                 }
             }
             
