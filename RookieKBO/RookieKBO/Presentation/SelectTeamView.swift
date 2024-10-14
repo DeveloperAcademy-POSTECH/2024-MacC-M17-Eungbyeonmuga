@@ -14,7 +14,7 @@ struct SelectTeamView: View {
     
     var body: some View {
         ZStack {
-            Color(Background.first)
+            Color(Background.bg)
                 .ignoresSafeArea()
             
             VStack(spacing: 8) {
@@ -95,7 +95,7 @@ private struct SelectTeamListView: View {
                             // 배경색 변경
                             RoundedRectangle(cornerRadius: 18)
                                 .fill(
-                                    selectedTeam == nil ? Color.white : (selectedTeam == team ? Color.white : Color.GrayScale.unselectBackground)
+                                    selectedTeam == nil ? Color.white : (selectedTeam == team ? Color.white : Color.TeamSelect.unselectBg)
                                 )
                                 .frame(width: 172, height: 150)
                             
@@ -112,7 +112,7 @@ private struct SelectTeamListView: View {
                                             Text(teamNameParts[0])
                                                 .foregroundColor(.TextLabel.main)
                                             Text(" " + teamNameParts[1])
-                                                .foregroundColor(.TextLabel.sub1)
+                                                .foregroundColor(.TextLabel.scoreBoard)
                                         }
                                     }.font(.Head.head2)
                                     
@@ -135,13 +135,13 @@ private struct SelectTeamListView: View {
                             if selectedTeam == team {
                                 RoundedRectangle(cornerRadius: 18)
                                     .stroke(
-                                        LinearGradient.gradient(startColor: Brand.primary1, endColor: Brand.primary2),
+                                        LinearGradient.gradient(startColor: Brand.primary, endColor: Brand.primaryGd),
                                         lineWidth: 5
                                     )
                                     .frame(width: 172, height: 150)
                             } else {
                                 RoundedRectangle(cornerRadius: 18)
-                                    .stroke(Color.GrayScale.stroke, lineWidth: 5)
+                                    .stroke(Color.TeamSelect.stroke, lineWidth: 5)
                                     .frame(width: 172, height: 150)
                             }
                         }
@@ -173,7 +173,7 @@ private struct StartTeam: View {
                     .frame(width: 361, height: 54)
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 16)
-                        .fill(LinearGradient.gradient(startColor: Brand.primary1, endColor: Brand.primary2)))
+                        .fill(LinearGradient.gradient(startColor: Brand.primary, endColor: Brand.primaryGd)))
             }
             .padding()
         }
