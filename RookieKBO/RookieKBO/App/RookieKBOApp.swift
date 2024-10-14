@@ -11,7 +11,8 @@ import SwiftUI
 struct RookieKBOApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView4()
+            SelectTeamView()
+                .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
         }
     }
 }
