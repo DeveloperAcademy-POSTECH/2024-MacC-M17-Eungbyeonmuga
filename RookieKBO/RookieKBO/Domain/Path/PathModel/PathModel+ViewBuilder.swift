@@ -13,8 +13,7 @@ extension PathModel {
     func build(_ screen: Screen) -> some View {
         switch screen {
         case .selectTeam:
-            Text("Select Team")
-            // 팀 선택 화면
+            SelectTeamView()
         }
     }
 }
