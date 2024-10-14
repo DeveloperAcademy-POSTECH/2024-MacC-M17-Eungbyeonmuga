@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SelectTeamView: View {
     
-    @StateObject private var selectTeamUseCase = SelectTeamUseCase()
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @State private var isSelectButtonPresented: Bool = false
     
     var body: some View {
@@ -25,25 +25,34 @@ struct SelectTeamView: View {
                 StartTeam()
             }
         }
-        .environmentObject(selectTeamUseCase)
     }
 }
 
 // MARK: - HeaderView
 
 private struct HeaderView: View {
+    
+    let currentSelectTeam = UserDefaults.standard.string(forKey: "selectTeam") ?? "없음"
+    
     var body: some View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 18) {
-                // TODO: Image -> Text로 변경
-                Image("titleLogo")
-                    .resizable()
-                    .frame(width: 150, height: 40)
-                
-                Text("응원하는 구단을 선택하세요!\n우리 팀의 정보를 먼저 확인할 수 있어요.")
-                    .font(.Head.head4)
-                    .foregroundColor(.TextLabel.main)
-                    .lineSpacing(8)
+                if currentSelectTeam == "없음" {
+                    // TODO: Image -> Text로 변경
+                    Image("titleLogo")
+                        .resizable()
+                        .frame(width: 150, height: 40)
+                    
+                    Text("응원하는 구단을 선택하세요!\n우리 팀의 정보를 먼저 확인할 수 있어요.")
+                        .font(.Head.head4)
+                        .foregroundColor(.TextLabel.main)
+                        .lineSpacing(8)
+                } else {
+                    Text("지금 '\(currentSelectTeam)' 응원하고 계시네요!\n응원 팀을 변경할 수도 있어요.")
+                        .font(.Head.head4)
+                        .foregroundColor(.TextLabel.main)
+                        .lineSpacing(8)
+                }
             }
             
             Spacer()
@@ -56,7 +65,7 @@ private struct HeaderView: View {
 
 private struct SelectTeamListView: View {
     
-    @EnvironmentObject private var selectTeamUseCase: SelectTeamUseCase
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     @Binding var isSelectButtonPresented: Bool
     
@@ -145,14 +154,14 @@ private struct SelectTeamListView: View {
 
 private struct StartTeam: View {
     
-    @EnvironmentObject var selectTeamUseCase: SelectTeamUseCase
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
             Button {
-                // TODO: 선택 팀 저장 & 화면 이동
-                print(selectTeamUseCase.state.selectedTeam ?? "선택 안함")
+                // TODO: 화면 이동
+                selectTeamUseCase.updateUserDefaultsTeam()
             } label: {
                 Text("루키크보 시작하기")
                     .font(.Head.head3)
@@ -168,4 +177,5 @@ private struct StartTeam: View {
 
 #Preview {
     SelectTeamView()
+        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
 }

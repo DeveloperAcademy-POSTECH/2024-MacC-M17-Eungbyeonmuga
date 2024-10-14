@@ -7,24 +7,17 @@
 
 import Foundation
 
-final class SelectTeamUseCase : ObservableObject {
+@Observable
+final class SelectTeamUseCase {
+    
+    private let selectTeamService: SelectTeamServiceInterface
     
     private(set) var state: State
     
-    init() {
+    init(selectTeamService: SelectTeamServiceInterface) {
+        self.selectTeamService = selectTeamService
         self.state = State(
-            teams: [
-                Team(name: "SSG 랜더스", image: "ssgUnder"),
-                Team(name: "KIA 타이거즈", image: "kiaUnder"),
-                Team(name: "KT 위즈", image: "ktUnder"),
-                Team(name: "LG 트윈스", image: "lgUnder"),
-                Team(name: "NC 다이노스", image: "ncUnder"),
-                Team(name: "두산 베어스", image: "doosanUnder"),
-                Team(name: "롯데 자이언츠", image: "lotteUnder"),
-                Team(name: "삼성 라이온즈", image: "samsungUnder"),
-                Team(name: "키움 히어로즈", image: "kiwoomUnder"),
-                Team(name: "한화 이글즈", image: "hanwhaUnder"),
-                Team(name: "전체 구단", image: "allTeamUnder")],
+            teams: selectTeamService.fetchAllTeam(),
             selectedTeam: nil
         )
     }
@@ -51,5 +44,10 @@ extension SelectTeamUseCase {
         } else {
             state.selectedTeam = team
         }
+    }
+    
+    /// 선택한 응원 팀 UserDefaults에 반영
+    func updateUserDefaultsTeam() {
+        selectTeamService.updateUserDefaultsTeam(state.selectedTeam?.name ?? "없음")
     }
 }
