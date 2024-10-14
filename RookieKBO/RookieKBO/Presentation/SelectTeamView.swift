@@ -135,7 +135,7 @@ private struct SelectTeamListView: View {
                             if selectedTeam == team {
                                 RoundedRectangle(cornerRadius: 18)
                                     .stroke(
-                                        LinearGradient.primaryGradient,
+                                        LinearGradient.gradient(startColor: Brand.primary1, endColor: Brand.primary2),
                                         lineWidth: 5
                                     )
                                     .frame(width: 172, height: 150)
@@ -173,7 +173,7 @@ private struct StartTeam: View {
                     .frame(width: 361, height: 54)
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 16)
-                        .fill(LinearGradient.primaryGradient))
+                        .fill(LinearGradient.gradient(startColor: Brand.primary1, endColor: Brand.primary2)))
             }
             .padding()
         }
