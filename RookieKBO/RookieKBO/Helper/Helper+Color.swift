@@ -17,11 +17,11 @@ typealias TextLabel = Color.TextLabel
 extension Color {
     
     enum Background {
-        static let bg = Color(.bg)
+        static let first = Color(.first)
+        static let second = Color(.second)
     }
     
     enum ScoreBoardColor {
-        static let bg = Color(.bg)
         static let homeBg = Color(.homeBg)
         static let scoreBoardBg = Color(.scoreBoardBg)
     }
@@ -69,7 +69,7 @@ extension Color {
     }
     
     enum WidgetBackground {
-        static let homeBg = Color(.homeBg)
-        static let scoreBoardBg = Color(.scoreBoardBg)
+        static let widgetHomeBg = Color(.widgetHomeBg)
+        static let widgetScoreBoardBg = Color(.widgetScoreBoardBg)
     }
 }

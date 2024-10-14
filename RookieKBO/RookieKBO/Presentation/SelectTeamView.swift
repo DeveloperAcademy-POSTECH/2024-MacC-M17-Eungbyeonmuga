@@ -14,7 +14,7 @@ struct SelectTeamView: View {
     
     var body: some View {
         ZStack {
-            Color(Background.bg)
+            Color(Background.first)
                 .ignoresSafeArea()
             
             VStack(spacing: 8) {
