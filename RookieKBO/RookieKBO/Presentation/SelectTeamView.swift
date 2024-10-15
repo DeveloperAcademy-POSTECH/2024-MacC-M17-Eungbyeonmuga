@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct SelectTeamView: View {
     
@@ -167,6 +168,8 @@ private struct StartTeam: View {
             Button {
                 // TODO: 화면 이동
                 selectTeamUseCase.updateUserDefaultsTeam()
+                WidgetCenter.shared.reloadAllTimelines()
+                
             } label: {
                 Text("루키크보 시작하기")
                     .font(.Head.head3)
