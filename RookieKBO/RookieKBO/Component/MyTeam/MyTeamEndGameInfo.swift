@@ -16,6 +16,7 @@ struct MyTeamEndGameInfo: View {
             HStack(spacing: 0) {
                 Text("오늘 종료된 경기")
                     .font(.Head.head4)
+                    .foregroundColor(.TextLabel.main)
                     .padding(.leading, 24)
                 
                 Spacer()
@@ -33,7 +34,7 @@ struct MyTeamEndGameInfo: View {
             
         }
         .padding(.vertical, 24)
-        .background(Color.gray)
+        .background(Color.ScoreBoardColor.scoreBoardBg)
         .cornerRadius(14)
     }
 }
@@ -47,33 +48,40 @@ private struct TeamInfo: View {
         HStack(spacing: 0) {
             VStack(spacing: 16) {
                 Image("\(endGameInfo.awayTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 72, height: 72)
                 
                 Text("\(endGameInfo.awayTeam.name.firstWord())")
                     .font(.Head.head2)
+                    .foregroundColor(.TextLabel.main)
             }
             
             Spacer()
             
             Text("VS")
                 .font(.Head.head3)
+                .background(Color.ScoreBoardColor.homeBg)
             
             Spacer()
             
             VStack(spacing: 16) {
                 Image("\(endGameInfo.homeTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 72, height: 72)
                 
                 HStack(spacing: 6) {
                     Text("\(endGameInfo.homeTeam.name.firstWord())")
                         .font(.Head.head2)
+                        .foregroundColor(.TextLabel.main)
                     
                     Text("홈")
                         .font(.Body.body5)
-                        .foregroundStyle(.black)
+                        .foregroundColor(.TextLabel.main)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 2)
-                        .background(Color.yellow)
+                        .background(Color.ScoreBoardColor.homeBg)
                         .cornerRadius(99)
                 }
             }

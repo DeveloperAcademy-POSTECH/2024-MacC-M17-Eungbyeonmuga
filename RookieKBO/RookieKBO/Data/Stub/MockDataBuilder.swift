@@ -13,8 +13,8 @@ struct MockDataBuilder {
         return Match(
             startDateTime: Date(),
             gameState: GameState.CANCEL,
-            homeTeam: Team(name: "SSG 랜더스", image: " ", color: "ssg"),
-            awayTeam: Team(name: "KIA 타이거즈", image: " ", color: "kia"),
+            homeTeam: Team(name: "SSG 랜더스", image: "ssgUnder", color: "ssg"),
+            awayTeam: Team(name: "KIA 타이거즈", image: "kiaUnder", color: "kia"),
             place: "인천 ssg랜더스필드",
             scoreBoard: [
                 ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 1, 0 ]),

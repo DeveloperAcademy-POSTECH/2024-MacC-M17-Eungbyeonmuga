@@ -19,7 +19,7 @@ struct EndGameInfo: View {
             ScoreBoardView(match: endGameInfo)
         }
         .padding(.all, 16)
-        .background(Color.gray)
+        .background(Color.ScoreBoardColor.scoreBoardBg)
         .cornerRadius(14)
     }
 }
@@ -36,6 +36,8 @@ private struct GameInfo: View {
         HStack(spacing: 0) {
             VStack(spacing: 5) {
                 Image("\(endGameInfo.awayTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 48, height: 48)
                 
                 Text("\(endGameInfo.awayTeam.name.firstWord())")
@@ -75,6 +77,8 @@ private struct GameInfo: View {
             
             VStack(spacing: 5) {
                 Image("\(endGameInfo.homeTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 48, height: 48)
                 
                 HStack(spacing: 2) {
@@ -83,10 +87,10 @@ private struct GameInfo: View {
                     
                     Text("홈")
                         .font(.Caption.caption2)
-                        .foregroundStyle(.black)
+                        .foregroundColor(.TextLabel.main)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
-                        .background(Color.yellow)
+                        .background(Color.ScoreBoardColor.homeBg)
                         .cornerRadius(99)
                 }
             }

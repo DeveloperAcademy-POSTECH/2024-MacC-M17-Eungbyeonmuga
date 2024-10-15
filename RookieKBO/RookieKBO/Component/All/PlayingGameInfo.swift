@@ -19,7 +19,7 @@ struct PlayingGameInfo: View {
             ScoreBoardView(match: playingGameInfo)
         }
         .padding(.all, 16)
-        .background(Color.gray)
+        .background(Color.ScoreBoardColor.scoreBoardBg)
         .cornerRadius(14)
     }
 }
@@ -36,9 +36,12 @@ private struct GameInfo: View {
         HStack(spacing: 0) {
             VStack(spacing: 5) {
                 Image("\(playingGameInfo.awayTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 48, height: 48)
                 
                 Text("\(playingGameInfo.awayTeam.name.firstWord())")
+                    .foregroundColor(.TextLabel.main)
                     .font(.Caption.caption1)
             }
             .padding(.trailing, 16)
@@ -51,6 +54,7 @@ private struct GameInfo: View {
             
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle2)
+                .foregroundColor(.TextLabel.main)
                 .padding(.vertical, 8)
                 .padding(.horizontal, 7)
             
@@ -58,29 +62,34 @@ private struct GameInfo: View {
             
             Text(inningText)
                 .font(.Body.body2)
+                .foregroundColor(.TextLabel.main)
             
             Spacer()
             
             Text("\(homeScore)")
                 .font(.CustomTitle.customTitle2)
+                .foregroundColor(.TextLabel.main)
                 .padding(.vertical, 8)
                 .padding(.horizontal, 7)
                 .padding(.trailing, 16)
             
             VStack(spacing: 5) {
                 Image("\(playingGameInfo.homeTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 48, height: 48)
                 
                 HStack(spacing: 2) {
                     Text("\(playingGameInfo.homeTeam.name.firstWord())")
                         .font(.Caption.caption1)
+                        .foregroundColor(.TextLabel.main)
                     
                     Text("홈")
                         .font(.Caption.caption2)
                         .foregroundStyle(.black)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
-                        .background(Color.yellow)
+                        .background(Color.ScoreBoardColor.homeBg)
                         .cornerRadius(99)
                 }
             }

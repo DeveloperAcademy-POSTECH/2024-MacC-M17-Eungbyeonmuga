@@ -15,10 +15,13 @@ struct PreparingGameInfo: View {
         HStack(spacing: 0) {
             VStack(spacing: 5) {
                 Image("\(preparingGameInfo.awayTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 48, height: 48)
                 
                 Text("\(preparingGameInfo.awayTeam.name.firstWord())")
                     .font(.Caption.caption1)
+                    .foregroundColor(.TextLabel.main)
             }
             
             Spacer()
@@ -26,9 +29,11 @@ struct PreparingGameInfo: View {
             VStack(spacing: 4) {
                 Text("\(preparingGameInfo.startDateTime.toTimeString())")
                     .font(.Body.body2)
+                    .foregroundColor(.TextLabel.main)
                 
                 Text("\(preparingGameInfo.place)")
                     .font(.Caption.caption2)
+                    .foregroundColor(.TextLabel.scoreBoard)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
             }
@@ -37,25 +42,28 @@ struct PreparingGameInfo: View {
             
             VStack(spacing: 5) {
                 Image("\(preparingGameInfo.awayTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 48, height: 48)
                 
                 HStack(spacing: 2) {
                     Text("\(preparingGameInfo.homeTeam.name.firstWord())")
                         .font(.Caption.caption1)
+                        .foregroundColor(.TextLabel.main)
                     
                     Text("홈")
                         .font(.Caption.caption3)
-                        .foregroundStyle(.black)
+                        .foregroundColor(.TextLabel.main)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
-                        .background(Color.yellow)
+                        .background(Color.ScoreBoardColor.homeBg)
                         .cornerRadius(99)
                 }
             }
         }
         .padding(.horizontal, 32)
         .padding(.vertical, 16)
-        .background(Color.gray)
+        .background(Color.ScoreBoardColor.scoreBoardBg)
         .cornerRadius(14)
     }
 }

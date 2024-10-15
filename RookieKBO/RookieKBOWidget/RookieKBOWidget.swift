@@ -121,10 +121,12 @@ private struct GameInfoView: View {
                 
                 Text("\(currentMatch?.awayTeam.name.firstWord() ??  "")")
                     .font(.Caption.caption1)
+                    .foregroundColor(.TextLabel.widget100)
             }
             
             Text("VS")
                 .font(.Caption.caption2)
+                .foregroundColor(.TextLabel.widget50)
             
             VStack(spacing: 8) {
                 Image("\(currentMatch?.homeTeam.image ?? "")")
@@ -133,13 +135,14 @@ private struct GameInfoView: View {
                 HStack(spacing: 2) {
                     Text("\(currentMatch?.homeTeam.name.firstWord() ??  "")")
                         .font(.Caption.caption1)
+                        .foregroundColor(.TextLabel.widget100)
                     
                     Text("홈")
                         .font(.Caption.caption2)
-                        .foregroundStyle(.black)
+                        .foregroundColor(.TextLabel.widget100)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
-                        .background(Color.yellow)
+                        .background(Color.WidgetBackground.widgetScoreBoardBg)
                         .cornerRadius(99)
                 }
             }
@@ -167,18 +170,21 @@ private struct PlayingGameView: View {
         HStack(spacing: 0) {
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle1)
+                .foregroundColor(.TextLabel.widget100)
                 .padding(.trailing, 13)
             
             Text("\(inningText)")
                 .font(.Caption.caption1)
+                .foregroundColor(.TextLabel.widget100)
                 .padding(.trailing, 14)
             
             Text("\(homeScore)")
                 .font(.CustomTitle.customTitle1)
+                .foregroundColor(.TextLabel.widget100)
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
-        .background(Color.pink)
+        .background(Color.WidgetBackground.widgetHomeBg)
         .cornerRadius(14)
     }
 }
@@ -197,18 +203,22 @@ private struct PreParingGameView: View {
             
             Text("\(currentMatch?.startDateTime.toTimeString() ?? "")")
                 .font(.Body.body2)
+                .foregroundColor(.TextLabel.widget100)
                 .padding(.bottom, 4)
             
             Text("\(currentMatch?.place ?? "")")
                 .font(.Caption.caption2)
+                .foregroundColor(.TextLabel.widget50)
             
         } else {
             Text("\(currentMatch?.startDateTime.formattedString() ?? "")")
                 .font(.Body.body2)
+                .foregroundColor(.TextLabel.widget100)
                 .padding(.bottom, 4)
             
             Text("\(currentMatch?.place ?? "")")
                 .font(.Caption.caption2)
+                .foregroundColor(.TextLabel.widget50)
         }
     }
 }
@@ -266,10 +276,12 @@ private struct CancelGameView: View {
             
             Text("우천 취소")
                 .font(.Body.body2)
+                .foregroundColor(.TextLabel.widget100)
                 .padding(.bottom, 4)
             
             Text("\(currentMatch?.place ?? "")")
                 .font(.Caption.caption2)
+                .foregroundColor(.TextLabel.widget50)
         }
     }
 }
@@ -289,6 +301,7 @@ private struct NoGamesView: View {
             
             Text("예정된 경기가 \n없어요!")
                 .font(.Body.body1)
+                .foregroundColor(.TextLabel.widget100)
                 .multilineTextAlignment(.center)
         }
     }
