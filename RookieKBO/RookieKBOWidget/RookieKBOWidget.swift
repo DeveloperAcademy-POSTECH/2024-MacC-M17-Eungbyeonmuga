@@ -79,22 +79,22 @@ struct RookieKBOWidgetEntryView : View {
             }
             
             if currentMatch?.gameState == .CANCEL.self {
-                CancelGameView(entry: entry)
+                WidgetCancelGame(entry: entry)
             }
             
             else if currentMatch?.gameState == .END.self {
-                EndGameView(entry: entry)
+                WidgetEndGame(entry: entry)
             }
             
             else if currentMatch?.gameState == .PLAYING.self {
-                PlayingGameView(entry: entry)
+                WidgetPlayingGame(entry: entry)
             }
             
             else if currentMatch?.gameState == .PREPARE {
-                PreParingGameView(entry: entry)
+                WidgetPreparingGame(entry: entry)
             }
             else {
-                NoGamesView(entry: entry)
+                WidgetNoGames(entry: entry)
             }
         }
     }
@@ -125,219 +125,6 @@ private func allTypeBackgroundView(entry: Provider.Entry) -> some View {
         return AnyView(EmptyView())
     }
 }
-
-// MARK: - GameInfoView
-
-private struct GameInfoView: View {
-    var entry: Provider.Entry
-    var currentMatch: Match? { entry.match }
-    
-    var body: some View {
-        HStack(spacing: 14) {
-            VStack(spacing: 8) {
-                Image("\(teamCharacterString(for: currentMatch?.awayTeam ?? Team(name: "", image: "", color: "")))")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
-                
-                Text("\(currentMatch?.awayTeam.name.firstWord() ??  "")")
-                    .font(.Caption.caption1)
-                    .foregroundColor(.TextLabel.widget100)
-            }
-            
-            Text("VS")
-                .font(.Caption.caption2)
-                .foregroundColor(.TextLabel.widget50)
-            
-            VStack(spacing: 8) {
-                Image("\(teamCharacterString(for: currentMatch?.homeTeam ?? Team(name: "", image: "", color: "")))")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
-                
-                HStack(spacing: 2) {
-                    Text("\(currentMatch?.homeTeam.name.firstWord() ??  "")")
-                        .font(.Caption.caption1)
-                        .foregroundColor(.TextLabel.widget100)
-                    
-                    Text("홈")
-                        .font(.Caption.caption2)
-                        .foregroundColor(.TextLabel.widget100)
-                        .padding(.horizontal, 3)
-                        .padding(.vertical, 1)
-                        .background(entry.selectedTeamType.selectedTeam == .allType ? Color.WidgetBackground.widgetScoreBoardBg : Color.teamColor(for: colorString(for: entry.selectedTeamType.selectedTeam)))
-                        .cornerRadius(99)
-                }
-            }
-        }
-    }
-}
-
-// MARK: - PlayingGameView
-
-private struct PlayingGameView: View {
-    var entry: Provider.Entry
-    var currentMatch: Match? { entry.match }
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            GameInfoView(entry: entry)
-                .padding(.bottom, 14)
-            
-            // TODO: nil 값 처리
-            let awayScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockMatch, team: .AWAY)
-            
-            let homeScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockMatch, team: .HOME)
-            
-            let inningText = calculateInningText(for: entry.match ?? MockDataBuilder.mockMatch)
-            
-            HStack(spacing: 0) {
-                Text("\(awayScore)")
-                    .font(.CustomTitle.customTitle1)
-                    .foregroundColor(.TextLabel.widget100)
-                    .padding(.trailing, 13)
-                
-                Text("\(inningText)")
-                    .font(.Caption.caption1)
-                    .foregroundColor(.TextLabel.widget100)
-                    .padding(.trailing, 14)
-                
-                Text("\(homeScore)")
-                    .font(.CustomTitle.customTitle1)
-                    .foregroundColor(.TextLabel.widget100)
-            }
-            .padding(.vertical, 8)
-            .padding(.horizontal, 12)
-            .background(Color.WidgetBackground.widgetHomeBg)
-            .cornerRadius(14)
-        }
-    }
-}
-
-// MARK: - PreParingGameView
-
-private struct PreParingGameView: View {
-    var entry: Provider.Entry
-    var currentMatch: Match? { entry.match }
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            GameInfoView(entry: entry)
-                .padding(.bottom, 14)
-            
-            if let startDateTime = currentMatch?.startDateTime, Calendar.current.isDate(startDateTime, inSameDayAs: Date.today) {
-                
-                Text("\(currentMatch?.startDateTime.toTimeString() ?? "")")
-                    .font(.Body.body2)
-                    .foregroundColor(.TextLabel.widget100)
-                    .padding(.bottom, 4)
-                
-                Text("\(currentMatch?.place ?? "")")
-                    .font(.Caption.caption2)
-                    .foregroundColor(.TextLabel.widget50)
-                
-            } else {
-                Text("\(currentMatch?.startDateTime.formattedString() ?? "")")
-                    .font(.Body.body2)
-                    .foregroundColor(.TextLabel.widget100)
-                    .padding(.bottom, 4)
-                
-                Text("\(currentMatch?.place ?? "")")
-                    .font(.Caption.caption2)
-                    .foregroundColor(.TextLabel.widget50)
-            }
-        }
-    }
-}
-
-// MARK: - EndGameView
-
-private struct EndGameView: View {
-    var entry: Provider.Entry
-    var currentMatch: Match? { entry.match }
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            GameInfoView(entry: entry)
-                .padding(.bottom, 14)
-            
-            // TODO: nil 값 처리
-            let awayScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockMatch, team: .AWAY)
-            
-            let homeScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockMatch, team: .HOME)
-            
-            let awayResult = getResult(for: awayScore, otherScore: homeScore)
-            
-            let homeResult = getResult(for: homeScore, otherScore: awayScore)
-            
-            HStack(spacing: 0) {
-                Text("\(awayScore)")
-                    .font(.CustomTitle.customTitle1)
-                    .foregroundColor(awayResult.color)
-                    .padding(.trailing, 11)
-                
-                Text("\(awayResult.description)")
-                    .font(.Body.body2)
-                    .foregroundColor(awayResult.color)
-                    .padding(.trailing, 10)
-                
-                Text("\(homeResult.description)")
-                    .font(.Body.body2)
-                    .foregroundColor(homeResult.color)
-                    .padding(.trailing, 12)
-                
-                Text("\(homeScore)")
-                    .font(.CustomTitle.customTitle1)
-                    .foregroundColor(homeResult.color)
-            }
-        }
-    }
-}
-
-// MARK: - CancelGameView
-
-private struct CancelGameView: View {
-    var entry: Provider.Entry
-    var currentMatch: Match? { entry.match }
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            GameInfoView(entry: entry)
-                .padding(.bottom, 14)
-            
-            Text("우천 취소")
-                .font(.Body.body2)
-                .foregroundColor(.TextLabel.widget100)
-                .padding(.bottom, 4)
-            
-            Text("\(currentMatch?.place ?? "")")
-                .font(.Caption.caption2)
-                .foregroundColor(.TextLabel.widget50)
-        }
-    }
-}
-
-// MARK: - NoGamesView
-
-private struct NoGamesView: View {
-    var entry: Provider.Entry
-    
-    var body: some View {
-        VStack(alignment: .center, spacing: 0) {
-            Image("\(teamTypeCharacterString(for: entry.selectedTeamType.selectedTeam))")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 55, height: 55)
-                .padding(.bottom, 15)
-            
-            Text("예정된 경기가 \n없어요!")
-                .font(.Body.body1)
-                .foregroundColor(.TextLabel.widget100)
-                .multilineTextAlignment(.center)
-        }
-    }
-}
-
 
 struct RookieKBOWidget: Widget {
     let kind: String = "choseyeon.RookieKBO.RookieKBOWidget"
