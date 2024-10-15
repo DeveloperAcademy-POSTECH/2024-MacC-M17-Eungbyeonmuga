@@ -33,11 +33,12 @@ struct MyTeamPreParingGameInfo: View {
             
             Text("\(preparingGameInfo.place)")
                 .font(.Body.body2)
+                .foregroundColor(.TextLabel.scoreBoard)
                 .padding(.bottom, 56)
             
         }
         .padding(.top, 24)
-        .background(Color.ScoreBoardColor.scoreBoardBg)
+        .background(Color.Background.second)
         .cornerRadius(14)
     }
 }
@@ -64,7 +65,7 @@ private struct TeamInfo: View {
             
             Text("VS")
                 .font(.Head.head3)
-                .background(Color.ScoreBoardColor.homeBg)
+                .foregroundColor(.TextLabel.scoreBoard)
             
             Spacer()
             

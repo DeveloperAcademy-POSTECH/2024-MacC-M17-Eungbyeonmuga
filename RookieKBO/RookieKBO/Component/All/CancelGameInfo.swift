@@ -63,7 +63,7 @@ struct CancelGameInfo: View {
         }
         .padding(.horizontal, 32)
         .padding(.vertical, 16)
-        .background(Color.ScoreBoardColor.scoreBoardBg)
+        .background(Color.Background.second)
         .cornerRadius(14)
     }
 }

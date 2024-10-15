@@ -33,12 +33,12 @@ struct MyTeamCancelGameInfo: View {
             
             Text("\(cancelGameInfo.place)")
                 .font(.Body.body2)
-                .foregroundColor(.ScoreBoardColor.scoreBoardBg)
+                .foregroundColor(.TextLabel.scoreBoard)
                 .padding(.bottom, 56)
             
         }
         .padding(.top, 24)
-        .background(Color.ScoreBoardColor.scoreBoardBg)
+        .background(Color.Background.second)
         .cornerRadius(14)
     }
 }

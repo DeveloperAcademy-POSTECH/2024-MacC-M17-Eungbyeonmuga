@@ -19,7 +19,7 @@ struct PlayingGameInfo: View {
             ScoreBoardView(match: playingGameInfo)
         }
         .padding(.all, 16)
-        .background(Color.ScoreBoardColor.scoreBoardBg)
+        .background(Color.Background.second)
         .cornerRadius(14)
     }
 }

@@ -70,8 +70,23 @@ struct RookieKBOWidgetEntryView : View {
             case .ncType:
                 BackgroundView(image: "img_widgetnc")
             case .allType:
-                // TODO: 그라데이션 추가
-                BackgroundView(image: "")
+                if let homeTeamColor = entry.match?.homeTeam.color,
+                   let awayTeamColor = entry.match?.awayTeam.color {
+                    let homeColor = Color.teamColor(for: homeTeamColor)
+                    let awayColor = Color.teamColor(for: awayTeamColor)
+                    
+                    let gradient = LinearGradient.gradient(startColor: homeColor ?? Color.widget30, endColor: awayColor ?? Color.widget30)
+                    
+                    Rectangle()
+                        .fill(gradient)
+                } else {
+                    if entry.match?.homeTeam.color == nil {
+                        EmptyView()
+                    }
+                    if entry.match?.awayTeam.color == nil {
+                        EmptyView()
+                    }
+                }
             }
             
             if currentMatch?.gameState == .CANCEL.self {
@@ -116,7 +131,10 @@ private struct GameInfoView: View {
     var body: some View {
         HStack(spacing: 14) {
             VStack(spacing: 8) {
-                Image("\(currentMatch?.awayTeam.image ?? "")")
+                //                Image("\(currentMatch?.awayTeam.image ?? "")")
+                Image("")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 40, height: 40)
                 
                 Text("\(currentMatch?.awayTeam.name.firstWord() ??  "")")
@@ -129,7 +147,10 @@ private struct GameInfoView: View {
                 .foregroundColor(.TextLabel.widget50)
             
             VStack(spacing: 8) {
-                Image("\(currentMatch?.homeTeam.image ?? "")")
+                //                Image("\(currentMatch?.homeTeam.image ?? "")")
+                Image("")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 40, height: 40)
                 
                 HStack(spacing: 2) {
@@ -157,35 +178,37 @@ private struct PlayingGameView: View {
     var currentMatch: Match? { entry.match }
     
     var body: some View {
-        GameInfoView(entry: entry)
-            .padding(.bottom, 14)
-        
-        // TODO: nil 값 처리
-        let awayScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockMatch, team: .AWAY)
-        
-        let homeScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockMatch, team: .HOME)
-        
-        let inningText = calculateInningText(for: entry.match ?? MockDataBuilder.mockMatch)
-        
-        HStack(spacing: 0) {
-            Text("\(awayScore)")
-                .font(.CustomTitle.customTitle1)
-                .foregroundColor(.TextLabel.widget100)
-                .padding(.trailing, 13)
+        VStack(spacing: 0) {
+            GameInfoView(entry: entry)
+                .padding(.bottom, 14)
             
-            Text("\(inningText)")
-                .font(.Caption.caption1)
-                .foregroundColor(.TextLabel.widget100)
-                .padding(.trailing, 14)
+            // TODO: nil 값 처리
+            let awayScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockMatch, team: .AWAY)
             
-            Text("\(homeScore)")
-                .font(.CustomTitle.customTitle1)
-                .foregroundColor(.TextLabel.widget100)
+            let homeScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockMatch, team: .HOME)
+            
+            let inningText = calculateInningText(for: entry.match ?? MockDataBuilder.mockMatch)
+            
+            HStack(spacing: 0) {
+                Text("\(awayScore)")
+                    .font(.CustomTitle.customTitle1)
+                    .foregroundColor(.TextLabel.widget100)
+                    .padding(.trailing, 13)
+                
+                Text("\(inningText)")
+                    .font(.Caption.caption1)
+                    .foregroundColor(.TextLabel.widget100)
+                    .padding(.trailing, 14)
+                
+                Text("\(homeScore)")
+                    .font(.CustomTitle.customTitle1)
+                    .foregroundColor(.TextLabel.widget100)
+            }
+            .padding(.vertical, 8)
+            .padding(.horizontal, 12)
+            .background(Color.WidgetBackground.widgetHomeBg)
+            .cornerRadius(14)
         }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 12)
-        .background(Color.WidgetBackground.widgetHomeBg)
-        .cornerRadius(14)
     }
 }
 
@@ -196,29 +219,31 @@ private struct PreParingGameView: View {
     var currentMatch: Match? { entry.match }
     
     var body: some View {
-        GameInfoView(entry: entry)
-            .padding(.bottom, 14)
-        
-        if let startDateTime = currentMatch?.startDateTime, Calendar.current.isDate(startDateTime, inSameDayAs: Date.today) {
+        VStack(spacing: 0) {
+            GameInfoView(entry: entry)
+                .padding(.bottom, 14)
             
-            Text("\(currentMatch?.startDateTime.toTimeString() ?? "")")
-                .font(.Body.body2)
-                .foregroundColor(.TextLabel.widget100)
-                .padding(.bottom, 4)
-            
-            Text("\(currentMatch?.place ?? "")")
-                .font(.Caption.caption2)
-                .foregroundColor(.TextLabel.widget50)
-            
-        } else {
-            Text("\(currentMatch?.startDateTime.formattedString() ?? "")")
-                .font(.Body.body2)
-                .foregroundColor(.TextLabel.widget100)
-                .padding(.bottom, 4)
-            
-            Text("\(currentMatch?.place ?? "")")
-                .font(.Caption.caption2)
-                .foregroundColor(.TextLabel.widget50)
+            if let startDateTime = currentMatch?.startDateTime, Calendar.current.isDate(startDateTime, inSameDayAs: Date.today) {
+                
+                Text("\(currentMatch?.startDateTime.toTimeString() ?? "")")
+                    .font(.Body.body2)
+                    .foregroundColor(.TextLabel.widget100)
+                    .padding(.bottom, 4)
+                
+                Text("\(currentMatch?.place ?? "")")
+                    .font(.Caption.caption2)
+                    .foregroundColor(.TextLabel.widget50)
+                
+            } else {
+                Text("\(currentMatch?.startDateTime.formattedString() ?? "")")
+                    .font(.Body.body2)
+                    .foregroundColor(.TextLabel.widget100)
+                    .padding(.bottom, 4)
+                
+                Text("\(currentMatch?.place ?? "")")
+                    .font(.Caption.caption2)
+                    .foregroundColor(.TextLabel.widget50)
+            }
         }
     }
 }
@@ -324,6 +349,7 @@ struct RookieKBOWidget: Widget {
     }
 }
 
+
 extension SelectTeamAppIntent {
     
     fileprivate static var allType: SelectTeamAppIntent {
@@ -396,5 +422,5 @@ extension SelectTeamAppIntent {
 #Preview(as: .systemSmall) {
     RookieKBOWidget()
 } timeline: {
-    WidgetEntry(date: .now, selectedTeam: .ncType, match: MockDataBuilder.mockMatch)
+    WidgetEntry(date: .now, selectedTeam: .allType, match: MockDataBuilder.mockMatch)
 }

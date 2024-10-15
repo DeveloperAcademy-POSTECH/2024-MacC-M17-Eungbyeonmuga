@@ -34,7 +34,7 @@ struct MyTeamEndGameInfo: View {
             
         }
         .padding(.vertical, 24)
-        .background(Color.ScoreBoardColor.scoreBoardBg)
+        .background(Color.Background.second)
         .cornerRadius(14)
     }
 }
@@ -61,7 +61,7 @@ private struct TeamInfo: View {
             
             Text("VS")
                 .font(.Head.head3)
-                .background(Color.ScoreBoardColor.homeBg)
+                .foregroundColor(.TextLabel.scoreBoard)
             
             Spacer()
             

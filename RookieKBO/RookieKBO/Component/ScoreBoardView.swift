@@ -45,7 +45,7 @@ struct ScoreBoardView: View {
             TeamBoard(inning: inning, match: match, isHomeTeam: false)
             TeamBoard(inning: inning, match: match, isHomeTeam: true)
         }
-        .background(Color.ScoreBoardColor.scoreBoardBg)
+        .background(Color.Background.second)
     }
 }
 

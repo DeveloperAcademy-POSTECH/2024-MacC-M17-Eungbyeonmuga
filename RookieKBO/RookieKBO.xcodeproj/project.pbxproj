@@ -74,6 +74,7 @@
 				Domain/UseCase/MatchUseCase.swift,
 				"Helper/Helper+Color.swift",
 				"Helper/Helper+DateFormatter.swift",
+				"Helper/Helper+LinearGradient.swift",
 				"Helper/Helper+PretendardFont.swift",
 				"Helper/Helper+Preview.swift",
 				"Helper/Helper+StringFormatter.swift",
