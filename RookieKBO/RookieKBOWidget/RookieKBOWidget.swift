@@ -69,7 +69,13 @@ struct RookieKBOWidgetEntryView : View {
             case .ncType:
                 BackgroundView(image: "img_widgetnc")
             case .allType:
-                allTypeBackgroundView(entry: entry)
+                if currentMatch == nil {
+                    let gradient = LinearGradient.gradient(startColor: Color.Brand.primary, endColor: Color.Brand.primaryGd)
+                    
+                    AnyView(Rectangle().fill(gradient))
+                } else {
+                    allTypeBackgroundView(entry: entry)
+                }
             }
             
             if currentMatch?.gameState == .CANCEL.self {
@@ -129,8 +135,7 @@ private struct GameInfoView: View {
     var body: some View {
         HStack(spacing: 14) {
             VStack(spacing: 8) {
-                //                Image("\(currentMatch?.awayTeam.image ?? "")")
-                Image("")
+                Image("\(teamCharacterString(for: currentMatch?.awayTeam ?? Team(name: "", image: "", color: "")))")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)
@@ -145,8 +150,7 @@ private struct GameInfoView: View {
                 .foregroundColor(.TextLabel.widget50)
             
             VStack(spacing: 8) {
-                //                Image("\(currentMatch?.homeTeam.image ?? "")")
-                Image("")
+                Image("\(teamCharacterString(for: currentMatch?.homeTeam ?? Team(name: "", image: "", color: "")))")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)
@@ -320,9 +324,9 @@ private struct NoGamesView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            
-            // TODO: 이미지 처리
-            Circle()
+            Image("\(teamTypeCharacterString(for: entry.selectedTeamType.selectedTeam))")
+                .resizable()
+                .scaledToFit()
                 .frame(width: 55, height: 55)
                 .padding(.bottom, 15)
             
@@ -424,5 +428,5 @@ extension SelectTeamAppIntent {
 #Preview(as: .systemSmall) {
     RookieKBOWidget()
 } timeline: {
-    WidgetEntry(date: .now, selectedTeamType: .doosanType, match: MockDataBuilder.mockMatch)
+    WidgetEntry(date: .now, selectedTeamType: .hanhwaType, match: MockDataBuilder.mockMatch)
 }
