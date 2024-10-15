@@ -17,33 +17,11 @@ struct Provider: AppIntentTimelineProvider {
         WidgetEntry(date: Date(), selectedTeam: configuration)
     }
     
-    //    func timeline(for configuration: SelectTeamAppIntent, in context: Context) async -> Timeline<WidgetEntry> {
-    //            var entries: [WidgetEntry] = []
-    //
-    //            let currentDate = Date()
-    //
-    //            // UserDefaults에서 선택된 팀을 가져옵니다.
-    //            let selectedTeam = getSelectTeam()
-    //
-    //            // SelectTeamAppIntent를 생성
-    //            let intent = SelectTeamAppIntent(selectedTeam: selectedTeam)
-    //
-    //            for hourOffset in 0 ..< 5 {
-    //                let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-    //                let entry = WidgetEntry(date: entryDate, selectedTeam: intent)
-    //                entries.append(entry)
-    //            }
-    //
-    //            return Timeline(entries: entries, policy: .atEnd)
-    //        }
-    
     func timeline(for configuration: SelectTeamAppIntent, in context: Context) async -> Timeline<WidgetEntry> {
         var entries: [WidgetEntry] = []
         
         let selectedTeamType = getSelectTeam()
         let selectedTeamAppIntent = SelectTeamAppIntent.from(selectTeamType: selectedTeamType)
-        
-        print(selectedTeamAppIntent)
         
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
@@ -72,26 +50,27 @@ struct RookieKBOWidgetEntryView : View {
         ZStack {
             switch entry.selectedTeam.selectedTeam {
             case .ssgType:
-                BackgroundView(image: "imgWidgetssg")
+                BackgroundView(image: "img_widgetssg")
             case .lgType:
-                BackgroundView(image: "imgWidgetlg")
+                BackgroundView(image: "img_widgetlg")
             case .lotteType:
-                BackgroundView(image: "imgWidgetlotte")
+                BackgroundView(image: "img_widgetlotte")
             case .samsungType:
-                BackgroundView(image: "imgWidgetsamsung")
+                BackgroundView(image: "img_widgetsamsung")
             case .doosanType:
-                BackgroundView(image: "imgWidgetdoosan")
+                BackgroundView(image: "img_widgetdoosan")
             case .kiaType:
-                BackgroundView(image: "imgWidgetkia")
+                BackgroundView(image: "img_widgetkia")
             case .kiwoomType:
-                BackgroundView(image: "imgWidgetkiwoom")
+                BackgroundView(image: "img_widgetkiwoom")
             case .hanhwaType:
-                BackgroundView(image: "imgWidgethanhwa")
+                BackgroundView(image: "img_widgethanhwa")
             case .ktType:
-                BackgroundView(image: "imgWidgetkt")
+                BackgroundView(image: "img_widgetkt")
             case .ncType:
-                BackgroundView(image: "imgWidgetnc")
+                BackgroundView(image: "img_widgetnc")
             case .allType:
+                // TODO: 그라데이션 추가
                 BackgroundView(image: "")
             }
             
@@ -127,7 +106,6 @@ private func BackgroundView(image: String) -> some View {
             // 추가 옵션
         }
 }
-
 
 // MARK: - GameInfoView
 
@@ -405,5 +383,5 @@ extension SelectTeamAppIntent {
 #Preview(as: .systemSmall) {
     RookieKBOWidget()
 } timeline: {
-    WidgetEntry(date: .now, selectedTeam: .ssgType, match: MockDataBuilder.mockMatch)
+    WidgetEntry(date: .now, selectedTeam: .ncType, match: MockDataBuilder.mockMatch)
 }
