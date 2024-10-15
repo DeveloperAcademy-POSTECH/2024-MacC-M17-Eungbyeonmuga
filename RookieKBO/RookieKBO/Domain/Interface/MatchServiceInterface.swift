@@ -10,7 +10,8 @@ import Foundation
 protocol MatchServiceInterface {
     func fetchMatch()
     func calculateScore(for match: Match, team: HomeAndAway) -> Int
-    func getResult(for teamScore: Int, otherScore: Int) -> String
+    func getAllTeamResult(for teamScore: Int, otherScore: Int) -> AllMatchResult
+    func getMyTeamResult(for teamScore: Int, otherScore: Int) -> MyTeamMatchResult
     func calculateInningText(for match: Match) -> String
     func adjustScores(_ scores: [Int], inning: ScoreBoardView.Inning) -> [String]
 }

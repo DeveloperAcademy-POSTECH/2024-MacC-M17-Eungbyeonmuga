@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 // 점수 계산
 func calculateScore(for match: Match, team: HomeAndAway) -> Int {
@@ -15,16 +16,45 @@ func calculateScore(for match: Match, team: HomeAndAway) -> Int {
     return scoreBoard.scores.reduce(0, +)
 }
 
-// 점수 기준으로 승, 패 반환
-func getResult(for teamScore: Int, otherScore: Int) -> String {
+// 점수 기준으로 승, 패 및 색 반환
+func getResult(for teamScore: Int, otherScore: Int) -> WidgetMatchResult {
     if teamScore > otherScore {
-        return "승"
+        return .win
     } else if teamScore < otherScore {
-        return "패"
+        return .lose
     } else {
-        return "무"
+        return .draw
     }
 }
+
+enum WidgetMatchResult {
+    case win
+    case lose
+    case draw
+
+    var color: Color {
+        switch self {
+        case .win:
+            return .widget100
+        case .lose:
+            return .widget30
+        case .draw:
+            return .widget50
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .win:
+            return "승"
+        case .lose:
+            return "패"
+        case .draw:
+            return "무"
+        }
+    }
+}
+
 
 // 이닝 계산
 func calculateInningText(for match: Match) -> String {
@@ -73,3 +103,32 @@ func getSelectTeam() -> SelectTeamType {
         return .allType
     }
 }
+
+// 각 팀의 색 반환을 위한 함수
+func colorString(for teamType: SelectTeamType) -> String {
+    switch teamType {
+    case .allType:
+        return "primary"
+    case .ssgType:
+        return "ssg"
+    case .lgType:
+        return "lg"
+    case .lotteType:
+        return "lotte"
+    case .samsungType:
+        return "samsung"
+    case .doosanType:
+        return "doosan"
+    case .kiaType:
+        return "kia"
+    case .kiwoomType:
+        return "kiwoom"
+    case .hanhwaType:
+        return "hanwha"
+    case .ktType:
+        return "kt"
+    case .ncType:
+        return "nc"
+    }
+}
+

@@ -66,9 +66,14 @@ extension MatchUseCase {
         matchService.calculateScore(for: match, team: team)
     }
     
-    /// 승, 패 계산하는 함수
-    func getResult(for teamScore: Int, otherScore: Int) -> String {
-        matchService.getResult(for: teamScore, otherScore: otherScore)
+    /// 전체 구단일 때 승패 계산하는 함수
+    func getAllTeamResult(for teamScore: Int, otherScore: Int) -> AllMatchResult {
+        matchService.getAllTeamResult(for: teamScore, otherScore: otherScore)
+    }
+    
+    /// 선택한 팀이 있을 때 승패 계산하는 함수
+    func getMyTeamResult(for teamScore: Int, otherScore: Int) -> MyTeamMatchResult {
+        matchService.getMyTeamResult(for: teamScore, otherScore: otherScore)
     }
     
     /// 이닝 계산하는 함수

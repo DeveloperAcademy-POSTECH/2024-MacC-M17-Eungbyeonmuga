@@ -12,7 +12,7 @@ struct MockDataBuilder {
     static var mockMatch: Match {
         return Match(
             startDateTime: Date(),
-            gameState: GameState.PLAYING,
+            gameState: GameState.END,
             homeTeam: Team(name: "SSG 랜더스", image: "ssgUnder", color: "ssg"),
             awayTeam: Team(name: "두산 베어스", image: "doosanUnder", color: "doosan"),
             place: "인천 ssg랜더스필드",

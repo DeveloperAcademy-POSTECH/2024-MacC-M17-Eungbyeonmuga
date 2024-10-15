@@ -10,11 +10,11 @@ import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> WidgetEntry {
-        WidgetEntry(date: Date(), selectedTeam: SelectTeamAppIntent())
+        WidgetEntry(date: Date(), selectedTeamType: SelectTeamAppIntent())
     }
     
     func snapshot(for configuration: SelectTeamAppIntent, in context: Context) async -> WidgetEntry {
-        WidgetEntry(date: Date(), selectedTeam: configuration)
+        WidgetEntry(date: Date(), selectedTeamType: configuration)
     }
     
     func timeline(for configuration: SelectTeamAppIntent, in context: Context) async -> Timeline<WidgetEntry> {
@@ -26,7 +26,7 @@ struct Provider: AppIntentTimelineProvider {
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = WidgetEntry(date: entryDate, selectedTeam: selectedTeamAppIntent)
+            let entry = WidgetEntry(date: entryDate, selectedTeamType: selectedTeamAppIntent)
             entries.append(entry)
         }
         
@@ -36,9 +36,8 @@ struct Provider: AppIntentTimelineProvider {
 
 struct WidgetEntry: TimelineEntry {
     let date: Date
-    var selectedTeam: SelectTeamAppIntent
+    var selectedTeamType: SelectTeamAppIntent
     var match: Match? = MockDataBuilder.mockMatch
-    
 }
 
 struct RookieKBOWidgetEntryView : View {
@@ -48,7 +47,7 @@ struct RookieKBOWidgetEntryView : View {
     
     var body: some View {
         ZStack {
-            switch entry.selectedTeam.selectedTeam {
+            switch entry.selectedTeamType.selectedTeam {
             case .ssgType:
                 BackgroundView(image: "img_widgetssg")
             case .lgType:
@@ -70,23 +69,7 @@ struct RookieKBOWidgetEntryView : View {
             case .ncType:
                 BackgroundView(image: "img_widgetnc")
             case .allType:
-                if let homeTeamColor = entry.match?.homeTeam.color,
-                   let awayTeamColor = entry.match?.awayTeam.color {
-                    let homeColor = Color.teamColor(for: homeTeamColor)
-                    let awayColor = Color.teamColor(for: awayTeamColor)
-                    
-                    let gradient = LinearGradient.gradient(startColor: homeColor ?? Color.widget30, endColor: awayColor ?? Color.widget30)
-                    
-                    Rectangle()
-                        .fill(gradient)
-                } else {
-                    if entry.match?.homeTeam.color == nil {
-                        EmptyView()
-                    }
-                    if entry.match?.awayTeam.color == nil {
-                        EmptyView()
-                    }
-                }
+                allTypeBackgroundView(entry: entry)
             }
             
             if currentMatch?.gameState == .CANCEL.self {
@@ -118,8 +101,23 @@ private func BackgroundView(image: String) -> some View {
         .resizable()
         .scaledToFill()
         .containerBackground(for: .widget) {
-            // 추가 옵션
         }
+}
+
+// MARK: - allTypeBackgroundView
+
+private func allTypeBackgroundView(entry: Provider.Entry) -> some View {
+    if let homeTeamColor = entry.match?.homeTeam.color,
+       let awayTeamColor = entry.match?.awayTeam.color {
+        let homeColor = Color.teamColor(for: homeTeamColor)
+        let awayColor = Color.teamColor(for: awayTeamColor)
+        
+        let gradient = LinearGradient.gradient(startColor: homeColor ?? Color.widget30, endColor: awayColor ?? Color.widget30)
+        
+        return AnyView(Rectangle().fill(gradient))
+    } else {
+        return AnyView(EmptyView())
+    }
 }
 
 // MARK: - GameInfoView
@@ -163,7 +161,7 @@ private struct GameInfoView: View {
                         .foregroundColor(.TextLabel.widget100)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
-                        .background(Color.WidgetBackground.widgetScoreBoardBg)
+                        .background(entry.selectedTeamType.selectedTeam == .allType ? Color.WidgetBackground.widgetScoreBoardBg : Color.teamColor(for: colorString(for: entry.selectedTeamType.selectedTeam)))
                         .cornerRadius(99)
                 }
             }
@@ -271,18 +269,22 @@ private struct EndGameView: View {
             HStack(spacing: 0) {
                 Text("\(awayScore)")
                     .font(.CustomTitle.customTitle1)
+                    .foregroundColor(awayResult.color)
                     .padding(.trailing, 11)
                 
-                Text("\(awayResult)")
+                Text("\(awayResult.description)")
                     .font(.Body.body2)
+                    .foregroundColor(awayResult.color)
                     .padding(.trailing, 10)
                 
-                Text("\(homeResult)")
+                Text("\(homeResult.description)")
                     .font(.Body.body2)
+                    .foregroundColor(homeResult.color)
                     .padding(.trailing, 12)
                 
                 Text("\(homeScore)")
                     .font(.CustomTitle.customTitle1)
+                    .foregroundColor(homeResult.color)
             }
         }
     }
@@ -422,5 +424,5 @@ extension SelectTeamAppIntent {
 #Preview(as: .systemSmall) {
     RookieKBOWidget()
 } timeline: {
-    WidgetEntry(date: .now, selectedTeam: .allType, match: MockDataBuilder.mockMatch)
+    WidgetEntry(date: .now, selectedTeamType: .doosanType, match: MockDataBuilder.mockMatch)
 }
