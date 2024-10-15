@@ -22,4 +22,16 @@ struct MockDataBuilder {
             ]
         )
     }
+    
+    static var mockEmptyMatch: Match {
+        return Match(
+            startDateTime: Date(),
+            gameState: GameState.END,
+            homeTeam: Team(name: "", image: "", color: ""),
+            awayTeam: Team(name: "", image: "", color: ""),
+            place: "",
+            scoreBoard: []
+        )
+    }
+    
 }
