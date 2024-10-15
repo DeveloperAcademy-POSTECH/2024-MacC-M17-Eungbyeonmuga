@@ -38,7 +38,6 @@ private struct HeaderView: View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 18) {
                 if currentSelectTeam == "없음" {
-                    // TODO: Image -> Text로 변경
                     Image("titleLogo")
                         .resizable()
                         .frame(width: 150, height: 40)
@@ -48,10 +47,16 @@ private struct HeaderView: View {
                         .foregroundColor(.TextLabel.main)
                         .lineSpacing(8)
                 } else {
-                    Text("지금 '\(currentSelectTeam)' 응원하고 계시네요!\n응원 팀을 변경할 수도 있어요.")
-                        .font(.Head.head4)
-                        .foregroundColor(.TextLabel.main)
-                        .lineSpacing(8)
+                    Group {
+                        if currentSelectTeam == "전체 구단" {
+                            Text("지금 '\(currentSelectTeam)'을 응원하고 계시네요!\n응원 팀을 변경할 수도 있어요.")
+                        } else {
+                            Text("지금 '\(currentSelectTeam)'를 응원하고 계시네요!\n응원 팀을 변경할 수도 있어요.")
+                        }
+                    }
+                    .font(.Head.head4)
+                    .foregroundColor(.TextLabel.main)
+                    .lineSpacing(8)
                 }
             }
             
@@ -90,7 +95,7 @@ private struct SelectTeamListView: View {
                             // 배경색 변경
                             RoundedRectangle(cornerRadius: 18)
                                 .fill(
-                                    selectedTeam == nil ? Color.white : (selectedTeam == team ? Color.white : Color.GrayScale.unselectBackground)
+                                    selectedTeam == nil ? Color.white : (selectedTeam == team ? Color.white : Color.TeamSelect.unselectBg)
                                 )
                                 .frame(width: 172, height: 150)
                             
@@ -107,7 +112,7 @@ private struct SelectTeamListView: View {
                                             Text(teamNameParts[0])
                                                 .foregroundColor(.TextLabel.main)
                                             Text(" " + teamNameParts[1])
-                                                .foregroundColor(.TextLabel.sub1)
+                                                .foregroundColor(.TextLabel.scoreBoard)
                                         }
                                     }.font(.Head.head2)
                                     
@@ -130,13 +135,13 @@ private struct SelectTeamListView: View {
                             if selectedTeam == team {
                                 RoundedRectangle(cornerRadius: 18)
                                     .stroke(
-                                        LinearGradient.primaryGradient,
+                                        LinearGradient.gradient(startColor: Brand.primary, endColor: Brand.primaryGd),
                                         lineWidth: 5
                                     )
                                     .frame(width: 172, height: 150)
                             } else {
                                 RoundedRectangle(cornerRadius: 18)
-                                    .stroke(Color.GrayScale.stroke, lineWidth: 5)
+                                    .stroke(Color.TeamSelect.stroke, lineWidth: 5)
                                     .frame(width: 172, height: 150)
                             }
                         }
@@ -168,7 +173,7 @@ private struct StartTeam: View {
                     .frame(width: 361, height: 54)
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 16)
-                        .fill(LinearGradient.primaryGradient))
+                        .fill(LinearGradient.gradient(startColor: Brand.primary, endColor: Brand.primaryGd)))
             }
             .padding()
         }
