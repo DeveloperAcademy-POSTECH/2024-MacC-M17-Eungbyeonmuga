@@ -74,7 +74,6 @@
 				"Helper/Helper+PretendardFont.swift",
 				"Helper/Helper+StringFormatter.swift",
 				"Helper/Helper+UserDefaults.swift",
-				Resource/Assets/Assets.xcassets,
 				Resource/Assets/Colors.xcassets,
 				"Resource/Fonts/Pretendard-Black.ttf",
 				"Resource/Fonts/Pretendard-Bold.ttf",
