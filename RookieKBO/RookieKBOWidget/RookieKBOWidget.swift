@@ -35,7 +35,7 @@ struct Provider: AppIntentTimelineProvider {
 struct WidgetEntry: TimelineEntry {
     let date: Date
     var selectedTeamType: SelectTeamAppIntent
-    var match: Match? = MockDataBuilder.mockMatch
+    var match: Match? = filterMatches(matches: MockDataBuilder.mockMatchList)
 }
 
 struct RookieKBOWidgetEntryView : View {
@@ -95,9 +95,6 @@ struct RookieKBOWidgetEntryView : View {
                 WidgetNoGames(entry: entry)
             }
         }
-        .onAppear {
-            print(UserDefaults.shared.string(forKey: "selectTeam") ?? "없다 이 방구자식아")
-        }
     }
 }
 
@@ -129,7 +126,9 @@ private func allTypeBackgroundView(entry: Provider.Entry) -> some View {
 
 
 struct RookieKBOWidget: Widget {
-    let kind: String = "choseyeon.RookieKBO.RookieKBOWidget"
+    
+    // TODO: 각자 그룹 아이디로 변경
+    let kind: String = "com.rookiekbo.widget"
     
     var body: some WidgetConfiguration {
         
@@ -137,8 +136,8 @@ struct RookieKBOWidget: Widget {
             RookieKBOWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("루키크보 위젯⚾️")
-        .description("루키크보 위젯입니다.")
+        .configurationDisplayName("루키크보 위젯")
+        .description("곧 다가올 경기 일정부터 실시간 경기 정보까지, \n응원 팀의 정보를 한눈에 확인하세요!")
         .supportedFamilies([.systemSmall])
         .contentMarginsDisabled()
     }

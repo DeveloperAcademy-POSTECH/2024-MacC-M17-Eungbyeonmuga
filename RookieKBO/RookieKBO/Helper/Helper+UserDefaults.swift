@@ -9,6 +9,8 @@ import Foundation
 
 extension UserDefaults {
     static var shared: UserDefaults {
+       
+        // TODO: 각자 그룹 아이디로 변경
         let appGroupId = "group.com.rookiekbo.widget"
         return UserDefaults(suiteName: appGroupId)!
     }
