@@ -95,6 +95,9 @@ struct RookieKBOWidgetEntryView : View {
                 WidgetNoGames(entry: entry)
             }
         }
+        .onAppear {
+            print(UserDefaults.shared.string(forKey: "selectTeam") ?? "없다 이 방구자식아")
+        }
     }
 }
 
@@ -147,88 +150,88 @@ extension SelectTeamAppIntent {
     fileprivate static var allType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .allType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("전체 구단", forKey: "selectTeam")
+//        UserDefaults.shared.removeObject(forKey: "selectTeam")
+//        UserDefaults.shared.set("전체 구단", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var ssgType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .ssgType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("SSG 랜더스", forKey: "selectTeam")
+//        UserDefaults.shared.removeObject(forKey: "selectTeam")
+//        UserDefaults.shared.set("SSG 랜더스", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var lgType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .lgType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("LG 트윈스", forKey: "selectTeam")
+//        UserDefaults.shared.removeObject(forKey: "selectTeam")
+//        UserDefaults.shared.set("LG 트윈스", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var lotteType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .lotteType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("롯데 자이언츠", forKey: "selectTeam")
+//        UserDefaults.shared.removeObject(forKey: "selectTeam")
+//        UserDefaults.shared.set("롯데 자이언츠", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var samsungType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .samsungType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("삼성 라이온즈", forKey: "selectTeam")
+//        UserDefaults.shared.removeObject(forKey: "selectTeam")
+//        UserDefaults.shared.set("삼성 라이온즈", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var doosanType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .doosanType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("두산 베어스", forKey: "selectTeam")
+//        UserDefaults.shared.removeObject(forKey: "selectTeam")
+//        UserDefaults.shared.set("두산 베어스", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var kiaType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .kiaType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("기아 타이거즈", forKey: "selectTeam")
+//        UserDefaults.shared.removeObject(forKey: "selectTeam")
+//        UserDefaults.shared.set("기아 타이거즈", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var kiwoomType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .kiwoomType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("키움 히어로즈", forKey: "selectTeam")
+//        UserDefaults.shared.removeObject(forKey: "selectTeam")
+//        UserDefaults.shared.set("키움 히어로즈", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var hanhwaType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .hanhwaType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("한화 이글스", forKey: "selectTeam")
+//        UserDefaults.shared.removeObject(forKey: "selectTeam")
+//        UserDefaults.shared.set("한화 이글스", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var ktType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .ktType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("KT 위즈", forKey: "selectTeam")
+//        UserDefaults.shared.removeObject(forKey: "selectTeam")
+//        UserDefaults.shared.set("KT 위즈", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var ncType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .ncType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("NC 다이노스", forKey: "selectTeam")
+//        UserDefaults.shared.removeObject(forKey: "selectTeam")
+//        UserDefaults.shared.set("NC 다이노스", forKey: "selectTeam")
         return intent
     }
 }
