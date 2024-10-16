@@ -10,7 +10,7 @@ import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> WidgetEntry {
-        WidgetEntry(date: Date(), selectedTeamType: SelectTeamAppIntent())
+        WidgetEntry(date: Date(), selectedTeamType: .allType)
     }
     
     func snapshot(for configuration: SelectTeamAppIntent, in context: Context) async -> WidgetEntry {

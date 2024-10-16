@@ -12,6 +12,5 @@ import SwiftUI
 struct RookieKBOWidgetBundle: WidgetBundle {
     var body: some Widget {
         RookieKBOWidget()
-        RookieKBOWidgetControl()
     }
 }
