@@ -16,6 +16,7 @@ struct MyTeamPreParingGameInfo: View {
             HStack(spacing: 0) {
                 Text("오늘 예정된 경기")
                     .font(.Head.head4)
+                    .foregroundColor(.TextLabel.main)
                     .padding(.leading, 24)
                 
                 Spacer()
@@ -27,15 +28,17 @@ struct MyTeamPreParingGameInfo: View {
             
             Text("\(preparingGameInfo.startDateTime.toTimeString())")
                 .font(.Head.head1)
+                .foregroundColor(.TextLabel.main)
                 .padding(.bottom, 8)
             
             Text("\(preparingGameInfo.place)")
                 .font(.Body.body2)
+                .foregroundColor(.TextLabel.scoreBoard)
                 .padding(.bottom, 56)
             
         }
         .padding(.top, 24)
-        .background(Color.gray)
+        .background(Color.Background.second)
         .cornerRadius(14)
     }
 }
@@ -49,33 +52,40 @@ private struct TeamInfo: View {
         HStack(spacing: 0) {
             VStack(spacing: 16) {
                 Image("\(preparingGameInfo.awayTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 72, height: 72)
                 
                 Text("\(preparingGameInfo.awayTeam.name.firstWord())")
                     .font(.Head.head2)
+                    .foregroundColor(.TextLabel.main)
             }
             
             Spacer()
             
             Text("VS")
                 .font(.Head.head3)
+                .foregroundColor(.TextLabel.scoreBoard)
             
             Spacer()
             
             VStack(spacing: 16) {
                 Image("\(preparingGameInfo.homeTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 72, height: 72)
                 
                 HStack(spacing: 6) {
                     Text("\(preparingGameInfo.homeTeam.name.firstWord())")
                         .font(.Head.head2)
+                        .foregroundColor(.TextLabel.main)
                     
                     Text("홈")
                         .font(.Body.body5)
-                        .foregroundStyle(.black)
+                        .foregroundColor(.TextLabel.main)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 2)
-                        .background(Color.yellow)
+                        .background(Color.ScoreBoardColor.homeBg)
                         .cornerRadius(99)
                 }
             }

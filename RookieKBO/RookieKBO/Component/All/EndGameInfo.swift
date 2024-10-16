@@ -19,7 +19,7 @@ struct EndGameInfo: View {
             ScoreBoardView(match: endGameInfo)
         }
         .padding(.all, 16)
-        .background(Color.gray)
+        .background(Color.Background.second)
         .cornerRadius(14)
     }
 }
@@ -36,6 +36,8 @@ private struct GameInfo: View {
         HStack(spacing: 0) {
             VStack(spacing: 5) {
                 Image("\(endGameInfo.awayTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 48, height: 48)
                 
                 Text("\(endGameInfo.awayTeam.name.firstWord())")
@@ -47,34 +49,40 @@ private struct GameInfo: View {
             
             let homeScore = matchUseCase.calculateScore(for: endGameInfo, team: .HOME)
             
-            let awayResult = matchUseCase.getResult(for: awayScore, otherScore: homeScore)
+            let awayResult = matchUseCase.getAllTeamResult(for: awayScore, otherScore: homeScore)
             
-            let homeResult = matchUseCase.getResult(for: homeScore, otherScore: awayScore)
+            let homeResult = matchUseCase.getAllTeamResult(for: homeScore, otherScore: awayScore)
             
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle2)
+                .foregroundColor(awayResult.color)
                 .padding(.vertical, 8)
                 .padding(.leading, 12)
                 .padding(.trailing, 11)
             
-            Text("\(awayResult)")
+            Text("\(awayResult.description)")
                 .font(.Body.body2)
+                .foregroundColor(awayResult.color)
                 .padding(.leading, 16)
             
             Spacer()
             
-            Text("\(homeResult)")
+            Text("\(homeResult.description)")
                 .font(.Body.body2)
+                .foregroundColor(homeResult.color)
                 .padding(.trailing, 16)
             
             Text("\(homeScore)")
                 .font(.CustomTitle.customTitle2)
+                .foregroundColor(homeResult.color)
                 .padding(.vertical, 8)
                 .padding(.leading, 12)
                 .padding(.trailing, 11)
             
             VStack(spacing: 5) {
                 Image("\(endGameInfo.homeTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 48, height: 48)
                 
                 HStack(spacing: 2) {
@@ -83,10 +91,10 @@ private struct GameInfo: View {
                     
                     Text("홈")
                         .font(.Caption.caption2)
-                        .foregroundStyle(.black)
+                        .foregroundColor(.TextLabel.main)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
-                        .background(Color.yellow)
+                        .background(Color.ScoreBoardColor.homeBg)
                         .cornerRadius(99)
                 }
             }

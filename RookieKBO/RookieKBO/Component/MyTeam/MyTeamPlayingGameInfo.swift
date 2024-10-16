@@ -16,6 +16,7 @@ struct MyTeamPlayingGameInfo: View {
             HStack(spacing: 0) {
                 Text("오늘 진행 중인 경기")
                     .font(.Head.head4)
+                    .foregroundColor(.TextLabel.main)
                     .padding(.leading, 24)
                 
                 Spacer()
@@ -33,7 +34,7 @@ struct MyTeamPlayingGameInfo: View {
             
         }
         .padding(.vertical, 24)
-        .background(Color.gray)
+        .background(Color.Background.second)
         .cornerRadius(14)
     }
 }
@@ -47,33 +48,40 @@ private struct TeamInfo: View {
         HStack(spacing: 0) {
             VStack(spacing: 16) {
                 Image("\(playingGameInfo.awayTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 72, height: 72)
                 
                 Text("\(playingGameInfo.awayTeam.name.firstWord())")
                     .font(.Head.head2)
+                    .foregroundColor(.TextLabel.main)
             }
             
             Spacer()
             
             Text("VS")
                 .font(.Head.head3)
+                .foregroundColor(.TextLabel.scoreBoard)
             
             Spacer()
             
             VStack(spacing: 16) {
                 Image("\(playingGameInfo.homeTeam.image)")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 72, height: 72)
                 
                 HStack(spacing: 6) {
                     Text("\(playingGameInfo.homeTeam.name.firstWord())")
                         .font(.Head.head2)
+                        .foregroundColor(.TextLabel.main)
                     
                     Text("홈")
                         .font(.Body.body5)
-                        .foregroundStyle(.black)
+                        .foregroundColor(.TextLabel.main)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 2)
-                        .background(Color.yellow)
+                        .background(Color.ScoreBoardColor.homeBg)
                         .cornerRadius(99)
                 }
             }
@@ -99,6 +107,7 @@ private struct GameScore: View {
             
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle2)
+                .foregroundColor(.TextLabel.main)
                 .padding(.vertical, 4)
                 .padding(.horizontal, 9)
             
@@ -106,11 +115,13 @@ private struct GameScore: View {
             
             Text(inningText)
                 .font(.Head.head4)
+                .foregroundColor(.TextLabel.main)
             
             Spacer()
             
             Text("\(homeScore)")
                 .font(.CustomTitle.customTitle2)
+                .foregroundColor(.TextLabel.main)
                 .padding(.vertical, 4)
                 .padding(.horizontal, 9)
         }

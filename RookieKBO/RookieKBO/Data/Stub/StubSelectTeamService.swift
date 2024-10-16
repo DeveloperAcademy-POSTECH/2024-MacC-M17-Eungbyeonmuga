@@ -19,13 +19,13 @@ struct StubSelectTeamService: SelectTeamServiceInterface {
             Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte"),
             Team(name: "삼성 라이온즈", image: "samsungUnder", color: "samsung"),
             Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom"),
-            Team(name: "한화 이글즈", image: "hanwhaUnder", color: "hanwha"),
+            Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha"),
             Team(name: "전체 구단", image: "allTeamUnder", color: "primary")
         ]
     }
     
     func updateUserDefaultsTeam(_ selectTeamName: String) {
-        UserDefaults.standard.removeObject(forKey: "selectTeam")
-        UserDefaults.standard.set(selectTeamName, forKey: "selectTeam")
+        UserDefaults.shared.removeObject(forKey: "selectTeam")
+        UserDefaults.shared.set(selectTeamName, forKey: "selectTeam")
     }
 }

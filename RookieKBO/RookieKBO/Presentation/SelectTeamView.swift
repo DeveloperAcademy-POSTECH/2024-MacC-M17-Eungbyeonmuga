@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct SelectTeamView: View {
     
@@ -32,7 +33,7 @@ struct SelectTeamView: View {
 
 private struct HeaderView: View {
     
-    let currentSelectTeam = UserDefaults.standard.string(forKey: "selectTeam") ?? "없음"
+    let currentSelectTeam = UserDefaults.shared.string(forKey: "selectTeam") ?? "없음"
     
     var body: some View {
         HStack(spacing: 0) {
@@ -167,6 +168,8 @@ private struct StartTeam: View {
             Button {
                 // TODO: 화면 이동
                 selectTeamUseCase.updateUserDefaultsTeam()
+                WidgetCenter.shared.reloadAllTimelines()
+                
             } label: {
                 Text("루키크보 시작하기")
                     .font(.Head.head3)

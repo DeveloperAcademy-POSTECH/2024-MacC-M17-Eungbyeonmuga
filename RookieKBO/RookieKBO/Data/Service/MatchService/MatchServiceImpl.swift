@@ -20,13 +20,23 @@ final class MatchServiceImpl: MatchServiceInterface {
         return scoreBoard.scores.reduce(0, +)
     }
     
-    func getResult(for teamScore: Int, otherScore: Int) -> String {
+    func getAllTeamResult(for teamScore: Int, otherScore: Int) -> AllMatchResult {
         if teamScore > otherScore {
-            return "승"
+            return .win
         } else if teamScore < otherScore {
-            return "패"
+            return .lose
         } else {
-            return "무"
+            return .draw
+        }
+    }
+    
+    func getMyTeamResult(for teamScore: Int, otherScore: Int) -> MyTeamMatchResult {
+        if teamScore > otherScore {
+            return .win
+        } else if teamScore < otherScore {
+            return .lose
+        } else {
+            return .draw
         }
     }
     

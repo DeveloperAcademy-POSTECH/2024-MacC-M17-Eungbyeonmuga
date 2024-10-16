@@ -6,8 +6,42 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DFC005A32CB8D40F007C96BE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC005A22CB8D40F007C96BE /* WidgetKit.framework */; };
+		DFC005A52CB8D40F007C96BE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC005A42CB8D40F007C96BE /* SwiftUI.framework */; };
+		DFC005B62CB8D410007C96BE /* RookieKBOWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DFC005A02CB8D40F007C96BE /* RookieKBOWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DFC005B42CB8D410007C96BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DF20BB782CAED5DC00F88298 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DFC0059F2CB8D40F007C96BE;
+			remoteInfo = RookieKBOWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DFC005B72CB8D410007C96BE /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				DFC005B62CB8D410007C96BE /* RookieKBOWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RookieKBO.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFC005A02CB8D40F007C96BE /* RookieKBOWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RookieKBOWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFC005A22CB8D40F007C96BE /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		DFC005A42CB8D40F007C96BE /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		DFCEC5702CBCA6A5009E91A7 /* RookieKBOWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RookieKBOWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -18,6 +52,41 @@
 			);
 			target = DF20BB7F2CAED5DC00F88298 /* RookieKBO */;
 		};
+		DFC005BB2CB8D410007C96BE /* Exceptions for "RookieKBOWidget" folder in "RookieKBOWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Widget/Info.plist,
+			);
+			target = DFC0059F2CB8D40F007C96BE /* RookieKBOWidgetExtension */;
+		};
+		DFC005BD2CB8D77E007C96BE /* Exceptions for "RookieKBO" folder in "RookieKBOWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Data/Stub/MockDataBuilder.swift,
+				Domain/Entity/GameState.swift,
+				Domain/Entity/HomeAndAway.swift,
+				Domain/Entity/Match.swift,
+				Domain/Entity/ScoreBoard.swift,
+				Domain/Entity/Team.swift,
+				"Helper/Helper+Color.swift",
+				"Helper/Helper+DateFormatter.swift",
+				"Helper/Helper+LinearGradient.swift",
+				"Helper/Helper+PretendardFont.swift",
+				"Helper/Helper+StringFormatter.swift",
+				"Helper/Helper+UserDefaults.swift",
+				Resource/Assets/Colors.xcassets,
+				"Resource/Fonts/Pretendard-Black.ttf",
+				"Resource/Fonts/Pretendard-Bold.ttf",
+				"Resource/Fonts/Pretendard-ExtraBold.ttf",
+				"Resource/Fonts/Pretendard-ExtraLight.ttf",
+				"Resource/Fonts/Pretendard-Light.ttf",
+				"Resource/Fonts/Pretendard-Medium.ttf",
+				"Resource/Fonts/Pretendard-Regular.ttf",
+				"Resource/Fonts/Pretendard-SemiBold.ttf",
+				"Resource/Fonts/Pretendard-Thin.ttf",
+			);
+			target = DFC0059F2CB8D40F007C96BE /* RookieKBOWidgetExtension */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -25,8 +94,17 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				DFA758CF2CB36DAE00C8743F /* Exceptions for "RookieKBO" folder in "RookieKBO" target */,
+				DFC005BD2CB8D77E007C96BE /* Exceptions for "RookieKBO" folder in "RookieKBOWidgetExtension" target */,
 			);
 			path = RookieKBO;
+			sourceTree = "<group>";
+		};
+		DFC005A62CB8D40F007C96BE /* RookieKBOWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DFC005BB2CB8D410007C96BE /* Exceptions for "RookieKBOWidget" folder in "RookieKBOWidgetExtension" target */,
+			);
+			path = RookieKBOWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -39,15 +117,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DFC0059D2CB8D40F007C96BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFC005A52CB8D40F007C96BE /* SwiftUI.framework in Frameworks */,
+				DFC005A32CB8D40F007C96BE /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		DF20BB772CAED5DC00F88298 = {
 			isa = PBXGroup;
 			children = (
+				DFCEC5702CBCA6A5009E91A7 /* RookieKBOWidgetExtension.entitlements */,
 				DF20BB822CAED5DC00F88298 /* RookieKBO */,
 				DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */,
+				DFC005A02CB8D40F007C96BE /* RookieKBOWidgetExtension.appex */,
+				DFC005A62CB8D40F007C96BE /* RookieKBOWidget */,
+				DFC005A12CB8D40F007C96BE /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		DFC005A12CB8D40F007C96BE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DFC005A22CB8D40F007C96BE /* WidgetKit.framework */,
+				DFC005A42CB8D40F007C96BE /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -60,10 +160,12 @@
 				DF20BB7C2CAED5DC00F88298 /* Sources */,
 				DF20BB7D2CAED5DC00F88298 /* Frameworks */,
 				DF20BB7E2CAED5DC00F88298 /* Resources */,
+				DFC005B72CB8D410007C96BE /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				DFC005B52CB8D410007C96BE /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				DF20BB822CAED5DC00F88298 /* RookieKBO */,
@@ -74,6 +176,28 @@
 			productName = RookieKBO;
 			productReference = DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */;
 			productType = "com.apple.product-type.application";
+		};
+		DFC0059F2CB8D40F007C96BE /* RookieKBOWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFC005BA2CB8D410007C96BE /* Build configuration list for PBXNativeTarget "RookieKBOWidgetExtension" */;
+			buildPhases = (
+				DFC0059C2CB8D40F007C96BE /* Sources */,
+				DFC0059D2CB8D40F007C96BE /* Frameworks */,
+				DFC0059E2CB8D40F007C96BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				DFC005A62CB8D40F007C96BE /* RookieKBOWidget */,
+			);
+			name = RookieKBOWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = RookieKBOWidgetExtension;
+			productReference = DFC005A02CB8D40F007C96BE /* RookieKBOWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -86,6 +210,9 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					DF20BB7F2CAED5DC00F88298 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					DFC0059F2CB8D40F007C96BE = {
 						CreatedOnToolsVersion = 16.0;
 					};
 				};
@@ -105,12 +232,20 @@
 			projectRoot = "";
 			targets = (
 				DF20BB7F2CAED5DC00F88298 /* RookieKBO */,
+				DFC0059F2CB8D40F007C96BE /* RookieKBOWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		DF20BB7E2CAED5DC00F88298 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFC0059E2CB8D40F007C96BE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -127,7 +262,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DFC0059C2CB8D40F007C96BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DFC005B52CB8D410007C96BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DFC0059F2CB8D40F007C96BE /* RookieKBOWidgetExtension */;
+			targetProxy = DFC005B42CB8D410007C96BE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		DF20BB8C2CAED5DD00F88298 /* Debug */ = {
@@ -254,10 +404,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RookieKBO/RookieKBO.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RookieKBO/Preview Content\"";
-				DEVELOPMENT_TEAM = VQLS72LDQP;
+				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RookieKBO/App/Info.plist;
@@ -284,10 +435,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RookieKBO/RookieKBO.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RookieKBO/Preview Content\"";
-				DEVELOPMENT_TEAM = VQLS72LDQP;
+				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RookieKBO/App/Info.plist;
@@ -303,6 +455,62 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = choseyeon.RookieKBO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DFC005B82CB8D410007C96BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = RookieKBOWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RookieKBOWidget/Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RookieKBOWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = choseyeon.RookieKBO.RookieKBOWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DFC005B92CB8D410007C96BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = RookieKBOWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RookieKBOWidget/Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RookieKBOWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = choseyeon.RookieKBO.RookieKBOWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -326,6 +534,15 @@
 			buildConfigurations = (
 				DF20BB8F2CAED5DD00F88298 /* Debug */,
 				DF20BB902CAED5DD00F88298 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFC005BA2CB8D410007C96BE /* Build configuration list for PBXNativeTarget "RookieKBOWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFC005B82CB8D410007C96BE /* Debug */,
+				DFC005B92CB8D410007C96BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

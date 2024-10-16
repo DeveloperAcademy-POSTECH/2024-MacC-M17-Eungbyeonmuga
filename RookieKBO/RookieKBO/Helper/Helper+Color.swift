@@ -16,6 +16,35 @@ typealias TextLabel = Color.TextLabel
 
 extension Color {
     
+    static func teamColor(for name: String) -> Color? {
+        switch name {
+        case "ssg":
+            return Color.TeamColor.ssg
+        case "kia":
+            return Color.TeamColor.kia
+        case "kt":
+            return Color.TeamColor.kt
+        case "lg":
+            return Color.TeamColor.lg
+        case "nc":
+            return Color.TeamColor.nc
+        case "doosan":
+            return Color.TeamColor.doosan
+        case "lotte":
+            return Color.TeamColor.lotte
+        case "samsung":
+            return Color.TeamColor.samsung
+        case "kiwoom":
+            return Color.TeamColor.kiwoom
+        case "hanwha":
+            return Color.TeamColor.hanwha
+        case "primary":
+            return primary
+        default:
+            return primary
+        }
+    }
+    
     enum Background {
         static let first = Color(.first)
         static let second = Color(.second)
