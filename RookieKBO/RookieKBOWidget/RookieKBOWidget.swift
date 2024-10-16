@@ -116,7 +116,7 @@ private func allTypeBackgroundView(entry: Provider.Entry) -> some View {
         let homeColor = Color.teamColor(for: homeTeamColor)
         let awayColor = Color.teamColor(for: awayTeamColor)
         
-        let gradient = LinearGradient.gradient(startColor: homeColor ?? Color.widget30, endColor: awayColor ?? Color.widget30)
+        let gradient = LinearGradient.gradient(startColor: awayColor ?? Color.widget30, endColor: homeColor ?? Color.widget30)
         
         return AnyView(Rectangle().fill(gradient))
     } else {

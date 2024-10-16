@@ -20,6 +20,13 @@ struct MyTeamEndGameInfo: View {
                     .padding(.leading, 24)
                 
                 Spacer()
+                
+                // TODO: 시즌 구분
+                Text("정규 시즌")
+                    .font(.Body.body2)
+                    .foregroundColor(.TextLabel.scoreBoard)
+                    .padding(.trailing, 24)
+                
             }
             .padding(.bottom, 48)
             
