@@ -9,7 +9,7 @@ import Foundation
 
 extension UserDefaults {
     static var shared: UserDefaults {
-        let appGroupId = "group.com.rookiekbo.widget"
+        let appGroupId = "group.com.rookiekbo.widget.simmons"
         return UserDefaults(suiteName: appGroupId)!
     }
 }
