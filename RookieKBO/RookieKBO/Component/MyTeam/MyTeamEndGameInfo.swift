@@ -115,24 +115,24 @@ private struct GameScore: View {
             
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle1)
-                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") : Color.TextLabel.scoreBoard)
+                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
                 .padding(.vertical, 4)
                 .padding(.horizontal, 9)
             
             Text("\(awayResult.description)")
                 .font(.Head.head4)
-                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") : Color.TextLabel.scoreBoard)
+                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
                 .padding(.leading, 16)
             
             Spacer()
             
             Text("\(homeResult.description)")
                 .font(.Head.head4)
-                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") : Color.TextLabel.scoreBoard)
+                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
                 .padding(.trailing, 16)
             
             Text("\(homeScore)")
-                .font(.CustomTitle.customTitle1).foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") : Color.TextLabel.scoreBoard)
+                .font(.CustomTitle.customTitle1).foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
                 .padding(.vertical, 4)
                 .padding(.horizontal, 9)
         }
