@@ -1,5 +1,5 @@
 //
-//  AllBeforeGameView.swift
+//  CurrentGameView.swift
 //  RookieKBO
 //
 //  Created by Simmons on 10/17/24.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct AllBeforeGameView: View {
+struct CurrentGameView: View {
     var body: some View {
-        Text("AllBeforeGameView")
+        Text("CurrentGameView")
     }
 }
 
 #Preview {
-    AllBeforeGameView()
+    CurrentGameView()
 }
