@@ -35,7 +35,9 @@ struct Provider: AppIntentTimelineProvider {
 struct WidgetEntry: TimelineEntry {
     let date: Date
     var selectedTeamType: SelectTeamAppIntent
-    var match: Match? = MockDataBuilder.mockMatch
+
+    // TODO: 데이터 변경
+    var match: Match? = filterMatches(matches: MockDataBuilder.mockMatchList)
 }
 
 struct RookieKBOWidgetEntryView : View {
@@ -60,8 +62,8 @@ struct RookieKBOWidgetEntryView : View {
                 BackgroundView(image: "img_widgetkia")
             case .kiwoomType:
                 BackgroundView(image: "img_widgetkiwoom")
-            case .hanhwaType:
-                BackgroundView(image: "img_widgethanhwa")
+            case .hanwhaType:
+                BackgroundView(image: "img_widgethanwha")
             case .ktType:
                 BackgroundView(image: "img_widgetkt")
             case .ncType:
@@ -72,6 +74,7 @@ struct RookieKBOWidgetEntryView : View {
                     
                     AnyView(Rectangle().fill(gradient))
                 } else {
+                    
                     allTypeBackgroundView(entry: entry)
                 }
             }
@@ -126,7 +129,9 @@ private func allTypeBackgroundView(entry: Provider.Entry) -> some View {
 
 
 struct RookieKBOWidget: Widget {
-    let kind: String = "choseyeon.RookieKBO.RookieKBOWidget"
+    
+    // TODO: 각자 위젯 아이디로 변경
+    let kind: String = "com.rookiekbo.widget"
     
     var body: some WidgetConfiguration {
         
@@ -134,8 +139,8 @@ struct RookieKBOWidget: Widget {
             RookieKBOWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("루키크보 위젯⚾️")
-        .description("루키크보 위젯입니다.")
+        .configurationDisplayName("루키크보 위젯")
+        .description("곧 다가올 경기 일정부터 실시간 경기 정보까지, \n응원 팀의 정보를 한눈에 확인하세요!")
         .supportedFamilies([.systemSmall])
         .contentMarginsDisabled()
     }
@@ -147,88 +152,66 @@ extension SelectTeamAppIntent {
     fileprivate static var allType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .allType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("전체 구단", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var ssgType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .ssgType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("SSG 랜더스", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var lgType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .lgType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("LG 트윈스", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var lotteType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .lotteType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("롯데 자이언츠", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var samsungType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .samsungType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("삼성 라이온즈", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var doosanType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .doosanType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("두산 베어스", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var kiaType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .kiaType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("기아 타이거즈", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var kiwoomType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .kiwoomType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("키움 히어로즈", forKey: "selectTeam")
         return intent
     }
     
-    fileprivate static var hanhwaType: SelectTeamAppIntent {
+    fileprivate static var hanwhaType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
-        intent.selectedTeam = .hanhwaType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("한화 이글스", forKey: "selectTeam")
+        intent.selectedTeam = .hanwhaType
         return intent
     }
     
     fileprivate static var ktType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .ktType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("KT 위즈", forKey: "selectTeam")
         return intent
     }
     
     fileprivate static var ncType: SelectTeamAppIntent {
         let intent = SelectTeamAppIntent()
         intent.selectedTeam = .ncType
-        UserDefaults.shared.removeObject(forKey: "selectTeam")
-        UserDefaults.shared.set("NC 다이노스", forKey: "selectTeam")
         return intent
     }
 }
@@ -236,5 +219,5 @@ extension SelectTeamAppIntent {
 #Preview(as: .systemSmall) {
     RookieKBOWidget()
 } timeline: {
-    WidgetEntry(date: .now, selectedTeamType: .kiwoomType, match: MockDataBuilder.mockMatch)
+    WidgetEntry(date: .now, selectedTeamType: .allType, match: MockDataBuilder.mockMatch)
 }

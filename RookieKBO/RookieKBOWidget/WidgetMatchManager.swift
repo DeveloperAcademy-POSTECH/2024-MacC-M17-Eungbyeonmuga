@@ -73,11 +73,17 @@ func calculateInningText(for match: Match) -> String {
     }
 }
 
+// 유저디폴트에서 선택한 팀 이름을 가져오는 함수
+func fetchSelectedTeamFromUserDefaults() -> String? {
+    return UserDefaults.shared.string(forKey: "selectTeam")
+}
+
 // 선택한 팀 반환 함수
 func getSelectTeam() -> SelectTeamType {
-    guard let teamName = UserDefaults.shared.string(forKey: "selectTeam") else {
+    guard let teamName = fetchSelectedTeamFromUserDefaults() else {
         return .allType
     }
+    
     switch teamName {
     case "SSG 랜더스":
         return .ssgType
@@ -94,7 +100,7 @@ func getSelectTeam() -> SelectTeamType {
     case "키움 히어로즈":
         return .kiwoomType
     case "한화 이글스":
-        return .hanhwaType
+        return .hanwhaType
     case "KT 위즈":
         return .ktType
     case "NC 다이노스":
@@ -123,7 +129,7 @@ func colorString(for teamType: SelectTeamType) -> String {
         return "kia"
     case .kiwoomType:
         return "kiwoom"
-    case .hanhwaType:
+    case .hanwhaType:
         return "hanwha"
     case .ktType:
         return "kt"
@@ -151,7 +157,7 @@ func teamTypeCharacterString(for teamType: SelectTeamType) -> String {
         return "widget_kia"
     case .kiwoomType:
         return "widget_kiwoom"
-    case .hanhwaType:
+    case .hanwhaType:
         return "widget_hanwha"
     case .ktType:
         return "widget_kt"
@@ -190,4 +196,40 @@ func teamCharacterString(for team: Team) -> String {
     }
 }
 
-
+// 매치 배열에서 필터링하는 함수
+func filterMatches(matches: [Match]) -> Match? {
+    let selectedTeamName = fetchSelectedTeamFromUserDefaults()
+    let filteredMatches: [Match]
+    
+    if selectedTeamName == "전체 구단" {
+        filteredMatches = matches
+    } else {
+        filteredMatches = matches.filter { match in
+            match.homeTeam.name == selectedTeamName || match.awayTeam.name == selectedTeamName
+        }
+    }
+    
+    let todayMatches = filteredMatches.filter {
+        Calendar.current.isDate($0.startDateTime, inSameDayAs: Date.today)
+    }
+    
+    if !todayMatches.isEmpty {
+        return todayMatches.sorted(by: { $0.startDateTime < $1.startDateTime }).first
+    }
+    
+    for state in [GameState.PLAYING, .PREPARE, .END, .CANCEL] {
+        if let match = todayMatches.first(where: { $0.gameState == state }) {
+            return match
+        }
+    }
+    
+    let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date.today)!
+    if let tomorrowPrepareMatch = filteredMatches.first(where: {
+        Calendar.current.isDate($0.startDateTime, inSameDayAs: tomorrow) && $0.gameState == .PREPARE
+    }) {
+        return tomorrowPrepareMatch
+    }
+    
+    let futureMatches = filteredMatches.filter { $0.startDateTime > Date() }
+    return futureMatches.sorted(by: { $0.startDateTime < $1.startDateTime }).first
+}
