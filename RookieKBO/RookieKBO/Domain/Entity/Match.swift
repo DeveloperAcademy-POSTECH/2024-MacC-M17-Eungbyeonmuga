@@ -14,6 +14,7 @@ struct Match: Codable, Identifiable, Equatable {
     var homeTeam: Team
     var awayTeam: Team
     var place: String
+    var season: String
     var scoreBoard: [ScoreBoard]?
     
     init(
@@ -22,6 +23,7 @@ struct Match: Codable, Identifiable, Equatable {
         homeTeam: Team,
         awayTeam: Team,
         place: String,
+        season: String,
         scoreBoard: [ScoreBoard]
     ) {
         self.id = UUID()
@@ -30,6 +32,7 @@ struct Match: Codable, Identifiable, Equatable {
         self.homeTeam = homeTeam
         self.awayTeam = awayTeam
         self.place = place
+        self.season = season
         self.scoreBoard = scoreBoard
     }
 }

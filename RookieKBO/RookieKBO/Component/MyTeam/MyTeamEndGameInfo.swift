@@ -22,7 +22,7 @@ struct MyTeamEndGameInfo: View {
                 Spacer()
                 
                 // TODO: 시즌 구분
-                Text("정규 시즌")
+                Text("\(endGameInfo.season)")
                     .font(.Body.body2)
                     .foregroundColor(.TextLabel.scoreBoard)
                     .padding(.trailing, 24)
