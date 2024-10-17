@@ -198,11 +198,9 @@ func teamCharacterString(for team: Team) -> String {
 
 // 매치 배열에서 필터링하는 함수
 func filterMatches(matches: [Match]) -> Match? {
-    let today = Calendar.current.startOfDay(for: Date())
     let selectedTeamName = fetchSelectedTeamFromUserDefaults()
-    
-    // 선택된 팀에 따라 필터링
     let filteredMatches: [Match]
+    
     if selectedTeamName == "전체 구단" {
         filteredMatches = matches
     } else {
@@ -211,12 +209,15 @@ func filterMatches(matches: [Match]) -> Match? {
         }
     }
     
-    // 오늘 날짜와 startDateTime 비교
     let todayMatches = filteredMatches.filter {
-        Calendar.current.isDate($0.startDateTime, inSameDayAs: today)
+        Calendar.current.isDate($0.startDateTime, inSameDayAs: Date.today)
     }
     
-    // 우선 순위에 따라 매치 반환
+    if !todayMatches.isEmpty {
+        return todayMatches.sorted(by: { $0.startDateTime < $1.startDateTime }).first
+    }
+    
+    // 우선 순위에 따라 매치 반환 (이전 로직)
     for state in [GameState.PLAYING, .PREPARE, .END, .CANCEL] {
         if let match = todayMatches.first(where: { $0.gameState == state }) {
             return match
@@ -224,7 +225,7 @@ func filterMatches(matches: [Match]) -> Match? {
     }
     
     // 오늘 경기가 없으면 내일 PREPARE 경기 검색
-    let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
+    let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date.today)!
     if let tomorrowPrepareMatch = filteredMatches.first(where: {
         Calendar.current.isDate($0.startDateTime, inSameDayAs: tomorrow) && $0.gameState == .PREPARE
     }) {
@@ -235,3 +236,41 @@ func filterMatches(matches: [Match]) -> Match? {
     let futureMatches = filteredMatches.filter { $0.startDateTime > Date() }
     return futureMatches.sorted(by: { $0.startDateTime < $1.startDateTime }).first
 }
+
+//func filterMatches(matches: [Match]) -> Match? {
+//    let selectedTeamName = fetchSelectedTeamFromUserDefaults()
+//    
+//    // 선택된 팀에 따라 필터링
+//    let filteredMatches: [Match]
+//    if selectedTeamName == "전체 구단" {
+//        filteredMatches = matches
+//    } else {
+//        filteredMatches = matches.filter { match in
+//            match.homeTeam.name == selectedTeamName || match.awayTeam.name == selectedTeamName
+//        }
+//    }
+//    
+//    // 오늘 날짜와 startDateTime 비교
+//    let todayMatches = filteredMatches.filter {
+//        Calendar.current.isDate($0.startDateTime, inSameDayAs: Date.today)
+//    }
+//    
+//    // 우선 순위에 따라 매치 반환
+//    for state in [GameState.PLAYING, .PREPARE, .END, .CANCEL] {
+//        if let match = todayMatches.first(where: { $0.gameState == state }) {
+//            return match
+//        }
+//    }
+//    
+//    // 오늘 경기가 없으면 내일 PREPARE 경기 검색
+//    let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date.today)!
+//    if let tomorrowPrepareMatch = filteredMatches.first(where: {
+//        Calendar.current.isDate($0.startDateTime, inSameDayAs: tomorrow) && $0.gameState == .PREPARE
+//    }) {
+//        return tomorrowPrepareMatch
+//    }
+//
+//    // 오늘 경기가 없으면 다른 날 진행 예정 경기 중 가장 빠른 경기 반환
+//    let futureMatches = filteredMatches.filter { $0.startDateTime > Date() }
+//    return futureMatches.sorted(by: { $0.startDateTime < $1.startDateTime }).first
+//}
