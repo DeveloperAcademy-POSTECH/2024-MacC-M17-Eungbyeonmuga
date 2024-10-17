@@ -133,9 +133,9 @@
 			isa = PBXGroup;
 			children = (
 				DFCEC5702CBCA6A5009E91A7 /* RookieKBOWidgetExtension.entitlements */,
-				DF20BB822CAED5DC00F88298 /* RookieKBO */,
 				DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */,
 				DFC005A02CB8D40F007C96BE /* RookieKBOWidgetExtension.appex */,
+				DF20BB822CAED5DC00F88298 /* RookieKBO */,
 				DFC005A62CB8D40F007C96BE /* RookieKBOWidget */,
 				DFC005A12CB8D40F007C96BE /* Frameworks */,
 			);

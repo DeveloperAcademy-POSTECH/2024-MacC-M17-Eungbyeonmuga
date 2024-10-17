@@ -60,15 +60,9 @@ struct FetchMatchesResponse: Decodable {
     /// Match로 변환합니다.
     func toMatches() -> [Match] {
         let dateFormatter = ISO8601DateFormatter()
-        
-        // Date 변환
         guard let date = dateFormatter.date(from: startDateTime) else {
             return []
         }
-        
-        // gameStatus 변환
-        
-        
         
         let homeTeam = toTeams(name: homeTeam)
         let awayTeam = toTeams(name: awayTeam)
@@ -87,7 +81,6 @@ struct FetchMatchesResponse: Decodable {
             season: season,
             scoreBoard: scoreBoard
         )
-        
         return [match]
     }
 }
