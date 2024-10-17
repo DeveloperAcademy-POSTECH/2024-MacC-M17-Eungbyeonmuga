@@ -35,6 +35,8 @@ struct Provider: AppIntentTimelineProvider {
 struct WidgetEntry: TimelineEntry {
     let date: Date
     var selectedTeamType: SelectTeamAppIntent
+
+    // TODO: 데이터 변경
     var match: Match? = filterMatches(matches: MockDataBuilder.mockMatchList)
 }
 
