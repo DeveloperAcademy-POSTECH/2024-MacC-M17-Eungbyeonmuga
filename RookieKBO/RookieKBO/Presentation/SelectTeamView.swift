@@ -37,22 +37,43 @@ private struct HeaderView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 18) {
+            VStack(alignment: .leading, spacing: 0) {
                 if currentSelectTeam == "없음" {
                     Image("titleLogo")
                         .resizable()
                         .frame(width: 150, height: 40)
+                        .padding(.bottom, 18)
                     
-                    Text("응원하는 구단을 선택하세요!\n우리 팀의 정보를 먼저 확인할 수 있어요.")
+                    Text("응원하는 구단을 선택하세요!")
                         .font(.Head.head4)
                         .foregroundColor(.TextLabel.main)
-                        .lineSpacing(8)
+                        .padding(.bottom, 8)
+                    
+                    Text("우리 팀의 정보를 먼저 확인할 수 있어요.")
+                        .font(.Head.head4)
+                        .foregroundColor(.TextLabel.main)
+                    
                 } else {
                     Group {
                         if currentSelectTeam == "전체 구단" {
-                            Text("지금 '\(currentSelectTeam)'을 응원하고 계시네요!\n응원 팀을 변경할 수도 있어요.")
+                            
+                            Text("지금 '\(currentSelectTeam)'을 응원하고 계시네요!")
+                                .font(.Head.head4)
+                                .foregroundColor(.TextLabel.main)
+                                .padding(.bottom, 8)
+                            
+                            Text("응원 팀을 변경할 수도 있어요.")
+                                .font(.Head.head4)
+                                .foregroundColor(.TextLabel.main)
                         } else {
-                            Text("지금 '\(currentSelectTeam)'를 응원하고 계시네요!\n응원 팀을 변경할 수도 있어요.")
+                            Text("지금 '\(currentSelectTeam)'을 응원하고 계시네요!")
+                                .font(.Head.head4)
+                                .foregroundColor(.TextLabel.main)
+                                .padding(.bottom, 8)
+                            
+                            Text("응원 팀을 변경할 수도 있어요.")
+                                .font(.Head.head4)
+                                .foregroundColor(.TextLabel.main)
                         }
                     }
                     .font(.Head.head4)

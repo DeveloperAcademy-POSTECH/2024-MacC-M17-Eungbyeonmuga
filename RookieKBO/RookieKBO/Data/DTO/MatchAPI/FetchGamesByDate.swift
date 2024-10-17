@@ -19,7 +19,7 @@ struct FetchGamesByDateResponse: Decodable {
         let season: String
         let startDate: String
         let place: String
-        let gameStatus: GameState
+        let gameStatus: GameState // 스트링으로 받아옴
         let homeTeam: String
         let awayTeam: String
         let homeScores: [Int]
@@ -30,6 +30,7 @@ struct FetchGamesByDateResponse: Decodable {
         let awayScore: Int
     }
     
+    // 변환
     func toScoreBoard() -> [Match] {
         self.gameInfos.compactMap {
             
