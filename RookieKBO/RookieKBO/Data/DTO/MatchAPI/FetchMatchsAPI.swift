@@ -60,18 +60,28 @@ struct FetchMatchesResponse: Decodable {
     /// Match로 변환합니다.
     func toMatches() -> [Match] {
         let dateFormatter = ISO8601DateFormatter()
+        
+        // Date 변환
         guard let date = dateFormatter.date(from: startDateTime) else {
             return []
         }
         
+        // 팀 변환
         let homeTeam = toTeams(name: homeTeam)
         let awayTeam = toTeams(name: awayTeam)
 
+        // 점수가 -1인 경우 nil 반환
+        if homeScore == -1 || awayScore == -1 {
+            return []
+        }
+
+        // ScoreBoard 생성
         let scoreBoard = [
             ScoreBoard(homeAndAway: .HOME, runs: homeRHEB[0], hits: homeRHEB[1], errors: homeRHEB[2], balls: homeRHEB[3], scores: homeScores),
             ScoreBoard(homeAndAway: .AWAY, runs: awayRHEB[0], hits: awayRHEB[1], errors: awayRHEB[2], balls: awayRHEB[3], scores: awayScores)
         ]
         
+        // Match 객체 생성
         let match = Match(
             startDateTime: date,
             gameState: GameState(rawValue: gameStatus) ?? .END,
@@ -81,6 +91,7 @@ struct FetchMatchesResponse: Decodable {
             season: season,
             scoreBoard: scoreBoard
         )
+        
         return [match]
     }
 }
