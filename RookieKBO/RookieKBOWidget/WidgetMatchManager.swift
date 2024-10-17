@@ -100,7 +100,7 @@ func getSelectTeam() -> SelectTeamType {
     case "키움 히어로즈":
         return .kiwoomType
     case "한화 이글스":
-        return .hanhwaType
+        return .hanwhaType
     case "KT 위즈":
         return .ktType
     case "NC 다이노스":
@@ -129,7 +129,7 @@ func colorString(for teamType: SelectTeamType) -> String {
         return "kia"
     case .kiwoomType:
         return "kiwoom"
-    case .hanhwaType:
+    case .hanwhaType:
         return "hanwha"
     case .ktType:
         return "kt"
@@ -157,7 +157,7 @@ func teamTypeCharacterString(for teamType: SelectTeamType) -> String {
         return "widget_kia"
     case .kiwoomType:
         return "widget_kiwoom"
-    case .hanhwaType:
+    case .hanwhaType:
         return "widget_hanwha"
     case .ktType:
         return "widget_kt"
