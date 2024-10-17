@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+enum APIEndPoints {
+    static let baseURL: String = "https://rookiekbo.store"
+    
+    enum games: String {
+        case fetchGamesByDate = ""
+    }
+}

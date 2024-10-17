@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GameState: Codable, CaseIterable {
+enum GameState: String, Codable, CaseIterable {
     case PREPARE
     case PLAYING
     case END
