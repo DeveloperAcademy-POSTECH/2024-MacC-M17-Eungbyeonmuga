@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "Property 1=Default.png",
+      "filename" : "img_widgetssg.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Property 1=Default@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Property 1=Default@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
