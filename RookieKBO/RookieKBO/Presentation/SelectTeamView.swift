@@ -10,6 +10,7 @@ import WidgetKit
 
 struct SelectTeamView: View {
     
+    @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @State private var isSelectButtonPresented: Bool = false
     
@@ -160,15 +161,16 @@ private struct SelectTeamListView: View {
 
 private struct StartTeam: View {
     
+    @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
             Button {
-                // TODO: 화면 이동
                 selectTeamUseCase.updateUserDefaultsTeam()
                 WidgetCenter.shared.reloadAllTimelines()
+                pathModel.pop()
                 
             } label: {
                 Text("루키크보 시작하기")

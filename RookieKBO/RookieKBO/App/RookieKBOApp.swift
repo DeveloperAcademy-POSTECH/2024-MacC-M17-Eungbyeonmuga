@@ -14,6 +14,8 @@ struct RookieKBOApp: App {
 //            SelectTeamView()
 //                .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
             AllGameInfoView()
+                .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+                .environment(PathModel())
         }
     }
 }
