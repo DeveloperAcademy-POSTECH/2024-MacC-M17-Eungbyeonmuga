@@ -33,12 +33,12 @@ struct MyTeamGameInfoView: View {
 //                    .tag(GameTab.beforeList)
                 
                 // 오늘 경기 뷰
-                CurrentGameView()
-                    .tag(GameTab.currentList)
+//                CurrentGameView()
+//                    .tag(GameTab.currentList)
                 
                 // 내일 경기 뷰
-                UpcomingGameView()
-                    .tag(GameTab.upcomingList)
+//                UpcomingGameView()
+//                    .tag(GameTab.upcomingList)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         }

@@ -83,6 +83,44 @@ struct MockDataBuilder {
         ]
     }
     
+    static var mockUpcommingGameList: [Match] {
+        return [
+            Match(
+                startDateTime: Calendar.current.date(byAdding: .day, value: 1, to: Date())!,
+                gameState: .CANCEL,
+                homeTeam: Team(name: "삼성 라이온즈", image: "samsungUnder", color: "samsung"),
+                awayTeam: Team(name: "NC 다이노스", image: "ncUnder", color: "nc"),
+                place: "대구 삼성라이온즈파크",
+                scoreBoard: []
+            ),
+            Match(
+                startDateTime: Calendar.current.date(byAdding: .day, value: 2, to: Date())!,
+                gameState: .PREPARE,
+                homeTeam: Team(name: "KIA 타이거즈", image: "kiaUnder", color: "kia"),
+                awayTeam: Team(name: "SSG 랜더스", image: "ssgUnder", color: "ssg"),
+                place: "광주 기아챔피언스필드",
+                scoreBoard: []
+            ),
+            Match(
+                startDateTime: Calendar.current.date(byAdding: .day, value: 0, to: Date())!,
+                gameState: .PREPARE,
+                homeTeam: Team(name: "KT 위즈", image: "ktUnder", color: "kt"),
+                awayTeam: Team(name: "NC 다이노스", image: "ncUnder", color: "nc"),
+                place: "수원 위즈 파크",
+                scoreBoard: []
+            ),
+            Match(
+                startDateTime: Calendar.current.date(byAdding: .day, value: 0, to: Date())!,
+                gameState: .PREPARE,
+                homeTeam: Team(name: "KT 위즈", image: "ktUnder", color: "kt"),
+                awayTeam: Team(name: "삼성 라이온즈", image: "samsungUnder", color: "samsung"),
+                place: "수원 위즈 파크",
+                scoreBoard: []
+            )
+        ]
+    }
+    
+    
     static var mockMatchList: [Match] {
         return [
             Match(

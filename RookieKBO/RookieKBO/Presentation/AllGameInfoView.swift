@@ -25,13 +25,13 @@ struct AllGameInfoView: View {
         }
     }
     
-    var todaygames: [Match] {
+    var todayGames: [Match] {
         return games.filter { match in
             return matchUseCase.isDateToday(match.startDateTime)
         }
     }
     
-    var futuregames: [Match] {
+    var upCommingGames: [Match] {
         return games.filter { match in
             return matchUseCase.isDateInFuture(match.startDateTime)
         }
@@ -63,7 +63,7 @@ struct AllGameInfoView: View {
                         .tag(GameTab.currentList)
                     
                     // 내일 경기 뷰
-                    UpcomingGameView()
+                    UpcomingGameView(games: upCommingGames)
                         .tag(GameTab.upcomingList)
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
