@@ -31,7 +31,7 @@ enum WidgetMatchResult {
     case win
     case lose
     case draw
-
+    
     var color: Color {
         switch self {
         case .win:
@@ -42,7 +42,7 @@ enum WidgetMatchResult {
             return .widget50
         }
     }
-
+    
     var description: String {
         switch self {
         case .win:
@@ -196,40 +196,41 @@ func teamCharacterString(for team: Team) -> String {
     }
 }
 
-// 매치 배열에서 필터링하는 함수
-func filterMatches(matches: [Match]) -> Match? {
-    let selectedTeamName = fetchSelectedTeamFromUserDefaults()
-    let filteredMatches: [Match]
+// 서버에서 매치를 가져오는 함수
+private func fetchMatchesFromServer() async -> Result<[Match], Error> {
+    let matchUseCase = MatchUseCase(matchService: MatchServiceImpl())
     
-    if selectedTeamName == "전체 구단" {
+    // TODO: 날짜 변경
+    let result = await matchUseCase.fetchMatches(date: "20241018")
+    return result
+}
+
+// 매치 배열에서 필터링하는 함수
+func filterMatches() async -> Match? {
+    let selectedTeamName = fetchSelectedTeamFromUserDefaults()
+    
+    var filteredMatches: [Match] = []
+    let result = await fetchMatchesFromServer()
+    
+    switch result {
+    case .success(let matches):
         filteredMatches = matches
-    } else {
-        filteredMatches = matches.filter { match in
+    case .failure(let error):
+        print("fetch 에러 \(error)")
+        return nil
+    }
+    
+    if selectedTeamName != "전체 구단" {
+        filteredMatches = filteredMatches.filter { match in
             match.homeTeam.name == selectedTeamName || match.awayTeam.name == selectedTeamName
         }
     }
     
-    let todayMatches = filteredMatches.filter {
-        Calendar.current.isDate($0.startDateTime, inSameDayAs: Date.today)
-    }
-    
-    if !todayMatches.isEmpty {
-        return todayMatches.sorted(by: { $0.startDateTime < $1.startDateTime }).first
-    }
-    
     for state in [GameState.PLAYING, .PREPARE, .END, .CANCEL] {
-        if let match = todayMatches.first(where: { $0.gameState == state }) {
+        if let match = filteredMatches.first(where: { $0.gameState == state }) {
             return match
         }
     }
     
-    let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date.today)!
-    if let tomorrowPrepareMatch = filteredMatches.first(where: {
-        Calendar.current.isDate($0.startDateTime, inSameDayAs: tomorrow) && $0.gameState == .PREPARE
-    }) {
-        return tomorrowPrepareMatch
-    }
-    
-    let futureMatches = filteredMatches.filter { $0.startDateTime > Date() }
-    return futureMatches.sorted(by: { $0.startDateTime < $1.startDateTime }).first
+    return nil
 }

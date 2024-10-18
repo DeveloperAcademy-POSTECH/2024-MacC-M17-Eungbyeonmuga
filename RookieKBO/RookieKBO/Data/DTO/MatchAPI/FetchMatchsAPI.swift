@@ -70,9 +70,23 @@ struct FetchMatchesResponse: Decodable {
             guard let date = dateFormatter.date(from: startDateTime) else {
                 return .failure(.matchinvalidDateError)
             }
-            print("🥵", date)
+            
             let homeTeam = toTeams(name: homeTeam)
             let awayTeam = toTeams(name: awayTeam)
+            
+            let gameState: GameState
+            switch gameStatus {
+            case "경기 준비":
+                gameState = .PREPARE
+            case "경기 중":
+                gameState = .PLAYING
+            case "경기 종료":
+                gameState = .END
+            case "경기 취소":
+                gameState = .CANCEL
+            default:
+                gameState = .END
+            }
             
             let scoreBoard = [
                 ScoreBoard(homeAndAway: .HOME, runs: homeRHEB[0], hits: homeRHEB[1], errors: homeRHEB[2], balls: homeRHEB[3], scores: homeScores),
@@ -81,7 +95,7 @@ struct FetchMatchesResponse: Decodable {
             
             let match = Match(
                 startDateTime: date,
-                gameState: GameState(rawValue: gameStatus) ?? .END,
+                gameState: gameState,
                 homeTeam: homeTeam,
                 awayTeam: awayTeam,
                 place: place,
@@ -95,20 +109,18 @@ struct FetchMatchesResponse: Decodable {
     /// 모든 게임 정보를 Match로 변환합니다.
     func toMatches() -> Result<[Match], NetworkError> {
         var matches: [Match] = []
+        
         for gameInfo in gameInfos {
-            if gameInfo.homeScore == -1 || gameInfo.awayScore == -1 {
-                continue
-            }
-            
             switch gameInfo.toMatch() {
             case .success(let match):
-                matches.append(match)
+                if let scoreBoard = match.scoreBoard,
+                   !(match.gameState == .END && scoreBoard[0].scores.isEmpty) {
+                    matches.append(match)
+                }
             case .failure(let error):
                 return .failure(error)
             }
         }
         return .success(matches)
     }
-    
 }
-

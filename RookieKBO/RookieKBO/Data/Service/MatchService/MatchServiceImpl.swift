@@ -11,7 +11,6 @@ final class MatchServiceImpl: MatchServiceInterface {
     
     private let matchRepository = MatchRepository()
     
-    ///Match 정보 패치합니다.
     func fetchMatches(date: String) async -> Result<[Match], Error> {
         let request = FetchMatchesRequest(date: date)
         let result = await matchRepository.fetchMatches(request: request)

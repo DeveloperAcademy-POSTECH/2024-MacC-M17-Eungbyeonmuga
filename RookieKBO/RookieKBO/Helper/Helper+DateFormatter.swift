@@ -26,5 +26,11 @@ extension Date {
         let calendar = Calendar.current
         return calendar.startOfDay(for: Date())
     }
+    
+    func toFormattedString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        return dateFormatter.string(from: self)
+    }
 }
 

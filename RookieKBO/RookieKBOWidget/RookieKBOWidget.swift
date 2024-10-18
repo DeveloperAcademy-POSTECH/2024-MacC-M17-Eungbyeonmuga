@@ -10,11 +10,11 @@ import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> WidgetEntry {
-        WidgetEntry(date: Date(), selectedTeamType: .allType)
+        WidgetEntry(date: Date(), selectedTeamType: .allType, match: MockDataBuilder.mockMatch)
     }
     
     func snapshot(for configuration: SelectTeamAppIntent, in context: Context) async -> WidgetEntry {
-        WidgetEntry(date: Date(), selectedTeamType: configuration)
+        WidgetEntry(date: Date(), selectedTeamType: configuration, match: MockDataBuilder.mockMatch)
     }
     
     func timeline(for configuration: SelectTeamAppIntent, in context: Context) async -> Timeline<WidgetEntry> {
@@ -25,7 +25,9 @@ struct Provider: AppIntentTimelineProvider {
         
         let currentDate = Date()
         let entryDate = Calendar.current.date(byAdding: .second, value: 1, to: currentDate)!
-        let entry = WidgetEntry(date: entryDate, selectedTeamType: selectedTeamAppIntent)
+        let todayMatch = await filterMatches()
+        print("😆😆투데이 매치😆😆", todayMatch)
+        let entry = WidgetEntry(date: entryDate, selectedTeamType: selectedTeamAppIntent, match: todayMatch ?? MockDataBuilder.mockEmptyMatch)
         entries.append(entry)
         
         return Timeline(entries: entries, policy: .atEnd)
@@ -35,9 +37,7 @@ struct Provider: AppIntentTimelineProvider {
 struct WidgetEntry: TimelineEntry {
     let date: Date
     var selectedTeamType: SelectTeamAppIntent
-
-    // TODO: 데이터 변경
-    var match: Match? = filterMatches(matches: MockDataBuilder.mockMatchList)
+    var match: Match
 }
 
 struct RookieKBOWidgetEntryView : View {
@@ -114,19 +114,17 @@ private func BackgroundView(image: String) -> some View {
 // MARK: - allTypeBackgroundView
 
 private func allTypeBackgroundView(entry: Provider.Entry) -> some View {
-    if let homeTeamColor = entry.match?.homeTeam.color,
-       let awayTeamColor = entry.match?.awayTeam.color {
-        let homeColor = Color.teamColor(for: homeTeamColor)
-        let awayColor = Color.teamColor(for: awayTeamColor)
-        
-        let gradient = LinearGradient.gradient(startColor: awayColor ?? Color.widget30, endColor: homeColor ?? Color.widget30)
-        
-        return AnyView(Rectangle().fill(gradient))
-    } else {
-        return AnyView(EmptyView())
-    }
-}
+    
+    let homeTeamColorString = entry.match.homeTeam.color
+    let awayTeamColorString = entry.match.awayTeam.color
+    
+    let homeColor = Color.teamColor(for: homeTeamColorString)
+    let awayColor = Color.teamColor(for: awayTeamColorString)
 
+    let gradient = LinearGradient.gradient(startColor: awayColor ?? Color.widget30, endColor: homeColor ?? Color.widget30)
+    
+    return AnyView(Rectangle().fill(gradient))
+}
 
 struct RookieKBOWidget: Widget {
     

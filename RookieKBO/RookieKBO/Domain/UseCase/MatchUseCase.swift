@@ -99,7 +99,7 @@ extension MatchUseCase {
             return .success(fetchedMatches)
             
         case .failure(let error):
-            print(error) // TODO: 에러처리
+            print(error)
             return .failure(error)
         }
     }

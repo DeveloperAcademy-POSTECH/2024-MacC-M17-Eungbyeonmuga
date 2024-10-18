@@ -55,16 +55,36 @@
 		DFC005BD2CB8D77E007C96BE /* Exceptions for "RookieKBO" folder in "RookieKBOWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				App/Config.swift,
+				Component/ScoreBoardView.swift,
+				Data/API/API.swift,
+				Data/API/RookieKBOAPI.swift,
+				Data/DTO/Base/BaseResponse.swift,
+				Data/DTO/MatchAPI/FetchMatchsAPI.swift,
+				Data/Network/HTTPMethod.swift,
+				Data/Network/NetworkClient.swift,
+				Data/Network/NetworkError.swift,
+				Data/Network/NetworkLog.swift,
+				Data/Service/MatchService/MatchRepository.swift,
+				Data/Service/MatchService/MatchServiceImpl.swift,
 				Data/Stub/MockDataBuilder.swift,
+				Data/Stub/ResultProtocol.swift,
+				Data/Stub/StubSelectTeamService.swift,
 				Domain/Entity/GameState.swift,
 				Domain/Entity/HomeAndAway.swift,
 				Domain/Entity/Match.swift,
 				Domain/Entity/ScoreBoard.swift,
 				Domain/Entity/Team.swift,
+				Domain/Interface/MatchServiceInterface.swift,
+				Domain/Interface/SelectTeamServiceInterface.swift,
+				Domain/UseCase/MatchUseCase.swift,
+				Domain/UseCase/SelectTeamUseCase.swift,
 				"Helper/Helper+Color.swift",
 				"Helper/Helper+DateFormatter.swift",
 				"Helper/Helper+LinearGradient.swift",
 				"Helper/Helper+PretendardFont.swift",
+				"Helper/Helper+Preview.swift",
+				"Helper/Helper+RawRepresentable.swift",
 				"Helper/Helper+StringFormatter.swift",
 				"Helper/Helper+UserDefaults.swift",
 				Resource/Assets/Colors.xcassets,
@@ -282,6 +302,8 @@
 /* Begin XCBuildConfiguration section */
 		DF20BB8C2CAED5DD00F88298 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = DF20BB822CAED5DC00F88298 /* RookieKBO */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -345,6 +367,8 @@
 		};
 		DF20BB8D2CAED5DD00F88298 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = DF20BB822CAED5DC00F88298 /* RookieKBO */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -465,6 +489,8 @@
 		};
 		DFC005B82CB8D410007C96BE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = DF20BB822CAED5DC00F88298 /* RookieKBO */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -493,6 +519,8 @@
 		};
 		DFC005B92CB8D410007C96BE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = DF20BB822CAED5DC00F88298 /* RookieKBO */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;

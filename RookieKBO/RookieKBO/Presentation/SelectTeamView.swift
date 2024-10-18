@@ -27,12 +27,6 @@ struct SelectTeamView: View {
                 StartTeam()
             }
         }
-        .onAppear {
-            Task {
-                // TODO: date 관리
-                await matchUseCase.fetchMatches(date: "20240402")
-            }
-        }
     }
 }
 
