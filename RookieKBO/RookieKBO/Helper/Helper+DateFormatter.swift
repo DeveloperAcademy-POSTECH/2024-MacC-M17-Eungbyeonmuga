@@ -14,6 +14,12 @@ extension Date {
         return dateFormatter.string(from: self)
     }
     
+    func toMonthDayString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM.dd"
+        return formatter.string(from: self)
+    }
+    
     func formattedString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
@@ -26,5 +32,8 @@ extension Date {
         let calendar = Calendar.current
         return calendar.startOfDay(for: Date())
     }
+    
+    
+
 }
 
