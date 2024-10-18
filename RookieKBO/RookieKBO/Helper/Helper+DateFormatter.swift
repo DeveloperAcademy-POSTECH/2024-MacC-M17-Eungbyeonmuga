@@ -32,5 +32,11 @@ extension Date {
         dateFormatter.dateFormat = "yyyyMMdd"
         return dateFormatter.string(from: self)
     }
+    
+    func fromFormattedString(_ dateString: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd" 
+        return dateFormatter.date(from: dateString)
+    }
 }
 

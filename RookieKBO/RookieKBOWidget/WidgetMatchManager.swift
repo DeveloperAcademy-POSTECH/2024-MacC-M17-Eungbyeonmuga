@@ -55,7 +55,6 @@ enum WidgetMatchResult {
     }
 }
 
-
 // 이닝 계산
 func calculateInningText(for match: Match) -> String {
     guard let homeScoreBoard = match.scoreBoard?.first(where: { $0.homeAndAway == .HOME }),
@@ -199,9 +198,8 @@ func teamCharacterString(for team: Team) -> String {
 // 서버에서 매치를 가져오는 함수
 private func fetchMatchesFromServer() async -> Result<[Match], Error> {
     let matchUseCase = MatchUseCase(matchService: MatchServiceImpl())
-    
     // TODO: 날짜 변경
-    let result = await matchUseCase.fetchMatches(date: "20241018")
+    let result = await matchUseCase.fetchMatches(date: Date.today.toFormattedString())
     return result
 }
 

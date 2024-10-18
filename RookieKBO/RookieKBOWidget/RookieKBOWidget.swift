@@ -26,8 +26,7 @@ struct Provider: AppIntentTimelineProvider {
         let currentDate = Date()
         let entryDate = Calendar.current.date(byAdding: .second, value: 1, to: currentDate)!
         let todayMatch = await filterMatches()
-        print("😆😆투데이 매치😆😆", todayMatch)
-        let entry = WidgetEntry(date: entryDate, selectedTeamType: selectedTeamAppIntent, match: todayMatch ?? MockDataBuilder.mockEmptyMatch)
+        let entry = WidgetEntry(date: entryDate, selectedTeamType: selectedTeamAppIntent, match: todayMatch)
         entries.append(entry)
         
         return Timeline(entries: entries, policy: .atEnd)
@@ -37,7 +36,7 @@ struct Provider: AppIntentTimelineProvider {
 struct WidgetEntry: TimelineEntry {
     let date: Date
     var selectedTeamType: SelectTeamAppIntent
-    var match: Match
+    var match: Match?
 }
 
 struct RookieKBOWidgetEntryView : View {
@@ -74,7 +73,6 @@ struct RookieKBOWidgetEntryView : View {
                     
                     AnyView(Rectangle().fill(gradient))
                 } else {
-                    
                     allTypeBackgroundView(entry: entry)
                 }
             }
@@ -114,17 +112,22 @@ private func BackgroundView(image: String) -> some View {
 // MARK: - allTypeBackgroundView
 
 private func allTypeBackgroundView(entry: Provider.Entry) -> some View {
-    
-    let homeTeamColorString = entry.match.homeTeam.color
-    let awayTeamColorString = entry.match.awayTeam.color
-    
+
+    let defaultColorString = "primary"
+    let homeTeamColorString = entry.match?.homeTeam.color ?? defaultColorString
+    let awayTeamColorString = entry.match?.awayTeam.color ?? defaultColorString
+
     let homeColor = Color.teamColor(for: homeTeamColorString)
     let awayColor = Color.teamColor(for: awayTeamColorString)
 
-    let gradient = LinearGradient.gradient(startColor: awayColor ?? Color.widget30, endColor: homeColor ?? Color.widget30)
+    let gradient = LinearGradient.gradient(
+        startColor: awayColor ?? Color.widget30,
+        endColor: homeColor ?? Color.widget30
+    )
     
     return AnyView(Rectangle().fill(gradient))
 }
+
 
 struct RookieKBOWidget: Widget {
     

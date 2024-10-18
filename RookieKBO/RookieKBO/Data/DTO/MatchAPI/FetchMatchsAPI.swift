@@ -76,7 +76,7 @@ struct FetchMatchesResponse: Decodable {
             
             let gameState: GameState
             switch gameStatus {
-            case "경기 준비":
+            case "경기 예정":
                 gameState = .PREPARE
             case "경기 중":
                 gameState = .PLAYING
@@ -115,12 +115,14 @@ struct FetchMatchesResponse: Decodable {
             case .success(let match):
                 if let scoreBoard = match.scoreBoard,
                    !(match.gameState == .END && scoreBoard[0].scores.isEmpty) {
+                    print("🎀toMatch🎀", match)
                     matches.append(match)
                 }
             case .failure(let error):
                 return .failure(error)
             }
         }
+        print("🎀toMatches🎀", matches)
         return .success(matches)
     }
 }
