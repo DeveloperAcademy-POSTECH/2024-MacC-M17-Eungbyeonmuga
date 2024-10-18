@@ -39,9 +39,9 @@ extension Color {
         case "hanwha":
             return Color.TeamColor.hanwha
         case "primary":
-            return primary
+            return .Brand.primary
         default:
-            return primary
+            return .Brand.primary
         }
     }
     
