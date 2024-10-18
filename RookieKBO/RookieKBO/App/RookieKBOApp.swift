@@ -13,6 +13,7 @@ struct RookieKBOApp: App {
         WindowGroup {
             AllGameInfoView()
                 .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+                .environment(MatchUseCase(matchService: MatchServiceImpl()))
                 .environment(PathModel())
         }
     }
