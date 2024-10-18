@@ -20,20 +20,20 @@ struct AllGameInfoView: View {
     let games: [Match] = MockDataBuilder.mockMatchList
     
     var pastGames: [Match] {
-        return games.filter { match in
-            return matchUseCase.isDateInPast(match.startDateTime)
+        return games.filter { game in
+            return matchUseCase.isDateInPast(game.startDateTime)
         }
     }
     
     var todayGames: [Match] {
-        return games.filter { match in
-            return matchUseCase.isDateToday(match.startDateTime)
+        return games.filter { game in
+            return matchUseCase.isDateToday(game.startDateTime)
         }
     }
     
     var upCommingGames: [Match] {
-        return games.filter { match in
-            return matchUseCase.isDateInFuture(match.startDateTime)
+        return games.filter { game in
+            return matchUseCase.isDateInFuture(game.startDateTime)
         }
     }
     
@@ -44,6 +44,9 @@ struct AllGameInfoView: View {
             VStack(spacing: 0) {
                 HeaderView()
                 
+                Spacer()
+                    .frame(height: 8)
+                
                 CustomTabBar(
                     tab: tab,
                     teamColor: teamColor,
@@ -51,7 +54,9 @@ struct AllGameInfoView: View {
                         tab = selectedTab
                     }
                 )
-                .padding(8)
+                
+                Spacer()
+                    .frame(height: 32)
                 
                 TabView(selection: $tab) {
                     // 이전 경기 뷰
@@ -59,7 +64,7 @@ struct AllGameInfoView: View {
                         .tag(GameTab.beforeList)
                     
                     // 오늘 경기 뷰
-                    CurrentGameView()
+                    CurrentGameView(games: todayGames)
                         .tag(GameTab.currentList)
                     
                     // 내일 경기 뷰
