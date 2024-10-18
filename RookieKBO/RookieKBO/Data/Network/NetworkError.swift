@@ -15,6 +15,8 @@ enum NetworkError: Error {
     case urlError(URLError)
     case error(Error)
     case urlComponentsError
+    case matchinvalidDateError
+    case matchinvalidScoreError
 
     var localizedDescription: String {
         switch self {
@@ -32,6 +34,10 @@ enum NetworkError: Error {
             return error.localizedDescription
         case .urlComponentsError:
             return "⚾️ URLComponents 오류"
+        case .matchinvalidDateError:
+            return "⚾️ 날짜 형식 오류"
+        case .matchinvalidScoreError:
+            return "⚾️ 점수 형식 오류"
         }
     }
 }

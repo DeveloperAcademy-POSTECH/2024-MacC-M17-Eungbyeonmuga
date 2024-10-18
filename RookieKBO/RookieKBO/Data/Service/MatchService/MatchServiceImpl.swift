@@ -17,8 +17,14 @@ final class MatchServiceImpl: MatchServiceInterface {
         let result = await matchRepository.fetchMatches(request: request)
         switch result {
         case .success(let fetchMatchesResponse):
-            let matches = fetchMatchesResponse.toMatches()
-            return .success(matches)
+            let matchesResult = fetchMatchesResponse.toMatches()
+            switch matchesResult {
+            case .success(let matches):
+                return .success(matches)
+                
+            case .failure(let error):
+                return .failure(error)
+            }
         case .failure(let error):
             return .failure(error)
         }
