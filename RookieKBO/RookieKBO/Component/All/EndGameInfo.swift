@@ -106,5 +106,6 @@ private struct GameInfo: View {
     EndGameInfo(
         endGameInfo: MockDataBuilder.mockMatch
     )
+    .environment(MatchUseCase(matchService: MatchServiceImpl()))
     .environment(PreviewHelper.mockMatchUseCase)
 }

@@ -10,10 +10,32 @@ import SwiftUI
 struct AllGameInfoView: View {
     
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @Environment(MatchUseCase.self) private var matchUseCase
     @Environment(PathModel.self) private var pathModel
     
     @State private var tab: GameTab = .currentList
     @State private var teamColor: Color = .Brand.primary
+    
+    // TODO: API 연결 이후 삭제 예정
+    let games: [Match] = MockDataBuilder.mockMatchList
+    
+    var pastGames: [Match] {
+        return games.filter { match in
+            return matchUseCase.isDateInPast(match.startDateTime)
+        }
+    }
+    
+    var todaygames: [Match] {
+        return games.filter { match in
+            return matchUseCase.isDateToday(match.startDateTime)
+        }
+    }
+    
+    var futuregames: [Match] {
+        return games.filter { match in
+            return matchUseCase.isDateInFuture(match.startDateTime)
+        }
+    }
     
     var body: some View {
         @Bindable var pathModel = pathModel
@@ -33,7 +55,7 @@ struct AllGameInfoView: View {
                 
                 TabView(selection: $tab) {
                     // 이전 경기 뷰
-                    BeforeGameView()
+                    BeforeGameView(games: pastGames)
                         .tag(GameTab.beforeList)
                     
                     // 오늘 경기 뷰
@@ -45,6 +67,7 @@ struct AllGameInfoView: View {
                         .tag(GameTab.upcomingList)
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
             }
             .onAppear {
                 if UserDefaults.shared.string(forKey: "selectTeam") == nil {
@@ -88,9 +111,6 @@ private struct HeaderView: View {
 #Preview {
     AllGameInfoView()
         .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(PathModel())
-}
-
-#Preview {
-    HeaderView()
 }

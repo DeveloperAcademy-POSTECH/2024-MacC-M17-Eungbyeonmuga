@@ -8,7 +8,7 @@
 import Foundation
 
 struct MockDataBuilder {
-   
+    
     static var mockMatch: Match {
         return Match(
             startDateTime: Date(),
@@ -34,8 +34,101 @@ struct MockDataBuilder {
         )
     }
     
+    static var mockEndGameList: [Match] {
+        return [
+            Match(
+                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                gameState: GameState.END,
+                homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha"),
+                awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg"),
+                place: "한화 생명 이글스 파크",
+                scoreBoard: [
+                    ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 1, 0 ]),
+                    ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 1, 1])
+                ]
+            ),
+            Match(
+                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                gameState: .PLAYING,
+                homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom"),
+                awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte"),
+                place: "수원 위즈 파크",
+                scoreBoard: [
+                    ScoreBoard(homeAndAway: .HOME, runs: 45, hits: 2, errors: 3, balls: 4, scores: [1, 2, 3, 4, 5, 6, 7, 8, 9]),
+                    ScoreBoard(homeAndAway: .AWAY, runs: 45, hits: 6, errors: 7, balls: 8, scores: [9, 8, 7, 6, 5, 4, 3, 2, 1])
+                ]
+            ),
+            Match(
+                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                gameState: GameState.END,
+                homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha"),
+                awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg"),
+                place: "한화 생명 이글스 파크",
+                scoreBoard: [
+                    ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 1, 0 ]),
+                    ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 1, 1])
+                ]
+            ),
+            Match(
+                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                gameState: .PLAYING,
+                homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom"),
+                awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte"),
+                place: "수원 위즈 파크",
+                scoreBoard: [
+                    ScoreBoard(homeAndAway: .HOME, runs: 45, hits: 2, errors: 3, balls: 4, scores: [1, 2, 3, 4, 5, 6, 7, 8, 9]),
+                    ScoreBoard(homeAndAway: .AWAY, runs: 45, hits: 6, errors: 7, balls: 8, scores: [9, 8, 7, 6, 5, 4, 3, 2, 1])
+                ]
+            )
+        ]
+    }
+    
     static var mockMatchList: [Match] {
         return [
+            Match(
+                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                gameState: GameState.END,
+                homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha"),
+                awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg"),
+                place: "한화 생명 이글스 파크",
+                scoreBoard: [
+                    ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 1, 0 ]),
+                    ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 1, 1])
+                ]
+            ),
+            Match(
+                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                gameState: .PLAYING,
+                homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom"),
+                awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte"),
+                place: "수원 위즈 파크",
+                scoreBoard: [
+                    ScoreBoard(homeAndAway: .HOME, runs: 45, hits: 2, errors: 3, balls: 4, scores: [1, 2, 3, 4, 5, 6, 7, 8, 9]),
+                    ScoreBoard(homeAndAway: .AWAY, runs: 45, hits: 6, errors: 7, balls: 8, scores: [9, 8, 7, 6, 5, 4, 3, 2, 1])
+                ]
+            ),
+            Match(
+                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                gameState: GameState.END,
+                homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha"),
+                awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg"),
+                place: "한화 생명 이글스 파크",
+                scoreBoard: [
+                    ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 1, 0 ]),
+                    ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 1, 1])
+                ]
+            ),
+            Match(
+                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                gameState: .PLAYING,
+                homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom"),
+                awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte"),
+                place: "수원 위즈 파크",
+                scoreBoard: [
+                    ScoreBoard(homeAndAway: .HOME, runs: 45, hits: 2, errors: 3, balls: 4, scores: [1, 2, 3, 4, 5, 6, 7, 8, 9]),
+                    ScoreBoard(homeAndAway: .AWAY, runs: 45, hits: 6, errors: 7, balls: 8, scores: [9, 8, 7, 6, 5, 4, 3, 2, 1])
+                ]
+            ),
             Match(
                 startDateTime: Calendar.current.date(byAdding: .hour, value: 1, to: Date())!,
                 gameState: .PLAYING,
@@ -140,5 +233,5 @@ struct MockDataBuilder {
                 scoreBoard: []
             )
         ]
-    }    
+    }
 }

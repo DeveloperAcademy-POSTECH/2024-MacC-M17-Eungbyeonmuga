@@ -29,8 +29,8 @@ struct MyTeamGameInfoView: View {
             
             TabView(selection: $tab) {
                 // 이전 경기 뷰
-                BeforeGameView()
-                    .tag(GameTab.beforeList)
+//                BeforeGameView()
+//                    .tag(GameTab.beforeList)
                 
                 // 오늘 경기 뷰
                 CurrentGameView()

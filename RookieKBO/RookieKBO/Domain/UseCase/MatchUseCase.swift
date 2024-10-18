@@ -85,4 +85,20 @@ extension MatchUseCase {
     func adjustScores(_ scores: [Int], inning: ScoreBoardView.Inning) -> [String] {
         matchService.adjustScores(scores, inning: inning)
     }
+    
+    // 이전 경기 필터링 메소드
+    func isDateInPast(_ date: Date) -> Bool {
+        matchService.isDateInPast(date)
+    }
+    
+    // 오늘 경기 필터링 메소드
+    func isDateToday(_ date: Date) -> Bool {
+        matchService.isDateToday(date)
+    }
+    
+    // 이후 경기 필터링 메소드
+    func isDateInFuture(_ date: Date) -> Bool {
+        matchService.isDateInFuture(date)
+    }
+    
 }

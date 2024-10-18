@@ -66,4 +66,23 @@ final class MatchServiceImpl: MatchServiceInterface {
         
         return adjustedScores
     }
+    
+    func isDateInPast(_ date: Date) -> Bool {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        return date < today
+    }
+    
+    func isDateToday(_ date: Date) -> Bool {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
+        return date >= today && date < tomorrow
+    }
+    
+    func isDateInFuture(_ date: Date) -> Bool {
+        let calendar = Calendar.current
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: Date()))!
+        return date >= tomorrow
+    }
 }
