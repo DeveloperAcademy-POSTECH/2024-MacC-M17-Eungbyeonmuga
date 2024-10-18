@@ -13,7 +13,6 @@ enum GameState: String, Codable, CaseIterable {
     case END
     case CANCEL
     
-    // TODO: 서버 확인 후 변경
     var korean: String {
         switch self {
         case .PREPARE: return "경기 예정"

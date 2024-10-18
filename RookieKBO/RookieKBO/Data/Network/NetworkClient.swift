@@ -250,6 +250,11 @@ extension NetworkClient {
         case delete = "DELETE"
     }
     
+    private enum HTTPHeader {
+        static let mimeTypeHeader = "Content-Type"
+        static let mimeTypeValue = "application/json"
+    }
+    
     /// StatusCode 반환
     private func statusCode(to response: URLResponse) -> Int? {
         (response as? HTTPURLResponse)?.statusCode
@@ -259,6 +264,12 @@ extension NetworkClient {
     private func urlToRequest(_ httpMethodList: HTTPMethodList, url: URL) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = httpMethodList.rawValue
+        
+        request.setValue(
+            HTTPHeader.mimeTypeValue,
+            forHTTPHeaderField: HTTPHeader.mimeTypeHeader
+        )
+        
         return request
     }
 }

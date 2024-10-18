@@ -10,6 +10,7 @@ import WidgetKit
 
 struct SelectTeamView: View {
     
+    @Environment(MatchUseCase.self) private var matchUseCase
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @State private var isSelectButtonPresented: Bool = false
     
@@ -24,6 +25,12 @@ struct SelectTeamView: View {
             }
             if isSelectButtonPresented {
                 StartTeam()
+            }
+        }
+        .onAppear {
+            Task {
+                // TODO: date 관리
+                await matchUseCase.fetchMatches(date: "20240402")
             }
         }
     }

@@ -13,8 +13,10 @@ final class MatchUseCase {
     private let matchService: MatchServiceInterface
     
     private(set) var state: State
+    private(set) var matches: [Match]
     
     init(matchService: MatchServiceInterface) {
+        self.matches = []
         self.matchService = matchService
         self.state = State(
             PreparingGame: nil,
@@ -84,5 +86,21 @@ extension MatchUseCase {
     // 점수 배열을 조정하는 메소드
     func adjustScores(_ scores: [Int], inning: ScoreBoardView.Inning) -> [String] {
         matchService.adjustScores(scores, inning: inning)
+    }
+    
+    // date를 보내 해당 날짜의 경기 정보 반환
+    func fetchMatches(date: String) async -> Result<[Match], Error> {
+        let result = await matchService.fetchMatches(date: date)
+        
+        switch result {
+        case .success(let fetchedMatches):
+            self.matches = fetchedMatches
+            print(fetchedMatches)
+            return .success(fetchedMatches)
+            
+        case .failure(let error):
+            print(error) // TODO: 에러처리
+            return .failure(error)
+        }
     }
 }

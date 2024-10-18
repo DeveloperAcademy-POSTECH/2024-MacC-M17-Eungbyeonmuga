@@ -45,13 +45,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		DFA758CF2CB36DAE00C8743F /* Exceptions for "RookieKBO" folder in "RookieKBO" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				App/Info.plist,
-			);
-			target = DF20BB7F2CAED5DC00F88298 /* RookieKBO */;
-		};
 		DFC005BB2CB8D410007C96BE /* Exceptions for "RookieKBOWidget" folder in "RookieKBOWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -87,13 +80,20 @@
 			);
 			target = DFC0059F2CB8D40F007C96BE /* RookieKBOWidgetExtension */;
 		};
+		DFF5FD712CC2072E000E36C1 /* Exceptions for "RookieKBO" folder in "RookieKBO" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				App/Info.plist,
+			);
+			target = DF20BB7F2CAED5DC00F88298 /* RookieKBO */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DF20BB822CAED5DC00F88298 /* RookieKBO */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				DFA758CF2CB36DAE00C8743F /* Exceptions for "RookieKBO" folder in "RookieKBO" target */,
+				DFF5FD712CC2072E000E36C1 /* Exceptions for "RookieKBO" folder in "RookieKBO" target */,
 				DFC005BD2CB8D77E007C96BE /* Exceptions for "RookieKBO" folder in "RookieKBOWidgetExtension" target */,
 			);
 			path = RookieKBO;
@@ -417,6 +417,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -448,6 +449,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

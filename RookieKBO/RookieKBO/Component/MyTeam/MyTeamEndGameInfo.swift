@@ -21,7 +21,6 @@ struct MyTeamEndGameInfo: View {
                 
                 Spacer()
                 
-                // TODO: 시즌 구분
                 Text("\(endGameInfo.season)")
                     .font(.Body.body2)
                     .foregroundColor(.TextLabel.scoreBoard)
