@@ -73,8 +73,9 @@ struct AllGameInfoView: View {
 private struct HeaderView: View {
     var body: some View {
         HStack(spacing: 0) {
-            Image("titleLogo")
+            Image(.titleLogo)
                 .resizable()
+                .scaledToFit()
                 .frame(width: 150, height: 40)
             
             Spacer()
@@ -88,4 +89,8 @@ private struct HeaderView: View {
     AllGameInfoView()
         .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
         .environment(PathModel())
+}
+
+#Preview {
+    HeaderView()
 }

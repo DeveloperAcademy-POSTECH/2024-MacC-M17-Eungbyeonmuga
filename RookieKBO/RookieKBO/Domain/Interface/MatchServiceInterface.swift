@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MatchServiceInterface {
-    func fetchMatch()
+    func fetchGames()
     func calculateScore(for match: Match, team: HomeAndAway) -> Int
     func getAllTeamResult(for teamScore: Int, otherScore: Int) -> AllMatchResult
     func getMyTeamResult(for teamScore: Int, otherScore: Int) -> MyTeamMatchResult

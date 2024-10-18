@@ -192,4 +192,5 @@ private struct StartTeam: View {
 #Preview {
     SelectTeamView()
         .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(PathModel())
 }

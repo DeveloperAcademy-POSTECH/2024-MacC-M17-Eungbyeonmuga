@@ -9,7 +9,7 @@ import Foundation
 
 final class MatchServiceImpl: MatchServiceInterface {
     
-    func fetchMatch() {
+    func fetchGames() {
         // 경기 받아오기
     }
     

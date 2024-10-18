@@ -17,10 +17,10 @@ final class MatchUseCase {
     init(matchService: MatchServiceInterface) {
         self.matchService = matchService
         self.state = State(
-            PreparingGame: nil,
-            PlayingGame: nil,
-            EndGame: nil,
-            CancelGame: nil
+            PreparingGames: nil,
+            PlayingGames: nil,
+            EndGames: nil,
+            CancelGames: nil
         )
     }
 }
@@ -30,10 +30,10 @@ final class MatchUseCase {
 extension MatchUseCase {
     
     struct State {
-        var PreparingGame: Match?
-        var PlayingGame: Match?
-        var EndGame: Match?
-        var CancelGame: Match?
+        var PreparingGames: [Match]?
+        var PlayingGames: [Match]?
+        var EndGames: [Match]?
+        var CancelGames: [Match]?
     }
 }
 
@@ -42,23 +42,23 @@ extension MatchUseCase {
 extension MatchUseCase {
     
     /// 예정 경기 업데이트
-    func updatePreparingGame(_ match: Match) {
-        state.PreparingGame = match
+    func updatePreparingGames(_ games: [Match]) {
+        state.PreparingGames = games
     }
     
     /// 진행중인 경기 업데이트
-    func updatePlayingGame(_ match: Match) {
-        state.PlayingGame = match
+    func updatePlayingGames(_ games: [Match]) {
+        state.PlayingGames = games
     }
     
     /// 종료 경기 업데이트
-    func updateEndGame(_ match: Match) {
-        state.EndGame = match
+    func updateEndGames(_ games: [Match]) {
+        state.EndGames = games
     }
     
     /// 취소 경기 업데이트
-    func updateCancelGame(_ match: Match) {
-        state.CancelGame = match
+    func updateCancelGame(_ games: [Match]) {
+        state.CancelGames = games
     }
     
     /// 점수 계산하는 함수
