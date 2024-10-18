@@ -37,7 +37,7 @@ struct MockDataBuilder {
     static var mockEndGameList: [Match] {
         return [
             Match(
-                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                startDateTime: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
                 gameState: GameState.END,
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg"),
@@ -48,7 +48,7 @@ struct MockDataBuilder {
                 ]
             ),
             Match(
-                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                startDateTime: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
                 gameState: .PLAYING,
                 homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom"),
                 awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte"),
@@ -59,7 +59,7 @@ struct MockDataBuilder {
                 ]
             ),
             Match(
-                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                startDateTime: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
                 gameState: GameState.END,
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg"),
@@ -70,7 +70,7 @@ struct MockDataBuilder {
                 ]
             ),
             Match(
-                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                startDateTime: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
                 gameState: .PLAYING,
                 homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom"),
                 awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte"),
@@ -124,7 +124,7 @@ struct MockDataBuilder {
     static var mockMatchList: [Match] {
         return [
             Match(
-                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                startDateTime: Calendar.current.date(byAdding: .day, value: -5, to: Date())!,
                 gameState: GameState.END,
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg"),
@@ -135,7 +135,7 @@ struct MockDataBuilder {
                 ]
             ),
             Match(
-                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                startDateTime: Calendar.current.date(byAdding: .day, value: -4, to: Date())!,
                 gameState: .PLAYING,
                 homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom"),
                 awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte"),
@@ -146,7 +146,7 @@ struct MockDataBuilder {
                 ]
             ),
             Match(
-                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                startDateTime: Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
                 gameState: GameState.END,
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg"),
@@ -157,7 +157,7 @@ struct MockDataBuilder {
                 ]
             ),
             Match(
-                startDateTime: Calendar.current.date(byAdding: .hour, value: -1, to: Date())!,
+                startDateTime: Calendar.current.date(byAdding: .day, value: -2, to: Date())!,
                 gameState: .PLAYING,
                 homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom"),
                 awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte"),
