@@ -11,6 +11,7 @@ import SwiftUI
 final class PathModel: PathModelProtocol {
     
     var path: NavigationPath = NavigationPath()
+    var fullScreenCover: FullScreenCover?
     
     /// path 이동
     func push(_ screen: Screen) {
@@ -25,6 +26,16 @@ final class PathModel: PathModelProtocol {
     /// 최상위 뷰로 이동
     func popToRoot() {
         path = .init()
+    }
+    
+    /// FullScreenCover로 화면 띄우기
+    func presentFullScreenCover(_ fullScreenCover: FullScreenCover) {
+        self.fullScreenCover = fullScreenCover
+    }
+    
+    /// FullScreenCover 제거
+    func dismissFullScreenCover() {
+        self.fullScreenCover = nil
     }
 }
 

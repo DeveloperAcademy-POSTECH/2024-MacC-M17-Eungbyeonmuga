@@ -11,4 +11,6 @@ protocol PathModelProtocol: ObservableObject {
     func push(_ screen: Screen)
     func pop()
     func popToRoot()
+    func presentFullScreenCover(_ fullScreenCover: FullScreenCover)
+    func dismissFullScreenCover()
 }

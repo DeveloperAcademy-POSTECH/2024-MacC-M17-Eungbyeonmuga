@@ -64,6 +64,9 @@ struct AllGameInfoView: View {
             .navigationDestination(for: Screen.self) { screen in
                 pathModel.build(screen)
             }
+            .navigationDestination(item: $pathModel.fullScreenCover) { fullScreen in
+                pathModel.build(fullScreen)
+            }
         }
     }
 }

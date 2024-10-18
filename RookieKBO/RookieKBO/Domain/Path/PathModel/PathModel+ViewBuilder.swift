@@ -18,4 +18,12 @@ extension PathModel {
             MyTeamGameInfoView()
         }
     }
+    
+    @ViewBuilder
+    func build(_ fullScreenCover: FullScreenCover) -> some View {
+        switch fullScreenCover {
+        case .allGameInfo:
+            AllGameInfoView()
+        }
+    }
 }
