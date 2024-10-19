@@ -25,20 +25,10 @@ enum Config {
 extension Config {
     static let baseURL: String = {
         guard let key = Config.infoDictionary[Keys.Plist.baseURL] as? String else {
-            print("Config.baseURL 오류: BASE_URL 키를 찾을 수 없음")  // 오류 메시지 출력
-            return "기본 URL" // 적절한 기본값 반환
+            print("Config.baseURL 오류: BASE_URL 키를 찾을 수 없음")
+            return "기본 URL" 
         }
         print("Base URL: \(key)")
         return key
     }()
 }
-
-
-//extension Config {
-//    static let baseURL: String = {
-//        guard let key = Config.infoDictionary[Keys.Plist.baseURL] as? String else {
-//            fatalError("Config.baseURL 오류")
-//        }
-//        return key
-//    }()
-//}
