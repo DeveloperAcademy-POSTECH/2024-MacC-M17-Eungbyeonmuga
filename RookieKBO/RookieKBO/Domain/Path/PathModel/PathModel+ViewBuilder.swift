@@ -14,6 +14,8 @@ extension PathModel {
         switch screen {
         case .selectTeam:
             SelectTeamView()
+        case .myTeamGameInfo:
+            MyTeamGameInfoView()
         }
     }
 }

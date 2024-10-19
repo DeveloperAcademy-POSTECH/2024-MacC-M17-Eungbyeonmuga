@@ -24,8 +24,10 @@ struct StubSelectTeamService: SelectTeamServiceInterface {
         ]
     }
     
-    func updateUserDefaultsTeam(_ selectTeamName: String) {
+    func updateUserDefaultsTeam(_ selectTeamName: String, _ selectTeamColor: String) {
         UserDefaults.shared.removeObject(forKey: "selectTeam")
+        UserDefaults.shared.removeObject(forKey: "selectTeamColor")
         UserDefaults.shared.set(selectTeamName, forKey: "selectTeam")
+        UserDefaults.shared.set(selectTeamColor, forKey: "selectTeamColor")
     }
 }

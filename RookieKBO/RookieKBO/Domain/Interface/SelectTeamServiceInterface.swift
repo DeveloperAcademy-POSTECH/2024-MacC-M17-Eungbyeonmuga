@@ -9,5 +9,5 @@ import Foundation
 
 protocol SelectTeamServiceInterface {
     func fetchAllTeam() -> [Team]
-    func updateUserDefaultsTeam(_ selectTeamName: String)
+    func updateUserDefaultsTeam(_ selectTeamName: String, _ selectTeamColor: String)
 }

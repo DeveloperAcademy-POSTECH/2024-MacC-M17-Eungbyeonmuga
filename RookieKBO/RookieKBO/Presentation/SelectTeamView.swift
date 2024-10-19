@@ -11,6 +11,7 @@ import WidgetKit
 struct SelectTeamView: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
+    @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @State private var isSelectButtonPresented: Bool = false
     
@@ -27,6 +28,7 @@ struct SelectTeamView: View {
                 StartTeam()
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
@@ -158,7 +160,7 @@ private struct SelectTeamListView: View {
                             if selectedTeam == team {
                                 RoundedRectangle(cornerRadius: 18)
                                     .stroke(
-                                        LinearGradient.gradient(startColor: Brand.primary, endColor: Brand.primaryGd),
+                                        LinearGradient.gradient(startColor: .Brand.primary, endColor: .Brand.primaryGd),
                                         lineWidth: 5
                                     )
                                     .frame(width: 172, height: 150)
@@ -182,15 +184,19 @@ private struct SelectTeamListView: View {
 
 private struct StartTeam: View {
     
+    @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
             Button {
-                // TODO: 화면 이동
                 selectTeamUseCase.updateUserDefaultsTeam()
                 WidgetCenter.shared.reloadAllTimelines()
+                pathModel.pop()
+                if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
+                    pathModel.push(.myTeamGameInfo)
+                }
                 
             } label: {
                 Text("루키크보 시작하기")
@@ -198,7 +204,7 @@ private struct StartTeam: View {
                     .frame(width: 361, height: 54)
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 16)
-                        .fill(LinearGradient.gradient(startColor: Brand.primary, endColor: Brand.primaryGd)))
+                        .fill(LinearGradient.gradient(startColor: .Brand.primary, endColor: .Brand.primaryGd)))
             }
             .padding()
         }
