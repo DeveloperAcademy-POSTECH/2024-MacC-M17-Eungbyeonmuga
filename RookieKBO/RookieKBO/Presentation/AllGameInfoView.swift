@@ -79,6 +79,7 @@ struct AllGameInfoView: View {
         .navigationDestination(for: Screen.self) { screen in
             pathModel.build(screen)
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
@@ -87,6 +88,10 @@ struct AllGameInfoView: View {
 private struct HeaderView: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @Environment(\.presentationMode) var presentationMode
+    
+    @State private var currentSelectTeam: String = "없음"
     
     var body: some View {
         HStack(spacing: 0) {
@@ -97,17 +102,32 @@ private struct HeaderView: View {
             
             Spacer()
             
-            Button {
-                pathModel.push(.selectTeam)
-            } label: {
-                Image(systemName: "arrow.triangle.2.circlepath.circle")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 32)
-                    .foregroundColor(.TeamSelect.unselectBg)
+            if currentSelectTeam == "전체 구단" {
+                Button {
+                    pathModel.push(.selectTeam)
+                } label: {
+                    Image(systemName: "arrow.triangle.2.circlepath.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 32)
+                        .foregroundColor(.TeamSelect.unselectBg)
+                }
+            } else {
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                        .resizable()
+                        .frame(width: 14, height: 14)
+                        .foregroundColor(.black)
+                        .padding(20)
+                }
             }
         }
         .padding(.horizontal)
+        .onAppear {
+            currentSelectTeam = selectTeamUseCase.state.selectedTeam?.name ?? "없음"
+        }
     }
 }
 
