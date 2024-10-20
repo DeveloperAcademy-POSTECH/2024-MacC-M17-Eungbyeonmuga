@@ -222,7 +222,7 @@ private struct TeamBoard: View {
 }
 
 #Preview {
-    ScoreBoardView(match: MockDataBuilder.mockMatch
-    )
-    .environment(PreviewHelper.mockMatchUseCase)
+    ScoreBoardView(match: MockDataBuilder.mockMatch)
+        .environment(MatchUseCase(matchService: MatchServiceImpl()))
+        .environment(PreviewHelper.mockMatchUseCase)
 }

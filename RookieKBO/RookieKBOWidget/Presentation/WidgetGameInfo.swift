@@ -16,7 +16,7 @@ struct WidgetGameInfo: View {
     var body: some View {
         HStack(spacing: 14) {
             VStack(spacing: 8) {
-                Image("\(teamCharacterString(for: currentMatch?.awayTeam ?? Team(name: "", image: "", color: "")))")
+                Image("\(teamCharacterString(for: currentMatch?.awayTeam ?? Team(name: "", image: "", color: "", backgroundImage: "")))")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)
@@ -31,7 +31,7 @@ struct WidgetGameInfo: View {
                 .foregroundColor(.TextLabel.widget50)
             
             VStack(spacing: 8) {
-                Image("\(teamCharacterString(for: currentMatch?.homeTeam ?? Team(name: "", image: "", color: "")))")
+                Image("\(teamCharacterString(for: currentMatch?.homeTeam ?? Team(name: "", image: "", color: "", backgroundImage: "")))")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)

@@ -14,4 +14,8 @@ protocol MatchServiceInterface {
     func getMyTeamResult(for teamScore: Int, otherScore: Int) -> MyTeamMatchResult
     func calculateInningText(for match: Match) -> String
     func adjustScores(_ scores: [Int], inning: ScoreBoardView.Inning) -> [String]
+    func isDateInPast(_ date: Date) -> Bool
+    func isDateToday(_ date: Date) -> Bool
+    func isDateInFuture(_ date: Date) -> Bool
+    func isMyTeam(_ team: Team, _ myTeam: Team) -> Bool
 }

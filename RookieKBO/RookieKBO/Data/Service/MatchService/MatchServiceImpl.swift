@@ -9,6 +9,8 @@ import Foundation
 
 final class MatchServiceImpl: MatchServiceInterface {
     
+    func fetchGames() {
+        // 경기 받아오기
     private let matchRepository = MatchRepository()
     
     func fetchMatches(date: String) async -> Result<[Match], Error> {
@@ -81,5 +83,29 @@ final class MatchServiceImpl: MatchServiceInterface {
         }
         
         return adjustedScores
+    }
+    
+    func isDateInPast(_ date: Date) -> Bool {
+        let calendar = Calendar.current
+        let today = Date.today
+        return date < today
+    }
+    
+    func isDateToday(_ date: Date) -> Bool {
+        let calendar = Calendar.current
+        let today = Date.today
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
+        return date >= today && date < tomorrow
+    }
+    
+    func isDateInFuture(_ date: Date) -> Bool {
+        let today = Date.today
+        let calendar = Calendar.current
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
+        return date >= tomorrow
+    }
+    
+    func isMyTeam(_ team: Team, _ myTeam: Team) -> Bool {
+        return team.name.lowercased().contains(myTeam.name.lowercased())
     }
 }
