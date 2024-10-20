@@ -26,14 +26,21 @@ struct RookieKBOApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if let selectTeam = selectTeamUseCase.state.selectedTeam {
-                if selectTeam.name == "전체 구단" {
-                    AllGameInfoView()
+            @Bindable var pathModel = pathModel
+            
+            NavigationStack(path: $pathModel.path) {
+                if let selectTeam = selectTeamUseCase.state.selectedTeam {
+                    if selectTeam.name == "전체 구단" {
+                        AllGameInfoView()
+                    } else {
+                        MyTeamGameInfoView()
+                    }
                 } else {
-                    MyTeamGameInfoView()
+                    SelectTeamView()
                 }
-            } else {
-                SelectTeamView()
+            }
+            .navigationDestination(for: Screen.self) { screen in
+                pathModel.build(screen)
             }
         }
         .environment(selectTeamUseCase)
