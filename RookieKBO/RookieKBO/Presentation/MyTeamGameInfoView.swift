@@ -48,32 +48,45 @@ struct MyTeamGameInfoView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            HeaderView()
-            
-            CustomTabBar(
-                tab: tab,
-                teamColor: teamColor,
-                onTabSelected: { selectedTab in
-                    tab = selectedTab
-                }
-            )
-            .padding(8)
-            
-            TabView(selection: $tab) {
-                // 이전 경기 뷰
-                BeforeGameView(games: pastGames)
-                    .tag(GameTab.beforeList)
-                
-                // 오늘 경기 뷰
-                CurrentGameView(games: todayGames)
-                    .tag(GameTab.currentList)
-                
-                // 내일 경기 뷰
-                UpcomingGameView(games: upCommingGames)
-                    .tag(GameTab.upcomingList)
+        // TODO: ZStack으로 수정 예정
+        VStack {
+            if let selectTeam = selectTeamUseCase.state.selectedTeam {
+                HeaderView(team: selectTeam)
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            VStack(spacing: 0) {
+                
+                HStack(spacing: 0) {
+                    Text("우리 팀의 경기 일정")
+                        .font(.Head.head2)
+                    Spacer()
+                }
+                .padding(EdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 0))
+                
+                CustomTabBar(
+                    tab: tab,
+                    teamColor: teamColor,
+                    onTabSelected: { selectedTab in
+                        tab = selectedTab
+                    }
+                )
+                .padding(8)
+                
+                TabView(selection: $tab) {
+                    // 이전 경기 뷰
+                    BeforeMyTeamGameView(games: pastGames)
+                        .tag(GameTab.beforeList)
+                    
+                    // 오늘 경기 뷰
+                    CurrentMyTeamGameView(games: todayGames)
+                        .tag(GameTab.currentList)
+                    
+                    // 내일 경기 뷰
+                    UpcomingMyTeamGameView(games: upCommingGames)
+                        .tag(GameTab.upcomingList)
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            }
+            .padding(16)
         }
         .onAppear {
             if let selectTeam = UserDefaults.shared.string(forKey: "selectTeam") {
@@ -82,6 +95,12 @@ struct MyTeamGameInfoView: View {
             if let selectTeamColor = UserDefaults.shared.string(forKey: "selectTeamColor") {
                 print("tab 색상: " + selectTeamColor)
                 teamColor = Color.teamColor(for: selectTeamColor) ?? .Brand.primary
+            }
+            if let selectedTeamObj = selectTeamUseCase.getUserDefaultsTeamObject() {
+                print("UserDefaults selectedTeam : \(selectedTeamObj)")
+            }
+            if let selectedTeamObj = selectTeamUseCase.state.selectedTeam {
+                print("selectTeamUseCase.state.selectedTeam : \(selectedTeamObj)")
             }
             
         }
@@ -93,19 +112,40 @@ struct MyTeamGameInfoView: View {
 // TODO: 팀별 헤더로 로고 수정 필요
 
 private struct HeaderView: View {
+    let team: Team
     var body: some View {
-        HStack(spacing: 0) {
-            Text("팀별 헤더로 로고 수정 필요")
-            Text(UserDefaults.shared.string(forKey: "selectTeam") ?? "X")
-            Image(.titleLogo)
+        ZStack(alignment: .topLeading) {
+            Image(team.backgroundImage)
                 .resizable()
-                .scaledToFit()
-                .frame(width: 150, height: 40)
-            
-            Spacer()
-            // TODO: 응원 팀 선택뷰 이동 버튼 구현
+                .scaledToFill()
+                .frame(maxWidth: .infinity, maxHeight: 250)
+                .ignoresSafeArea()
+            VStack(alignment: .leading) {
+                HStack {
+                    Image(.titleLogoWhite)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 20)
+                    
+                    Spacer()
+                    
+                    Image(.logoCircle)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 32)
+                    
+                    Image(.refreshCircle)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 32)
+                }
+                
+                Text(team.name)
+                    .font(.CustomTitle.customTitle1)
+                    .foregroundStyle(.white)
+            }
+            .padding(12)
         }
-        .padding(.horizontal)
     }
 }
 

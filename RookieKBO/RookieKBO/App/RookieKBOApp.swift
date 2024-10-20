@@ -10,14 +10,6 @@ import SwiftUI
 @main
 struct RookieKBOApp: App {
     
-    @State private var selectTeamUseCase = SelectTeamUseCase(selectTeamService: StubSelectTeamService())
-    
-    init() {
-        if let selectedTeam = selectTeamUseCase.getUserDefaultsTeamObject() {
-            selectTeamUseCase.toggleSelectedTeam(selectedTeam)
-        }
-    }
-    
     var body: some Scene {
         WindowGroup {
             AllGameInfoView()

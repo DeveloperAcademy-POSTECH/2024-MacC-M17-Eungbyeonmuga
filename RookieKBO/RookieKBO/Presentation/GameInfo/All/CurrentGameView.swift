@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CurrentGameView: View {
     
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
     let games: [Match]
     
     var prepareGames: [Match] {
@@ -47,7 +49,7 @@ struct CurrentGameView: View {
             
             
             VStack(spacing: 16) {
-                ForEach(playingGames) { game in
+                ForEach(playingGames, id: \.id) { game in
                     PlayingGameInfo(playingGameInfo: game)
                 }
             }
@@ -61,7 +63,7 @@ struct CurrentGameView: View {
             }
             
             VStack(spacing: 16) {
-                ForEach(prepareGames) { game in
+                ForEach(prepareGames, id: \.id) { game in
                     PreparingGameInfo(preparingGameInfo: game)
                 }
             }
@@ -75,7 +77,7 @@ struct CurrentGameView: View {
             }
             
             VStack(spacing: 16) {
-                ForEach(endGames) { game in
+                ForEach(endGames, id: \.id) { game in
                     EndGameInfo(endGameInfo: game)
                 }
             }
@@ -89,7 +91,7 @@ struct CurrentGameView: View {
             }
             
             VStack(spacing: 16) {
-                ForEach(cancelGames) { game in
+                ForEach(cancelGames, id: \.id) { game in
                     CancelGameInfo(cancelGameInfo: game)
                 }
             }
@@ -100,6 +102,7 @@ struct CurrentGameView: View {
 #Preview {
     CurrentGameView(games: MockDataBuilder.mockMatchList)
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
+        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
         .environment(PathModel())
         .environment(PreviewHelper.mockMatchUseCase)
 }
