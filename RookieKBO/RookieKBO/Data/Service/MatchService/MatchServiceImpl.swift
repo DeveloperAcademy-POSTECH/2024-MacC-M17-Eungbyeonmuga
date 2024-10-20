@@ -87,20 +87,20 @@ final class MatchServiceImpl: MatchServiceInterface {
     
     func isDateInPast(_ date: Date) -> Bool {
         let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
+        let today = Date.today
         return date < today
     }
     
     func isDateToday(_ date: Date) -> Bool {
         let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
+        let today = Date.today
         let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
         return date >= today && date < tomorrow
     }
     
     func isDateInFuture(_ date: Date) -> Bool {
+        let today = Date.today
         let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
         let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
         return date >= tomorrow
     }

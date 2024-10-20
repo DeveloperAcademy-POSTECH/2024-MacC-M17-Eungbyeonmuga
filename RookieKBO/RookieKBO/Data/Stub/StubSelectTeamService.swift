@@ -36,7 +36,7 @@ struct StubSelectTeamService: SelectTeamServiceInterface {
         
         do {
             let encodedTeam = try encoder.encode(team)
-            UserDefaults.standard.set(encodedTeam, forKey: "selectTeamObject")
+            UserDefaults.shared.set(encodedTeam, forKey: "selectTeamObject")
             print("Team object saved successfully.")
         } catch {
             print("Failed to encode and save team object: \(error)")
@@ -47,7 +47,7 @@ struct StubSelectTeamService: SelectTeamServiceInterface {
     func getUserDefaultsTeamObject() -> Team? {
         let decoder = JSONDecoder()
         
-        if let savedTeamData = UserDefaults.standard.data(forKey: "selectTeamObject") {
+        if let savedTeamData = UserDefaults.shared.data(forKey: "selectTeamObject") {
             do {
                 let loadedTeam = try decoder.decode(Team.self, from: savedTeamData)
                 return loadedTeam
