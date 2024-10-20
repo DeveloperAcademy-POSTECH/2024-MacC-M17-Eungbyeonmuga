@@ -45,6 +45,7 @@ private struct GameInfo: View {
                     .font(.Caption.caption1)
             }
             .padding(.trailing, 16)
+            .padding(.leading, 8)
             
             let awayScore = matchUseCase.calculateScore(for: playingGameInfo, team: .AWAY)
             
@@ -93,6 +94,7 @@ private struct GameInfo: View {
                         .cornerRadius(99)
                 }
             }
+            .padding(.trailing, 8)
         }
     }
 }
