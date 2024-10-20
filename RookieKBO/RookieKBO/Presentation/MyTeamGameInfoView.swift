@@ -10,7 +10,6 @@ import SwiftUI
 struct MyTeamGameInfoView: View {
     
     @Environment(PathModel.self) private var pathModel
-    
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(MatchUseCase.self) private var matchUseCase
     
@@ -115,7 +114,9 @@ struct MyTeamGameInfoView: View {
 // TODO: 팀별 헤더로 로고 수정 필요
 
 private struct HeaderView: View {
+    
     @Environment(PathModel.self) private var pathModel
+    
     let team: Team
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -144,8 +145,7 @@ private struct HeaderView: View {
                     }
                     
                     Button {
-                        // TODO: 새로고침 버튼 기능 구현
-                        
+                        pathModel.push(.selectTeam)
                     } label: {
                         Image(.refreshCircle)
                             .resizable()

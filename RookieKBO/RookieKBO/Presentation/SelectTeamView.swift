@@ -13,9 +13,27 @@ struct SelectTeamView: View {
     @Environment(MatchUseCase.self) private var matchUseCase
     @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
     @State private var isSelectButtonPresented: Bool = false
+    @State private var isNavigationBarPresented: Bool = false
     
     @State private var selectedTeam: Team?
+    
+    var backButton: some View {
+        Group {
+            if UserDefaults.shared.string(forKey: "selectTeam") != nil {
+                Button {
+                    pathModel.pop()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.black)
+                        .frame(width: 36, height: 44)
+                }
+            } else {
+                EmptyView()
+            }
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -31,6 +49,7 @@ struct SelectTeamView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: backButton)
     }
 }
 
@@ -38,7 +57,10 @@ struct SelectTeamView: View {
 
 private struct HeaderView: View {
     
-    let currentSelectTeam = UserDefaults.shared.string(forKey: "selectTeam") ?? "없음"
+//    let currentSelectTeam = UserDefaults.shared.string(forKey: "selectTeam") ?? "없음"
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
+    @State private var currentSelectTeam: String = "없음"
     
     var body: some View {
         HStack(spacing: 0) {
@@ -90,6 +112,9 @@ private struct HeaderView: View {
             Spacer()
         }
         .padding()
+        .onAppear {
+            currentSelectTeam = selectTeamUseCase.state.selectedTeam?.name ?? "없음"
+        }
     }
 }
 
@@ -203,7 +228,9 @@ private struct StartTeam: View {
                     print("UserDefaults Select team: \(selectTeamUseCase.getUserDefaultsTeamObject()!)")
                 }
                 WidgetCenter.shared.reloadAllTimelines()
-//                pathModel.pop()
+                if pathModel.path.count > 0 {
+                    pathModel.pop()
+                }
 //                if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
 //                    pathModel.push(.myTeamGameInfo)
 //                } else {

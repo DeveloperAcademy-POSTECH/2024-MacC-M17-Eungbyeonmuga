@@ -38,50 +38,46 @@ struct AllGameInfoView: View {
     }
     
     var body: some View {
-        @Bindable var pathModel = pathModel
-        
-        NavigationStack(path: $pathModel.path) {
-            VStack(spacing: 0) {
-                HeaderView()
-                
-                Spacer()
-                    .frame(height: 8)
-                
-                CustomTabBar(
-                    tab: tab,
-                    teamColor: teamColor,
-                    onTabSelected: { selectedTab in
-                        tab = selectedTab
-                    }
-                )
-                
-                Spacer()
-                    .frame(height: 32)
-                
-                TabView(selection: $tab) {
-                    // 이전 경기 뷰
-                    BeforeGameView(games: pastGames)
-                        .tag(GameTab.beforeList)
-                    
-                    // 오늘 경기 뷰
-                    CurrentGameView(games: todayGames)
-                        .tag(GameTab.currentList)
-                    
-                    // 내일 경기 뷰
-                    UpcomingGameView(games: upCommingGames)
-                        .tag(GameTab.upcomingList)
+        VStack(spacing: 0) {
+            HeaderView()
+            
+            Spacer()
+                .frame(height: 8)
+            
+            CustomTabBar(
+                tab: tab,
+                teamColor: teamColor,
+                onTabSelected: { selectedTab in
+                    tab = selectedTab
                 }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+            )
+            
+            Spacer()
+                .frame(height: 32)
+            
+            TabView(selection: $tab) {
+                // 이전 경기 뷰
+                BeforeGameView(games: pastGames)
+                    .tag(GameTab.beforeList)
+                
+                // 오늘 경기 뷰
+                CurrentGameView(games: todayGames)
+                    .tag(GameTab.currentList)
+                
+                // 내일 경기 뷰
+                UpcomingGameView(games: upCommingGames)
+                    .tag(GameTab.upcomingList)
             }
-            .onChange(of: UserDefaults.shared.string(forKey: "selectTeamColor")) { newColor in
-                if let newColor = newColor {
-                    teamColor = Color.teamColor(for: newColor) ?? .Brand.primary
-                }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+        }
+        .onChange(of: UserDefaults.shared.string(forKey: "selectTeamColor")) { newColor in
+            if let newColor = newColor {
+                teamColor = Color.teamColor(for: newColor) ?? .Brand.primary
             }
-            .navigationDestination(for: Screen.self) { screen in
-                pathModel.build(screen)
-            }
+        }
+        .navigationDestination(for: Screen.self) { screen in
+            pathModel.build(screen)
         }
     }
 }
@@ -89,6 +85,9 @@ struct AllGameInfoView: View {
 // MARK: - HearderView
 
 private struct HeaderView: View {
+    
+    @Environment(PathModel.self) private var pathModel
+    
     var body: some View {
         HStack(spacing: 0) {
             Image(.titleLogo)
@@ -97,7 +96,16 @@ private struct HeaderView: View {
                 .frame(width: 150, height: 40)
             
             Spacer()
-            // TODO: 응원 팀 선택뷰 이동 버튼 구현
+            
+            Button {
+                pathModel.push(.selectTeam)
+            } label: {
+                Image(systemName: "arrow.triangle.2.circlepath.circle")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 32)
+                    .foregroundColor(.TeamSelect.unselectBg)
+            }
         }
         .padding(.horizontal)
     }

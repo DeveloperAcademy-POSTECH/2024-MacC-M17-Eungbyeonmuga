@@ -36,6 +36,7 @@ struct StubSelectTeamService: SelectTeamServiceInterface {
         
         do {
             let encodedTeam = try encoder.encode(team)
+            print("encodedTeam: \(encodedTeam)")
             UserDefaults.shared.set(encodedTeam, forKey: "selectTeamObject")
             print("Team object saved successfully.")
         } catch {
@@ -50,6 +51,7 @@ struct StubSelectTeamService: SelectTeamServiceInterface {
         if let savedTeamData = UserDefaults.shared.data(forKey: "selectTeamObject") {
             do {
                 let loadedTeam = try decoder.decode(Team.self, from: savedTeamData)
+                print("loadedTeam: \(loadedTeam)")
                 return loadedTeam
             } catch {
                 print("Failed to decode team object: \(error)")

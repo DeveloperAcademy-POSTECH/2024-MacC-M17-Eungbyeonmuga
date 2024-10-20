@@ -428,7 +428,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RookieKBO/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = VQLS72LDQP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RookieKBO/App/Info.plist;
@@ -442,7 +442,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo.simmons;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -461,7 +461,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RookieKBO/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = VQLS72LDQP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RookieKBO/App/Info.plist;
@@ -475,7 +475,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo.simmons;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -493,7 +493,7 @@
 				CODE_SIGN_ENTITLEMENTS = RookieKBOWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = VQLS72LDQP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RookieKBOWidget/Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RookieKBOWidget;
@@ -504,7 +504,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo.Dev.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo.simmons.Dev.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -523,7 +523,7 @@
 				CODE_SIGN_ENTITLEMENTS = RookieKBOWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = VQLS72LDQP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RookieKBOWidget/Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RookieKBOWidget;
@@ -534,7 +534,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo.simmons.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
