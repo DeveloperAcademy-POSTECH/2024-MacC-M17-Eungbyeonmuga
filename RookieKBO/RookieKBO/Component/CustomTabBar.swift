@@ -76,10 +76,29 @@ struct TabButton: View {
                 .background(RoundedRectangle(cornerRadius: 99)
                     .fill(Color.clear)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 99)
-                            .stroke(isSelected ? LinearGradient.gradient(startColor: .Brand.primary, endColor: .Brand.primaryGd) : LinearGradient.gradient(startColor: .clear, endColor: .clear), lineWidth: 2)
+                        Group {
+                            if color == .Brand.primary {
+                                if isSelected {
+                                    RoundedRectangle(cornerRadius: 99)
+                                        .stroke(LinearGradient.gradient(startColor: .Brand.primary, endColor: .Brand.primaryGd), lineWidth: 2)
+                                } else {
+                                    RoundedRectangle(cornerRadius: 99)
+                                        .stroke(Color.clear, lineWidth: 2)
+                                }
+                            }
+                            else {
+                                if isSelected {
+                                    RoundedRectangle(cornerRadius: 99)
+                                        .stroke(color, lineWidth: 2)
+                                } else {
+                                    RoundedRectangle(cornerRadius: 99)
+                                        .stroke(Color.clear, lineWidth: 2)
+                                }
+                            }
+                            
+                        }
+                    )
                 )
-            )
         }
     }
 }

@@ -36,7 +36,6 @@ struct UpcomingGameView: View {
                 }
             }
         }
-        .padding(.top, 32)
         .scrollIndicators(.hidden)
     }
 }
