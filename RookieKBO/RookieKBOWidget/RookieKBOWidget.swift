@@ -26,7 +26,7 @@ struct Provider: AppIntentTimelineProvider {
         let currentDate = Date()
         let entryDate = Calendar.current.date(byAdding: .second, value: 1, to: currentDate)!
         let todayMatch = await filterMatches()
-        let entry = WidgetEntry(date: entryDate, selectedTeamType: selectedTeamAppIntent, match: todayMatch)
+        let entry = WidgetEntry(date: entryDate, selectedTeamType: selectedTeamAppIntent, match: MockDataBuilder.mockMatchList.randomElement())
         entries.append(entry)
         
         return Timeline(entries: entries, policy: .atEnd)
