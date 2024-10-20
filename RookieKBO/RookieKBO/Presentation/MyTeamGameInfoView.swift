@@ -24,7 +24,7 @@ struct MyTeamGameInfoView: View {
     var myTeamGames: [Match] {
         return games.filter { game in
             if let selectedTeamName = selectTeamUseCase.state.selectedTeam {
-                return matchUseCase.isMyTeam(game.homeTeam, selectedTeamName)
+                return matchUseCase.isMyTeam(game.homeTeam, selectedTeamName) || matchUseCase.isMyTeam(game.awayTeam, selectedTeamName)
             }
             return false
         }
@@ -56,7 +56,7 @@ struct MyTeamGameInfoView: View {
             }
             VStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 0) {
-                    HStack(spacing: 8) {
+                    HStack(spacing: 16) {
                         Image(.titleLogoWhite)
                             .resizable()
                             .scaledToFit()

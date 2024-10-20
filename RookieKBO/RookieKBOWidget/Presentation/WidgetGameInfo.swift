@@ -20,6 +20,7 @@ struct WidgetGameInfo: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)
+                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
                 
                 Text("\(currentMatch?.awayTeam.name.firstWord() ??  "")")
                     .font(.Caption.caption1)
@@ -35,6 +36,7 @@ struct WidgetGameInfo: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)
+                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
                 
                 HStack(spacing: 2) {
                     Text("\(currentMatch?.homeTeam.name.firstWord() ??  "")")
