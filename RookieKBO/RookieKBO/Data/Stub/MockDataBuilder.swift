@@ -61,6 +61,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 place: "한화 생명 이글스 파크",
+                season: "포스트 시즌",
                 scoreBoard: [
                     ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 1, 0 ]),
                     ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 1, 1])
@@ -72,6 +73,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom", backgroundImage: "kiwoomBg"),
                 awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte", backgroundImage: "lotteBg"),
                 place: "수원 위즈 파크",
+                season: "포스트 시즌",
                 scoreBoard: [
                     ScoreBoard(homeAndAway: .HOME, runs: 45, hits: 2, errors: 3, balls: 4, scores: [1, 2, 3, 4, 5, 6, 7, 8, 9]),
                     ScoreBoard(homeAndAway: .AWAY, runs: 45, hits: 6, errors: 7, balls: 8, scores: [9, 8, 7, 6, 5, 4, 3, 2, 1])
@@ -83,6 +85,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 place: "한화 생명 이글스 파크",
+                season: "포스트 시즌",
                 scoreBoard: [
                     ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 1, 0 ]),
                     ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 1, 1])
@@ -94,6 +97,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom", backgroundImage: "kiwoomBg"),
                 awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte", backgroundImage: "lotteBg"),
                 place: "수원 위즈 파크",
+                season: "포스트 시즌",
                 scoreBoard: [
                     ScoreBoard(homeAndAway: .HOME, runs: 45, hits: 2, errors: 3, balls: 4, scores: [1, 2, 3, 4, 5, 6, 7, 8, 9]),
                     ScoreBoard(homeAndAway: .AWAY, runs: 45, hits: 6, errors: 7, balls: 8, scores: [9, 8, 7, 6, 5, 4, 3, 2, 1])
@@ -105,6 +109,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom", backgroundImage: "kiwoomBg"),
                 awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte", backgroundImage: "lotteBg"),
                 place: "수원 위즈 파크",
+                season: "포스트 시즌",
                 scoreBoard: [
                     ScoreBoard(homeAndAway: .HOME, runs: 45, hits: 2, errors: 3, balls: 4, scores: [1, 2, 3, 4, 5, 6, 7, 8, 9]),
                     ScoreBoard(homeAndAway: .AWAY, runs: 45, hits: 6, errors: 7, balls: 8, scores: [9, 8, 7, 6, 5, 4, 3, 2, 1])
@@ -116,6 +121,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom", backgroundImage: "kiwoomBg"),
                 awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte", backgroundImage: "lotteBg"),
                 place: "수원 위즈 파크",
+                season: "포스트 시즌",
                 scoreBoard: [
                     ScoreBoard(homeAndAway: .HOME, runs: 45, hits: 2, errors: 3, balls: 4, scores: [1, 2, 3, 4, 5, 6, 7, 8, 9]),
                     ScoreBoard(homeAndAway: .AWAY, runs: 45, hits: 6, errors: 7, balls: 8, scores: [9, 8, 7, 6, 5, 4, 3, 2, 1])
@@ -132,6 +138,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "삼성 라이온즈", image: "samsungUnder", color: "samsung", backgroundImage: "samsungBg"),
                 awayTeam: Team(name: "NC 다이노스", image: "ncUnder", color: "nc", backgroundImage: "ncBg"),
                 place: "대구 삼성라이온즈파크",
+                season: "포스트 시즌",
                 scoreBoard: []
             ),
             Match(
@@ -140,6 +147,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "KIA 타이거즈", image: "kiaUnder", color: "kia", backgroundImage: "kiaBg"),
                 awayTeam: Team(name: "SSG 랜더스", image: "ssgUnder", color: "ssg", backgroundImage: "ssgBg"),
                 place: "광주 기아챔피언스필드",
+                season: "포스트 시즌",
                 scoreBoard: []
             ),
             Match(
@@ -148,6 +156,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "KT 위즈", image: "ktUnder", color: "kt", backgroundImage: "ktBg"),
                 awayTeam: Team(name: "NC 다이노스", image: "ncUnder", color: "nc", backgroundImage: "ncBg"),
                 place: "수원 위즈 파크",
+                season: "포스트 시즌",
                 scoreBoard: []
             ),
             Match(
@@ -156,6 +165,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "KT 위즈", image: "ktUnder", color: "kt", backgroundImage: "ktBg"),
                 awayTeam: Team(name: "삼성 라이온즈", image: "samsungUnder", color: "samsung", backgroundImage: "samsungBg"),
                 place: "수원 위즈 파크",
+                season: "포스트 시즌",
                 scoreBoard: []
             )
         ]
@@ -170,6 +180,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 place: "한화 생명 이글스 파크",
+                season: "포스트 시즌",
                 scoreBoard: [
                     ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 1, 0 ]),
                     ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 1, 1])
@@ -181,6 +192,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom", backgroundImage: "kiwoomBg"),
                 awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte", backgroundImage: "lotteBg"),
                 place: "수원 위즈 파크",
+                season: "포스트 시즌",
                 scoreBoard: [
                     ScoreBoard(homeAndAway: .HOME, runs: 45, hits: 2, errors: 3, balls: 4, scores: [1, 2, 3, 4, 5, 6, 7, 8, 9]),
                     ScoreBoard(homeAndAway: .AWAY, runs: 45, hits: 6, errors: 7, balls: 8, scores: [9, 8, 7, 6, 5, 4, 3, 2, 1])
@@ -192,6 +204,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 place: "한화 생명 이글스 파크",
+                season: "포스트 시즌",
                 scoreBoard: [
                     ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 1, 0 ]),
                     ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 1, 1])
@@ -203,6 +216,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 place: "한화 생명 이글스 파크",
+                season: "포스트 시즌",
                 scoreBoard: [
                     ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 1, 0 ]),
                     ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 1, 1])
@@ -214,6 +228,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 place: "한화 생명 이글스 파크",
+                season: "포스트 시즌",
                 scoreBoard: [
                     ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 1, 1, 0, 1, 0, 1, 0 ]),
                     ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 1, 1])
@@ -225,6 +240,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom", backgroundImage: "kiwoomBg"),
                 awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte", backgroundImage: "lotteBg"),
                 place: "수원 위즈 파크",
+                season: "포스트 시즌",
                 scoreBoard: [
                     ScoreBoard(homeAndAway: .HOME, runs: 45, hits: 2, errors: 3, balls: 4, scores: [1, 2, 3, 4, 5, 6, 7, 8, 9]),
                     ScoreBoard(homeAndAway: .AWAY, runs: 45, hits: 6, errors: 7, balls: 8, scores: [9, 8, 7, 6, 5, 4, 3, 2, 1])
@@ -323,6 +339,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 place: "한화 생명 이글스 파크",
+                season: "포스트 시즌",
                 scoreBoard: []
             ),
             Match(
@@ -331,6 +348,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "SSG 랜더스", image: "ssgUnder", color: "ssg", backgroundImage: "ssgBg"),
                 place: "한화 생명 이글스 파크",
+                season: "포스트 시즌",
                 scoreBoard: []
             ),
             Match(
@@ -366,6 +384,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 place: "대전 한화생명이글스파크",
+                season: "포스트 시즌",
                 scoreBoard: []
             ),
             Match(
@@ -374,6 +393,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 place: "대전 한화생명이글스파크",
+                season: "포스트 시즌",
                 scoreBoard: []
             ),
             Match(
@@ -382,6 +402,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 place: "대전 한화생명이글스파크",
+                season: "포스트 시즌",
                 scoreBoard: []
             ),
             Match(
@@ -390,6 +411,7 @@ struct MockDataBuilder {
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 place: "대전 한화생명이글스파크",
+                season: "포스트 시즌",
                 scoreBoard: []
             )
         ]
