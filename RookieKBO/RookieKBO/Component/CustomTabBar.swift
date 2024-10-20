@@ -70,10 +70,35 @@ struct TabButton: View {
             Text(title)
                 .font(.Head.head4)
                 .foregroundColor(isSelected ? color : TextLabel.tab)
-                .frame(width: 107, height: 36)
+                .frame(width: 75, height: 20)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
                 .background(RoundedRectangle(cornerRadius: 99)
-                    .fill(.clear)
-                    .stroke(isSelected ? color : .clear, lineWidth: 2))
+                    .fill(Color.clear)
+                    .overlay(
+                        Group {
+                            if color == .Brand.primary {
+                                if isSelected {
+                                    RoundedRectangle(cornerRadius: 99)
+                                        .stroke(LinearGradient.gradient(startColor: .Brand.primary, endColor: .Brand.primaryGd), lineWidth: 2)
+                                } else {
+                                    RoundedRectangle(cornerRadius: 99)
+                                        .stroke(Color.clear, lineWidth: 2)
+                                }
+                            }
+                            else {
+                                if isSelected {
+                                    RoundedRectangle(cornerRadius: 99)
+                                        .stroke(color, lineWidth: 2)
+                                } else {
+                                    RoundedRectangle(cornerRadius: 99)
+                                        .stroke(Color.clear, lineWidth: 2)
+                                }
+                            }
+                            
+                        }
+                    )
+                )
         }
     }
 }
