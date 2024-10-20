@@ -15,7 +15,7 @@ enum PreviewHelper {
         matchService: MatchServiceImpl()
     )
     
-    static let mockSelectTeamUseCase = SelectTeamUseCase(
-        selectTeamService: StubSelectTeamService())
+//    static let mockSelectTeamUseCase = SelectTeamUseCase(
+//        selectTeamService: StubSelectTeamService())
 }
 #endif

@@ -9,8 +9,6 @@ import Foundation
 
 final class MatchServiceImpl: MatchServiceInterface {
     
-    func fetchGames() {
-        // 경기 받아오기
     private let matchRepository = MatchRepository()
     
     func fetchMatches(date: String) async -> Result<[Match], Error> {
