@@ -10,12 +10,13 @@ import SwiftUI
 struct MyTeamGameInfoView: View {
     
     @Environment(PathModel.self) private var pathModel
-    
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(MatchUseCase.self) private var matchUseCase
     
     @State private var tab: GameTab = .currentList
     @State private var teamColor: Color = .Brand.primary
+    
+    @State private var isAllGameInfoFullScreenPresented = false
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
     let games: [Match] = MockDataBuilder.mockMatchList
@@ -51,7 +52,7 @@ struct MyTeamGameInfoView: View {
         // TODO: ZStack으로 수정 예정
         VStack {
             if let selectTeam = selectTeamUseCase.state.selectedTeam {
-                HeaderView(team: selectTeam)
+                HeaderView(isAllGameInfoFullScreenPresented: $isAllGameInfoFullScreenPresented, team: selectTeam)
             }
             VStack(spacing: 0) {
                 
@@ -107,6 +108,9 @@ struct MyTeamGameInfoView: View {
         .navigationDestination(for: Screen.self) { screen in
             pathModel.build(screen)
         }
+        .fullScreenCover(isPresented: $isAllGameInfoFullScreenPresented) {
+            AllGameInfoView()
+        }
         .navigationBarBackButtonHidden(true)
     }
 }
@@ -115,8 +119,13 @@ struct MyTeamGameInfoView: View {
 // TODO: 팀별 헤더로 로고 수정 필요
 
 private struct HeaderView: View {
+    
     @Environment(PathModel.self) private var pathModel
+    
+    @Binding var isAllGameInfoFullScreenPresented: Bool
+    
     let team: Team
+    
     var body: some View {
         ZStack(alignment: .topLeading) {
             Image(team.backgroundImage)
@@ -135,7 +144,7 @@ private struct HeaderView: View {
                     
                     Button {
                         print("Go AllGameInfo View")
-                        pathModel.push(.allGameInfo)
+                        isAllGameInfoFullScreenPresented = true
                     } label: {
                         Image(.logoCircle)
                             .resizable()
@@ -144,8 +153,7 @@ private struct HeaderView: View {
                     }
                     
                     Button {
-                        // TODO: 새로고침 버튼 기능 구현
-                        
+                        pathModel.push(.selectTeam)
                     } label: {
                         Image(.refreshCircle)
                             .resizable()
