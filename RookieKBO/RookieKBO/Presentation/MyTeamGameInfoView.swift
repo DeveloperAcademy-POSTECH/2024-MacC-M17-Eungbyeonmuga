@@ -50,44 +50,88 @@ struct MyTeamGameInfoView: View {
     
     var body: some View {
         // TODO: ZStack으로 수정 예정
-        VStack {
+        ZStack {
             if let selectTeam = selectTeamUseCase.state.selectedTeam {
                 HeaderView(isAllGameInfoFullScreenPresented: $isAllGameInfoFullScreenPresented, team: selectTeam)
             }
             VStack(spacing: 0) {
-                
-                HStack(spacing: 0) {
-                    Text("우리 팀의 경기 일정")
-                        .font(.Head.head2)
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack(spacing: 8) {
+                        Image(.titleLogoWhite)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 20)
+                        
+                        Spacer()
+                        
+                        Button {
+                            print("Go AllGameInfo View")
+                            isAllGameInfoFullScreenPresented = true
+                        } label: {
+                            Image(.logoCircle)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 32)
+                        }
+                        
+                        Button {
+                            pathModel.push(.selectTeam)
+                        } label: {
+                            Image(.refreshCircle)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 32)
+                        }
+                    }
+                    .padding(.horizontal, 32)
+                    
+                    Text(selectTeamUseCase.state.selectedTeam?.name ?? "")
+                        .font(.CustomTitle.customTitle1)
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 32)
+                    
                     Spacer()
                 }
-                .padding(EdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 0))
+                .frame(height: 240)
                 
-                CustomTabBar(
-                    tab: tab,
-                    teamColor: teamColor,
-                    onTabSelected: { selectedTab in
-                        tab = selectedTab
+                VStack(spacing: 0) {
+                    
+                    HStack(spacing: 0) {
+                        Text("우리 팀의 경기 일정")
+                            .font(.Head.head6)
+                        Spacer()
                     }
-                )
-                .padding(8)
-                
-                TabView(selection: $tab) {
-                    // 이전 경기 뷰
-                    BeforeMyTeamGameView(games: pastGames)
-                        .tag(GameTab.beforeList)
+                    .padding(.init(top: 24, leading: 32, bottom: 16, trailing: 0))
                     
-                    // 오늘 경기 뷰
-                    CurrentMyTeamGameView(games: todayGames)
-                        .tag(GameTab.currentList)
+                    CustomTabBar(
+                        tab: tab,
+                        teamColor: teamColor,
+                        onTabSelected: { selectedTab in
+                            tab = selectedTab
+                        }
+                    )
+                    .padding(8)
                     
-                    // 내일 경기 뷰
-                    UpcomingMyTeamGameView(games: upCommingGames)
-                        .tag(GameTab.upcomingList)
+                    TabView(selection: $tab) {
+                        // 이전 경기 뷰
+                        BeforeMyTeamGameView(games: pastGames)
+                            .tag(GameTab.beforeList)
+                        
+                        // 오늘 경기 뷰
+                        CurrentMyTeamGameView(games: todayGames)
+                            .tag(GameTab.currentList)
+                        
+                        // 내일 경기 뷰
+                        UpcomingMyTeamGameView(games: upCommingGames)
+                            .tag(GameTab.upcomingList)
+                    }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    .padding(.horizontal, 32)
                 }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .background(RoundedRectangle(cornerRadius: 24)
+                    .fill(Color.Background.first))
+                .ignoresSafeArea(edges: .all)
             }
-            .padding(16)
         }
         .onAppear {
             if let selectedTeamObj = selectTeamUseCase.getUserDefaultsTeamObject() {
@@ -123,44 +167,11 @@ private struct HeaderView: View {
         ZStack(alignment: .topLeading) {
             Image(team.backgroundImage)
                 .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity, maxHeight: 250)
-                .ignoresSafeArea()
-            VStack(alignment: .leading) {
-                HStack {
-                    Image(.titleLogoWhite)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 20)
-                    
-                    Spacer()
-                    
-                    Button {
-                        print("Go AllGameInfo View")
-                        isAllGameInfoFullScreenPresented = true
-                    } label: {
-                        Image(.logoCircle)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 32)
-                    }
-                    
-                    Button {
-                        pathModel.push(.selectTeam)
-                    } label: {
-                        Image(.refreshCircle)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 32)
-                    }
-                }
-                
-                Text(team.name)
-                    .font(.CustomTitle.customTitle1)
-                    .foregroundStyle(.white)
-            }
-            .padding(12)
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
+//                .ignoresSafeArea()
         }
+        .ignoresSafeArea(edges: .all)
     }
 }
 

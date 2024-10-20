@@ -19,6 +19,7 @@ extension Font {
         static let head3: Font = .custom("Pretendard-Medium", size: 22)
         static let head4: Font = .custom("Pretendard-Medium", size: 20)
         static let head5: Font = .custom("Pretendard-SemiBold", size: 18)
+        static let head6: Font = .custom("Pretendard-Bold", size: 24)
     }
     
     enum Body {
