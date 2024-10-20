@@ -29,6 +29,7 @@ struct EndGameInfo: View {
 private struct GameInfo: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     let endGameInfo: Match
     
@@ -56,26 +57,26 @@ private struct GameInfo: View {
             
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle1)
-                .foregroundColor(awayResult.color)
+                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
                 .padding(.vertical, 8)
                 .padding(.leading, 12)
                 .padding(.trailing, 11)
             
             Text("\(awayResult.description)")
                 .font(.Body.body2)
-                .foregroundColor(awayResult.color)
+                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
                 .padding(.leading, 16)
             
             Spacer()
             
             Text("\(homeResult.description)")
                 .font(.Body.body2)
-                .foregroundColor(homeResult.color)
+                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
                 .padding(.trailing, 16)
             
             Text("\(homeScore)")
                 .font(.CustomTitle.customTitle1)
-                .foregroundColor(homeResult.color)
+                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
                 .padding(.vertical, 8)
                 .padding(.leading, 12)
                 .padding(.trailing, 11)
