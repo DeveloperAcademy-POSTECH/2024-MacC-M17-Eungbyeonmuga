@@ -18,6 +18,7 @@ struct CancelGameInfo: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 48, height: 48)
+                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
                 
                 Text("\(cancelGameInfo.awayTeam.name.firstWord())")
                     .font(.Caption.caption1)
@@ -45,6 +46,7 @@ struct CancelGameInfo: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 48, height: 48)
+                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
                 
                 HStack(spacing: 2) {
                     Text("\(cancelGameInfo.homeTeam.name.firstWord())")

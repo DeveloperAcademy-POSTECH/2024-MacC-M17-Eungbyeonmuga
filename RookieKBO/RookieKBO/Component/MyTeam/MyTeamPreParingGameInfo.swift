@@ -55,6 +55,7 @@ private struct TeamInfo: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 72, height: 72)
+                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
                 
                 Text("\(preparingGameInfo.awayTeam.name.firstWord())")
                     .font(.Head.head2)
@@ -74,6 +75,7 @@ private struct TeamInfo: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 72, height: 72)
+                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
                 
                 HStack(spacing: 6) {
                     Text("\(preparingGameInfo.homeTeam.name.firstWord())")
