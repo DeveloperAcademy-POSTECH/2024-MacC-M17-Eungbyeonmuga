@@ -86,4 +86,8 @@ final class MatchServiceImpl: MatchServiceInterface {
         let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
         return date >= tomorrow
     }
+    
+    func isMyTeam(_ team: Team, _ myTeam: Team) -> Bool {
+        return team.name.lowercased().contains(myTeam.name.lowercased())
+    }
 }

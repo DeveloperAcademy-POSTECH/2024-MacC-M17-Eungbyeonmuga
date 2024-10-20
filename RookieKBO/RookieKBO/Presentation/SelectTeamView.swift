@@ -170,6 +170,10 @@ private struct StartTeam: View {
             Spacer()
             Button {
                 selectTeamUseCase.updateUserDefaultsTeam()
+                if let selectedTeam = selectTeamUseCase.state.selectedTeam {
+                    selectTeamUseCase.updateUserDefaultsTeamObject(selectedTeam)
+                    print("UserDefaults Select team: \(selectTeamUseCase.getUserDefaultsTeamObject()!)")
+                }
                 WidgetCenter.shared.reloadAllTimelines()
                 pathModel.pop()
                 if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
@@ -192,5 +196,7 @@ private struct StartTeam: View {
 #Preview {
     SelectTeamView()
         .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(PathModel())
+        .environment(PreviewHelper.mockMatchUseCase)
 }

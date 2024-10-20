@@ -37,11 +37,14 @@ struct CurrentGameView: View {
     
     var body: some View {
         ScrollView {
-            HStack(spacing: 0) {
-                GameStateLabel(gameState: GameStateLabel.GameState.playing)
-                Spacer()
+            if !playingGames.isEmpty {
+                HStack(spacing: 0) {
+                    GameStateLabel(gameState: GameStateLabel.GameState.playing)
+                    Spacer()
+                }
+                .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
             }
-            .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+            
             
             VStack(spacing: 16) {
                 ForEach(playingGames) { game in
@@ -49,11 +52,13 @@ struct CurrentGameView: View {
                 }
             }
             
-            HStack(spacing: 0) {
-                GameStateLabel(gameState: GameStateLabel.GameState.preparing)
-                Spacer()
+            if !prepareGames.isEmpty {
+                HStack(spacing: 0) {
+                    GameStateLabel(gameState: GameStateLabel.GameState.preparing)
+                    Spacer()
+                }
+                .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
             }
-            .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
             
             VStack(spacing: 16) {
                 ForEach(prepareGames) { game in
@@ -61,11 +66,13 @@ struct CurrentGameView: View {
                 }
             }
             
-            HStack(spacing: 0) {
-                GameStateLabel(gameState: GameStateLabel.GameState.end)
-                Spacer()
+            if !endGames.isEmpty {
+                HStack(spacing: 0) {
+                    GameStateLabel(gameState: GameStateLabel.GameState.end)
+                    Spacer()
+                }
+                .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
             }
-            .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
             
             VStack(spacing: 16) {
                 ForEach(endGames) { game in
@@ -73,11 +80,13 @@ struct CurrentGameView: View {
                 }
             }
             
-            HStack(spacing: 0) {
-                GameStateLabel(gameState: GameStateLabel.GameState.cancel)
-                Spacer()
+            if !cancelGames.isEmpty {
+                HStack(spacing: 0) {
+                    GameStateLabel(gameState: GameStateLabel.GameState.cancel)
+                    Spacer()
+                }
+                .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
             }
-            .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
             
             VStack(spacing: 16) {
                 ForEach(cancelGames) { game in

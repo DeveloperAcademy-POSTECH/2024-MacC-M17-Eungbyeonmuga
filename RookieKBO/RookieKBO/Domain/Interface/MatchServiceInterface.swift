@@ -17,4 +17,5 @@ protocol MatchServiceInterface {
     func isDateInPast(_ date: Date) -> Bool
     func isDateToday(_ date: Date) -> Bool
     func isDateInFuture(_ date: Date) -> Bool
+    func isMyTeam(_ team: Team, _ myTeam: Team) -> Bool
 }

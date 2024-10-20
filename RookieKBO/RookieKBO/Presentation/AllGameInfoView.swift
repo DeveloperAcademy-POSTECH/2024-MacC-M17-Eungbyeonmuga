@@ -16,7 +16,7 @@ struct AllGameInfoView: View {
     @State private var tab: GameTab = .currentList
     @State private var teamColor: Color = .Brand.primary
     
-    // TODO: API 연결 이후 삭제 예정
+    // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
     let games: [Match] = MockDataBuilder.mockMatchList
     
     var pastGames: [Match] {
@@ -80,7 +80,11 @@ struct AllGameInfoView: View {
                     pathModel.push(.selectTeam)
                 } else if UserDefaults.shared.string(forKey: "selectTeam") != "전체 구단" {
                     print("MyTeamGameInfoView로 이동")
-                    print("팀: " + UserDefaults.shared.string(forKey: "selectTeam")!)
+                    print("팀-: " + UserDefaults.shared.string(forKey: "selectTeam")!)
+                    
+                    // TODO: 로그 추후 삭제 예정
+                    print("selectTeamUseCase.state.selectedTeam : \(selectTeamUseCase.state.selectedTeam)")
+                    
                     pathModel.push(.myTeamGameInfo)
                 }
             }
@@ -118,4 +122,5 @@ private struct HeaderView: View {
         .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(PathModel())
+        .environment(PreviewHelper.mockMatchUseCase)
 }

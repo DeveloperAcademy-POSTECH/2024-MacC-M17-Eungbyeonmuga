@@ -101,4 +101,9 @@ extension MatchUseCase {
         matchService.isDateInFuture(date)
     }
     
+    // 내 팀 경기 필터링 메소드
+    func isMyTeam(_ team: Team, _ myTeam: Team) -> Bool {
+        matchService.isMyTeam(team, myTeam)
+    }
+    
 }
