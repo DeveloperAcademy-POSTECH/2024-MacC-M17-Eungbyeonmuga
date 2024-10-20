@@ -72,18 +72,14 @@ func calculateInningText(for match: Match) -> String {
     }
 }
 
-// 유저디폴트에서 선택한 팀 이름을 가져오는 함수
-func fetchSelectedTeamFromUserDefaults() -> String? {
-    return UserDefaults.shared.string(forKey: "selectTeam")
-}
-
 // 선택한 팀 반환 함수
 func getSelectTeam() -> SelectTeamType {
-    guard let teamName = fetchSelectedTeamFromUserDefaults() else {
+    let stubSelectTeamService = StubSelectTeamService()
+    guard let selectTeam = stubSelectTeamService.getUserDefaultsTeamObject() else {
         return .allType
     }
     
-    switch teamName {
+    switch selectTeam.name {
     case "SSG 랜더스":
         return .ssgType
     case "LG 트윈스":
@@ -203,9 +199,10 @@ private func fetchMatchesFromServer() async -> Result<[Match], Error> {
     return result
 }
 
-// 매치 배열에서 필터링하는 함수
+// 서버에서 받아온 매치 배열에서 필터링하는 함수
 func filterMatches() async -> Match? {
-    let selectedTeamName = fetchSelectedTeamFromUserDefaults()
+    let stubSelectTeamService = StubSelectTeamService()
+    let selectedTeam = stubSelectTeamService.getUserDefaultsTeamObject()
     
     var filteredMatches: [Match] = []
     let result = await fetchMatchesFromServer()
@@ -218,9 +215,9 @@ func filterMatches() async -> Match? {
         return nil
     }
     
-    if selectedTeamName != "전체 구단" {
+    if selectedTeam?.name != "전체 구단" {
         filteredMatches = filteredMatches.filter { match in
-            match.homeTeam.name == selectedTeamName || match.awayTeam.name == selectedTeamName
+            match.homeTeam.name == selectedTeam?.name || match.awayTeam.name == selectedTeam?.name
         }
     }
     
@@ -231,4 +228,44 @@ func filterMatches() async -> Match? {
     }
     
     return nil
+}
+
+// 목업 데이터 필터링 함수
+func filterMatches(matches: [Match]) -> Match? {
+    let stubSelectTeamService = StubSelectTeamService()
+    let selectedTeam = stubSelectTeamService.getUserDefaultsTeamObject()
+    let filteredMatches: [Match]
+    
+    if selectedTeam?.name == "전체 구단" {
+        filteredMatches = matches
+    } else {
+        filteredMatches = matches.filter { match in
+            match.homeTeam.name == selectedTeam?.name || match.awayTeam.name == selectedTeam?.name
+        }
+    }
+    print("🍎", filteredMatches)
+    
+    let todayMatches = filteredMatches.filter {
+        Calendar.current.isDate($0.startDateTime, inSameDayAs: Date.today)
+    }
+    
+    if !todayMatches.isEmpty {
+        return todayMatches.sorted(by: { $0.startDateTime < $1.startDateTime }).first
+    }
+    
+    for state in [GameState.PLAYING, .PREPARE, .END, .CANCEL] {
+        if let match = todayMatches.first(where: { $0.gameState == state }) {
+            return match
+        }
+    }
+    
+    let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date.today)!
+    if let tomorrowPrepareMatch = filteredMatches.first(where: {
+        Calendar.current.isDate($0.startDateTime, inSameDayAs: tomorrow) && $0.gameState == .PREPARE
+    }) {
+        return tomorrowPrepareMatch
+    }
+    
+    let futureMatches = filteredMatches.filter { $0.startDateTime > Date() }
+    return futureMatches.sorted(by: { $0.startDateTime < $1.startDateTime }).first
 }

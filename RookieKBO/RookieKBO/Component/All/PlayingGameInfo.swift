@@ -45,6 +45,7 @@ private struct GameInfo: View {
                     .font(.Caption.caption1)
             }
             .padding(.trailing, 16)
+            .padding(.leading, 8)
             
             let awayScore = matchUseCase.calculateScore(for: playingGameInfo, team: .AWAY)
             
@@ -53,7 +54,7 @@ private struct GameInfo: View {
             let inningText = matchUseCase.calculateInningText(for: playingGameInfo)
             
             Text("\(awayScore)")
-                .font(.CustomTitle.customTitle2)
+                .font(.CustomTitle.customTitle1)
                 .foregroundColor(.TextLabel.main)
                 .padding(.vertical, 8)
                 .padding(.horizontal, 7)
@@ -67,7 +68,7 @@ private struct GameInfo: View {
             Spacer()
             
             Text("\(homeScore)")
-                .font(.CustomTitle.customTitle2)
+                .font(.CustomTitle.customTitle1)
                 .foregroundColor(.TextLabel.main)
                 .padding(.vertical, 8)
                 .padding(.horizontal, 7)
@@ -93,6 +94,7 @@ private struct GameInfo: View {
                         .cornerRadius(99)
                 }
             }
+            .padding(.trailing, 8)
         }
     }
 }

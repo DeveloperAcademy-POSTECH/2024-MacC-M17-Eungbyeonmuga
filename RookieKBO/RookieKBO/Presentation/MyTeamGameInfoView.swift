@@ -134,20 +134,13 @@ struct MyTeamGameInfoView: View {
             }
         }
         .onAppear {
-            if let selectTeam = UserDefaults.shared.string(forKey: "selectTeam") {
-                print("팀: " + selectTeam)
-            }
-            if let selectTeamColor = UserDefaults.shared.string(forKey: "selectTeamColor") {
-                print("tab 색상: " + selectTeamColor)
-                teamColor = Color.teamColor(for: selectTeamColor) ?? .Brand.primary
-            }
             if let selectedTeamObj = selectTeamUseCase.getUserDefaultsTeamObject() {
+                teamColor = Color.teamColor(for: selectedTeamObj.color) ?? .Brand.primary
                 print("UserDefaults selectedTeam : \(selectedTeamObj)")
             }
             if let selectedTeamObj = selectTeamUseCase.state.selectedTeam {
                 print("selectTeamUseCase.state.selectedTeam : \(selectedTeamObj)")
             }
-            
         }
         .navigationDestination(for: Screen.self) { screen in
             pathModel.build(screen)

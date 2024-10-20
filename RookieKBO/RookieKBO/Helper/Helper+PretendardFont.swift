@@ -32,7 +32,7 @@ extension Font {
     
     enum Caption {
         static let caption1: Font = .custom("Pretendard-Bold", size: 12)
-        static let caption2: Font = .custom("Pretendard-Medium", size: 10)
+        static let caption2: Font = .custom("Pretendard-Medium", size: 12)
         static let caption3: Font = .custom("Pretendard-Medium", size: 8)
     }
 }

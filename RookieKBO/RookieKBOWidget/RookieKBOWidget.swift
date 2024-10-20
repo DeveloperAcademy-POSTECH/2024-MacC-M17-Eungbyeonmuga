@@ -25,8 +25,8 @@ struct Provider: AppIntentTimelineProvider {
         
         let currentDate = Date()
         let entryDate = Calendar.current.date(byAdding: .second, value: 1, to: currentDate)!
-        let todayMatch = await filterMatches()
-        let entry = WidgetEntry(date: entryDate, selectedTeamType: selectedTeamAppIntent, match: MockDataBuilder.mockMatchList.randomElement())
+//        let todayMatch = await filterMatches()
+        let entry = WidgetEntry(date: entryDate, selectedTeamType: selectedTeamAppIntent, match: filterMatches(matches: MockDataBuilder.mockMatchList))
         entries.append(entry)
         
         return Timeline(entries: entries, policy: .atEnd)
@@ -132,7 +132,7 @@ private func allTypeBackgroundView(entry: Provider.Entry) -> some View {
 struct RookieKBOWidget: Widget {
     
     // TODO: 각자 위젯 아이디로 변경
-    let kind: String = "com.rookiekbo.simmons.widget"
+    let kind: String = "com.rookiekbo.widget"
     
     var body: some WidgetConfiguration {
         
