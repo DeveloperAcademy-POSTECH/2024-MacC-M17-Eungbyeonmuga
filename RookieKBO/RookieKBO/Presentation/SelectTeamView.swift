@@ -206,6 +206,7 @@ private struct SelectTeamListView: View {
             .padding(.horizontal)
             .padding(.bottom, 80)
         }
+        .scrollIndicators(.hidden)
     }
 }
 

@@ -55,7 +55,7 @@ private struct GameInfo: View {
             let homeResult = matchUseCase.getAllTeamResult(for: homeScore, otherScore: awayScore)
             
             Text("\(awayScore)")
-                .font(.CustomTitle.customTitle2)
+                .font(.CustomTitle.customTitle1)
                 .foregroundColor(awayResult.color)
                 .padding(.vertical, 8)
                 .padding(.leading, 12)
@@ -74,7 +74,7 @@ private struct GameInfo: View {
                 .padding(.trailing, 16)
             
             Text("\(homeScore)")
-                .font(.CustomTitle.customTitle2)
+                .font(.CustomTitle.customTitle1)
                 .foregroundColor(homeResult.color)
                 .padding(.vertical, 8)
                 .padding(.leading, 12)

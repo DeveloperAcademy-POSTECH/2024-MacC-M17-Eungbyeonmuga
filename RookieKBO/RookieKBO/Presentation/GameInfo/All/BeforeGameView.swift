@@ -21,20 +21,22 @@ struct BeforeGameView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 16) {
+            VStack(spacing: 0) {
                 ForEach(gamesGroupedByDate.keys.sorted(), id: \.self) { date in
                     HStack(spacing: 0) {
                         DateLabel(date: date)
                         Spacer()
                     }
-                    .padding(.top)
+                    .padding(.vertical, 16)
 
                     ForEach(gamesGroupedByDate[date] ?? []) { game in
                         EndGameInfo(endGameInfo: game)
+                            .padding(.bottom, 16)
                     }
                 }
             }
         }
+        .scrollIndicators(.hidden)
     }
 }
 

@@ -230,6 +230,7 @@ func filterMatches() async -> Match? {
     return nil
 }
 
+// 목업 데이터 필터링 함수
 func filterMatches(matches: [Match]) -> Match? {
     let stubSelectTeamService = StubSelectTeamService()
     let selectedTeam = stubSelectTeamService.getUserDefaultsTeamObject()
@@ -242,6 +243,7 @@ func filterMatches(matches: [Match]) -> Match? {
             match.homeTeam.name == selectedTeam?.name || match.awayTeam.name == selectedTeam?.name
         }
     }
+    print("🍎", filteredMatches)
     
     let todayMatches = filteredMatches.filter {
         Calendar.current.isDate($0.startDateTime, inSameDayAs: Date.today)
