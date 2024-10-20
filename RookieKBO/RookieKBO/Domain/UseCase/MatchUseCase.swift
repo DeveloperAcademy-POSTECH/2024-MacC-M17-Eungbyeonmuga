@@ -13,8 +13,10 @@ final class MatchUseCase {
     private let matchService: MatchServiceInterface
     
     private(set) var state: State
+    private(set) var matches: [Match]
     
     init(matchService: MatchServiceInterface) {
+        self.matches = []
         self.matchService = matchService
         self.state = State(
             PreparingGames: nil,
@@ -85,7 +87,7 @@ extension MatchUseCase {
     func adjustScores(_ scores: [Int], inning: ScoreBoardView.Inning) -> [String] {
         matchService.adjustScores(scores, inning: inning)
     }
-    
+  
     // 이전 경기 필터링 메소드
     func isDateInPast(_ date: Date) -> Bool {
         matchService.isDateInPast(date)
@@ -105,5 +107,20 @@ extension MatchUseCase {
     func isMyTeam(_ team: Team, _ myTeam: Team) -> Bool {
         matchService.isMyTeam(team, myTeam)
     }
-    
+  
+    // date를 보내 해당 날짜의 경기 정보 반환
+    func fetchMatches(date: String) async -> Result<[Match], Error> {
+        let result = await matchService.fetchMatches(date: date)
+        
+        switch result {
+        case .success(let fetchedMatches):
+            self.matches = fetchedMatches
+            print(fetchedMatches)
+            return .success(fetchedMatches)
+            
+        case .failure(let error):
+            print(error)
+            return .failure(error)
+        }
+    }
 }

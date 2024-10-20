@@ -11,6 +11,24 @@ final class MatchServiceImpl: MatchServiceInterface {
     
     func fetchGames() {
         // 경기 받아오기
+    private let matchRepository = MatchRepository()
+    
+    func fetchMatches(date: String) async -> Result<[Match], Error> {
+        let request = FetchMatchesRequest(date: date)
+        let result = await matchRepository.fetchMatches(request: request)
+        switch result {
+        case .success(let fetchMatchesResponse):
+            let matchesResult = fetchMatchesResponse.toMatches()
+            switch matchesResult {
+            case .success(let matches):
+                return .success(matches)
+                
+            case .failure(let error):
+                return .failure(error)
+            }
+        case .failure(let error):
+            return .failure(error)
+        }
     }
     
     func calculateScore(for match: Match, team: HomeAndAway) -> Int {

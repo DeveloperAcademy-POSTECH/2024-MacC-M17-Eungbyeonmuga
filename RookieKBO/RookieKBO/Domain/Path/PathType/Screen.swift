@@ -1,6 +1,6 @@
 //
 //  Screen.swift
-//  webSocket
+//  RookieKBO
 //
 //  Created by Simmons on 10/13/24.
 //

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GameState: Codable, CaseIterable {
+enum GameState: String, Codable, CaseIterable {
     case PREPARE
     case PLAYING
     case END
@@ -15,10 +15,10 @@ enum GameState: Codable, CaseIterable {
     
     var korean: String {
         switch self {
-        case .PREPARE: return "준비"
-        case .PLAYING: return "경기중"
-        case .END: return "종료"
-        case .CANCEL: return "취소"
+        case .PREPARE: return "경기 예정"
+        case .PLAYING: return "경기 중"
+        case .END: return "경기 종료"
+        case .CANCEL: return "경기 취소"
         }
     }
 }
