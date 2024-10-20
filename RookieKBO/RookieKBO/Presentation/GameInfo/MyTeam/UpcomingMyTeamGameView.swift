@@ -35,6 +35,7 @@ struct UpcomingMyTeamGameView: View {
                 }
             }
         }
+        .scrollIndicators(.hidden)
     }
 }
 

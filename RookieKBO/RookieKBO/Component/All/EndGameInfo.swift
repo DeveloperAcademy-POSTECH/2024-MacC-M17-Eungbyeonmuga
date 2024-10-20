@@ -57,7 +57,7 @@ private struct GameInfo: View {
             let homeResult = matchUseCase.getAllTeamResult(for: homeScore, otherScore: awayScore)
             
             Text("\(awayScore)")
-                .font(.CustomTitle.customTitle1)
+                .font(.CustomTitle.customTitle2)
                 .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
                 .padding(.vertical, 8)
                 .padding(.leading, 12)
@@ -76,7 +76,7 @@ private struct GameInfo: View {
                 .padding(.trailing, 16)
             
             Text("\(homeScore)")
-                .font(.CustomTitle.customTitle1)
+                .font(.CustomTitle.customTitle2)
                 .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
                 .padding(.vertical, 8)
                 .padding(.leading, 12)
@@ -91,6 +91,8 @@ private struct GameInfo: View {
                 
                 HStack(spacing: 2) {
                     Text("\(endGameInfo.homeTeam.name.firstWord())")
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                         .font(.Caption.caption1)
                     
                     Text("홈")

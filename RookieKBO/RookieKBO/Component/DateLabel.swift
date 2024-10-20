@@ -9,8 +9,12 @@ import SwiftUI
 
 struct DateLabel: View {
     
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
     let date: Date
-    let isAllTeam: Bool = UserDefaults.shared.string(forKey: "selectTeam") == "전체 구단"
+    var isAllTeam: Bool {
+        selectTeamUseCase.getUserDefaultsTeamObject()?.name == "전체 구단"
+    }
 
     var body: some View {
         Text("\(date.toMonthDayString())")

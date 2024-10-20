@@ -35,6 +35,7 @@ struct BeforeMyTeamGameView: View {
                 }
             }
         }
+        .scrollIndicators(.hidden)
     }
 }
 
