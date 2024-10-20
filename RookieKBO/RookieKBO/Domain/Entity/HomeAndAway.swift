@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum HomeAndAway: Codable, CaseIterable {
+enum HomeAndAway: String, Codable, CaseIterable {
     case HOME
     case AWAY
     
