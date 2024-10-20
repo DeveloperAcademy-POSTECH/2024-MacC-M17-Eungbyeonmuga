@@ -14,6 +14,8 @@ struct SelectTeamView: View {
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @State private var isSelectButtonPresented: Bool = false
     
+    @State private var selectedTeam: Team?
+    
     var body: some View {
         ZStack {
             Color(Background.first)
@@ -21,10 +23,10 @@ struct SelectTeamView: View {
             
             VStack(spacing: 8) {
                 HeaderView()
-                SelectTeamListView(isSelectButtonPresented: $isSelectButtonPresented)
+                SelectTeamListView(isSelectButtonPresented: $isSelectButtonPresented, selectedTeam: $selectedTeam)
             }
             if isSelectButtonPresented {
-                StartTeam()
+                StartTeam(selectedTeam: $selectedTeam)
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -77,7 +79,7 @@ private struct SelectTeamListView: View {
     
     @Binding var isSelectButtonPresented: Bool
     
-    @State var selectedTeam: Team?
+    @Binding var selectedTeam: Team?
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
@@ -91,7 +93,9 @@ private struct SelectTeamListView: View {
                         } else {
                             selectedTeam = team
                         }
-                        selectTeamUseCase.toggleSelectedTeam(team)
+//                        selectTeamUseCase.toggleSelectedTeam(team)
+                        // TODO: 추후 삭제 예정 (LOG)
+                        print("응원팀 버튼 클릭 : \(selectedTeam)")
                         isSelectButtonPresented = selectedTeam != nil
                     } label: {
                         ZStack {
@@ -164,21 +168,25 @@ private struct StartTeam: View {
     
     @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @Binding var selectedTeam: Team?
     
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
             Button {
                 selectTeamUseCase.updateUserDefaultsTeam()
-                if let selectedTeam = selectTeamUseCase.state.selectedTeam {
+                if let selectedTeam = selectedTeam {
                     selectTeamUseCase.updateUserDefaultsTeamObject(selectedTeam)
+                    selectTeamUseCase.fetchSelectedTeam(selectedTeam)
                     print("UserDefaults Select team: \(selectTeamUseCase.getUserDefaultsTeamObject()!)")
                 }
                 WidgetCenter.shared.reloadAllTimelines()
-                pathModel.pop()
-                if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
-                    pathModel.push(.myTeamGameInfo)
-                }
+//                pathModel.pop()
+//                if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
+//                    pathModel.push(.myTeamGameInfo)
+//                } else {
+//                    pathModel.push(.allGameInfo)
+//                }
                 
             } label: {
                 Text("루키크보 시작하기")

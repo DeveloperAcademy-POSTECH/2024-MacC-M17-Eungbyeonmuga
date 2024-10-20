@@ -13,4 +13,5 @@ enum Screen: Identifiable, Hashable {
     
     case selectTeam
     case myTeamGameInfo
+    case allGameInfo
 }

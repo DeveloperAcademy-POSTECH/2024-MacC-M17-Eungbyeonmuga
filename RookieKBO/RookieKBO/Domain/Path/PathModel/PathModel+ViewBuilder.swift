@@ -16,6 +16,8 @@ extension PathModel {
             SelectTeamView()
         case .myTeamGameInfo:
             MyTeamGameInfoView()
+        case .allGameInfo:
+            AllGameInfoView()
         }
     }
 }

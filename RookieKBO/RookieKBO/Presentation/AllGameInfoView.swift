@@ -74,24 +74,6 @@ struct AllGameInfoView: View {
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
             }
-            .onAppear {
-                if UserDefaults.shared.string(forKey: "selectTeam") == nil {
-                    print("SelectTeamView로 이동")
-                    pathModel.push(.selectTeam)
-                } else if UserDefaults.shared.string(forKey: "selectTeam") != "전체 구단" {
-                    print("MyTeamGameInfoView로 이동")
-                    print("팀-: " + UserDefaults.shared.string(forKey: "selectTeam")!)
-                    
-                    // TODO: 로그 추후 삭제 예정
-                    print("selectTeamUseCase.state.selectedTeam : \(selectTeamUseCase.state.selectedTeam)")
-                    
-                    if let selectedTeam = selectTeamUseCase.getUserDefaultsTeamObject() {
-                        selectTeamUseCase.fetchSelectedTeam(selectedTeam)
-                    }
-                    
-                    pathModel.push(.myTeamGameInfo)
-                }
-            }
             .onChange(of: UserDefaults.shared.string(forKey: "selectTeamColor")) { newColor in
                 if let newColor = newColor {
                     teamColor = Color.teamColor(for: newColor) ?? .Brand.primary

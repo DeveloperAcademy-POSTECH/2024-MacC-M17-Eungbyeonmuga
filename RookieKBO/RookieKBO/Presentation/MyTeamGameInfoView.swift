@@ -104,6 +104,9 @@ struct MyTeamGameInfoView: View {
             }
             
         }
+        .navigationDestination(for: Screen.self) { screen in
+            pathModel.build(screen)
+        }
         .navigationBarBackButtonHidden(true)
     }
 }
@@ -112,6 +115,7 @@ struct MyTeamGameInfoView: View {
 // TODO: 팀별 헤더로 로고 수정 필요
 
 private struct HeaderView: View {
+    @Environment(PathModel.self) private var pathModel
     let team: Team
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -129,15 +133,25 @@ private struct HeaderView: View {
                     
                     Spacer()
                     
-                    Image(.logoCircle)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 32)
+                    Button {
+                        print("Go AllGameInfo View")
+                        pathModel.push(.allGameInfo)
+                    } label: {
+                        Image(.logoCircle)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 32)
+                    }
                     
-                    Image(.refreshCircle)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 32)
+                    Button {
+                        // TODO: 새로고침 버튼 기능 구현
+                        
+                    } label: {
+                        Image(.refreshCircle)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 32)
+                    }
                 }
                 
                 Text(team.name)
