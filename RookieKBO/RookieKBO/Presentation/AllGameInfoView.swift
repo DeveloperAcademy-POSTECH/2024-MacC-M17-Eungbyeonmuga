@@ -75,9 +75,6 @@ struct AllGameInfoView: View {
                 teamColor = Color.teamColor(for: newColor) ?? .Brand.primary
             }
         }
-        .navigationDestination(for: Screen.self) { screen in
-            pathModel.build(screen)
-        }
         .navigationBarBackButtonHidden(true)
     }
 }

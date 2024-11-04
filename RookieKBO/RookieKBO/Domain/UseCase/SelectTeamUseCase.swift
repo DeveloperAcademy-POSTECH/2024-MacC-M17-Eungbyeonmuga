@@ -40,14 +40,14 @@ extension SelectTeamUseCase {
 
 extension SelectTeamUseCase {
     
-    /// 선택한 응원 팀 업데이트
-    func toggleSelectedTeam(_ team: Team) {
-        if state.selectedTeam == team {
-            state.selectedTeam = nil
-        } else {
-            state.selectedTeam = team
-        }
-    }
+//    /// 선택한 응원 팀 업데이트
+//    func toggleSelectedTeam(_ team: Team) {
+//        if state.selectedTeam == team {
+//            state.selectedTeam = nil
+//        } else {
+//            state.selectedTeam = team
+//        }
+//    }
     
     func fetchSelectedTeam(_ team: Team) {
         state.selectedTeam = team

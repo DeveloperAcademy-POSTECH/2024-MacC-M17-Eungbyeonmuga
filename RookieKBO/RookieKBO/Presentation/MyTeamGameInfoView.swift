@@ -142,9 +142,6 @@ struct MyTeamGameInfoView: View {
                 print("selectTeamUseCase.state.selectedTeam : \(selectedTeamObj)")
             }
         }
-        .navigationDestination(for: Screen.self) { screen in
-            pathModel.build(screen)
-        }
         .fullScreenCover(isPresented: $isAllGameInfoFullScreenPresented) {
             AllGameInfoView()
         }

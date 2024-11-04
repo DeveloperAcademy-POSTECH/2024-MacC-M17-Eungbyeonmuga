@@ -140,9 +140,6 @@ private struct SelectTeamListView: View {
                         } else {
                             selectedTeam = team
                         }
-//                        selectTeamUseCase.toggleSelectedTeam(team)
-                        // TODO: 추후 삭제 예정 (LOG)
-                        print("응원팀 버튼 클릭 : \(selectedTeam)")
                         isSelectButtonPresented = selectedTeam != nil
                     } label: {
                         ZStack {
@@ -222,21 +219,17 @@ private struct StartTeam: View {
         VStack(spacing: 0) {
             Spacer()
             Button {
-                selectTeamUseCase.updateUserDefaultsTeam()
                 if let selectedTeam = selectedTeam {
+                    selectTeamUseCase.updateUserDefaultsTeam()
                     selectTeamUseCase.updateUserDefaultsTeamObject(selectedTeam)
+                    // InitialScreenView의 if문으로 인해 화면 변경
                     selectTeamUseCase.fetchSelectedTeam(selectedTeam)
-                    print("UserDefaults Select team: \(selectTeamUseCase.getUserDefaultsTeamObject()!)")
                 }
-                WidgetCenter.shared.reloadAllTimelines()
                 if pathModel.path.count > 0 {
                     pathModel.pop()
                 }
-//                if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
-//                    pathModel.push(.myTeamGameInfo)
-//                } else {
-//                    pathModel.push(.allGameInfo)
-//                }
+                WidgetCenter.shared.reloadAllTimelines()
+               
                 
             } label: {
                 Text("루키크보 시작하기")

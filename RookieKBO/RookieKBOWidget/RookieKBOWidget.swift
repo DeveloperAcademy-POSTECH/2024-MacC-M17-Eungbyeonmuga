@@ -132,7 +132,7 @@ private func allTypeBackgroundView(entry: Provider.Entry) -> some View {
 struct RookieKBOWidget: Widget {
     
     // TODO: 각자 위젯 아이디로 변경
-    let kind: String = "com.rookiekbo.widget"
+    let kind: String = "com.rookiekbo.simmons.widget"
     
     var body: some WidgetConfiguration {
         
