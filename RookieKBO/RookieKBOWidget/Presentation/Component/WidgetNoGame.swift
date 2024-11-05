@@ -1,5 +1,5 @@
 //
-//  WidgetNoGames.swift
+//  WidgetNoGame.swift
 //  RookieKBOWidgetExtension
 //
 //  Created by crownjoe on 10/16/24.
@@ -9,7 +9,7 @@ import WidgetKit
 import SwiftUI
 
 
-struct WidgetNoGames: View {
+struct WidgetNoGame: View {
     var entry: Provider.Entry
     
     var body: some View {
