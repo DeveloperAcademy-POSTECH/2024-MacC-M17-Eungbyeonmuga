@@ -1,5 +1,5 @@
 //
-//  Term.swift
+//  TermEntry.swift
 //  RookieKBO
 //
 //  Created by crownjoe on 11/6/24.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Term {
+class TermEntry {
     @Attribute(.unique) var id: UUID
     var term: String
     var definition: String

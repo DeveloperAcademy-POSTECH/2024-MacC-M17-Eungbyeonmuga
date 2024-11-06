@@ -82,7 +82,7 @@
 				Domain/Entity/Match.swift,
 				Domain/Entity/ScoreBoard.swift,
 				Domain/Entity/Team.swift,
-				Domain/Entity/Term.swift,
+				Domain/Entity/TermEntry.swift,
 				Domain/Entity/VideoTranscript.swift,
 				Domain/Interface/MatchServiceInterface.swift,
 				Domain/Interface/SelectTeamServiceInterface.swift,
