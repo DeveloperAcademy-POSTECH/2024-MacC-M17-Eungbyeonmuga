@@ -122,7 +122,7 @@ async def get_video_ids_api(target_date: str):
         raise HTTPException(status_code=500, detail=str(e))
     
 
-# 특정 날짜의 게임 정보를 반환
+# 특정 날짜의 게임 정보를 반환 (5번 api)
 @app.get("/games/{date}", response_model=GameResponse)
 async def get_game_info(date: str):
     return await scrape_game_info(date)
@@ -132,8 +132,7 @@ async def get_game_info(date: str):
 # 최신 순으로 제목, 날짜, 썸네일 이미지, 비디오 id 반환 1번 함수
 def get_video_details() -> list[dict]:
 
-    chrome_driver_path =  '/Users/choseyeon/.wdm/drivers/chromedriver/mac64/130.0.6723.91/chromedriver-mac-arm64/chromedriver'
-    # "/opt/homebrew/bin/chromedriver"
+    chrome_driver_path = "/opt/homebrew/bin/chromedriver"
     service = Service(executable_path=chrome_driver_path)
     options = Options()
     options.add_argument("--headless")  # 브라우저 창 띄우지 않기
@@ -226,7 +225,7 @@ def get_team_rankings(url: str) -> List[Dict[str, str]]:
 
     return rankings
 
-# 기본 정보 크롤링 함수 비동기화
+# 기본 정보 크롤링 함수 비동기화 (5번 함수)
 async def get_game_boxes(date: str):
     url = f"https://statiz.sporki.com/schedule/?m=daily&date={date}"
     async with aiohttp.ClientSession() as session:
@@ -235,7 +234,7 @@ async def get_game_boxes(date: str):
             game_boxes = soup.select('body > div.warp > div.container > section > div.box_type_boared > div.item_box')
             return game_boxes
 
-# 비동기적으로 summary 페이지를 크롤링하는 함수
+# 비동기적으로 summary 페이지를 크롤링하는 함수 (5번 함수)
 async def fetch_summary(session, summary_url, game_info):
     async with session.get(summary_url) as response:
         summary_content = await response.text()
@@ -266,7 +265,7 @@ async def fetch_summary(session, summary_url, game_info):
                 game_info["awayRHEB"] = scores[-4:]
                 game_info["awayScore"] = total_score
 
-# 메인 크롤링 함수
+# 특정 경기 일정 크롤링 함수 (5번 함수)
 async def scrape_game_info(date: str):
     game_boxes = await get_game_boxes(date)  # 비동기적으로 호출
     is_available = bool(game_boxes)
@@ -331,11 +330,9 @@ async def scrape_game_info(date: str):
 
 
 
-
-# 날짜에 해당하는 비디오 ID를 가져오는 4번 함수
+# 특정 햐날짜에 해당하는 비디오 ID를 가져오는 4번 함수
 def get_video_ids(playlist_url: str, target_date: datetime) -> list[str]:
-    chrome_driver_path =  '/Users/choseyeon/.wdm/drivers/chromedriver/mac64/130.0.6723.91/chromedriver-mac-arm64/chromedriver'
-    # "/opt/homebrew/bin/chromedriver"
+    chrome_driver_path =  "/opt/homebrew/bin/chromedriver"
 
     service = Service(executable_path=chrome_driver_path)
     options = Options()
