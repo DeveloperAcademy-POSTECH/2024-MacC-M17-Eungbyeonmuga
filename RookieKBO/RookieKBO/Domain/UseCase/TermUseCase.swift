@@ -45,7 +45,7 @@ extension TermUseCase {
                 print("🧃 id: \(entry.id), 용어: \(entry.term), 설명: \(entry.definition)")
             }
         } catch {
-            print("❌ TermEntry를 불러오는 중 오류 발생:", error)
+            print("❌ TermEntry를 불러오는 중 오류 발생", error)
         }
     }
     
@@ -59,7 +59,7 @@ extension TermUseCase {
             let termEntries = try readTermSet()
             
             if termEntries.contains(where: { $0.term == term }) {
-                print("⚠️ 이미 저장된 용어입니다: \(term)")
+                print("⚠️ 이미 저장된 용어입니다 \(term)")
                 return
             }
             
@@ -68,7 +68,7 @@ extension TermUseCase {
             print("✅ 새로운 TermEntry가 추가됨: \(term) - \(definition)")
             
         } catch {
-            print("❌ TermEntry를 불러오거나 추가하는 중 오류 발생:", error)
+            print("❌ TermEntry를 불러오거나 추가하는 중 오류 발생", error)
         }
     }
     
@@ -90,11 +90,11 @@ extension TermUseCase {
                 modelContainer?.mainContext.delete(entryToDelete)
                 print("✅ \(term) 용어가 삭제")
             } else {
-                print("⚠️ 삭제할 용어를 찾을 수 없습니다: \(term)")
+                print("⚠️ 삭제할 용어 없음 \(term)")
             }
             
         } catch {
-            print("❌ TermEntry를 읽는 중 오류 발생:", error)
+            print("❌ TermEntry를 읽는 중 오류 발생", error)
         }
     }
 }

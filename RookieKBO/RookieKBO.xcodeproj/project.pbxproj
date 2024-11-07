@@ -10,6 +10,7 @@
 		DFC005A32CB8D40F007C96BE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC005A22CB8D40F007C96BE /* WidgetKit.framework */; };
 		DFC005A52CB8D40F007C96BE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC005A42CB8D40F007C96BE /* SwiftUI.framework */; };
 		DFC005B62CB8D410007C96BE /* RookieKBOWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DFC005A02CB8D40F007C96BE /* RookieKBOWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DFE5EDAE2CDCB98B009A7BA3 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = DFE5EDAD2CDCB98B009A7BA3 /* YouTubePlayerKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFE5EDAE2CDCB98B009A7BA3 /* YouTubePlayerKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +195,7 @@
 			);
 			name = RookieKBO;
 			packageProductDependencies = (
+				DFE5EDAD2CDCB98B009A7BA3 /* YouTubePlayerKit */,
 			);
 			productName = RookieKBO;
 			productReference = DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */;
@@ -247,6 +250,9 @@
 			);
 			mainGroup = DF20BB772CAED5DC00F88298;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				DFE5EDAC2CDCB98B009A7BA3 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DF20BB772CAED5DC00F88298;
 			projectDirPath = "";
@@ -577,6 +583,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DFE5EDAC2CDCB98B009A7BA3 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DFE5EDAD2CDCB98B009A7BA3 /* YouTubePlayerKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DFE5EDAC2CDCB98B009A7BA3 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
+			productName = YouTubePlayerKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DF20BB782CAED5DC00F88298 /* Project object */;
 }
