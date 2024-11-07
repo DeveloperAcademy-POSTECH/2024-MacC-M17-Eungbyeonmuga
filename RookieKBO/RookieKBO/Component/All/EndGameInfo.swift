@@ -19,7 +19,7 @@ struct EndGameInfo: View {
             ScoreBoardView(match: endGameInfo)
         }
         .padding(.all, 16)
-        .background(Color.Background.second)
+        .background(.gray2)
         .cornerRadius(14)
     }
 }
@@ -58,26 +58,26 @@ private struct GameInfo: View {
             
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle2)
-                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
+                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
                 .padding(.vertical, 8)
                 .padding(.leading, 12)
                 .padding(.trailing, 11)
             
             Text("\(awayResult.description)")
                 .font(.Body.body2)
-                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
+                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
                 .padding(.leading, 16)
             
             Spacer()
             
             Text("\(homeResult.description)")
                 .font(.Body.body2)
-                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
+                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
                 .padding(.trailing, 16)
             
             Text("\(homeScore)")
                 .font(.CustomTitle.customTitle2)
-                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
+                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
                 .padding(.vertical, 8)
                 .padding(.leading, 12)
                 .padding(.trailing, 11)
@@ -97,10 +97,10 @@ private struct GameInfo: View {
                     
                     Text("홈")
                         .font(.Caption.caption2)
-                        .foregroundColor(.TextLabel.main)
+                        .foregroundColor(.gray7)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
-                        .background(Color.ScoreBoardColor.homeBg)
+                        .background(.gray4)
                         .cornerRadius(99)
                 }
             }

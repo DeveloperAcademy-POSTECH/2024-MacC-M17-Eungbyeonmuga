@@ -20,12 +20,12 @@ struct WidgetCancelGame: View {
             
             Text("우천 취소")
                 .font(.Body.body2)
-                .foregroundColor(.TextLabel.widget100)
+                .foregroundColor(.widget100)
                 .padding(.bottom, 4)
             
             Text("\(currentMatch?.place ?? "")")
                 .font(.Caption.caption2)
-                .foregroundColor(.TextLabel.widget50)
+                .foregroundColor(.widget50)
         }
     }
 }

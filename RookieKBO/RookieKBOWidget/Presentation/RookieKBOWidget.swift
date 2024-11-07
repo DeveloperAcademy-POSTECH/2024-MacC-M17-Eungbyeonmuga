@@ -69,7 +69,7 @@ struct RookieKBOWidgetEntryView : View {
                 BackgroundView(image: "img_widgetnc")
             case .allType:
                 if currentMatch == nil {
-                    let gradient = LinearGradient.gradient(startColor: Color.Brand.primary, endColor: Color.Brand.primaryGd)
+                    let gradient = LinearGradient.gradient(startColor: .brandPrimary, endColor: .brandPrimaryGd)
                     
                     AnyView(Rectangle().fill(gradient))
                 } else {

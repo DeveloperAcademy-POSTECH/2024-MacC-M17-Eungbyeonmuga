@@ -45,7 +45,7 @@ struct ScoreBoardView: View {
             TeamBoard(inning: inning, match: match, isHomeTeam: false)
             TeamBoard(inning: inning, match: match, isHomeTeam: true)
         }
-        .background(Color.Background.second)
+        .background(.gray2)
     }
 }
 
@@ -59,43 +59,43 @@ private struct InningInfo: View {
             Text("팀명")
                 .frame(width: 24)
                 .font(.Caption.caption2)
-                .foregroundColor(.TextLabel.scoreBoard)
+                .foregroundColor(.gray5)
                 .padding(.trailing, 8)
             
             ForEach(1...inningCount, id: \.self) { inningNumber in
                 Text("\(inningNumber)")
                     .font(.Caption.caption2)
                     .frame(maxWidth: .infinity)
-                    .foregroundColor(.TextLabel.scoreBoard)
+                    .foregroundColor(.gray5)
             }
             .padding(.trailing, trailingPadding)
             
             Text("R")
                 .font(.Caption.caption2)
-                .foregroundColor(.TextLabel.scoreBoard)
+                .foregroundColor(.gray5)
                 .frame(maxWidth: .infinity)
                 .padding(.trailing, trailingPadding)
             
             Text("H")
                 .font(.Caption.caption2)
-                .foregroundColor(.TextLabel.scoreBoard)
+                .foregroundColor(.gray5)
                 .frame(maxWidth: .infinity)
                 .padding(.trailing, trailingPadding)
             
             Text("E")
                 .font(.Caption.caption2)
-                .foregroundColor(.TextLabel.scoreBoard)
+                .foregroundColor(.gray5)
                 .frame(maxWidth: .infinity)
                 .padding(.trailing, trailingPadding)
             
             Text("B")
                 .font(.Caption.caption2)
-                .foregroundColor(.TextLabel.scoreBoard)
+                .foregroundColor(.gray5)
                 .frame(maxWidth: .infinity)
         }
         .padding(.vertical, 5)
         .padding(.horizontal, 16)
-        .background(Color.ScoreBoardColor.scoreBoardBg)
+        .background(.white0)
         .cornerRadius(99)
     }
     
@@ -157,7 +157,7 @@ private struct TeamBoard: View {
             Text(isHomeTeam ? match.homeTeam.name.firstWord() : match.awayTeam.name.firstWord())
                 .frame(width: 24)
                 .font(.Caption.caption2)
-                .foregroundColor(.TextLabel.main)
+                .foregroundColor(.gray7)
                 .padding(.trailing, 8)
             
             ForEach(scoreBoard, id: \.id) { score in
@@ -166,7 +166,7 @@ private struct TeamBoard: View {
                 ForEach(adjustedScores, id: \.self) { scoreValue in
                     Text(scoreValue)
                         .font(.Caption.caption2)
-                        .foregroundColor(.TextLabel.main)
+                        .foregroundColor(.gray7)
                         .frame(maxWidth: .infinity)
                 }
                 .padding(.trailing, paddingAmount)
@@ -175,25 +175,25 @@ private struct TeamBoard: View {
             if let firstScoreBoard = scoreBoard.first {
                 Text("\(firstScoreBoard.runs)")
                     .font(.Caption.caption2)
-                    .foregroundColor(.TextLabel.main)
+                    .foregroundColor(.gray7)
                     .frame(maxWidth: .infinity)
                     .padding(.trailing, paddingAmount)
                 
                 Text("\(firstScoreBoard.hits)")
                     .font(.Caption.caption2)
-                    .foregroundColor(.TextLabel.main)
+                    .foregroundColor(.gray7)
                     .frame(maxWidth: .infinity)
                     .padding(.trailing, paddingAmount)
                 
                 Text("\(firstScoreBoard.errors)")
                     .font(.Caption.caption2)
-                    .foregroundColor(.TextLabel.main)
+                    .foregroundColor(.gray7)
                     .frame(maxWidth: .infinity)
                     .padding(.trailing, paddingAmount)
                 
                 Text("\(firstScoreBoard.balls)")
                     .font(.Caption.caption2)
-                    .foregroundColor(.TextLabel.main)
+                    .foregroundColor(.gray7)
                     .frame(maxWidth: .infinity)
             }
         }

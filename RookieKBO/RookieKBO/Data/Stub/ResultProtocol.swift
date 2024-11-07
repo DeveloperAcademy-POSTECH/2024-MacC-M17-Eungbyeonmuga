@@ -20,11 +20,11 @@ enum AllMatchResult: ResultProtocol {
     var color: Color {
         switch self {
         case .win:
-            return .Brand.primary
+            return .brandPrimary
         case .lose:
-            return .TextLabel.scoreBoard
+            return .gray5
         case .draw:
-            return .Brand.primaryGd
+            return .brandPrimaryGd
         }
     }
     
