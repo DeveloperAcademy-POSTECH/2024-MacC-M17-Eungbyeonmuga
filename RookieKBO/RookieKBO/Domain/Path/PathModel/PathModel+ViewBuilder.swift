@@ -18,6 +18,10 @@ extension PathModel {
             MyTeamGameInfoView()
         case .allGameInfo:
             AllGameInfoView()
+        case .highlight:
+            HighlightView()
+        case .myPage:
+            MyPageView()
         }
     }
 }
