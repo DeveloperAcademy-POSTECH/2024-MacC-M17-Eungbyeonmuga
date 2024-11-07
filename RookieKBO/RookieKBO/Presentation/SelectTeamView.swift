@@ -37,7 +37,7 @@ struct SelectTeamView: View {
     
     var body: some View {
         ZStack {
-            Color(Background.first)
+            Color(.gray1)
                 .ignoresSafeArea()
             
             VStack(spacing: 8) {
@@ -57,7 +57,6 @@ struct SelectTeamView: View {
 
 private struct HeaderView: View {
     
-//    let currentSelectTeam = UserDefaults.shared.string(forKey: "selectTeam") ?? "없음"
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     @State private var currentSelectTeam: String = "없음"
@@ -73,12 +72,12 @@ private struct HeaderView: View {
                     
                     Text("응원하는 구단을 선택하세요!")
                         .font(.Head.head4)
-                        .foregroundColor(.TextLabel.main)
+                        .foregroundColor(.gray7)
                         .padding(.bottom, 8)
                     
                     Text("우리 팀의 정보를 먼저 확인할 수 있어요.")
                         .font(.Head.head4)
-                        .foregroundColor(.TextLabel.main)
+                        .foregroundColor(.gray7)
                     
                 } else {
                     Group {
@@ -86,25 +85,25 @@ private struct HeaderView: View {
                             
                             Text("지금 '\(currentSelectTeam)'을 응원하고 계시네요!")
                                 .font(.Head.head4)
-                                .foregroundColor(.TextLabel.main)
+                                .foregroundColor(.gray7)
                                 .padding(.bottom, 8)
                             
                             Text("응원 팀을 변경할 수도 있어요.")
                                 .font(.Head.head4)
-                                .foregroundColor(.TextLabel.main)
+                                .foregroundColor(.gray7)
                         } else {
                             Text("지금 '\(currentSelectTeam)'을 응원하고 계시네요!")
                                 .font(.Head.head4)
-                                .foregroundColor(.TextLabel.main)
+                                .foregroundColor(.gray7)
                                 .padding(.bottom, 8)
                             
                             Text("응원 팀을 변경할 수도 있어요.")
                                 .font(.Head.head4)
-                                .foregroundColor(.TextLabel.main)
+                                .foregroundColor(.gray7)
                         }
                     }
                     .font(.Head.head4)
-                    .foregroundColor(.TextLabel.main)
+                    .foregroundColor(.gray7)
                     .lineSpacing(8)
                 }
             }
@@ -140,16 +139,13 @@ private struct SelectTeamListView: View {
                         } else {
                             selectedTeam = team
                         }
-//                        selectTeamUseCase.toggleSelectedTeam(team)
-                        // TODO: 추후 삭제 예정 (LOG)
-                        print("응원팀 버튼 클릭 : \(selectedTeam)")
                         isSelectButtonPresented = selectedTeam != nil
                     } label: {
                         ZStack {
                             // 배경색 변경
                             RoundedRectangle(cornerRadius: 18)
                                 .fill(
-                                    selectedTeam == nil ? Color.white : (selectedTeam == team ? Color.white : Color.TeamSelect.unselectBg)
+                                    selectedTeam == nil ? .white0 : (selectedTeam == team ? .white0 : .gray3)
                                 )
                                 .frame(width: 172, height: 150)
                             
@@ -161,12 +157,12 @@ private struct SelectTeamListView: View {
                                     Group{
                                         if teamNameParts[0] == "전체" {
                                             Text(team.name)
-                                                .foregroundColor(.TextLabel.main)
+                                                .foregroundColor(.gray7)
                                         } else {
                                             Text(teamNameParts[0])
-                                                .foregroundColor(.TextLabel.main)
+                                                .foregroundColor(.gray7)
                                             Text(" " + teamNameParts[1])
-                                                .foregroundColor(.TextLabel.scoreBoard)
+                                                .foregroundColor(.gray5)
                                         }
                                     }.font(.Head.head2)
                                     
@@ -189,13 +185,13 @@ private struct SelectTeamListView: View {
                             if selectedTeam == team {
                                 RoundedRectangle(cornerRadius: 18)
                                     .stroke(
-                                        LinearGradient.gradient(startColor: .Brand.primary, endColor: .Brand.primaryGd),
+                                        LinearGradient.gradient(startColor: .brandPrimary, endColor: .brandPrimaryGd),
                                         lineWidth: 5
                                     )
                                     .frame(width: 172, height: 150)
                             } else {
                                 RoundedRectangle(cornerRadius: 18)
-                                    .stroke(Color.TeamSelect.stroke, lineWidth: 5)
+                                    .stroke(.gray2, lineWidth: 5)
                                     .frame(width: 172, height: 150)
                             }
                         }
@@ -222,21 +218,18 @@ private struct StartTeam: View {
         VStack(spacing: 0) {
             Spacer()
             Button {
-                selectTeamUseCase.updateUserDefaultsTeam()
                 if let selectedTeam = selectedTeam {
+                    selectTeamUseCase.updateUserDefaultsTeam()
                     selectTeamUseCase.updateUserDefaultsTeamObject(selectedTeam)
+                    
+                    // InitialScreenView의 if문으로 인해 화면 변경
                     selectTeamUseCase.fetchSelectedTeam(selectedTeam)
-                    print("UserDefaults Select team: \(selectTeamUseCase.getUserDefaultsTeamObject()!)")
                 }
-                WidgetCenter.shared.reloadAllTimelines()
                 if pathModel.path.count > 0 {
                     pathModel.pop()
                 }
-//                if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
-//                    pathModel.push(.myTeamGameInfo)
-//                } else {
-//                    pathModel.push(.allGameInfo)
-//                }
+                WidgetCenter.shared.reloadAllTimelines()
+               
                 
             } label: {
                 Text("루키크보 시작하기")
@@ -244,7 +237,7 @@ private struct StartTeam: View {
                     .frame(width: 361, height: 54)
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 16)
-                        .fill(LinearGradient.gradient(startColor: .Brand.primary, endColor: .Brand.primaryGd)))
+                        .fill(LinearGradient.gradient(startColor: .brandPrimary, endColor: .brandPrimaryGd)))
             }
             .padding()
         }

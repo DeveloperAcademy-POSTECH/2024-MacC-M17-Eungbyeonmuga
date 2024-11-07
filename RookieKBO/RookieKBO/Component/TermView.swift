@@ -14,7 +14,7 @@ struct TermView: View {
                 Text("용어 A")
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
-                    .background(Color.Brand.primaryGd)
+                    .background(Color.brandPrimaryGd)
                     .cornerRadius(8)
                     .padding(.trailing, 8)
                 
@@ -31,7 +31,7 @@ struct TermView: View {
             Text("용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻")
         }
         .padding(.all, 16)
-        .background(Color.ScoreBoardColor.scoreBoardBg)
+        .background(Color.gray2)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)

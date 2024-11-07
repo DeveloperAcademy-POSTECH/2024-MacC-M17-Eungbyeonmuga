@@ -16,7 +16,7 @@ struct MyTeamCancelGameInfo: View {
             HStack(spacing: 0) {
                 Text("오늘 취소된 경기")
                     .font(.Head.head4)
-                    .foregroundColor(.TextLabel.main)
+                    .foregroundColor(.gray7)
                     .padding(.leading, 24)
                 
                 Spacer()
@@ -28,17 +28,17 @@ struct MyTeamCancelGameInfo: View {
             
             Text("우천 취소")
                 .font(.Head.head1)
-                .foregroundColor(.TextLabel.main)
+                .foregroundColor(.gray7)
                 .padding(.bottom, 8)
             
             Text("\(cancelGameInfo.place)")
                 .font(.Body.body2)
-                .foregroundColor(.TextLabel.scoreBoard)
+                .foregroundColor(.gray5)
                 .padding(.bottom, 56)
             
         }
         .padding(.top, 24)
-        .background(Color.Background.second)
+        .background(.gray2)
         .cornerRadius(14)
     }
 }
@@ -59,14 +59,14 @@ private struct TeamInfo: View {
                 
                 Text("\(cancelGameInfo.awayTeam.name.firstWord())")
                     .font(.Head.head2)
-                    .foregroundColor(.TextLabel.main)
+                    .foregroundColor(.gray7)
             }
             
             Spacer()
             
             Text("VS")
                 .font(.Head.head3)
-                .foregroundColor(.TextLabel.scoreBoard)
+                .foregroundColor(.gray5)
             
             Spacer()
             
@@ -80,14 +80,14 @@ private struct TeamInfo: View {
                 HStack(spacing: 6) {
                     Text("\(cancelGameInfo.homeTeam.name.firstWord())")
                         .font(.Head.head2)
-                        .foregroundColor(.TextLabel.main)
+                        .foregroundColor(.gray7)
                     
                     Text("홈")
                         .font(.Body.body5)
-                        .foregroundColor(.TextLabel.main)
+                        .foregroundColor(.gray7)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 2)
-                        .background(Color.ScoreBoardColor.homeBg)
+                        .background(.gray4)
                         .cornerRadius(99)
                 }
             }

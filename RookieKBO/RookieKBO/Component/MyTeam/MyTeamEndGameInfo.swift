@@ -16,14 +16,14 @@ struct MyTeamEndGameInfo: View {
             HStack(spacing: 0) {
                 Text("오늘 종료된 경기")
                     .font(.Head.head4)
-                    .foregroundColor(.TextLabel.main)
+                    .foregroundColor(.gray7)
                     .padding(.leading, 24)
                 
                 Spacer()
                 
                 Text("\(endGameInfo.season)")
                     .font(.Body.body2)
-                    .foregroundColor(.TextLabel.scoreBoard)
+                    .foregroundColor(.gray5)
                     .padding(.trailing, 24)
                 
             }
@@ -40,7 +40,7 @@ struct MyTeamEndGameInfo: View {
             
         }
         .padding(.vertical, 24)
-        .background(Color.Background.second)
+        .background(.gray2)
         .cornerRadius(14)
     }
 }
@@ -61,14 +61,14 @@ private struct TeamInfo: View {
                 
                 Text("\(endGameInfo.awayTeam.name.firstWord())")
                     .font(.Head.head2)
-                    .foregroundColor(.TextLabel.main)
+                    .foregroundColor(.gray7)
             }
             
             Spacer()
             
             Text("VS")
                 .font(.Head.head3)
-                .foregroundColor(.TextLabel.scoreBoard)
+                .foregroundColor(.gray5)
             
             Spacer()
             
@@ -82,14 +82,14 @@ private struct TeamInfo: View {
                 HStack(spacing: 6) {
                     Text("\(endGameInfo.homeTeam.name.firstWord())")
                         .font(.Head.head2)
-                        .foregroundColor(.TextLabel.main)
+                        .foregroundColor(.gray7)
                     
                     Text("홈")
                         .font(.Body.body5)
-                        .foregroundColor(.TextLabel.main)
+                        .foregroundColor(.gray7)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 2)
-                        .background(Color.ScoreBoardColor.homeBg)
+                        .background(.gray4)
                         .cornerRadius(99)
                 }
             }
@@ -116,24 +116,24 @@ private struct GameScore: View {
             
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle1)
-                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
+                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
                 .padding(.vertical, 4)
                 .padding(.horizontal, 9)
             
             Text("\(awayResult.description)")
                 .font(.Head.head4)
-                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
+                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
                 .padding(.leading, 16)
             
             Spacer()
             
             Text("\(homeResult.description)")
                 .font(.Head.head4)
-                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
+                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
                 .padding(.trailing, 16)
             
             Text("\(homeScore)")
-                .font(.CustomTitle.customTitle1).foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : Color.TextLabel.scoreBoard)
+                .font(.CustomTitle.customTitle1).foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
                 .padding(.vertical, 4)
                 .padding(.horizontal, 9)
         }

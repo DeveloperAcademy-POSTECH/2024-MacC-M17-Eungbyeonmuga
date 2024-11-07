@@ -24,12 +24,12 @@ struct WidgetGameInfo: View {
                 
                 Text("\(currentMatch?.awayTeam.name.firstWord() ??  "")")
                     .font(.Caption.caption1)
-                    .foregroundColor(.TextLabel.widget100)
+                    .foregroundColor(.widget100)
             }
             
             Text("VS")
                 .font(.Caption.caption2)
-                .foregroundColor(.TextLabel.widget50)
+                .foregroundColor(.widget50)
             
             VStack(spacing: 8) {
                 Image("\(teamCharacterString(for: currentMatch?.homeTeam ?? Team(name: "", image: "", color: "", backgroundImage: "")))")
@@ -41,14 +41,14 @@ struct WidgetGameInfo: View {
                 HStack(spacing: 2) {
                     Text("\(currentMatch?.homeTeam.name.firstWord() ??  "")")
                         .font(.Caption.caption1)
-                        .foregroundColor(.TextLabel.widget100)
+                        .foregroundColor(.widget100)
                     
                     Text("홈")
                         .font(.Caption.caption2)
-                        .foregroundColor(.TextLabel.widget100)
+                        .foregroundColor(.widget100)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
-                        .background(entry.selectedTeamType.selectedTeam == .allType ? Color.WidgetBackground.widgetScoreBoardBg : Color.teamColor(for: colorString(for: entry.selectedTeamType.selectedTeam)))
+                        .background(entry.selectedTeamType.selectedTeam == .allType ? .widgetScoreBoardBg : Color.teamColor(for: colorString(for: entry.selectedTeamType.selectedTeam)))
                         .cornerRadius(99)
                 }
             }

@@ -14,7 +14,7 @@ struct MyTeamGameInfoView: View {
     @Environment(MatchUseCase.self) private var matchUseCase
     
     @State private var tab: GameTab = .currentList
-    @State private var teamColor: Color = .Brand.primary
+    @State private var teamColor: Color = .brandPrimary
     
     @State private var isAllGameInfoFullScreenPresented = false
     
@@ -49,56 +49,22 @@ struct MyTeamGameInfoView: View {
     }
     
     var body: some View {
-        // TODO: ZStack으로 수정 예정
         ZStack {
             if let selectTeam = selectTeamUseCase.state.selectedTeam {
-                HeaderView(isAllGameInfoFullScreenPresented: $isAllGameInfoFullScreenPresented, team: selectTeam)
+                Image(selectTeam.backgroundImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity)
+                    .ignoresSafeArea(edges : .all)
             }
+            
             VStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 0) {
-                    HStack(spacing: 16) {
-                        Image(.titleLogoWhite)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 20)
-                        
-                        Spacer()
-                        
-                        Button {
-                            print("Go AllGameInfo View")
-                            isAllGameInfoFullScreenPresented = true
-                        } label: {
-                            Image(.logoCircle)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 32)
-                        }
-                        
-                        Button {
-                            pathModel.push(.selectTeam)
-                        } label: {
-                            Image(.refreshCircle)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 32)
-                        }
-                    }
-                    .padding(.horizontal, 32)
-                    
-                    Text(selectTeamUseCase.state.selectedTeam?.name ?? "")
-                        .font(.CustomTitle.customTitle1)
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 32)
-                    
-                    Spacer()
-                }
-                .frame(height: 240)
+                HeaderView(isAllGameInfoFullScreenPresented: $isAllGameInfoFullScreenPresented)
                 
                 VStack(spacing: 0) {
-                    
                     HStack(spacing: 0) {
                         Text("우리 팀의 경기 일정")
-                            .font(.Head.head6)
+                            .font(.Head.head4b)
                         Spacer()
                     }
                     .padding(.init(top: 24, leading: 32, bottom: 16, trailing: 0))
@@ -129,21 +95,18 @@ struct MyTeamGameInfoView: View {
                     .padding(.horizontal, 32)
                 }
                 .background(RoundedRectangle(cornerRadius: 24)
-                    .fill(Color.Background.first))
+                    .fill(.gray1))
                 .ignoresSafeArea(edges: .all)
             }
         }
         .onAppear {
             if let selectedTeamObj = selectTeamUseCase.getUserDefaultsTeamObject() {
-                teamColor = Color.teamColor(for: selectedTeamObj.color) ?? .Brand.primary
+                teamColor = Color.teamColor(for: selectedTeamObj.color) ?? .brandPrimary
                 print("UserDefaults selectedTeam : \(selectedTeamObj)")
             }
             if let selectedTeamObj = selectTeamUseCase.state.selectedTeam {
                 print("selectTeamUseCase.state.selectedTeam : \(selectedTeamObj)")
             }
-        }
-        .navigationDestination(for: Screen.self) { screen in
-            pathModel.build(screen)
         }
         .fullScreenCover(isPresented: $isAllGameInfoFullScreenPresented) {
             AllGameInfoView()
@@ -153,25 +116,53 @@ struct MyTeamGameInfoView: View {
 }
 
 // MARK: - HearderView
-// TODO: 팀별 헤더로 로고 수정 필요
 
 private struct HeaderView: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     @Binding var isAllGameInfoFullScreenPresented: Bool
     
-    let team: Team
-    
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            Image(team.backgroundImage)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: .infinity)
-//                .ignoresSafeArea()
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 16) {
+                Image(.titleLogoWhite)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 20)
+                
+                Spacer()
+                
+                Button {
+                    print("Go AllGameInfo View")
+                    isAllGameInfoFullScreenPresented = true
+                } label: {
+                    Image(.logoCircle)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 32)
+                }
+                
+                Button {
+                    pathModel.push(.selectTeam)
+                } label: {
+                    Image(.refreshCircle)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 32)
+                }
+            }
+            .padding(.horizontal, 32)
+            
+            Text(selectTeamUseCase.state.selectedTeam?.name ?? "")
+                .font(.CustomTitle.customTitle1)
+                .foregroundStyle(.white)
+                .padding(.horizontal, 32)
+            
+            Spacer()
         }
-        .ignoresSafeArea(edges: .all)
+        .frame(height: 240)
     }
 }
 

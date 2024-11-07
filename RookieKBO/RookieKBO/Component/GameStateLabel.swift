@@ -25,7 +25,7 @@ struct GameStateLabel: View {
             .foregroundStyle(gameState == GameState.playing ? Color.white : Color.black)
             .background {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(gameState == GameState.playing ? Brand.primary : Background.second)
+                    .fill(gameState == GameState.playing ? .brandPrimary : Color.gray2)
             }
     }
 }

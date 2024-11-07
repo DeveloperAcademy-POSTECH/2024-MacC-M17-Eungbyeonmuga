@@ -22,7 +22,7 @@ struct PreparingGameInfo: View {
                 
                 Text("\(preparingGameInfo.awayTeam.name.firstWord())")
                     .font(.Caption.caption1)
-                    .foregroundColor(.TextLabel.main)
+                    .foregroundColor(.gray7)
             }
             
             Spacer()
@@ -30,11 +30,11 @@ struct PreparingGameInfo: View {
             VStack(spacing: 4) {
                 Text("\(preparingGameInfo.startDateTime.toTimeString())")
                     .font(.Body.body2)
-                    .foregroundColor(.TextLabel.main)
+                    .foregroundColor(.gray7)
                 
                 Text("\(preparingGameInfo.place)")
                     .font(.Caption.caption2)
-                    .foregroundColor(.TextLabel.scoreBoard)
+                    .foregroundColor(.gray5)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
             }
@@ -51,21 +51,21 @@ struct PreparingGameInfo: View {
                 HStack(spacing: 2) {
                     Text("\(preparingGameInfo.homeTeam.name.firstWord())")
                         .font(.Caption.caption1)
-                        .foregroundColor(.TextLabel.main)
+                        .foregroundColor(.gray7)
                     
                     Text("홈")
                         .font(.Caption.caption3)
-                        .foregroundColor(.TextLabel.main)
+                        .foregroundColor(.gray7)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
-                        .background(Color.ScoreBoardColor.homeBg)
+                        .background(.gray4)
                         .cornerRadius(99)
                 }
             }
         }
         .padding(.horizontal, 32)
         .padding(.vertical, 16)
-        .background(Color.Background.second)
+        .background(.gray2)
         .cornerRadius(14)
     }
 }
