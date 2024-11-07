@@ -14,9 +14,11 @@ struct TermView: View {
     @State private var isSaved: Bool = false
     
     var term: String
+    var description: String
+    var time: Double
     
     var body: some View {
-        VStack(spacing: 18) {
+        VStack(alignment: .leading, spacing: 18) {
             HStack(spacing: 0) {
                 Text(term)
                     .font(.Head.head4b)
@@ -27,7 +29,7 @@ struct TermView: View {
                     .cornerRadius(8)
                     .padding(.trailing, 8)
                 
-                Text("0:30")
+                Text("\(time)")
                     .font(.Body.body5)
                     .foregroundColor(.gray5)
                 
@@ -48,7 +50,7 @@ struct TermView: View {
                     termUseCase.printTermEntries()  // 로그로 확인
                 }
             }
-            Text("용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻용어뜻")
+            Text(description)
                 .font(.Body.body2)
                 .foregroundColor(.gray7)
         }
@@ -63,6 +65,6 @@ struct TermView: View {
 }
 
 #Preview {
-    TermView(term: "백투백 홈런")
+    TermView(term: "백투백 홈런", description: "어쩌고 저쩌고어쩌고어쩌고 저쩌고 저쩌고어쩌고 저쩌고어어쩌어쩌고 저쩌고고 저쩌고쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고", time: 13.0)
         .environment(PreviewHelper.mockTermUseCase)
 }

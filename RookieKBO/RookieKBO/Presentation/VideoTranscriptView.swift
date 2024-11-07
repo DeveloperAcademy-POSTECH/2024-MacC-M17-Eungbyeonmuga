@@ -9,6 +9,10 @@ import SwiftUI
 import YouTubePlayerKit
 
 struct VideoTranscriptView: View {
+    @Environment(TermUseCase.self) private var termUseCase
+    
+    // 실제 데이터로 변경
+    let currentTranscript = MockTermBuilder.mockTranscript
     
     var youtubeId = [
         YouTubePlayer(stringLiteral: "https://www.youtube.com/watch?v=uaK6e95za0w")
@@ -24,8 +28,17 @@ struct VideoTranscriptView: View {
             TermRow()
                 .padding(.bottom, 16)
             
-            TermView(term: "백투백 홈런")
-            
+            ScrollView {
+                ForEach(currentTranscript.transcript, id: \.start) { transcriptItem in
+                    if let description = termDictionary[transcriptItem.text] {
+                        TermView(term: transcriptItem.text, description: description, time: transcriptItem.start)
+                            .padding(.bottom, 8)
+                            .padding(.horizontal, 16)
+                    } else {
+                        EmptyView()
+                    }
+                }
+            }
         }
     }
 }
@@ -65,4 +78,5 @@ private struct TermRow: View {
 
 #Preview {
     VideoTranscriptView()
+        .environment(PreviewHelper.mockTermUseCase)
 }

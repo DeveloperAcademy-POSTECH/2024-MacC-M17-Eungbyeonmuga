@@ -75,7 +75,7 @@
 				Data/Network/NetworkLog.swift,
 				Data/Service/MatchService/MatchRepository.swift,
 				Data/Service/MatchService/MatchServiceImpl.swift,
-				Data/Stub/MockDataBuilder.swift,
+				Data/Stub/MockData/MockDataBuilder.swift,
 				Data/Stub/ResultProtocol.swift,
 				Data/Stub/StubSelectTeamService.swift,
 				Domain/Entity/GameState.swift,
