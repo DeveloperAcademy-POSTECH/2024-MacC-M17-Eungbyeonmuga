@@ -12,16 +12,18 @@ struct WidgetPlayingGame: View {
     var entry: Provider.Entry
     var currentMatch: Match? { entry.match }
     
+    let matchUseCase = MatchUseCase(matchService: MatchServiceImpl())
+    
     var body: some View {
         VStack(spacing: 0) {
             WidgetGameInfo(entry: entry)
                 .padding(.bottom, 14)
             
-            let awayScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockEmptyMatch, team: .AWAY)
+            let awayScore = matchUseCase.calculateScore(for: currentMatch ?? MockDataBuilder.mockEmptyMatch, team: .AWAY)
             
-            let homeScore = calculateScore(for: currentMatch ?? MockDataBuilder.mockEmptyMatch, team: .HOME)
+            let homeScore = matchUseCase.calculateScore(for: currentMatch ?? MockDataBuilder.mockEmptyMatch, team: .HOME)
             
-            let inningText = calculateInningText(for: entry.match ?? MockDataBuilder.mockEmptyMatch)
+            let inningText = matchUseCase.calculateInningText(for: entry.match ?? MockDataBuilder.mockEmptyMatch)
             
             HStack(spacing: 0) {
                 Text("\(awayScore)")

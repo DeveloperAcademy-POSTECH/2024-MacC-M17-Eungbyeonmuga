@@ -93,7 +93,7 @@ struct RookieKBOWidgetEntryView : View {
                 WidgetPreparingGame(entry: entry)
             }
             else {
-                WidgetNoGames(entry: entry)
+                WidgetNoGame(entry: entry)
             }
         }
     }
