@@ -44,6 +44,6 @@ struct UpcomingGameView: View {
     UpcomingGameView(games: MockDataBuilder.mockUpcommingGameList)
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(PathModel())
-        .environment(PreviewHelper.mockMatchUseCase)
+        .environment(PreviewHelperForWidget.mockMatchUseCase)
 }
 

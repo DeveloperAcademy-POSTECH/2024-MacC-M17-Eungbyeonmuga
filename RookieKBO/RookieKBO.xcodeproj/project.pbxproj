@@ -78,7 +78,6 @@
 				Data/Stub/MockDataBuilder.swift,
 				Data/Stub/ResultProtocol.swift,
 				Data/Stub/StubSelectTeamService.swift,
-				Data/Stub/StubTermService.swift,
 				Domain/Entity/GameState.swift,
 				Domain/Entity/HomeAndAway.swift,
 				Domain/Entity/Match.swift,
@@ -87,16 +86,15 @@
 				Domain/Entity/Team.swift,
 				Domain/Interface/MatchServiceInterface.swift,
 				Domain/Interface/SelectTeamServiceInterface.swift,
-				Domain/Interface/TermServiceInterface.swift,
 				Domain/UseCase/MatchUseCase.swift,
 				"Helper/Helper+Color.swift",
 				"Helper/Helper+DateFormatter.swift",
 				"Helper/Helper+LinearGradient.swift",
 				"Helper/Helper+PretendardFont.swift",
-				"Helper/Helper+Preview.swift",
 				"Helper/Helper+RawRepresentable.swift",
 				"Helper/Helper+StringFormatter.swift",
 				"Helper/Helper+UserDefaults.swift",
+				"Helper/Helper+WidgetPreview.swift",
 				Resource/Assets/Colors.xcassets,
 				"Resource/Fonts/Pretendard-Black.ttf",
 				"Resource/Fonts/Pretendard-Bold.ttf",
@@ -438,7 +436,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RookieKBO/Preview Content\"";
-				DEVELOPMENT_TEAM = VQLS72LDQP;
+				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RookieKBO/App/Info.plist;
@@ -452,7 +450,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo.simmons;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -471,7 +469,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RookieKBO/Preview Content\"";
-				DEVELOPMENT_TEAM = VQLS72LDQP;
+				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RookieKBO/App/Info.plist;
@@ -485,7 +483,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo.simmons;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -503,7 +501,7 @@
 				CODE_SIGN_ENTITLEMENTS = RookieKBOWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VQLS72LDQP;
+				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RookieKBOWidget/Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RookieKBOWidget;
@@ -514,7 +512,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo.simmons.Dev.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo.Dev.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -533,7 +531,7 @@
 				CODE_SIGN_ENTITLEMENTS = RookieKBOWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VQLS72LDQP;
+				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RookieKBOWidget/Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RookieKBOWidget;
@@ -544,7 +542,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo.simmons.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;

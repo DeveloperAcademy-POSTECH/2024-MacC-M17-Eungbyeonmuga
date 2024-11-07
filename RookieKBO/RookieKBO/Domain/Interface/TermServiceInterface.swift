@@ -8,5 +8,7 @@
 import Foundation
 
 protocol TermServiceInterface {
-    
+    func printTermEntries()
+    func createTermEntry(term: String)
+    func deleteTermEntry(term: String)
 }

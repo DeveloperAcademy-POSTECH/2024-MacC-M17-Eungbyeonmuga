@@ -70,5 +70,5 @@ struct CurrentMyTeamGameView: View {
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
         .environment(PathModel())
-        .environment(PreviewHelper.mockMatchUseCase)
+        .environment(PreviewHelperForWidget.mockMatchUseCase)
 }

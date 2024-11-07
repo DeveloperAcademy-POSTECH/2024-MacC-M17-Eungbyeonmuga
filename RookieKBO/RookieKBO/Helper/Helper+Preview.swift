@@ -2,20 +2,21 @@
 //  Helper+Preview.swift
 //  RookieKBO
 //
-//  Created by crownjoe on 10/7/24.
+//  Created by crownjoe on 11/7/24.
 //
 
 import Foundation
 
-// MARK: - Preview를 위한 주입용 Mock 객체
+// MARK: - Preview를 위한 주입용 Mock 객체 (위젯 적용 불가능)
 
 #if DEBUG
 enum PreviewHelper {
-    static let mockMatchUseCase = MatchUseCase(
-        matchService: MatchServiceImpl()
+    
+    static let mockTermUseCase = TermUseCase(
+        termService: TermService(termDictionary: termDictionary)
     )
     
-//    static let mockSelectTeamUseCase = SelectTeamUseCase(
-//        selectTeamService: StubSelectTeamService())
+    static let mockSelectTeamUseCase = SelectTeamUseCase(
+        selectTeamService: StubSelectTeamService())
 }
 #endif

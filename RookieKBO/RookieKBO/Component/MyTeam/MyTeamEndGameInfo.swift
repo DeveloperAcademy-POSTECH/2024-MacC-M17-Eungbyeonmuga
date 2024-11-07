@@ -145,6 +145,6 @@ private struct GameScore: View {
     MyTeamEndGameInfo(
         endGameInfo: MockDataBuilder.mockMatch
     )
-    .environment(PreviewHelper.mockMatchUseCase)
+    .environment(PreviewHelperForWidget.mockMatchUseCase)
 //    .environment(PreviewHelper.mockSelectTeamUseCase)
 }
