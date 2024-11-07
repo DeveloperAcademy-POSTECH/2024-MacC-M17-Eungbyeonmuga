@@ -93,8 +93,7 @@ private struct TabBar: View {
         }
         .padding(.horizontal, 44)
         .padding(.vertical)
-        // TODO: 배경 색상 gray1로 변경
-        .background(Color.white)
+        .background(Color.gray1)
     }
 }
 
