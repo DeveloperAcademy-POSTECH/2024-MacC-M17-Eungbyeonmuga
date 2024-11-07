@@ -9,7 +9,11 @@ import SwiftUI
 import YouTubePlayerKit
 
 struct VideoTranscriptView: View {
+    
     @Environment(TermUseCase.self) private var termUseCase
+    
+    @State private var searchText = ""
+    @State private var isSearchActive = false
     
     // 실제 데이터로 변경
     let currentTranscript = MockTermBuilder.mockTranscript
@@ -27,17 +31,78 @@ struct VideoTranscriptView: View {
             YouTubePlayerView(youtubeId.first ?? "")
                 .frame(height: 220)
             
-            TermRow()
-                .padding(.bottom, 16)
+            if isSearchActive {
+                SearchBar(text: $searchText)
+                    .padding(.bottom, 16)
+            } else {
+                TermRow()
+                    .padding(.bottom, 16)
+                    .onTapGesture {
+                        withAnimation {
+                            isSearchActive.toggle()
+                        }
+                    }
+            }
             
-            ScrollView {
-                ForEach(currentTranscript.transcript, id: \.start) { transcriptItem in
-                    if let description = termDictionary[transcriptItem.text] {
-                        TermView(term: transcriptItem.text, description: description, time: transcriptItem.start)
-                            .padding(.bottom, 8)
-                            .padding(.horizontal, 16)
-                    } else {
-                        EmptyView()
+            // MARK: - 하이라이트에 맞는 용어 리스트
+            
+            if !isSearchActive && searchText == "" {
+                ScrollView {
+                    ForEach(currentTranscript.transcript, id: \.start) { transcriptItem in
+                        if let description = termDictionary[transcriptItem.text] {
+                            TermView(term: transcriptItem.text, description: description, time: transcriptItem.start)
+                                .padding(.bottom, 8)
+                                .padding(.horizontal, 16)
+                        } else {
+                            EmptyView()
+                        }
+                    }
+                }
+            } else {
+                
+                // MARK: - 검색 결과 리스트
+                
+                let filteredItems = currentTranscript.transcript.filter {
+                    $0.text.lowercased().contains(searchText.lowercased())
+                }
+                
+                if filteredItems .isEmpty && searchText != "" {
+                    Spacer()
+                    
+                    Text("검색 결과가 없어요!")
+                        .font(.Body.body3)
+                        .foregroundColor(.gray6)
+                    
+                    Spacer()
+                } else if !(filteredItems .isEmpty) {
+                    ScrollView {
+                        let filteredItems = currentTranscript.transcript.filter {
+                            $0.text.lowercased().contains(searchText.lowercased())
+                        }
+                        
+                        ForEach(filteredItems, id: \.start) { transcriptItem in
+                            SearchResult(searchText: transcriptItem.text, time: transcriptItem.start)
+                                .padding(.bottom, 8)
+                                .padding(.horizontal, 16)
+                        }
+                    }
+                } else {
+                    ZStack {
+                        ScrollView {
+                            ForEach(currentTranscript.transcript, id: \.start) { transcriptItem in
+                                if let description = termDictionary[transcriptItem.text] {
+                                    TermView(term: transcriptItem.text, description: description, time: transcriptItem.start)
+                                        .padding(.bottom, 8)
+                                        .padding(.horizontal, 16)
+                                } else {
+                                    EmptyView()
+                                }
+                            }
+                        }
+                        
+                        Rectangle()
+                            .background(.gray6)
+                            .opacity(0.1)
                     }
                 }
             }
@@ -102,6 +167,43 @@ private struct TermRow: View {
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 16)
+        .background(.gray2)
+    }
+}
+
+
+private struct SearchBar: View {
+    
+    @Binding var text: String
+    
+    var body: some View {
+        HStack {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray7)
+                
+                TextField("선수명 등 키워드를 검색하고 타임라인 이동", text: $text)
+                    .font(text.isEmpty ? .Body.body3 : .Body.body2)
+                    .foregroundColor(text.isEmpty ? .gray5 : .gray7)
+                
+                if !text.isEmpty {
+                    Button {
+                        self.text = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                    }
+                } else {
+                    EmptyView()
+                }
+            }
+            .padding(.vertical, 10)
+            .padding(.horizontal, 16)
+            .foregroundColor(.gray7)
+            .background(.white0)
+            .cornerRadius(99)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
         .background(.gray2)
     }
 }

@@ -11,9 +11,12 @@ struct SearchResult: View {
     
     @State private var isPlaying: Bool = false
     
+    var searchText: String
+    var time: Double
+    
     var body: some View {
         HStack(spacing: 0) {
-            Text("박성한")
+            Text(searchText)
                 .font(.Head.head4b)
                 .foregroundColor(.gray7)
                 .padding(.horizontal, 8)
@@ -22,7 +25,7 @@ struct SearchResult: View {
                 .cornerRadius(8)
                 .padding(.trailing, 8)
             
-            Text("(time.toTimeFormat())")
+            Text("\(time.toTimeFormat())")
                 .font(.Body.body5)
                 .foregroundColor(.gray5)
             
@@ -42,5 +45,5 @@ struct SearchResult: View {
 }
 
 #Preview {
-    SearchResult()
+    SearchResult(searchText: "박성한", time: 5.98)
 }

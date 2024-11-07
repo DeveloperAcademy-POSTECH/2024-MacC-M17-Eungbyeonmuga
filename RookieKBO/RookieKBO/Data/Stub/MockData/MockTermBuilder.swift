@@ -17,6 +17,23 @@ struct MockTermBuilder {
                 TranscriptItem(text: "도루", start: 12.0),
                 TranscriptItem(text: "홈런", start: 20.0),
                 TranscriptItem(text: "사이클링 히트", start: 30.0),
+                TranscriptItem(text: "사이클링 히트", start: 40.0),
+                TranscriptItem(text: "사이클링 히트", start: 60.0),
+                TranscriptItem(text: "사이클링 히트", start: 80.0),
+                TranscriptItem(text: "사이클링 히트", start: 87.0),
+                TranscriptItem(text: "사이클링 히트", start: 90.0),
+                TranscriptItem(text: "사이클링 히트", start: 100.0),
+                TranscriptItem(text: "사이클링 히트", start: 110.0),
+                TranscriptItem(text: "박성한", start: 12.0),
+                TranscriptItem(text: "박성한", start: 30.0),
+                TranscriptItem(text: "박성한", start: 40.0),
+                TranscriptItem(text: "박성한", start: 60.0),
+                TranscriptItem(text: "박성한", start: 80.0),
+                TranscriptItem(text: "박성한", start: 87.0),
+                TranscriptItem(text: "박성한", start: 90.0),
+                TranscriptItem(text: "박성한", start: 100.0),
+                TranscriptItem(text: "박성한", start: 110.0),
+                TranscriptItem(text: "박성한", start: 20.0)
             ]
         )
     }
