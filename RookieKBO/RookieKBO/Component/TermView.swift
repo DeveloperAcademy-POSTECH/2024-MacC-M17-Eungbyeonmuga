@@ -29,7 +29,7 @@ struct TermView: View {
                     .cornerRadius(8)
                     .padding(.trailing, 8)
                 
-                Text("\(time)")
+                Text("\(time.toTimeFormat())")
                     .font(.Body.body5)
                     .foregroundColor(.gray5)
                 
