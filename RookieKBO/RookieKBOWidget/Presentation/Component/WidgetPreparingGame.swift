@@ -21,22 +21,22 @@ struct WidgetPreparingGame: View {
                 
                 Text("\(currentMatch?.startDateTime.toTimeString() ?? "")")
                     .font(.Body.body2)
-                    .foregroundColor(.TextLabel.widget100)
+                    .foregroundColor(.widget100)
                     .padding(.bottom, 4)
                 
                 Text("\(currentMatch?.place ?? "")")
                     .font(.Caption.caption2)
-                    .foregroundColor(.TextLabel.widget50)
+                    .foregroundColor(.widget50)
                 
             } else {
                 Text("\(currentMatch?.startDateTime.formattedString() ?? "")")
                     .font(.Body.body2)
-                    .foregroundColor(.TextLabel.widget100)
+                    .foregroundColor(.widget100)
                     .padding(.bottom, 4)
                 
                 Text("\(currentMatch?.place ?? "")")
                     .font(.Caption.caption2)
-                    .foregroundColor(.TextLabel.widget50)
+                    .foregroundColor(.widget50)
             }
         }
     }

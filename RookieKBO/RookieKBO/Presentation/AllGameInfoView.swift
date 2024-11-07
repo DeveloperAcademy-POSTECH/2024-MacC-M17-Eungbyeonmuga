@@ -14,7 +14,7 @@ struct AllGameInfoView: View {
     @Environment(PathModel.self) private var pathModel
     
     @State private var tab: GameTab = .currentList
-    @State private var teamColor: Color = .Brand.primary
+    @State private var teamColor: Color = .brandPrimary
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
     let games: [Match] = MockDataBuilder.mockMatchList
@@ -72,7 +72,7 @@ struct AllGameInfoView: View {
         }
         .onChange(of: UserDefaults.shared.string(forKey: "selectTeamColor")) { newColor in
             if let newColor = newColor {
-                teamColor = Color.teamColor(for: newColor) ?? .Brand.primary
+                teamColor = Color.teamColor(for: newColor) ?? .brandPrimary
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -106,7 +106,7 @@ private struct HeaderView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(height: 32)
-                        .foregroundColor(.TeamSelect.unselectBg)
+                        .foregroundColor(.gray3)
                 }
             } else {
                 Button {

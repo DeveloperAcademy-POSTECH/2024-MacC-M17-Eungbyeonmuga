@@ -20,10 +20,10 @@ struct DateLabel: View {
         Text("\(date.toMonthDayString())")
             .font(.Body.body2)
             .padding(EdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12))
-            .foregroundStyle(isAllTeam ? Color.white : .TextLabel.main)
+            .foregroundStyle(isAllTeam ? Color.white : .gray7)
             .background {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(isAllTeam ? Color.Brand.primary : .Background.second)
+                    .fill(isAllTeam ? .brandPrimary : Color.gray2)
             }
     }
 }

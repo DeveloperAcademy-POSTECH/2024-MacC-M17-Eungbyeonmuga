@@ -22,7 +22,7 @@ struct WidgetNoGame: View {
             
             Text("예정된 경기가 \n없어요!")
                 .font(.Body.body1)
-                .foregroundColor(.TextLabel.widget100)
+                .foregroundColor(.widget100)
                 .multilineTextAlignment(.center)
         }
     }

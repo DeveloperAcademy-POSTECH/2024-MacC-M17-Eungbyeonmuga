@@ -37,7 +37,7 @@ struct SelectTeamView: View {
     
     var body: some View {
         ZStack {
-            Color(Background.first)
+            Color(.gray1)
                 .ignoresSafeArea()
             
             VStack(spacing: 8) {
@@ -72,12 +72,12 @@ private struct HeaderView: View {
                     
                     Text("응원하는 구단을 선택하세요!")
                         .font(.Head.head4)
-                        .foregroundColor(.TextLabel.main)
+                        .foregroundColor(.gray7)
                         .padding(.bottom, 8)
                     
                     Text("우리 팀의 정보를 먼저 확인할 수 있어요.")
                         .font(.Head.head4)
-                        .foregroundColor(.TextLabel.main)
+                        .foregroundColor(.gray7)
                     
                 } else {
                     Group {
@@ -85,25 +85,25 @@ private struct HeaderView: View {
                             
                             Text("지금 '\(currentSelectTeam)'을 응원하고 계시네요!")
                                 .font(.Head.head4)
-                                .foregroundColor(.TextLabel.main)
+                                .foregroundColor(.gray7)
                                 .padding(.bottom, 8)
                             
                             Text("응원 팀을 변경할 수도 있어요.")
                                 .font(.Head.head4)
-                                .foregroundColor(.TextLabel.main)
+                                .foregroundColor(.gray7)
                         } else {
                             Text("지금 '\(currentSelectTeam)'을 응원하고 계시네요!")
                                 .font(.Head.head4)
-                                .foregroundColor(.TextLabel.main)
+                                .foregroundColor(.gray7)
                                 .padding(.bottom, 8)
                             
                             Text("응원 팀을 변경할 수도 있어요.")
                                 .font(.Head.head4)
-                                .foregroundColor(.TextLabel.main)
+                                .foregroundColor(.gray7)
                         }
                     }
                     .font(.Head.head4)
-                    .foregroundColor(.TextLabel.main)
+                    .foregroundColor(.gray7)
                     .lineSpacing(8)
                 }
             }
@@ -145,7 +145,7 @@ private struct SelectTeamListView: View {
                             // 배경색 변경
                             RoundedRectangle(cornerRadius: 18)
                                 .fill(
-                                    selectedTeam == nil ? Color.white : (selectedTeam == team ? Color.white : Color.TeamSelect.unselectBg)
+                                    selectedTeam == nil ? .white0 : (selectedTeam == team ? .white0 : .gray3)
                                 )
                                 .frame(width: 172, height: 150)
                             
@@ -157,12 +157,12 @@ private struct SelectTeamListView: View {
                                     Group{
                                         if teamNameParts[0] == "전체" {
                                             Text(team.name)
-                                                .foregroundColor(.TextLabel.main)
+                                                .foregroundColor(.gray7)
                                         } else {
                                             Text(teamNameParts[0])
-                                                .foregroundColor(.TextLabel.main)
+                                                .foregroundColor(.gray7)
                                             Text(" " + teamNameParts[1])
-                                                .foregroundColor(.TextLabel.scoreBoard)
+                                                .foregroundColor(.gray5)
                                         }
                                     }.font(.Head.head2)
                                     
@@ -185,13 +185,13 @@ private struct SelectTeamListView: View {
                             if selectedTeam == team {
                                 RoundedRectangle(cornerRadius: 18)
                                     .stroke(
-                                        LinearGradient.gradient(startColor: .Brand.primary, endColor: .Brand.primaryGd),
+                                        LinearGradient.gradient(startColor: .brandPrimary, endColor: .brandPrimaryGd),
                                         lineWidth: 5
                                     )
                                     .frame(width: 172, height: 150)
                             } else {
                                 RoundedRectangle(cornerRadius: 18)
-                                    .stroke(Color.TeamSelect.stroke, lineWidth: 5)
+                                    .stroke(.gray2, lineWidth: 5)
                                     .frame(width: 172, height: 150)
                             }
                         }
@@ -237,7 +237,7 @@ private struct StartTeam: View {
                     .frame(width: 361, height: 54)
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 16)
-                        .fill(LinearGradient.gradient(startColor: .Brand.primary, endColor: .Brand.primaryGd)))
+                        .fill(LinearGradient.gradient(startColor: .brandPrimary, endColor: .brandPrimaryGd)))
             }
             .padding()
         }

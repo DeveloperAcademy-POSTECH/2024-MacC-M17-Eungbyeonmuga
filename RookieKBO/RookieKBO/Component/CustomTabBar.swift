@@ -69,7 +69,7 @@ struct TabButton: View {
         }) {
             Text(title)
                 .font(.Head.head4)
-                .foregroundColor(isSelected ? color : TextLabel.tab)
+                .foregroundColor(isSelected ? color : .gray6)
                 .frame(width: 75, height: 20)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
@@ -77,10 +77,10 @@ struct TabButton: View {
                     .fill(Color.clear)
                     .overlay(
                         Group {
-                            if color == .Brand.primary {
+                            if color == .brandPrimary {
                                 if isSelected {
                                     RoundedRectangle(cornerRadius: 99)
-                                        .stroke(LinearGradient.gradient(startColor: .Brand.primary, endColor: .Brand.primaryGd), lineWidth: 2)
+                                        .stroke(LinearGradient.gradient(startColor: .brandPrimary, endColor: .brandPrimaryGd), lineWidth: 2)
                                 } else {
                                     RoundedRectangle(cornerRadius: 99)
                                         .stroke(Color.clear, lineWidth: 2)
@@ -112,7 +112,7 @@ enum GameTab {
 #Preview {
     CustomTabBar(
         tab: .beforeList,
-        teamColor: .Brand.primary,
+        teamColor: .brandPrimary,
         onTabSelected: { selectedTab in
             print("Selected tab: \(selectedTab)")
         }

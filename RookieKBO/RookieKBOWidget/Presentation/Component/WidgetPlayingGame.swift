@@ -28,21 +28,21 @@ struct WidgetPlayingGame: View {
             HStack(spacing: 0) {
                 Text("\(awayScore)")
                     .font(.CustomTitle.customTitle1)
-                    .foregroundColor(.TextLabel.widget100)
+                    .foregroundColor(.widget100)
                     .padding(.trailing, 13)
                 
                 Text("\(inningText)")
                     .font(.Caption.caption1)
-                    .foregroundColor(.TextLabel.widget100)
+                    .foregroundColor(.widget100)
                     .padding(.trailing, 14)
                 
                 Text("\(homeScore)")
                     .font(.CustomTitle.customTitle1)
-                    .foregroundColor(.TextLabel.widget100)
+                    .foregroundColor(.widget100)
             }
             .padding(.vertical, 8)
             .padding(.horizontal, 12)
-            .background(Color.WidgetBackground.widgetHomeBg)
+            .background(.widgetHomeBg)
             .cornerRadius(14)
         }
     }
