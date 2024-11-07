@@ -111,8 +111,7 @@ private struct TabBarButton: View {
                 .frame(width: 32, height: 32)
             
             Text(tab.title)
-                // TODO: 폰트 caption3b로 변경
-                .font(.Caption.caption3)
+                .font(.Caption.caption3b)
                 .foregroundColor(selectedTab == tab ? .brandPrimary : .gray6)
         }
         .onTapGesture {

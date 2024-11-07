@@ -64,7 +64,7 @@ struct MyTeamGameInfoView: View {
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
                         Text("우리 팀의 경기 일정")
-                            .font(.Head.head6)
+                            .font(.Head.head4b)
                         Spacer()
                     }
                     .padding(.init(top: 24, leading: 32, bottom: 16, trailing: 0))
