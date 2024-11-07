@@ -62,4 +62,7 @@ struct TeamScreenView: View {
 
 #Preview {
     InitialScreenView()
+        .environment(PathModel())
+        .environment(MatchUseCase(matchService: MatchServiceImpl()))
+        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
 }
