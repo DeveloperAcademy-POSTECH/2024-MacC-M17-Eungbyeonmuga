@@ -49,53 +49,19 @@ struct MyTeamGameInfoView: View {
     }
     
     var body: some View {
-        // TODO: ZStack으로 수정 예정
         ZStack {
             if let selectTeam = selectTeamUseCase.state.selectedTeam {
-                HeaderView(isAllGameInfoFullScreenPresented: $isAllGameInfoFullScreenPresented, team: selectTeam)
+                Image(selectTeam.backgroundImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity)
+                    .ignoresSafeArea(edges : .all)
             }
+            
             VStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 0) {
-                    HStack(spacing: 16) {
-                        Image(.titleLogoWhite)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 20)
-                        
-                        Spacer()
-                        
-                        Button {
-                            print("Go AllGameInfo View")
-                            isAllGameInfoFullScreenPresented = true
-                        } label: {
-                            Image(.logoCircle)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 32)
-                        }
-                        
-                        Button {
-                            pathModel.push(.selectTeam)
-                        } label: {
-                            Image(.refreshCircle)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 32)
-                        }
-                    }
-                    .padding(.horizontal, 32)
-                    
-                    Text(selectTeamUseCase.state.selectedTeam?.name ?? "")
-                        .font(.CustomTitle.customTitle1)
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 32)
-                    
-                    Spacer()
-                }
-                .frame(height: 240)
+                HeaderView(isAllGameInfoFullScreenPresented: $isAllGameInfoFullScreenPresented)
                 
                 VStack(spacing: 0) {
-                    
                     HStack(spacing: 0) {
                         Text("우리 팀의 경기 일정")
                             .font(.Head.head6)
@@ -150,25 +116,53 @@ struct MyTeamGameInfoView: View {
 }
 
 // MARK: - HearderView
-// TODO: 팀별 헤더로 로고 수정 필요
 
 private struct HeaderView: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     @Binding var isAllGameInfoFullScreenPresented: Bool
     
-    let team: Team
-    
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            Image(team.backgroundImage)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: .infinity)
-//                .ignoresSafeArea()
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 16) {
+                Image(.titleLogoWhite)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 20)
+                
+                Spacer()
+                
+                Button {
+                    print("Go AllGameInfo View")
+                    isAllGameInfoFullScreenPresented = true
+                } label: {
+                    Image(.logoCircle)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 32)
+                }
+                
+                Button {
+                    pathModel.push(.selectTeam)
+                } label: {
+                    Image(.refreshCircle)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 32)
+                }
+            }
+            .padding(.horizontal, 32)
+            
+            Text(selectTeamUseCase.state.selectedTeam?.name ?? "")
+                .font(.CustomTitle.customTitle1)
+                .foregroundStyle(.white)
+                .padding(.horizontal, 32)
+            
+            Spacer()
         }
-        .ignoresSafeArea(edges: .all)
+        .frame(height: 240)
     }
 }
 

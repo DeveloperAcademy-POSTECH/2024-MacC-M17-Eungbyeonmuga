@@ -57,7 +57,6 @@ struct SelectTeamView: View {
 
 private struct HeaderView: View {
     
-//    let currentSelectTeam = UserDefaults.shared.string(forKey: "selectTeam") ?? "없음"
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     @State private var currentSelectTeam: String = "없음"
@@ -222,6 +221,7 @@ private struct StartTeam: View {
                 if let selectedTeam = selectedTeam {
                     selectTeamUseCase.updateUserDefaultsTeam()
                     selectTeamUseCase.updateUserDefaultsTeamObject(selectedTeam)
+                    
                     // InitialScreenView의 if문으로 인해 화면 변경
                     selectTeamUseCase.fetchSelectedTeam(selectedTeam)
                 }
