@@ -18,6 +18,7 @@ struct VideoTranscriptView: View {
     // 실제 데이터로 변경
     let currentTranscript = MockTermBuilder.mockTranscript
     
+    // 실제 데이터로 변경
     var youtubeId = [
         YouTubePlayer(stringLiteral: "https://www.youtube.com/watch?v=uaK6e95za0w")
     ]
@@ -33,10 +34,8 @@ struct VideoTranscriptView: View {
             
             if isSearchActive {
                 SearchBar(text: $searchText)
-                    .padding(.bottom, 16)
             } else {
                 TermRow()
-                    .padding(.bottom, 16)
                     .onTapGesture {
                         withAnimation {
                             isSearchActive.toggle()
@@ -44,29 +43,35 @@ struct VideoTranscriptView: View {
                     }
             }
             
-            // MARK: - 하이라이트에 맞는 용어 리스트
+            // 시간 별로 정렬
+            // MARK: - 하이라이트 재생 시 용어 정리
             
-            if !isSearchActive && searchText == "" {
+            if !isSearchActive {
                 ScrollView {
-                    ForEach(currentTranscript.transcript, id: \.start) { transcriptItem in
+                    ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.start) { transcriptItem in
                         if let description = termDictionary[transcriptItem.text] {
-                            TermView(term: transcriptItem.text, description: description, time: transcriptItem.start)
-                                .padding(.bottom, 8)
-                                .padding(.horizontal, 16)
+                            TermView(
+                                term: transcriptItem.text,
+                                description: description,
+                                time: transcriptItem.start
+                            )
+                            .padding(.bottom, 8)
+                            .padding(.horizontal, 16)
                         } else {
                             EmptyView()
                         }
                     }
                 }
+                .padding(.top, 16)
             } else {
-                
-                // MARK: - 검색 결과 리스트
-                
                 let filteredItems = currentTranscript.transcript.filter {
                     $0.text.lowercased().contains(searchText.lowercased())
                 }
                 
+                // MARK: - 검색 결과가 없을 때
+                
                 if filteredItems .isEmpty && searchText != "" {
+                    
                     Spacer()
                     
                     Text("검색 결과가 없어요!")
@@ -74,41 +79,62 @@ struct VideoTranscriptView: View {
                         .foregroundColor(.gray6)
                     
                     Spacer()
+                    
                 } else if !(filteredItems .isEmpty) {
+                    // MARK: - 검색 결과 리스트
+                    
                     ScrollView {
                         let filteredItems = currentTranscript.transcript.filter {
                             $0.text.lowercased().contains(searchText.lowercased())
                         }
                         
-                        ForEach(filteredItems, id: \.start) { transcriptItem in
-                            SearchResult(searchText: transcriptItem.text, time: transcriptItem.start)
-                                .padding(.bottom, 8)
-                                .padding(.horizontal, 16)
+                        ForEach(filteredItems.sorted(by: { $0.start < $1.start}), id: \.start) { transcriptItem in
+                            SearchResult(
+                                searchText: transcriptItem.text,
+                                time: transcriptItem.start
+                            )
+                            .padding(.bottom, 8)
+                            .padding(.horizontal, 16)
                         }
                     }
                 } else {
+                    // MARK: - 검색 시 오버레이
+                    // 시간 별로 정렬
+                    
                     ZStack {
                         ScrollView {
-                            ForEach(currentTranscript.transcript, id: \.start) { transcriptItem in
+                            ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.start) { transcriptItem in
                                 if let description = termDictionary[transcriptItem.text] {
-                                    TermView(term: transcriptItem.text, description: description, time: transcriptItem.start)
-                                        .padding(.bottom, 8)
-                                        .padding(.horizontal, 16)
+                                    TermView(
+                                        term: transcriptItem.text,
+                                        description: description,
+                                        time: transcriptItem.start
+                                    )
+                                    .padding(.bottom, 8)
+                                    .padding(.horizontal, 16)
                                 } else {
                                     EmptyView()
                                 }
                             }
                         }
+                        .padding(.top, 16)
                         
                         Rectangle()
                             .background(.gray6)
                             .opacity(0.1)
+                            .onTapGesture {
+                                withAnimation {
+                                    isSearchActive.toggle()
+                                }
+                            }
                     }
                 }
             }
         }
     }
 }
+
+// MARK: - TopView
 
 private struct TopView: View {
     var body: some View {
@@ -138,6 +164,8 @@ private struct TopView: View {
         .background(Color.brandPrimary)
     }
 }
+
+// MARK: - TermRow
 
 private struct TermRow: View {
     var body: some View {
@@ -171,6 +199,7 @@ private struct TermRow: View {
     }
 }
 
+// MARK: - SearchBar
 
 private struct SearchBar: View {
     

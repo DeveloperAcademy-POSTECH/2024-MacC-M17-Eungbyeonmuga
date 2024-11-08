@@ -43,16 +43,19 @@ struct TermView: View {
                 .onTapGesture {
                     isSaved.toggle()
                     if isSaved {
-                        termUseCase.createTermEntry(term: term)  // 용어 저장
+                        termUseCase.createTermEntry(term: term)
                     } else {
-                        termUseCase.deleteTermEntry(term: term)  // 용어 삭제
+                        termUseCase.deleteTermEntry(term: term)
                     }
-                    termUseCase.printTermEntries()  // 로그로 확인
+                    termUseCase.printTermEntries()
                 }
             }
             Text(description)
                 .font(.Body.body2)
                 .foregroundColor(.gray7)
+        }
+        .onTapGesture {
+            isPlaying.toggle()
         }
         .padding(.all, 16)
         .background(.white0)
