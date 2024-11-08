@@ -10,6 +10,7 @@ import SwiftUI
 struct TermView: View {
     @Environment(TermUseCase.self) private var termUseCase
     
+    //    @Binding var isPlaying: Bool
     @State private var isPlaying: Bool = false
     @State private var isSaved: Bool = false
     
@@ -68,6 +69,10 @@ struct TermView: View {
 }
 
 #Preview {
-    TermView(term: "백투백 홈런", description: "어쩌고 저쩌고어쩌고어쩌고 저쩌고 저쩌고어쩌고 저쩌고어어쩌어쩌고 저쩌고고 저쩌고쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고", time: 13.0)
-        .environment(PreviewHelper.mockTermUseCase)
+    TermView(
+        term: "백투백 홈런",
+        description: "어쩌고 저쩌고어쩌고어쩌고 저쩌고 저쩌고어쩌고 저쩌고어어쩌어쩌고 저쩌고고 저쩌고쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고",
+        time: 13.0
+    )
+    .environment(PreviewHelper.mockTermUseCase)
 }

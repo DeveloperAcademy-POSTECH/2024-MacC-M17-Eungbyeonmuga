@@ -43,18 +43,23 @@ struct VideoTranscriptView: View {
                     }
             }
             
-            // 시간 별로 정렬
             // MARK: - 하이라이트 재생 시 용어 정리
             
             if !isSearchActive {
                 ScrollView {
-                    ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.start) { transcriptItem in
+                    ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
                         if let description = termDictionary[transcriptItem.text] {
                             TermView(
                                 term: transcriptItem.text,
                                 description: description,
                                 time: transcriptItem.start
                             )
+                            .onTapGesture {
+                                youtubeId.first?.seek(
+                                    to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                                    allowSeekAhead: true
+                                )
+                            }
                             .padding(.bottom, 8)
                             .padding(.horizontal, 16)
                         } else {
@@ -88,11 +93,17 @@ struct VideoTranscriptView: View {
                             $0.text.lowercased().contains(searchText.lowercased())
                         }
                         
-                        ForEach(filteredItems.sorted(by: { $0.start < $1.start}), id: \.start) { transcriptItem in
+                        ForEach(filteredItems.sorted(by: { $0.start < $1.start}), id: \.id) { transcriptItem in
                             SearchResult(
                                 searchText: transcriptItem.text,
                                 time: transcriptItem.start
                             )
+                            .onTapGesture {
+                                youtubeId.first?.seek(
+                                    to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                                    allowSeekAhead: true
+                                )
+                            }
                             .padding(.bottom, 8)
                             .padding(.horizontal, 16)
                         }
@@ -103,7 +114,7 @@ struct VideoTranscriptView: View {
                     
                     ZStack {
                         ScrollView {
-                            ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.start) { transcriptItem in
+                            ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
                                 if let description = termDictionary[transcriptItem.text] {
                                     TermView(
                                         term: transcriptItem.text,
