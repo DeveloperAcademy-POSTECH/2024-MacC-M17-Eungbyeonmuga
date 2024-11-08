@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct HighlightView: View {
-    let highlightContent = ["ssgBg", "ktBg", "ncBg", "lgBg"]
+    
+    @Environment(HighlightUseCase.self) private var highlightUseCase
+    
+    let highlight = MockDataBuilder.mockHighlightInfo
+    let highlightContent = MockDataBuilder.mockHighlightInfo.map { $0.thumbnail }
     
     var body: some View {
         ZStack {
@@ -91,4 +95,5 @@ struct ListItem: View {
 
 #Preview {
     HighlightView()
+        .environment(HighlightUseCase())
 }

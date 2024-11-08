@@ -16,7 +16,14 @@ struct ScoreBoard: Codable, Identifiable, Equatable {
     var balls: Int
     var scores: [Int]
     
-    init(homeAndAway: HomeAndAway, runs: Int, hits: Int, errors: Int, balls: Int, scores: [Int]) {
+    init(
+        homeAndAway: HomeAndAway,
+        runs: Int,
+        hits: Int,
+        errors: Int,
+        balls: Int,
+        scores: [Int]
+    ) {
         self.id = UUID()
         self.homeAndAway = homeAndAway
         self.runs = runs
