@@ -14,6 +14,8 @@ struct VideoTranscriptView: View {
     
     @State private var searchText = ""
     @State private var isSearchActive = false
+    @State private var isPlaying: Bool = false
+    @State private var playingItemId: UUID?
     
     // 실제 데이터로 변경
     let currentTranscript = MockTermBuilder.mockTranscript
@@ -50,16 +52,25 @@ struct VideoTranscriptView: View {
                     ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
                         if let description = termDictionary[transcriptItem.text] {
                             TermView(
+                                isPlaying: Binding(
+                                    get: { playingItemId == transcriptItem.id },
+                                    set: { isPlaying in
+                                        playingItemId = isPlaying ? transcriptItem.id : nil
+                                    }
+                                ),
                                 term: transcriptItem.text,
                                 description: description,
                                 time: transcriptItem.start
                             )
-                            .onTapGesture {
-                                youtubeId.first?.seek(
-                                    to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
-                                    allowSeekAhead: true
-                                )
-                            }
+                            .simultaneousGesture(
+                                TapGesture()
+                                    .onEnded {
+                                        youtubeId.first?.seek(
+                                            to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                                            allowSeekAhead: true
+                                        )
+                                    }
+                            )
                             .padding(.bottom, 8)
                             .padding(.horizontal, 16)
                         } else {
@@ -95,28 +106,32 @@ struct VideoTranscriptView: View {
                         
                         ForEach(filteredItems.sorted(by: { $0.start < $1.start}), id: \.id) { transcriptItem in
                             SearchResult(
+                                isPlaying: $isPlaying,
                                 searchText: transcriptItem.text,
                                 time: transcriptItem.start
                             )
-                            .onTapGesture {
-                                youtubeId.first?.seek(
-                                    to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
-                                    allowSeekAhead: true
-                                )
-                            }
+                            .simultaneousGesture(
+                                TapGesture()
+                                    .onEnded {
+                                        youtubeId.first?.seek(
+                                            to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                                            allowSeekAhead: true
+                                        )
+                                    }
+                            )
                             .padding(.bottom, 8)
                             .padding(.horizontal, 16)
                         }
                     }
                 } else {
                     // MARK: - 검색 시 오버레이
-                    // 시간 별로 정렬
                     
                     ZStack {
                         ScrollView {
                             ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
                                 if let description = termDictionary[transcriptItem.text] {
                                     TermView(
+                                        isPlaying: $isPlaying,
                                         term: transcriptItem.text,
                                         description: description,
                                         time: transcriptItem.start

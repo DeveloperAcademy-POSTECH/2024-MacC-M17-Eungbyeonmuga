@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchResult: View {
     
-    @State private var isPlaying: Bool = false
+    @Binding var isPlaying: Bool
     
     var searchText: String
     var time: Double
@@ -31,9 +31,6 @@ struct SearchResult: View {
             
             Spacer()
         }
-        .onTapGesture {
-            isPlaying.toggle()
-        }
         .padding(.all, 16)
         .background(.white0)
         .cornerRadius(16)
@@ -41,9 +38,16 @@ struct SearchResult: View {
             RoundedRectangle(cornerRadius: 16)
                 .stroke(isPlaying ? Color.brandPrimaryGd : Color.gray2, lineWidth: 2)
         )
+        .onTapGesture {
+            isPlaying.toggle()
+        }
     }
 }
 
 #Preview {
-    SearchResult(searchText: "박성한", time: 5.98)
+    SearchResult(
+        isPlaying: .constant(true),
+        searchText: "박성한",
+        time: 5.98
+    )
 }

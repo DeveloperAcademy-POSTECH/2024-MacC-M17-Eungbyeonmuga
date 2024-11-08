@@ -10,9 +10,8 @@ import SwiftUI
 struct TermView: View {
     @Environment(TermUseCase.self) private var termUseCase
     
-    //    @Binding var isPlaying: Bool
-    @State private var isPlaying: Bool = false
     @State private var isSaved: Bool = false
+    @Binding var isPlaying: Bool
     
     var term: String
     var description: String
@@ -55,9 +54,6 @@ struct TermView: View {
                 .font(.Body.body2)
                 .foregroundColor(.gray7)
         }
-        .onTapGesture {
-            isPlaying.toggle()
-        }
         .padding(.all, 16)
         .background(.white0)
         .cornerRadius(16)
@@ -65,11 +61,15 @@ struct TermView: View {
             RoundedRectangle(cornerRadius: 16)
                 .stroke(isPlaying ? Color.brandPrimaryGd : Color.gray2, lineWidth: 2)
         )
+        .onTapGesture {
+            isPlaying.toggle()
+        }
     }
 }
 
 #Preview {
     TermView(
+        isPlaying: .constant(true),
         term: "백투백 홈런",
         description: "어쩌고 저쩌고어쩌고어쩌고 저쩌고 저쩌고어쩌고 저쩌고어어쩌어쩌고 저쩌고고 저쩌고쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고",
         time: 13.0
