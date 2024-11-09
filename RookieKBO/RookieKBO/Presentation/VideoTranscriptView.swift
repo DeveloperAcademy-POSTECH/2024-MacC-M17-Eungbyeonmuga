@@ -13,9 +13,9 @@ struct VideoTranscriptView: View {
     @Environment(TermUseCase.self) private var termUseCase
     
     @State private var searchText = ""
+    @State private var playingItemId: UUID?
     @State private var isSearchActive = false
     @State private var isPlaying: Bool = false
-    @State private var playingItemId: UUID?
     
     // 실제 데이터로 변경
     let currentTranscript = MockTermBuilder.mockTranscript
@@ -36,8 +36,10 @@ struct VideoTranscriptView: View {
             
             if isSearchActive {
                 SearchBar(text: $searchText)
+                    .padding(.bottom, 16)
             } else {
                 TermRow()
+                    .padding(.bottom, 16)
                     .onTapGesture {
                         withAnimation {
                             isSearchActive.toggle()
@@ -45,116 +47,122 @@ struct VideoTranscriptView: View {
                     }
             }
             
-            // MARK: - 하이라이트 재생 시 용어 정리
+    // MARK: - 콘텐츠 영역
             
-            if !isSearchActive {
-                ScrollView {
-                    ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
-                        if let description = termDictionary[transcriptItem.text] {
-                            TermView(
-                                isPlaying: Binding(
-                                    get: { playingItemId == transcriptItem.id },
-                                    set: { isPlaying in
-                                        playingItemId = isPlaying ? transcriptItem.id : nil
-                                    }
-                                ),
-                                term: transcriptItem.text,
-                                description: description,
-                                time: transcriptItem.start
-                            )
-                            .simultaneousGesture(
-                                TapGesture()
-                                    .onEnded {
-                                        youtubeId.first?.seek(
-                                            to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
-                                            allowSeekAhead: true
-                                        )
-                                    }
-                            )
-                            .padding(.bottom, 8)
-                            .padding(.horizontal, 16)
-                        } else {
-                            EmptyView()
-                        }
-                    }
-                }
-                .padding(.top, 16)
+            if isSearchActive {
+                searchContent
+            } else {
+                termContent
+            }
+        }
+    }
+    
+    // MARK: - 검색 콘텐츠
+    
+    private var searchContent: some View {
+        Group {
+            if searchText.isEmpty {
+                termContent
             } else {
                 let filteredItems = currentTranscript.transcript.filter {
                     $0.text.lowercased().contains(searchText.lowercased())
                 }
                 
-                // MARK: - 검색 결과가 없을 때
-                
-                if filteredItems .isEmpty && searchText != "" {
-                    
-                    Spacer()
-                    
-                    Text("검색 결과가 없어요!")
-                        .font(.Body.body3)
-                        .foregroundColor(.gray6)
-                    
-                    Spacer()
-                    
-                } else if !(filteredItems .isEmpty) {
-                    // MARK: - 검색 결과 리스트
-                    
-                    ScrollView {
-                        let filteredItems = currentTranscript.transcript.filter {
-                            $0.text.lowercased().contains(searchText.lowercased())
-                        }
-                        
-                        ForEach(filteredItems.sorted(by: { $0.start < $1.start}), id: \.id) { transcriptItem in
-                            SearchResult(
-                                isPlaying: $isPlaying,
-                                searchText: transcriptItem.text,
-                                time: transcriptItem.start
-                            )
-                            .simultaneousGesture(
-                                TapGesture()
-                                    .onEnded {
-                                        youtubeId.first?.seek(
-                                            to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
-                                            allowSeekAhead: true
-                                        )
-                                    }
-                            )
-                            .padding(.bottom, 8)
-                            .padding(.horizontal, 16)
-                        }
-                    }
+                if filteredItems.isEmpty {
+                    noSearchResults
                 } else {
-                    // MARK: - 검색 시 오버레이
-                    
-                    ZStack {
-                        ScrollView {
-                            ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
-                                if let description = termDictionary[transcriptItem.text] {
-                                    TermView(
-                                        isPlaying: $isPlaying,
-                                        term: transcriptItem.text,
-                                        description: description,
-                                        time: transcriptItem.start
-                                    )
-                                    .padding(.bottom, 8)
-                                    .padding(.horizontal, 16)
-                                } else {
-                                    EmptyView()
-                                }
-                            }
+                    searchResultsView(filteredItems)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 검색 결과 없을 때
+    
+    private var noSearchResults: some View {
+        VStack {
+            Spacer()
+            Text("검색 결과가 없어요!")
+                .font(.Body.body3)
+                .foregroundColor(.gray6)
+            Spacer()
+        }
+    }
+    
+    // MARK: - 검색 결과 리스트
+    
+    private func searchResultsView(_ items: [TranscriptItem]) -> some View {
+        ScrollView {
+            ForEach(items.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
+                SearchResult(
+                    isPlaying: Binding(
+                        get: { playingItemId == transcriptItem.id },
+                        set: { isPlaying in
+                            playingItemId = isPlaying ? transcriptItem.id : nil
                         }
-                        .padding(.top, 16)
-                        
-                        Rectangle()
-                            .background(.gray6)
-                            .opacity(0.1)
-                            .onTapGesture {
-                                withAnimation {
-                                    isSearchActive.toggle()
+                    ),
+                    searchText: transcriptItem.text,
+                    time: transcriptItem.start
+                )
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded {
+                            youtubeId.first?.seek(
+                                to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                                allowSeekAhead: true
+                            )
+                        }
+                )
+                .padding(.bottom, 8)
+                .padding(.horizontal, 16)
+            }
+        }
+    }
+    
+    // MARK: - 하이라이트 영상 용어 리스트
+    
+    private var termContent: some View {
+        ZStack {
+            ScrollView {
+                ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
+                    if let description = termDictionary[transcriptItem.text] {
+                        TermView(
+                            isPlaying: Binding(
+                                get: { playingItemId == transcriptItem.id },
+                                set: { isPlaying in
+                                    playingItemId = isPlaying ? transcriptItem.id : nil
                                 }
-                            }
+                            ),
+                            term: transcriptItem.text,
+                            description: description,
+                            time: transcriptItem.start
+                        )
+                        .simultaneousGesture(
+                            TapGesture()
+                                .onEnded {
+                                    youtubeId.first?.seek(
+                                        to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                                        allowSeekAhead: true
+                                    )
+                                }
+                        )
+                        .padding(.bottom, 8)
+                        .padding(.horizontal, 16)
+                    } else {
+                        EmptyView()
                     }
                 }
+            }
+            
+            if isSearchActive {
+                Rectangle()
+                    .foregroundColor(.white)
+                    .opacity(0.4)
+                    .onTapGesture {
+                        withAnimation {
+                            isSearchActive.toggle()
+                        }
+                    }
             }
         }
     }
