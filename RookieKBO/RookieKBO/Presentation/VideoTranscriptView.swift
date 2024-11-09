@@ -47,7 +47,7 @@ struct VideoTranscriptView: View {
                     }
             }
             
-    // MARK: - 콘텐츠 영역
+            // MARK: - 콘텐츠 영역
             
             if isSearchActive {
                 searchContent
@@ -124,45 +124,48 @@ struct VideoTranscriptView: View {
     private var termContent: some View {
         ZStack {
             ScrollView {
-                ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
-                    if let description = termDictionary[transcriptItem.text] {
-                        TermView(
-                            isPlaying: Binding(
-                                get: { playingItemId == transcriptItem.id },
-                                set: { isPlaying in
-                                    playingItemId = isPlaying ? transcriptItem.id : nil
-                                }
-                            ),
-                            term: transcriptItem.text,
-                            description: description,
-                            time: transcriptItem.start
-                        )
-                        .simultaneousGesture(
-                            TapGesture()
-                                .onEnded {
-                                    youtubeId.first?.seek(
-                                        to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
-                                        allowSeekAhead: true
-                                    )
-                                }
-                        )
-                        .padding(.bottom, 8)
-                        .padding(.horizontal, 16)
-                    } else {
-                        EmptyView()
+                VStack {
+                    ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
+                        if let description = termDictionary[transcriptItem.text] {
+                            TermView(
+                                isPlaying: Binding(
+                                    get: { playingItemId == transcriptItem.id },
+                                    set: { isPlaying in
+                                        playingItemId = isPlaying ? transcriptItem.id : nil
+                                    }
+                                ),
+                                term: transcriptItem.text,
+                                description: description,
+                                time: transcriptItem.start
+                            )
+                            .simultaneousGesture(
+                                TapGesture()
+                                    .onEnded {
+                                        youtubeId.first?.seek(
+                                            to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                                            allowSeekAhead: true
+                                        )
+                                    }
+                            )
+                            .padding(.bottom, 8)
+                            .padding(.horizontal, 16)
+                        } else {
+                            EmptyView()
+                        }
                     }
                 }
             }
             
             if isSearchActive {
                 Rectangle()
-                    .foregroundColor(.white)
-                    .opacity(0.4)
+                    .foregroundColor(.gray6)
+                    .opacity(0.3)
                     .onTapGesture {
                         withAnimation {
                             isSearchActive.toggle()
                         }
                     }
+                    .edgesIgnoringSafeArea(.all)
             }
         }
     }
