@@ -28,14 +28,17 @@ private struct HighlightContentView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
     
+    // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
     let highlightInfo = MockDataBuilder.mockHighlightInfo
     
     var body: some View {
+        
         ScrollView {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 Section(header: HighlightHeaderView()) {
                     
                     HighlightHeaderDetailView()
+                    HighlightContentSettingView()
                     
                     ForEach(highlightInfo, id: \.self) { info in
                         HighlightContent(videoInfo: info) {
@@ -77,6 +80,60 @@ private struct HighlightHeaderDetailView: View {
     }
 }
 
+// MARK: - HighlightContentSettingView
+
+private struct HighlightContentSettingView: View {
+    
+    var body: some View {
+        
+        HStack(spacing: 8) {
+            HStack(spacing: 4) {
+                Image(systemName: "baseball")
+                    .font(.Caption.caption1)
+                
+                Text("전체 구단")
+                    .font(.Body.body1)
+            }
+            .foregroundColor(.white0)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 20)
+            .background(
+                RoundedRectangle(cornerRadius: 99)
+                    .fill(.brandPrimary)
+            )
+            
+            Button {
+                // TODO: 날짜 불러오기
+            } label: {
+                HStack(spacing: 4) {
+                    Image(systemName: "calendar")
+                        .font(.Caption.caption1)
+                        .foregroundColor(.gray7)
+                    
+                    Text("날짜")
+                        .font(.Body.body1)
+                        .foregroundColor(.gray7)
+                    
+                    Image(systemName: "chevron.down")
+                        .font(.Caption.caption1)
+                        .foregroundColor(.gray5)
+                }
+                .padding(.vertical, 12)
+                .padding(.leading, 20)
+                .padding(.trailing, 14)
+                .background(
+                    RoundedRectangle(cornerRadius: 99)
+                        .fill(.white0)
+                        .stroke(.gray2, lineWidth: 2)
+                )
+            }
+            
+            Spacer()
+        }
+        .padding()
+    }
+}
+
 // MARK: - HighlightHeaderView
 
 struct HighlightHeaderView: View {
@@ -113,13 +170,13 @@ private struct HighlightContent: View {
                         .aspectRatio(contentMode: .fill)
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 203)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
                 } placeholder: {
                     ProgressView()
                         .frame(height: 203)
                 }
                 
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: 16)
                     .foregroundColor(.black8)
                     .opacity(0.5)
                 
