@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Highlight: Codable, Identifiable, Equatable {
+struct Highlight: Codable, Identifiable, Equatable, Hashable {
     var id: UUID
     var title: String
     var date: String
