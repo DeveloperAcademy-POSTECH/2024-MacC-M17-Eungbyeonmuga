@@ -14,7 +14,6 @@ class TermEntry {
     var term: String
     var definition: String
     
-    
     init(term: String, definition: String) {
         self.term = term
         self.definition = definition

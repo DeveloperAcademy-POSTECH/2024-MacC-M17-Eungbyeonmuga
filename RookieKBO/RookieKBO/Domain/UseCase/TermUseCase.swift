@@ -19,8 +19,9 @@ final class TermUseCase {
     init(termService: TermServiceInterface) {
         self.termService = termService
         self.state = State(
-            termEntries: []
+            savedTerms: []
         )
+        filterAndUpdateSavedTerms()
     }
 }
 
@@ -29,7 +30,7 @@ final class TermUseCase {
 extension TermUseCase {
     
     struct State {
-        var termEntries : [TermEntry]
+        var savedTerms : [TermEntry]
     }
 }
 
@@ -45,12 +46,32 @@ extension TermUseCase {
     // 특정 용어를 저장하는 함수
     func createTermEntry(term: String) {
         termService.createTermEntry(term: term)
+        filterAndUpdateSavedTerms()
     }
     
     // 저장된 용어 삭제하는 함수
     func deleteTermEntry(term: String) {
         termService.deleteTermEntry(term: term)
+        filterAndUpdateSavedTerms()
     }
     
+    // 저장된 용어 읽는 함수
+    func readTermSet() throws -> [TermEntry] {
+        try termService.readTermSet()
+    }
     
+    // 저장된 용어 isSaved 관리
+    func isTermSaved(term: String) -> Bool {
+        return state.savedTerms.contains { $0.term == term }
+    }
+    
+    // 필터링 후 업데이트
+    private func filterAndUpdateSavedTerms() {
+        do {
+            let allTerms = try termService.readTermSet()
+            self.state.savedTerms = allTerms
+        } catch {
+            print("저장된 용어를 불러오는 중 오류 발생: \(error)")
+        }
+    }
 }

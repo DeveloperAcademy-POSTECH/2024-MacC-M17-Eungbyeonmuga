@@ -10,8 +10,9 @@ import SwiftUI
 struct TermView: View {
     @Environment(TermUseCase.self) private var termUseCase
     
-    @State private var isSaved: Bool = false
+//    @State private var isSaved: Bool = false
     @Binding var isPlaying: Bool
+    @Binding var isSaved: Bool
     
     var term: String
     var description: String
@@ -42,12 +43,12 @@ struct TermView: View {
                 }
                 .onTapGesture {
                     isSaved.toggle()
-                    if isSaved {
-                        termUseCase.createTermEntry(term: term)
-                    } else {
-                        termUseCase.deleteTermEntry(term: term)
-                    }
-                    termUseCase.printTermEntries()
+//                    if isSaved {
+//                        termUseCase.createTermEntry(term: term)
+//                    } else {
+//                        termUseCase.deleteTermEntry(term: term)
+//                    }
+//                    termUseCase.printTermEntries()
                 }
             }
             Text(description)
@@ -70,6 +71,7 @@ struct TermView: View {
 #Preview {
     TermView(
         isPlaying: .constant(true),
+        isSaved: .constant(true),
         term: "백투백 홈런",
         description: "어쩌고 저쩌고어쩌고어쩌고 저쩌고 저쩌고어쩌고 저쩌고어어쩌어쩌고 저쩌고고 저쩌고쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고",
         time: 13.0

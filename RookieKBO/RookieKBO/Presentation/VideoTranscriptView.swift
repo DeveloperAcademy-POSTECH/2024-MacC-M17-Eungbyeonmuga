@@ -16,6 +16,8 @@ struct VideoTranscriptView: View {
     @State private var playingItemId: UUID?
     @State private var isSearchActive = false
     @State private var isPlaying: Bool = false
+    @State private var isSaved: Bool = false
+    @State private var savedTerms: [String: Bool] = [:]
     
     // 실제 데이터로 변경
     let currentTranscript = MockTermBuilder.mockTranscript
@@ -119,7 +121,7 @@ struct VideoTranscriptView: View {
         }
     }
     
-    // MARK: - 하이라이트 영상 용어 리스트
+    // MARK: - 하이라이트 영상 용어 리스트 (저장된 용어가 있으면 업데이트)
     
     private var termContent: some View {
         ZStack {
@@ -127,11 +129,24 @@ struct VideoTranscriptView: View {
                 VStack {
                     ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
                         if let description = termDictionary[transcriptItem.text] {
+                            let isTermSaved = termUseCase.isTermSaved(term: transcriptItem.text)
+                            
                             TermView(
                                 isPlaying: Binding(
                                     get: { playingItemId == transcriptItem.id },
                                     set: { isPlaying in
                                         playingItemId = isPlaying ? transcriptItem.id : nil
+                                    }
+                                ),
+                                isSaved: Binding(
+                                    get: { isTermSaved },
+                                    set: { newValue in
+                                        if newValue {
+                                            termUseCase.createTermEntry(term: transcriptItem.text)
+                                        } else {
+                                            termUseCase.deleteTermEntry(term: transcriptItem.text)
+                                        }
+                                        termUseCase.printTermEntries() 
                                     }
                                 ),
                                 term: transcriptItem.text,
@@ -153,9 +168,9 @@ struct VideoTranscriptView: View {
                             EmptyView()
                         }
                     }
+
                 }
             }
-            
             if isSearchActive {
                 Rectangle()
                     .foregroundColor(.gray6)
@@ -169,6 +184,7 @@ struct VideoTranscriptView: View {
             }
         }
     }
+
 }
 
 // MARK: - TopView

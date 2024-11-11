@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+@MainActor
 final class TermService: TermServiceInterface {
     
     private var modelContainer: ModelContainer?
@@ -24,12 +25,7 @@ final class TermService: TermServiceInterface {
             print("❌ ModelContainer 초기화 중 오류 발생:", error)
         }
     }
-}
-
-@MainActor
-extension TermService {
     
-    /// 로그 확인용 저장한 용어 출력하는 함수
     func printTermEntries() {
         do {
             let termEntries = try readTermSet()
