@@ -34,22 +34,14 @@ private struct HighlightContentView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
     
-    @State private var selectedDate: Date? = nil
-    
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
     let highlightInfo = MockDataBuilder.mockHighlightInfo
     
-    // 선택된 날짜와 일치하는 하이라이트 정보를 필터링
     private var filteredHighlights: [Highlight] {
-        guard let selectedDate = selectedDate else {
+        guard let selectedDate = highlightUseCase.state.selectedDate else {
             return highlightInfo
         }
-        return highlightInfo.filter { info in
-            if let date = Date().fromStringToDate(info.date) {
-                return Calendar.current.isDate(date, inSameDayAs: selectedDate)
-            }
-            return false
-        }
+        return highlightUseCase.filterHighlights(for: selectedDate, in: highlightInfo)
     }
     
     var body: some View {
@@ -59,7 +51,7 @@ private struct HighlightContentView: View {
                 Section(header: HighlightHeaderView()) {
                     
                     HighlightHeaderDetailView()
-                    HighlightContentSettingView(selectedDate: $selectedDate)
+                    HighlightContentSettingView()
                     
                     ForEach(filteredHighlights, id: \.self) { info in
                         HighlightContent(videoInfo: info) {
@@ -103,7 +95,8 @@ private struct HighlightHeaderDetailView: View {
 
 private struct HighlightContentSettingView: View {
     
-    @Binding var selectedDate: Date?
+    @Environment(HighlightUseCase.self) private var highlightUseCase
+    
     @State private var isShowingSetCalendar = false
     
     var body: some View {
@@ -131,7 +124,7 @@ private struct HighlightContentSettingView: View {
                         .font(.Caption.caption1)
                         .foregroundColor(.gray7)
                     
-                    Text(selectedDate == Date() || selectedDate == nil ? "날짜" : "\(selectedDate!.toMonthDayString())")
+                    Text(highlightUseCase.state.selectedDate == nil ? "날짜" : "\(highlightUseCase.state.selectedDate!.toMonthDayString())")
                         .font(.Body.body1)
                         .foregroundColor(.gray7)
                     
@@ -149,9 +142,9 @@ private struct HighlightContentSettingView: View {
                 )
             }
             
-            if selectedDate != nil {
+            if highlightUseCase.state.selectedDate != nil {
                 Button {
-                    selectedDate = nil
+                    highlightUseCase.fetchSelectedDate(nil)
                 } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "arrow.counterclockwise")
@@ -176,7 +169,7 @@ private struct HighlightContentSettingView: View {
         }
         .padding()
         .sheet(isPresented: $isShowingSetCalendar) {
-            SetCalendarView(selectedDate: $selectedDate)
+            SetCalendarView()
                 .presentationDragIndicator(.visible)
                 .presentationDetents([.height(535)])
         }
@@ -190,29 +183,14 @@ private struct SetCalendarView: View {
     @Environment(HighlightUseCase.self) private var highlightUseCase
     @Environment(\.presentationMode) var presentationMode
     
-    @Binding var selectedDate: Date?
-    
     @State private var currentDate = Date()
     @State private var isValidDate = false
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
     let highlightInfo = MockDataBuilder.mockHighlightInfo
     
-    // highlightInfo에서 날짜 배열을 Date 타입으로 변환
-    private var validDates: [Date] {
-        highlightInfo.compactMap {
-            Date().fromStringToDate($0.date)
-        }
-    }
-    
-    // 선택된 날짜와 일치하는 하이라이트 정보를 필터링
     private var matchingHighlights: [Highlight] {
-        highlightInfo.filter { info in
-            if let date = Date().fromStringToDate(info.date) {
-                return Calendar.current.isDate(date, inSameDayAs: currentDate)
-            }
-            return false
-        }
+        highlightUseCase.filterHighlights(for: currentDate, in: highlightInfo)
     }
     
     var body: some View {
@@ -225,12 +203,11 @@ private struct SetCalendarView: View {
             .datePickerStyle(.graphical)
             .tint(.brandPrimary)
             .onAppear {
-                currentDate = selectedDate ?? Date()
-                // 뷰가 처음 나타날 때 선택된 날짜가 유효한지 확인
-                isValidDate = validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: currentDate) })
+                currentDate = highlightUseCase.state.selectedDate ?? Date()
+                isValidDate = highlightUseCase.isValidDate(currentDate, from: highlightInfo)
             }
             .onChange(of: currentDate) { newDate in
-                isValidDate = validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: newDate) })
+                isValidDate = highlightUseCase.isValidDate(newDate, from: highlightInfo)
             }
             
             Spacer()
@@ -240,7 +217,7 @@ private struct SetCalendarView: View {
                     Spacer()
                     
                     ForEach(matchingHighlights, id: \.self) { info in
-                        Text("\(info.title.split(separator: " ")[3...5].joined(separator: " "))")
+                        Text(highlightUseCase.extractHomeAway(from: info.title))
                             .foregroundColor(.black8)
                             .lineLimit(nil)
                         
@@ -249,7 +226,7 @@ private struct SetCalendarView: View {
                 }
                 
                 Button {
-                    selectedDate = currentDate
+                    highlightUseCase.fetchSelectedDate(currentDate)
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("날짜 적용하기")
@@ -271,6 +248,7 @@ private struct SetCalendarView: View {
             } else {
                 Text("경기가 없습니다.")
                     .foregroundColor(.black8)
+                    .padding(.vertical)
             }
         }
         .padding()
@@ -299,6 +277,9 @@ private struct HighlightHeaderView: View {
 // MARK: - HighlightContent
 
 private struct HighlightContent: View {
+    
+    @Environment(HighlightUseCase.self) private var highlightUseCase
+    
     let videoInfo: Highlight
     let tapAction: () -> Void
     
@@ -325,7 +306,7 @@ private struct HighlightContent: View {
                 
                 HStack(spacing: 8){
                     VStack(alignment: .leading, spacing: 0) {
-                        Text(videoInfo.title.split(separator: " ")[3...5].joined(separator: " "))
+                        Text(highlightUseCase.extractHomeAway(from: videoInfo.title))
                             .foregroundColor(.white0)
                             .font(.Head.head2)
                         
