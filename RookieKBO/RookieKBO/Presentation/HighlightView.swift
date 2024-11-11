@@ -84,8 +84,9 @@ private struct HighlightHeaderDetailView: View {
 
 private struct HighlightContentSettingView: View {
     
+    @State private var isShowingSetCalendar = false
+    
     var body: some View {
-        
         HStack(spacing: 8) {
             HStack(spacing: 4) {
                 Image(systemName: "baseball")
@@ -103,7 +104,7 @@ private struct HighlightContentSettingView: View {
             )
             
             Button {
-                // TODO: 날짜 불러오기
+                isShowingSetCalendar = true
             } label: {
                 HStack(spacing: 4) {
                     Image(systemName: "calendar")
@@ -131,12 +132,96 @@ private struct HighlightContentSettingView: View {
             Spacer()
         }
         .padding()
+        .sheet(isPresented: $isShowingSetCalendar) {
+            SetCalendarView()
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.height(535)])
+        }
+    }
+}
+
+// MARK: - SetCalendarView
+
+private struct SetCalendarView: View {
+    
+    @Environment(HighlightUseCase.self) private var highlightUseCase
+    
+    @State private var selectedDate = Date()
+    @State private var isValidDate = false
+    
+    // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
+    let highlightInfo = MockDataBuilder.mockHighlightInfo
+    
+    // highlightInfo에서 날짜 배열을 Date 타입으로 변환
+    private var validDates: [Date] {
+        highlightInfo.compactMap {
+            Date().fromStringToDate($0.date)
+        }
+    }
+    
+    // 선택된 날짜와 일치하는 하이라이트 정보를 필터링
+    private var matchingHighlights: [Highlight] {
+        highlightInfo.filter { info in
+            if let date = Date().fromStringToDate(info.date) {
+                return Calendar.current.isDate(date, inSameDayAs: selectedDate)
+            }
+            return false
+        }
+    }
+    
+    var body: some View {
+        VStack {
+            DatePicker(
+                "하이라이트 날짜 선택",
+                selection: $selectedDate,
+                displayedComponents: .date
+            )
+            .datePickerStyle(.graphical)
+            .tint(.brandPrimary)
+            .onAppear {
+                // 뷰가 처음 나타날 때 선택된 날짜가 유효한지 확인
+                isValidDate = validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: selectedDate) })
+            }
+            .onChange(of: selectedDate) { newDate in
+                isValidDate = validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: newDate) })
+            }
+            
+            Spacer()
+            
+            if isValidDate {
+                VStack(alignment: .leading) {
+                    Text("해당 날짜의 경기:")
+                        .font(.headline)
+                    ForEach(matchingHighlights, id: \.self) { info in
+                        Text("- \(info.title)")
+                            .foregroundColor(.primary)
+                    }
+                }
+                .padding()
+                
+                Button {
+                    // TODO: 해당 날짜만 화면에 띄우기
+                } label: {
+                    Text("루키크보 시작하기")
+                        .font(.Head.head3)
+                        .frame(width: 361, height: 54)
+                        .foregroundColor(.white)
+                        .background(RoundedRectangle(cornerRadius: 16)
+                            .fill(LinearGradient.gradient(startColor: .brandPrimary, endColor: .brandPrimaryGd)))
+                }
+                .padding()
+            } else {
+                Text("유효하지 않은 날짜입니다.")
+                    .foregroundColor(.red)
+            }
+        }
+        .padding()
     }
 }
 
 // MARK: - HighlightHeaderView
 
-struct HighlightHeaderView: View {
+private struct HighlightHeaderView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
