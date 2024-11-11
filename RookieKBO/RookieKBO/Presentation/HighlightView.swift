@@ -13,8 +13,14 @@ struct HighlightView: View {
     
     var body: some View {
         ZStack {
+            // 상단 배경
             Color.brandPrimary
-                .ignoresSafeArea()
+                .ignoresSafeArea(edges: .top)
+            
+            // 하단 배경
+            Color.gray1
+                .ignoresSafeArea(edges: .bottom)
+                .offset(y: UIScreen.main.bounds.height / 3.5)
             
             HighlightContentView()
                 .clipped()
@@ -28,8 +34,23 @@ private struct HighlightContentView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
     
+    @State private var selectedDate: Date? = nil
+    
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
     let highlightInfo = MockDataBuilder.mockHighlightInfo
+    
+    // 선택된 날짜와 일치하는 하이라이트 정보를 필터링
+    private var filteredHighlights: [Highlight] {
+        guard let selectedDate = selectedDate else {
+            return highlightInfo
+        }
+        return highlightInfo.filter { info in
+            if let date = Date().fromStringToDate(info.date) {
+                return Calendar.current.isDate(date, inSameDayAs: selectedDate)
+            }
+            return false
+        }
+    }
     
     var body: some View {
         
@@ -38,9 +59,9 @@ private struct HighlightContentView: View {
                 Section(header: HighlightHeaderView()) {
                     
                     HighlightHeaderDetailView()
-                    HighlightContentSettingView()
+                    HighlightContentSettingView(selectedDate: $selectedDate)
                     
-                    ForEach(highlightInfo, id: \.self) { info in
+                    ForEach(filteredHighlights, id: \.self) { info in
                         HighlightContent(videoInfo: info) {
                             // TODO: 자막 페이지로 이동
                             print("TODO: 자막 페이지로 이동 \(info.videoId)")
@@ -49,14 +70,12 @@ private struct HighlightContentView: View {
                         .padding(.vertical, 8)
                     }
                     
-                    // TODO: 스크롤 시 아래 주황부분 제거
                     Spacer()
                         .frame(height: 24)
                 }
             }
             .background(.gray1)
         }
-        
     }
 }
 
@@ -84,6 +103,7 @@ private struct HighlightHeaderDetailView: View {
 
 private struct HighlightContentSettingView: View {
     
+    @Binding var selectedDate: Date?
     @State private var isShowingSetCalendar = false
     
     var body: some View {
@@ -133,7 +153,7 @@ private struct HighlightContentSettingView: View {
         }
         .padding()
         .sheet(isPresented: $isShowingSetCalendar) {
-            SetCalendarView()
+            SetCalendarView(selectedDate: $selectedDate)
                 .presentationDragIndicator(.visible)
                 .presentationDetents([.height(535)])
         }
@@ -145,8 +165,11 @@ private struct HighlightContentSettingView: View {
 private struct SetCalendarView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
+    @Environment(\.presentationMode) var presentationMode
     
-    @State private var selectedDate = Date()
+    @Binding var selectedDate: Date?
+    
+    @State private var currentDate = Date()
     @State private var isValidDate = false
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
@@ -163,7 +186,7 @@ private struct SetCalendarView: View {
     private var matchingHighlights: [Highlight] {
         highlightInfo.filter { info in
             if let date = Date().fromStringToDate(info.date) {
-                return Calendar.current.isDate(date, inSameDayAs: selectedDate)
+                return Calendar.current.isDate(date, inSameDayAs: currentDate)
             }
             return false
         }
@@ -173,16 +196,17 @@ private struct SetCalendarView: View {
         VStack {
             DatePicker(
                 "하이라이트 날짜 선택",
-                selection: $selectedDate,
+                selection: $currentDate,
                 displayedComponents: .date
             )
             .datePickerStyle(.graphical)
             .tint(.brandPrimary)
             .onAppear {
+                currentDate = selectedDate ?? Date()
                 // 뷰가 처음 나타날 때 선택된 날짜가 유효한지 확인
-                isValidDate = validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: selectedDate) })
+                isValidDate = validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: currentDate) })
             }
-            .onChange(of: selectedDate) { newDate in
+            .onChange(of: currentDate) { newDate in
                 isValidDate = validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: newDate) })
             }
             
@@ -200,7 +224,8 @@ private struct SetCalendarView: View {
                 .padding()
                 
                 Button {
-                    // TODO: 해당 날짜만 화면에 띄우기
+                    selectedDate = currentDate
+                    presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("루키크보 시작하기")
                         .font(.Head.head3)
