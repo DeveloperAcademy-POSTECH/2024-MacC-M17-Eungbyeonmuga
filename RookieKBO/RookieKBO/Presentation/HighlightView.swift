@@ -83,7 +83,7 @@ private struct HighlightContentView: View {
 
 private struct HighlightHeaderDetailView: View {
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack(spacing: 0) {
                 Text("영상을 보면서 야구 용어를 학습하거나\n좋아하는 선수를 찾아보세요!")
                     .foregroundColor(.white0)
@@ -108,7 +108,7 @@ private struct HighlightContentSettingView: View {
     
     var body: some View {
         HStack(spacing: 8) {
-            HStack(spacing: 4) {
+            HStack(spacing: 8) {
                 Image(systemName: "baseball")
                     .font(.Caption.caption1)
                 
@@ -126,12 +126,12 @@ private struct HighlightContentSettingView: View {
             Button {
                 isShowingSetCalendar = true
             } label: {
-                HStack(spacing: 4) {
+                HStack(spacing: 8) {
                     Image(systemName: "calendar")
                         .font(.Caption.caption1)
                         .foregroundColor(.gray7)
                     
-                    Text("날짜")
+                    Text(selectedDate == Date() || selectedDate == nil ? "날짜" : "\(selectedDate!.toMonthDayString())")
                         .font(.Body.body1)
                         .foregroundColor(.gray7)
                     
@@ -147,6 +147,29 @@ private struct HighlightContentSettingView: View {
                         .fill(.white0)
                         .stroke(.gray2, lineWidth: 2)
                 )
+            }
+            
+            if selectedDate != nil {
+                Button {
+                    selectedDate = nil
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "arrow.counterclockwise")
+                            .font(.Caption.caption1)
+                            .foregroundColor(.gray7)
+                        
+                        Text("오늘")
+                            .font(.Body.body1)
+                            .foregroundColor(.gray7)
+                    }
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 99)
+                            .fill(.white0)
+                            .stroke(.gray2, lineWidth: 2)
+                    )
+                }
             }
             
             Spacer()
@@ -193,7 +216,7 @@ private struct SetCalendarView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             DatePicker(
                 "하이라이트 날짜 선택",
                 selection: $currentDate,
@@ -213,31 +236,41 @@ private struct SetCalendarView: View {
             Spacer()
             
             if isValidDate {
-                VStack(alignment: .leading) {
-                    Text("해당 날짜의 경기:")
-                        .font(.headline)
+                HStack(spacing: 0) {
+                    Spacer()
+                    
                     ForEach(matchingHighlights, id: \.self) { info in
-                        Text("- \(info.title)")
-                            .foregroundColor(.primary)
+                        Text("\(info.title.split(separator: " ")[3...5].joined(separator: " "))")
+                            .foregroundColor(.black8)
+                            .lineLimit(nil)
+                        
+                        Spacer()
                     }
                 }
-                .padding()
                 
                 Button {
                     selectedDate = currentDate
                     presentationMode.wrappedValue.dismiss()
                 } label: {
-                    Text("루키크보 시작하기")
+                    Text("날짜 적용하기")
                         .font(.Head.head3)
                         .frame(width: 361, height: 54)
-                        .foregroundColor(.white)
-                        .background(RoundedRectangle(cornerRadius: 16)
-                            .fill(LinearGradient.gradient(startColor: .brandPrimary, endColor: .brandPrimaryGd)))
+                        .foregroundColor(.white0)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(
+                                    LinearGradient.gradient(
+                                        startColor: .brandPrimary,
+                                        endColor: .brandPrimaryGd
+                                    )
+                                )
+                        )
                 }
-                .padding()
+                .padding(.vertical)
+                
             } else {
-                Text("유효하지 않은 날짜입니다.")
-                    .foregroundColor(.red)
+                Text("경기가 없습니다.")
+                    .foregroundColor(.black8)
             }
         }
         .padding()
