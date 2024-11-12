@@ -9,6 +9,29 @@ import Foundation
 
 struct MockDataBuilder {
     
+    static var mockHighlightInfo: [Highlight] {
+        return [
+            Highlight(
+                title: "[KBO 하이라이트] 10.28 삼성 vs KIA | KS 5차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-28",
+                thumbnail: "https://img.youtube.com/vi/8HyQHBYaROQ/maxresdefault.jpg",
+                videoId: "8HyQHBYaROQ"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.26 KIA vs 삼성 | KS 4차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-26",
+                thumbnail: "https://img.youtube.com/vi/uaK6e95za0w/maxresdefault.jpg",
+                videoId: "uaK6e95za0w"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.25 KIA vs 삼성 | KS 3차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-25",
+                thumbnail: "https://img.youtube.com/vi/KX9a8IufZzk/maxresdefault.jpg",
+                videoId: "KX9a8IufZzk"
+            )
+        ]
+    }
+    
     static var mockMatch: Match {
         return Match(
             startDateTime: Date(),

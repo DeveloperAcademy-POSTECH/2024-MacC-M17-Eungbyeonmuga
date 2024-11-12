@@ -20,7 +20,10 @@ struct Team: Codable, Identifiable, Equatable {
     var backgroundImage: String
     
     init(
-        name: String, image: String, color: String, backgroundImage: String
+        name: String,
+        image: String,
+        color: String,
+        backgroundImage: String
     ) {
         self.id = UUID()
         self.name = name
