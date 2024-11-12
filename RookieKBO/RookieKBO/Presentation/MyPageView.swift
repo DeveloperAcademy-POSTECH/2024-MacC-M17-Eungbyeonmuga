@@ -18,10 +18,9 @@ struct MyPageView: View {
             
             VStack(spacing: 0) {
                 HeaderView()
+                SettingView()
+                    .background(.gray1)
             }
-        }
-        .onAppear {
-            print(selectTeamUseCase.state.selectedTeam?.image ?? "abc")
         }
     }
 }
@@ -63,8 +62,92 @@ private struct HeaderView: View {
             
             Spacer()
         }
-        
-        Spacer()
+    }
+}
+
+// MARK: - SettingView
+
+private struct SettingView: View {
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            
+            Button {
+                
+            } label: {
+                HStack(spacing: 0) {
+                    Image(.saveWord)
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .padding(28)
+                        .padding(.trailing, -8)
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("저장된 야구 용어")
+                            .font(.Head.head2b)
+                            .foregroundColor(.gray7)
+                        
+                        Text("저장했던 용어를 다시 확인해보세요!")
+                            .font(.Body.body4)
+                            .foregroundStyle(.gray7)
+                    }
+                    
+                    Spacer()
+                }
+                .frame(width: 361, height: 106)
+                .background(
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(.black8.opacity(0.05))
+                            .blur(radius: 10)
+                        
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(.white0)
+                    }
+                )
+                .padding()
+                .padding(.vertical, 8)
+            }
+            
+            Button {
+                
+            } label: {
+                HStack(spacing: 0) {
+                    Image(.changeTeam)
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .padding(28)
+                        .padding(.trailing, -8)
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("응원팀 변경")
+                            .font(.Head.head2b)
+                            .foregroundColor(.gray7)
+                        
+                        Text("응원하는 팀을 바꿀 수 있어요!")
+                            .font(.Body.body4)
+                            .foregroundStyle(.gray7)
+                    }
+                    
+                    Spacer()
+                }
+                .frame(width: 361, height: 106)
+                .background(
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(.black8.opacity(0.05))
+                            .blur(radius: 10)
+                        
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(.white0)
+                    }
+                )
+                .padding(.horizontal)
+            }
+            
+            Spacer()
+                .frame(width: UIScreen.main.bounds.width)
+        }
     }
 }
 
