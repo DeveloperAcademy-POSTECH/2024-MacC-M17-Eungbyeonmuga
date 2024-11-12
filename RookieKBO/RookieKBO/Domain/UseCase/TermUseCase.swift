@@ -14,7 +14,6 @@ final class TermUseCase {
     private let termService: TermServiceInterface
     
     private(set) var state: State
-    private(set) var modelContainer: ModelContainer?
     
     init(termService: TermServiceInterface) {
         self.termService = termService
@@ -70,8 +69,16 @@ extension TermUseCase {
         do {
             let allTerms = try termService.readTermSet()
             self.state.savedTerms = allTerms
+            print("🥹 savedTerms 배열 내용: ", self.state.savedTerms)
+            debugPrint("🥹 savedTerms 객체 내용: ", self.state.savedTerms)
+            
+            self.state.savedTerms.forEach { term in
+                print("term: \(term.term), definition: \(term.definition)")
+            }
+            
         } catch {
             print("저장된 용어를 불러오는 중 오류 발생: \(error)")
         }
     }
+
 }

@@ -26,4 +26,14 @@ struct MockTermBuilder {
             ]
         )
     }
+    
+    static var mockSavedTerms: [TermEntry] {
+        return [
+            TermEntry(term: "Swift", definition: "A powerful programming language used for iOS and macOS development."),
+            TermEntry(term: "Xcode", definition: "An integrated development environment (IDE) for macOS to develop software for Apple platforms."),
+            TermEntry(term: "UIKit", definition: "A framework that provides the necessary infrastructure for iOS apps."),
+            TermEntry(term: "CoreData", definition: "An object graph and persistence framework for macOS and iOS.")
+        ]
+    }
+
 }
