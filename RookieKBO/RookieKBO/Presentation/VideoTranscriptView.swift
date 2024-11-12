@@ -12,36 +12,51 @@ struct VideoTranscriptView: View {
     
     @Environment(TermUseCase.self) private var termUseCase
     
+    // 데이터 변경
+    @StateObject private var youtubePlayer = YouTubePlayer(
+        source: .url("https://www.youtube.com/watch?v=uaK6e95za0w"),
+        configuration: YouTubePlayer.Configuration(autoPlay: false)
+    )
+    
     @State private var searchText = ""
     @State private var playingItemId: UUID?
     @State private var isSearchActive = false
     @State private var isPlaying: Bool = false
     @State private var isSaved: Bool = false
     @State private var savedTerms: [String: Bool] = [:]
+    @State private var currentPlaybackTime: TimeInterval = 0
     
-    // 실제 데이터로 변경
-    let currentTranscript = MockTermBuilder.mockTranscript
+    // 데이터 변경
+    private let currentTranscript = MockTermBuilder.mockTranscript
+    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-    // 실제 데이터로 변경
-    var youtubeId = [
-        YouTubePlayer(stringLiteral: "https://www.youtube.com/watch?v=uaK6e95za0w")
-    ]
+    /// 재생될 때 업데이트 하는 함수
+    func updateIsPlaying(for time: TimeInterval) {
+        let matchingItems = currentTranscript.transcript.filter {
+            abs($0.start - time) <= 1.0
+        }
+        
+        if let matchingItem = matchingItems.first {
+            playingItemId = matchingItem.id
+            isPlaying = true
+            print("재생중~ \(matchingItem.text) 지금 시간은~ \(time)")
+        } else {
+            isPlaying = false
+            print("매칭 안됐어 짜식아 \(time)")
+        }
+    }
     
     var body: some View {
-        
         VStack(spacing: 0) {
-            
             TopView()
             
-            YouTubePlayerView(youtubeId.first ?? "")
+            YouTubePlayerView(youtubePlayer)
                 .frame(height: 220)
             
             if isSearchActive {
                 SearchBar(text: $searchText)
-                    .padding(.bottom, 16)
             } else {
                 TermRow()
-                    .padding(.bottom, 16)
                     .onTapGesture {
                         withAnimation {
                             isSearchActive.toggle()
@@ -49,18 +64,26 @@ struct VideoTranscriptView: View {
                     }
             }
             
-            // MARK: - 콘텐츠 영역
-            
             if isSearchActive {
                 searchContent
             } else {
                 termContent
             }
         }
+        .onReceive(timer) { _ in
+            youtubePlayer.getCurrentTime { result in
+                switch result {
+                case .success(let time):
+                    currentPlaybackTime = time.value
+                    updateIsPlaying(for: currentPlaybackTime)
+                case .failure(let error):
+                    print("재생 시간 가져오는 에러다 짜식아 \(error)")
+                }
+            }
+        }
     }
     
     // MARK: - 검색 콘텐츠
-    
     private var searchContent: some View {
         Group {
             if searchText.isEmpty {
@@ -79,8 +102,6 @@ struct VideoTranscriptView: View {
         }
     }
     
-    // MARK: - 검색 결과 없을 때
-    
     private var noSearchResults: some View {
         VStack {
             Spacer()
@@ -90,8 +111,6 @@ struct VideoTranscriptView: View {
             Spacer()
         }
     }
-    
-    // MARK: - 검색 결과 리스트
     
     private func searchResultsView(_ items: [TranscriptItem]) -> some View {
         ScrollView {
@@ -103,13 +122,13 @@ struct VideoTranscriptView: View {
                             playingItemId = isPlaying ? transcriptItem.id : nil
                         }
                     ),
-                    searchText: transcriptItem.text,
+                    searchText: searchText,
                     time: transcriptItem.start
                 )
                 .simultaneousGesture(
                     TapGesture()
                         .onEnded {
-                            youtubeId.first?.seek(
+                            youtubePlayer.seek(
                                 to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
                                 allowSeekAhead: true
                             )
@@ -120,8 +139,6 @@ struct VideoTranscriptView: View {
             }
         }
     }
-    
-    // MARK: - 하이라이트 영상 용어 리스트 (저장된 용어가 있으면 업데이트)
     
     private var termContent: some View {
         ZStack {
@@ -146,7 +163,7 @@ struct VideoTranscriptView: View {
                                         } else {
                                             termUseCase.deleteTermEntry(term: transcriptItem.text)
                                         }
-                                        termUseCase.printTermEntries() 
+                                        termUseCase.printTermEntries()
                                     }
                                 ),
                                 term: transcriptItem.text,
@@ -156,7 +173,7 @@ struct VideoTranscriptView: View {
                             .simultaneousGesture(
                                 TapGesture()
                                     .onEnded {
-                                        youtubeId.first?.seek(
+                                        youtubePlayer.seek(
                                             to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
                                             allowSeekAhead: true
                                         )
@@ -168,13 +185,14 @@ struct VideoTranscriptView: View {
                             EmptyView()
                         }
                     }
-
+                    
                 }
             }
             if isSearchActive {
                 Rectangle()
                     .foregroundColor(.gray6)
                     .opacity(0.3)
+                    .padding(.top, -16)
                     .onTapGesture {
                         withAnimation {
                             isSearchActive.toggle()
@@ -183,8 +201,8 @@ struct VideoTranscriptView: View {
                     .edgesIgnoringSafeArea(.all)
             }
         }
+        .padding(.top, 16)
     }
-
 }
 
 // MARK: - TopView
