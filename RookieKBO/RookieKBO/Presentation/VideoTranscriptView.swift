@@ -15,7 +15,7 @@ struct VideoTranscriptView: View {
     // 데이터 변경
     @StateObject private var youtubePlayer = YouTubePlayer(
         source: .url("https://www.youtube.com/watch?v=uaK6e95za0w"),
-        configuration: YouTubePlayer.Configuration(autoPlay: false)
+        configuration: YouTubePlayer.Configuration(autoPlay: true)
     )
     
     @State private var searchText = ""
