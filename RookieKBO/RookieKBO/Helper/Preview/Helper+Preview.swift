@@ -14,7 +14,7 @@ import Foundation
 enum PreviewHelper {
     
     static let mockTermUseCase = TermUseCase(
-        termService: TermService(termDictionary: termDictionary)
+        termService: TermServiceImpl(termDictionary: termDictionary)
     )
     
     static let mockSelectTeamUseCase = SelectTeamUseCase(

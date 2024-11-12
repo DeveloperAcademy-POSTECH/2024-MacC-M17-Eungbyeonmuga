@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @MainActor
-final class TermService: TermServiceInterface {
+final class TermServiceImpl: TermServiceInterface {
     
     private var modelContainer: ModelContainer?
     private var termEntries: [TermEntry]
