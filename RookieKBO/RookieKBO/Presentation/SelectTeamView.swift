@@ -249,5 +249,5 @@ private struct StartTeam: View {
         .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(PathModel())
-        .environment(PreviewHelper.mockMatchUseCase)
+        .environment(PreviewHelperForWidget.mockMatchUseCase)
 }

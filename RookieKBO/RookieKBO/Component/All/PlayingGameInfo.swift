@@ -105,5 +105,5 @@ private struct GameInfo: View {
     PlayingGameInfo(
         playingGameInfo: MockDataBuilder.mockMatch
     )
-    .environment(PreviewHelper.mockMatchUseCase)
+    .environment(PreviewHelperForWidget.mockMatchUseCase)
 }

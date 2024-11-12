@@ -224,5 +224,5 @@ private struct TeamBoard: View {
 #Preview {
     ScoreBoardView(match: MockDataBuilder.mockMatch)
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
-        .environment(PreviewHelper.mockMatchUseCase)
+        .environment(PreviewHelperForWidget.mockMatchUseCase)
 }
