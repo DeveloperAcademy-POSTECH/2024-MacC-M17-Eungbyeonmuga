@@ -32,14 +32,19 @@ struct VideoTranscriptView: View {
     
     /// 재생될 때 업데이트 하는 함수
     private func updateIsPlaying(for time: TimeInterval) {
-        let matchingItems = currentTranscript.transcript.filter {
-            abs($0.start - time) <= 1.0
+        let matchingItems = currentTranscript.transcript.filter { transcriptItem in
+            abs(transcriptItem.start - time) <= 1.0
         }
         
         if let matchingItem = matchingItems.first {
-            playingItemId = matchingItem.id
-            isPlaying = true
-            print("재생중~ \(matchingItem.text) 지금 시간은~ \(time)")
+            if termDictionary[matchingItem.text] != nil {
+                playingItemId = matchingItem.id
+                isPlaying = true
+                print("재생중~ \(matchingItem.text) 지금 시간은~ \(time)")
+            } else {
+                isPlaying = false
+                print("매칭 안된 항목: \(matchingItem.text), time: \(time)")
+            }
         } else {
             isPlaying = false
             print("매칭 안됐어 짜식아 \(time)")
@@ -142,68 +147,93 @@ struct VideoTranscriptView: View {
     }
     
     private var termContent: some View {
-        ZStack {
-            ScrollView {
-                VStack {
-                    ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
-                        if let description = termDictionary[transcriptItem.text] {
-                            let isTermSaved = termUseCase.isTermSaved(term: transcriptItem.text)
-                            
-                            TermView(
-                                isPlaying: Binding(
-                                    get: { playingItemId == transcriptItem.id },
-                                    set: { isPlaying in
-                                        playingItemId = isPlaying ? transcriptItem.id : nil
-                                    }
-                                ),
-                                isSaved: Binding(
-                                    get: { isTermSaved },
-                                    set: { newValue in
-                                        if newValue {
-                                            termUseCase.createTermEntry(term: transcriptItem.text)
-                                        } else {
-                                            termUseCase.deleteTermEntry(term: transcriptItem.text)
+        ScrollViewReader { scrollProxy in
+            ZStack {
+                ScrollView {
+                    VStack {
+                        ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
+                            if let description = termDictionary[transcriptItem.text] {
+                                let isTermSaved = termUseCase.isTermSaved(term: transcriptItem.text)
+                                
+                                TermView(
+                                    isPlaying: Binding(
+                                        get: { playingItemId == transcriptItem.id },
+                                        set: { isPlaying in
+                                            playingItemId = isPlaying ? transcriptItem.id : nil
+                                            if isPlaying {
+                                                withAnimation {
+                                                    scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+                                                }
+                                            }
+                                            
                                         }
-                                        termUseCase.printTermEntries()
+                                    ),
+                                    isSaved: Binding(
+                                        get: { isTermSaved },
+                                        set: { newValue in
+                                            if newValue {
+                                                termUseCase.createTermEntry(term: transcriptItem.text)
+                                            } else {
+                                                termUseCase.deleteTermEntry(term: transcriptItem.text)
+                                            }
+                                            termUseCase.printTermEntries()
+                                        }
+                                    ),
+                                    term: transcriptItem.text,
+                                    description: description,
+                                    time: transcriptItem.start
+                                )
+                                .id(transcriptItem.id)
+                                .simultaneousGesture(
+                                    TapGesture()
+                                        .onEnded {
+                                            youtubePlayer.seek(
+                                                to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                                                allowSeekAhead: true
+                                            )
+                                        }
+                                )
+                                .padding(.bottom, 8)
+                                .padding(.horizontal, 16)
+                                
+                                .onAppear {
+                                    if playingItemId == transcriptItem.id {
+                                        withAnimation {
+                                            scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+                                        }
                                     }
-                                ),
-                                term: transcriptItem.text,
-                                description: description,
-                                time: transcriptItem.start
-                            )
-                            .simultaneousGesture(
-                                TapGesture()
-                                    .onEnded {
-                                        youtubePlayer.seek(
-                                            to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
-                                            allowSeekAhead: true
-                                        )
+                                }
+                                .onChange(of: playingItemId) {
+                                    if let playingItemId {
+                                        withAnimation {
+                                            scrollProxy.scrollTo(playingItemId, anchor: .top)
+                                        }
                                     }
-                            )
-                            .padding(.bottom, 8)
-                            .padding(.horizontal, 16)
-                        } else {
-                            EmptyView()
+                                }
+                            } else {
+                                EmptyView()
+                            }
                         }
                     }
-                    
+                }
+                if isSearchActive {
+                    Rectangle()
+                        .foregroundColor(.gray6)
+                        .opacity(0.3)
+                        .padding(.top, -16)
+                        .onTapGesture {
+                            withAnimation {
+                                isSearchActive.toggle()
+                            }
+                        }
+                        .edgesIgnoringSafeArea(.all)
                 }
             }
-            if isSearchActive {
-                Rectangle()
-                    .foregroundColor(.gray6)
-                    .opacity(0.3)
-                    .padding(.top, -16)
-                    .onTapGesture {
-                        withAnimation {
-                            isSearchActive.toggle()
-                        }
-                    }
-                    .edgesIgnoringSafeArea(.all)
-            }
+            .padding(.top, 16)
         }
-        .padding(.top, 16)
     }
+    
+    
 }
 
 // MARK: - TopView
