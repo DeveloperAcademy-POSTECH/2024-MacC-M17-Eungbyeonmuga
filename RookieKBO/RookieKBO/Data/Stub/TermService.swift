@@ -26,6 +26,7 @@ final class TermService: TermServiceInterface {
         }
     }
     
+    // 저장된 용어 출력하는 함수
     func printTermEntries() {
         do {
             let termEntries = try readTermSet()

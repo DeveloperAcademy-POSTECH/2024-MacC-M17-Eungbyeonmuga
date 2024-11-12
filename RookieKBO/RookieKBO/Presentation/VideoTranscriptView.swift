@@ -31,7 +31,7 @@ struct VideoTranscriptView: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     /// 재생될 때 업데이트 하는 함수
-    func updateIsPlaying(for time: TimeInterval) {
+    private func updateIsPlaying(for time: TimeInterval) {
         let matchingItems = currentTranscript.transcript.filter {
             abs($0.start - time) <= 1.0
         }
@@ -43,6 +43,35 @@ struct VideoTranscriptView: View {
         } else {
             isPlaying = false
             print("매칭 안됐어 짜식아 \(time)")
+        }
+    }
+    
+    /// 검색 결과로 뷰를 그리는 함수
+    private func searchResultsView(_ items: [TranscriptItem]) -> some View {
+        ScrollView {
+            ForEach(items.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
+                SearchResult(
+                    isPlaying: Binding(
+                        get: { playingItemId == transcriptItem.id },
+                        set: { isPlaying in
+                            playingItemId = isPlaying ? transcriptItem.id : nil
+                        }
+                    ),
+                    searchText: searchText,
+                    time: transcriptItem.start
+                )
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded {
+                            youtubePlayer.seek(
+                                to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                                allowSeekAhead: true
+                            )
+                        }
+                )
+                .padding(.bottom, 8)
+                .padding(.horizontal, 16)
+            }
         }
     }
     
@@ -109,34 +138,6 @@ struct VideoTranscriptView: View {
                 .font(.Body.body3)
                 .foregroundColor(.gray6)
             Spacer()
-        }
-    }
-    
-    private func searchResultsView(_ items: [TranscriptItem]) -> some View {
-        ScrollView {
-            ForEach(items.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
-                SearchResult(
-                    isPlaying: Binding(
-                        get: { playingItemId == transcriptItem.id },
-                        set: { isPlaying in
-                            playingItemId = isPlaying ? transcriptItem.id : nil
-                        }
-                    ),
-                    searchText: searchText,
-                    time: transcriptItem.start
-                )
-                .simultaneousGesture(
-                    TapGesture()
-                        .onEnded {
-                            youtubePlayer.seek(
-                                to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
-                                allowSeekAhead: true
-                            )
-                        }
-                )
-                .padding(.bottom, 8)
-                .padding(.horizontal, 16)
-            }
         }
     }
     

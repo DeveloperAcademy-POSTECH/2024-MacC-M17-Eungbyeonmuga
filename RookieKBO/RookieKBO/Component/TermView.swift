@@ -10,7 +10,6 @@ import SwiftUI
 struct TermView: View {
     @Environment(TermUseCase.self) private var termUseCase
     
-//    @State private var isSaved: Bool = false
     @Binding var isPlaying: Bool
     @Binding var isSaved: Bool
     
@@ -43,12 +42,6 @@ struct TermView: View {
                 }
                 .onTapGesture {
                     isSaved.toggle()
-//                    if isSaved {
-//                        termUseCase.createTermEntry(term: term)
-//                    } else {
-//                        termUseCase.deleteTermEntry(term: term)
-//                    }
-//                    termUseCase.printTermEntries()
                 }
             }
             Text(description)
