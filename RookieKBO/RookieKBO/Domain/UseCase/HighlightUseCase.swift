@@ -54,7 +54,7 @@ extension HighlightUseCase {
         }
     }
     
-    // 제목에서 특정 단어 추출
+    // 특정 단어 추출
     func extractHomeAway(from title: String) -> String {
         let components = title.split(separator: " ")
         guard components.count > 5 else { return title }

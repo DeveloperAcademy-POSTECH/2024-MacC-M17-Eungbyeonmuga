@@ -165,7 +165,7 @@ private struct HighlightContentSettingView: View {
                 }
             }
             
-            Spacer()
+            Spacer(minLength: 0)
         }
         .padding()
         .sheet(isPresented: $isShowingSetCalendar) {
@@ -201,6 +201,7 @@ private struct SetCalendarView: View {
                 displayedComponents: .date
             )
             .datePickerStyle(.graphical)
+            .environment(\.locale, Locale(identifier: String(Locale.preferredLanguages[0])))
             .tint(.brandPrimary)
             .onAppear {
                 currentDate = highlightUseCase.state.selectedDate ?? Date()
@@ -213,23 +214,11 @@ private struct SetCalendarView: View {
             Spacer()
             
             if isValidDate {
-                HStack(spacing: 0) {
-                    Spacer()
-                    
-                    ForEach(matchingHighlights, id: \.self) { info in
-                        Text(highlightUseCase.extractHomeAway(from: info.title))
-                            .foregroundColor(.black8)
-                            .lineLimit(nil)
-                        
-                        Spacer()
-                    }
-                }
-                
                 Button {
                     highlightUseCase.fetchSelectedDate(currentDate)
                     presentationMode.wrappedValue.dismiss()
                 } label: {
-                    Text("날짜 적용하기")
+                    Text("이 날의 경기 정보를 볼래요!")
                         .font(.Head.head3)
                         .frame(width: 361, height: 54)
                         .foregroundColor(.white0)
@@ -244,10 +233,14 @@ private struct SetCalendarView: View {
                         )
                 }
                 .padding(.vertical)
-                
             } else {
-                Text("경기가 없습니다.")
-                    .foregroundColor(.black8)
+                Text("이 날은 경기가 없어요!")
+                    .font(.Head.head3)
+                    .frame(width: 361, height: 54)
+                    .foregroundColor(.white0)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(.gray4))
                     .padding(.vertical)
             }
         }
