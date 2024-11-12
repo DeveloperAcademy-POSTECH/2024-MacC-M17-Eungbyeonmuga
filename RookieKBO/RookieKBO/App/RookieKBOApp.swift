@@ -16,7 +16,7 @@ struct RookieKBOApp: App {
                 .environment(PathModel())
                 .environment(MatchUseCase(matchService: MatchServiceImpl()))
                 .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
-                .environment(HighlightUseCase())
+                .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
         }
     }
 }

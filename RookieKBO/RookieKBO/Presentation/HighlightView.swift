@@ -324,5 +324,5 @@ private struct HighlightContent: View {
 
 #Preview {
     HighlightView()
-        .environment(HighlightUseCase())
+        .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
 }

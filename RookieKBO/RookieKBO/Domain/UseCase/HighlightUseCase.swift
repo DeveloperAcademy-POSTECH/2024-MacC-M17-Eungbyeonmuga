@@ -10,9 +10,12 @@ import Foundation
 @Observable
 final class HighlightUseCase {
     
+    private let highlightService: HighlightServiceInterface
+    
     private(set) var state: State
     
-    init() {
+    init(highlightService: HighlightServiceInterface) {
+        self.highlightService = highlightService
         self.state = State(
             HighlightInfo: nil,
             selectedDate: nil
@@ -40,24 +43,16 @@ extension HighlightUseCase {
     
     // 유효한 날짜인지 확인
     func isValidDate(_ date: Date, from highlightInfo: [Highlight]) -> Bool {
-        let validDates = highlightInfo.compactMap { Date().fromStringToDate($0.date) }
-        return validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: date) })
+        highlightService.isValidDate(date, from: highlightInfo)
     }
     
     // 해당 날짜에 맞는 Highlight 매칭
     func filterHighlights(for selectedDate: Date, in highlightInfo: [Highlight]) -> [Highlight] {
-        highlightInfo.filter {
-            guard let date = Date().fromStringToDate($0.date) else {
-                return false
-            }
-            return Calendar.current.isDate(date, inSameDayAs: selectedDate)
-        }
+        highlightService.filterHighlights(for: selectedDate, in: highlightInfo)
     }
     
     // 특정 단어 추출
     func extractHomeAway(from title: String) -> String {
-        let components = title.split(separator: " ")
-        guard components.count > 5 else { return title }
-        return components[3...5].joined(separator: " ")
+        highlightService.extractHomeAway(from: title)
     }
 }
