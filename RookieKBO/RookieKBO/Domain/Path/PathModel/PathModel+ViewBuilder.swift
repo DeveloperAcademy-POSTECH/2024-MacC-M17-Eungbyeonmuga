@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
+
+import SwiftUI
 
 extension PathModel {
-    
+
     @ViewBuilder
     func build(_ screen: Screen) -> some View {
         switch screen {

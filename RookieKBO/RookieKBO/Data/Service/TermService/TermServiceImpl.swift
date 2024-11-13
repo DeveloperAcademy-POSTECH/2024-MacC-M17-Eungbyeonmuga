@@ -11,7 +11,7 @@ import SwiftData
 @MainActor
 final class TermServiceImpl: TermServiceInterface {
     
-    private var modelContainer: ModelContainer?
+    var modelContainer: ModelContainer?
     private var termEntries: [TermEntry]
     private let termDictionary: [String: String]
     
