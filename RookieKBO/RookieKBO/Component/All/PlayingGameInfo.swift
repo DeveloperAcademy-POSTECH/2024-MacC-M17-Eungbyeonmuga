@@ -103,7 +103,7 @@ private struct GameInfo: View {
 
 #Preview {
     PlayingGameInfo(
-        playingGameInfo: MockDataBuilder.mockMatch
+        playingGameInfo: MockDataBuilderForWidget.mockMatch
     )
     .environment(PreviewHelperForWidget.mockMatchUseCase)
 }

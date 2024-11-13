@@ -19,7 +19,7 @@ struct MyTeamGameInfoView: View {
     @State private var isAllGameInfoFullScreenPresented = false
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
-    let games: [Match] = MockDataBuilder.mockMatchList
+    let games: [Match] = MockDataBuilderForWidget.mockMatchList
     
     var myTeamGames: [Match] {
         return games.filter { game in

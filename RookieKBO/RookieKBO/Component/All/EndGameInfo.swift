@@ -122,7 +122,7 @@ private struct GameInfo: View {
 
 #Preview {
     EndGameInfo(
-        endGameInfo: MockDataBuilder.mockMatch
+        endGameInfo: MockDataBuilderForWidget.mockMatch
     )
     .environment(MatchUseCase(matchService: MatchServiceImpl()))
     .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))

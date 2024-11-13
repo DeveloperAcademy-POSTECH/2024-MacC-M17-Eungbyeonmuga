@@ -28,7 +28,7 @@ struct VideoTranscriptView: View {
     @State private var currentPlaybackTime: TimeInterval = 0
     
     // 데이터 변경
-    private let currentTranscript = MockTermBuilder.mockTranscript
+    private let currentTranscript = MockDataBuilder.mockTranscript
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     /// 재생될 때 업데이트 하는 함수

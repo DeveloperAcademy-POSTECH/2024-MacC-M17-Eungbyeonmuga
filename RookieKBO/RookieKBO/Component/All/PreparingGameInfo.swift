@@ -71,5 +71,5 @@ struct PreparingGameInfo: View {
 }
 
 #Preview {
-    PreparingGameInfo(preparingGameInfo: MockDataBuilder.mockMatch)
+    PreparingGameInfo(preparingGameInfo: MockDataBuilderForWidget.mockMatch)
 }

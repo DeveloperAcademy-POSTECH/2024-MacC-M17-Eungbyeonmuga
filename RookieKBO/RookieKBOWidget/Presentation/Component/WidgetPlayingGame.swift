@@ -19,11 +19,11 @@ struct WidgetPlayingGame: View {
             WidgetGameInfo(entry: entry)
                 .padding(.bottom, 14)
             
-            let awayScore = matchUseCase.calculateScore(for: currentMatch ?? MockDataBuilder.mockEmptyMatch, team: .AWAY)
+            let awayScore = matchUseCase.calculateScore(for: currentMatch ?? MockDataBuilderForWidget.mockEmptyMatch, team: .AWAY)
             
-            let homeScore = matchUseCase.calculateScore(for: currentMatch ?? MockDataBuilder.mockEmptyMatch, team: .HOME)
+            let homeScore = matchUseCase.calculateScore(for: currentMatch ?? MockDataBuilderForWidget.mockEmptyMatch, team: .HOME)
             
-            let inningText = matchUseCase.calculateInningText(for: entry.match ?? MockDataBuilder.mockEmptyMatch)
+            let inningText = matchUseCase.calculateInningText(for: entry.match ?? MockDataBuilderForWidget.mockEmptyMatch)
             
             HStack(spacing: 0) {
                 Text("\(awayScore)")

@@ -40,7 +40,7 @@ struct BeforeMyTeamGameView: View {
 }
 
 #Preview {
-    BeforeMyTeamGameView(games: MockDataBuilder.mockEndGameList)
+    BeforeMyTeamGameView(games: MockDataBuilderForWidget.mockEndGameList)
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(PathModel())
         .environment(PreviewHelperForWidget.mockMatchUseCase)

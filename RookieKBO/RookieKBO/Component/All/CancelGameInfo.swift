@@ -72,6 +72,6 @@ struct CancelGameInfo: View {
 
 #Preview {
     CancelGameInfo(
-        cancelGameInfo: MockDataBuilder.mockMatch
+        cancelGameInfo: MockDataBuilderForWidget.mockMatch
     )
 }

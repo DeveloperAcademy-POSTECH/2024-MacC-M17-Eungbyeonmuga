@@ -98,6 +98,6 @@ private struct TeamInfo: View {
 
 #Preview {
     MyTeamCancelGameInfo(
-        cancelGameInfo: MockDataBuilder.mockMatch
+        cancelGameInfo: MockDataBuilderForWidget.mockMatch
     )
 }

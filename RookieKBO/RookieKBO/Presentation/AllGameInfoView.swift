@@ -17,7 +17,7 @@ struct AllGameInfoView: View {
     @State private var teamColor: Color = .brandPrimary
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
-    let games: [Match] = MockDataBuilder.mockMatchList
+    let games: [Match] = MockDataBuilderForWidget.mockMatchList
     
     var pastGames: [Match] {
         return games.filter { game in
