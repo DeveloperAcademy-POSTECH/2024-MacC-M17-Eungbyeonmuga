@@ -76,7 +76,7 @@ private struct SettingView: View {
         VStack(spacing: 0) {
             
             Button {
-                // TODO: 저장된 야구 용어 페이지로 이동
+                pathModel.push(.savedTerms)
             } label: {
                 HStack(spacing: 0) {
                     Image(.saveWord)

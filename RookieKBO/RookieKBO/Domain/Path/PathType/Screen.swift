@@ -17,4 +17,5 @@ enum Screen: Identifiable, Hashable {
     case highlight
     case videoTranscript
     case myPage
+    case savedTerms
 }
