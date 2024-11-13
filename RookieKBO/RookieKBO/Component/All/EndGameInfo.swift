@@ -25,6 +25,7 @@ struct EndGameInfo: View {
 }
 
 // MARK: - teamColorGradient
+
 private func teamColorGradient(match: Match) -> some View {
 
     let homeTeamColorString = match.homeTeam.color
@@ -34,8 +35,8 @@ private func teamColorGradient(match: Match) -> some View {
     let awayColor = Color.teamColor(for: awayTeamColorString)
 
     let gradient = LinearGradient.gradient(
-        startColor: awayColor ?? Color.widget30,
-        endColor: homeColor ?? Color.widget30
+        startColor: awayColor ?? Color.brandPrimary,
+        endColor: homeColor ?? Color.brandPrimaryGd
     )
     
     return AnyView(Rectangle().fill(gradient))
@@ -62,7 +63,7 @@ private struct GameInfo: View {
                 Text("\(endGameInfo.awayTeam.name.firstWord())")
                     .font(.Head.head2b)
                     .foregroundColor(.white0)
-                
+                    .frame(width: 76)
             }
             .padding(.trailing, 8)
             .padding(.leading, 10)
@@ -74,6 +75,7 @@ private struct GameInfo: View {
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle1)
                 .foregroundColor(awayScore < homeScore ? .white40 : .white0)
+                .frame(width: 48)
             
             Spacer()
             
@@ -87,8 +89,9 @@ private struct GameInfo: View {
                 .font(.CustomTitle.customTitle1)
                 .foregroundColor(homeScore < awayScore ? .white40 : .white0)
                 .padding(.trailing, 8)
+                .frame(width: 48)
             
-            VStack(spacing: 5) {
+            VStack(spacing: 4) {
                 Image("\(endGameInfo.homeTeam.image)")
                     .resizable()
                     .scaledToFit()
@@ -105,11 +108,12 @@ private struct GameInfo: View {
                     Text("홈")
                         .font(.Caption.caption2)
                         .foregroundColor(.gray7)
-                        .padding(.horizontal, 3)
-                        .padding(.vertical, 1)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 2)
                         .background(.white0)
                         .cornerRadius(99)
                 }
+                .frame(width: 76)
             }
             .padding(.trailing, 10)
         }
