@@ -10,6 +10,7 @@ import SwiftUI
 struct HighlightView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
+    @Environment(PathModel.self) private var pathModel
     
     var body: some View {
         ZStack {
@@ -33,6 +34,7 @@ struct HighlightView: View {
 private struct HighlightContentView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
+    @Environment(PathModel.self) private var pathModel
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
     let highlightInfo = MockDataBuilder.mockHighlightInfo
@@ -55,8 +57,8 @@ private struct HighlightContentView: View {
                     
                     ForEach(filteredHighlights, id: \.self) { info in
                         HighlightContent(videoInfo: info) {
-                            // TODO: 자막 페이지로 이동
-                            print("TODO: 자막 페이지로 이동 \(info.videoId)")
+                            // TODO: 네비게이션 시 정보 넘겨주는 것 설정
+                            pathModel.push(.videoTranscript)
                         }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
@@ -325,4 +327,5 @@ private struct HighlightContent: View {
 #Preview {
     HighlightView()
         .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
+        .environment(PathModel())
 }

@@ -15,5 +15,7 @@ enum Screen: Identifiable, Hashable {
     case myTeamGameInfo
     case allGameInfo
     case highlight
+    case videoTranscript
     case myPage
+    case savedTerms
 }

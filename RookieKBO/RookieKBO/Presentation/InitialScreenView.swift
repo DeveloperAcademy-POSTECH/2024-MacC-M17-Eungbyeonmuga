@@ -42,6 +42,7 @@ struct TeamScreenView: View {
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     @State private var selectedTab: Tab = .match
+    @State private var isTabBarHidden: Bool = false
     
     var body: some View {
         @Bindable var pathModel = pathModel
@@ -67,12 +68,16 @@ struct TeamScreenView: View {
                 VStack(spacing: 0) {
                     Spacer()
                     
-                    TabBar(selectedTab: $selectedTab)
-                        .frame(height: 60)
+                    if !isTabBarHidden {
+                        TabBar(selectedTab: $selectedTab)
+                            .frame(height: 60)
+                    }
                 }
             }
             .navigationDestination(for: Screen.self) { screen in
                 pathModel.build(screen)
+                    .onAppear { isTabBarHidden = true }
+                    .onDisappear { isTabBarHidden = false }
             }
         }
     }
