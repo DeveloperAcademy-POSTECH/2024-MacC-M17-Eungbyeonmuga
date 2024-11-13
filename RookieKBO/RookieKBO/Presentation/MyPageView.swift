@@ -10,6 +10,7 @@ import SwiftUI
 struct MyPageView: View {
     
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @Environment(PathModel.self) private var pathModel
     
     var body: some View {
         ZStack {
@@ -69,11 +70,13 @@ private struct HeaderView: View {
 
 private struct SettingView: View {
     
+    @Environment(PathModel.self) private var pathModel
+    
     var body: some View {
         VStack(spacing: 0) {
             
             Button {
-                
+                // TODO: 저장된 야구 용어 페이지로 이동
             } label: {
                 HStack(spacing: 0) {
                     Image(.saveWord)
@@ -110,7 +113,7 @@ private struct SettingView: View {
             }
             
             Button {
-                
+                pathModel.push(.selectTeam)
             } label: {
                 HStack(spacing: 0) {
                     Image(.changeTeam)
@@ -154,4 +157,5 @@ private struct SettingView: View {
 #Preview {
     MyPageView()
         .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(PathModel())
 }

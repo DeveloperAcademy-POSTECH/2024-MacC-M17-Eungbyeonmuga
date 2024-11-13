@@ -11,6 +11,7 @@ import YouTubePlayerKit
 struct VideoTranscriptView: View {
     
     @Environment(TermUseCase.self) private var termUseCase
+    @Environment(PathModel.self) private var pathModel
     
     // 데이터 변경
     @StateObject private var youtubePlayer = YouTubePlayer(
@@ -115,6 +116,7 @@ struct VideoTranscriptView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden()
     }
     
     // MARK: - 검색 콘텐츠
@@ -239,6 +241,9 @@ struct VideoTranscriptView: View {
 // MARK: - TopView
 
 private struct TopView: View {
+    
+    @Environment(PathModel.self) private var pathModel
+    
     var body: some View {
         HStack(spacing: 0) {
             HStack(alignment: .lastTextBaseline, spacing: 0) {
@@ -259,6 +264,7 @@ private struct TopView: View {
                 .foregroundStyle(.white0)
                 .onTapGesture {
                     // 창닫기 기능
+                    pathModel.pop()
                 }
         }
         .padding(.bottom, 24)
@@ -343,4 +349,5 @@ private struct SearchBar: View {
 #Preview {
     VideoTranscriptView()
         .environment(PreviewHelper.mockTermUseCase)
+        .environment(PathModel())
 }

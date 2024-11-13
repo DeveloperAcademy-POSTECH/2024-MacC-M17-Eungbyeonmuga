@@ -20,6 +20,8 @@ extension PathModel {
             AllGameInfoView()
         case .highlight:
             HighlightView()
+        case .videoTranscript:
+            VideoTranscriptView()
         case .myPage:
             MyPageView()
         }
