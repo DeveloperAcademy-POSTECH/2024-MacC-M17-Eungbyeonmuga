@@ -20,7 +20,7 @@ struct StubSelectTeamService: SelectTeamServiceInterface {
             Team(name: "삼성 라이온즈", image: "samsungUnder", color: "samsung", backgroundImage: "samsungBg"),
             Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom", backgroundImage: "kiwoomBg"),
             Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
-            Team(name: "전체 구단", image: "allTeamUnder", color: "primary", backgroundImage: "")
+            Team(name: "전체 구단", image: "allTeamUnder", color: "primary", backgroundImage: "allTeamBg")
         ]
     }
     

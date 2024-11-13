@@ -14,6 +14,7 @@ final class MatchUseCase {
     
     private(set) var state: State
     private(set) var matches: [Match]
+    private(set) var selectedDate: Date?
     
     init(matchService: MatchServiceInterface) {
         self.matches = []
@@ -24,6 +25,7 @@ final class MatchUseCase {
             EndGames: nil,
             CancelGames: nil
         )
+        self.selectedDate = nil
     }
 }
 
