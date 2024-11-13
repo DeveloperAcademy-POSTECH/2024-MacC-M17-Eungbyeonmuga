@@ -19,9 +19,26 @@ struct EndGameInfo: View {
             ScoreBoardView(match: endGameInfo)
         }
         .padding(.all, 16)
-        .background(.gray2)
-        .cornerRadius(14)
+        .background(teamColorGradient(match: endGameInfo))
+        .cornerRadius(24)
     }
+}
+
+// MARK: - teamColorGradient
+private func teamColorGradient(match: Match) -> some View {
+
+    let homeTeamColorString = match.homeTeam.color
+    let awayTeamColorString = match.awayTeam.color
+
+    let homeColor = Color.teamColor(for: homeTeamColorString)
+    let awayColor = Color.teamColor(for: awayTeamColorString)
+
+    let gradient = LinearGradient.gradient(
+        startColor: awayColor ?? Color.widget30,
+        endColor: homeColor ?? Color.widget30
+    )
+    
+    return AnyView(Rectangle().fill(gradient))
 }
 
 // MARK: - GameInfo
@@ -35,76 +52,66 @@ private struct GameInfo: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            VStack(spacing: 5) {
+            VStack(spacing: 4) {
                 Image("\(endGameInfo.awayTeam.image)")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 48, height: 48)
+                    .frame(width: 56, height: 56)
                     .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
                 
                 Text("\(endGameInfo.awayTeam.name.firstWord())")
-                    .font(.Caption.caption1)
+                    .font(.Head.head2b)
+                    .foregroundColor(.white0)
+                
             }
-            .padding(.trailing, 16)
-            .padding(.leading, 8)
+            .padding(.trailing, 8)
+            .padding(.leading, 10)
             
             let awayScore = matchUseCase.calculateScore(for: endGameInfo, team: .AWAY)
             
             let homeScore = matchUseCase.calculateScore(for: endGameInfo, team: .HOME)
             
-            let awayResult = matchUseCase.getAllTeamResult(for: awayScore, otherScore: homeScore)
-            
-            let homeResult = matchUseCase.getAllTeamResult(for: homeScore, otherScore: awayScore)
-            
             Text("\(awayScore)")
-                .font(.CustomTitle.customTitle2)
-                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
-                .padding(.vertical, 8)
-                .padding(.leading, 12)
-                .padding(.trailing, 11)
-            
-            Text("\(awayResult.description)")
-                .font(.Body.body2)
-                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
-                .padding(.leading, 16)
+                .font(.CustomTitle.customTitle1)
+                .foregroundColor(awayScore < homeScore ? .white40 : .white0)
             
             Spacer()
             
-            Text("\(homeResult.description)")
+            Text("종료")
                 .font(.Body.body2)
-                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
-                .padding(.trailing, 16)
+                .foregroundColor(.white0)
+            
+            Spacer()
             
             Text("\(homeScore)")
-                .font(.CustomTitle.customTitle2)
-                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
-                .padding(.vertical, 8)
-                .padding(.leading, 12)
-                .padding(.trailing, 11)
+                .font(.CustomTitle.customTitle1)
+                .foregroundColor(homeScore < awayScore ? .white40 : .white0)
+                .padding(.trailing, 8)
             
             VStack(spacing: 5) {
                 Image("\(endGameInfo.homeTeam.image)")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 48, height: 48)
+                    .frame(width: 56, height: 56)
                     .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
                 
-                HStack(spacing: 2) {
+                HStack(spacing: 8) {
                     Text("\(endGameInfo.homeTeam.name.firstWord())")
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
-                        .font(.Caption.caption1)
+                        .font(.Head.head2b)
+                        .foregroundColor(.white0)
                     
                     Text("홈")
                         .font(.Caption.caption2)
                         .foregroundColor(.gray7)
                         .padding(.horizontal, 3)
                         .padding(.vertical, 1)
-                        .background(.gray4)
+                        .background(.white0)
                         .cornerRadius(99)
                 }
             }
-            .padding(.trailing, 8)
+            .padding(.trailing, 10)
         }
     }
 }
@@ -114,5 +121,6 @@ private struct GameInfo: View {
         endGameInfo: MockDataBuilder.mockMatch
     )
     .environment(MatchUseCase(matchService: MatchServiceImpl()))
+    .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
     .environment(PreviewHelperForWidget.mockMatchUseCase)
 }
