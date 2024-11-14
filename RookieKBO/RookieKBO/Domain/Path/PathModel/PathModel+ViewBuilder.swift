@@ -29,6 +29,8 @@ extension PathModel {
             MyPageView()
         case .savedTerms:
             SavedTermsView()
+        case .offSeason:
+            OffSeasonView()
         }
     }
 }

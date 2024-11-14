@@ -14,6 +14,7 @@ final class MatchUseCase {
     
     private(set) var state: State
     private(set) var matches: [Match]
+    private(set) var selectedDate: Date?
     
     init(matchService: MatchServiceInterface) {
         self.matches = []
@@ -24,6 +25,7 @@ final class MatchUseCase {
             EndGames: nil,
             CancelGames: nil
         )
+        self.selectedDate = nil
     }
 }
 
@@ -122,5 +124,19 @@ extension MatchUseCase {
             print(error)
             return .failure(error)
         }
+    }
+    
+    func fetchSelectedDate(_ selectedDate: Date?) {
+        self.selectedDate = selectedDate
+    }
+    
+    // 해당 날짜에 맞는 match 매칭
+    func filterMatches(for selectedDate: Date, in matchInfo: [Match]) -> [Match] {
+        matchService.filterMatches(for: selectedDate, in: matchInfo)
+    }
+    
+    // 유효한 날짜인지 확인
+    func isValidDate(_ date: Date, from matchInfo: [Match]) -> Bool {
+        matchService.isValidDate(date, from: matchInfo)
     }
 }

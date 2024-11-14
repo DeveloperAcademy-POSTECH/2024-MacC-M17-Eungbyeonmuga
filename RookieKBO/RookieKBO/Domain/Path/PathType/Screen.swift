@@ -18,4 +18,5 @@ enum Screen: Identifiable, Hashable {
     case videoTranscript
     case myPage
     case savedTerms
+    case offSeason
 }
