@@ -17,26 +17,26 @@ struct CancelGameInfo: View {
                 Image("\(cancelGameInfo.awayTeam.image)")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 48, height: 48)
+                    .frame(width: 56, height: 56)
                     .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
                 
                 Text("\(cancelGameInfo.awayTeam.name.firstWord())")
-                    .font(.Caption.caption1)
-                    .foregroundColor(.gray7)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .font(.Head.head2b)
+                    .foregroundColor(.white0)
             }
             
             Spacer()
             
-            VStack(spacing: 4) {
-                Text("우천 취소")
+            VStack(spacing: 8) {
+                Text("경기가")
                     .font(.Body.body2)
-                    .foregroundColor(.gray7)
+                    .foregroundColor(.white0)
                 
-                Text("\(cancelGameInfo.place)")
-                    .font(.Caption.caption2)
-                    .foregroundColor(.gray5)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
+                Text("취소되었어요")
+                    .font(.Body.body2)
+                    .foregroundColor(.white0)
             }
             
             Spacer()
@@ -45,30 +45,52 @@ struct CancelGameInfo: View {
                 Image("\(cancelGameInfo.homeTeam.image)")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 48, height: 48)
+                    .frame(width: 56, height: 56)
                     .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
                 
-                HStack(spacing: 2) {
+                HStack(spacing: 8) {
                     Text("\(cancelGameInfo.homeTeam.name.firstWord())")
-                        .foregroundColor(.gray7)
-                        .font(.Caption.caption1)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        .font(.Head.head2b)
+                        .foregroundColor(.white0)
                     
                     Text("홈")
-                        .font(.Caption.caption3)
+                        .font(.Caption.caption2)
                         .foregroundColor(.gray7)
-                        .padding(.horizontal, 3)
-                        .padding(.vertical, 1)
-                        .background(.gray4)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 2)
+                        .background(.white0)
                         .cornerRadius(99)
                 }
             }
         }
-        .padding(.horizontal, 32)
-        .padding(.vertical, 16)
-        .background(.gray2)
-        .cornerRadius(14)
+        .padding(.horizontal, 21)
+        .padding(.top, 16)
+        .padding(.bottom, 24)
+        .background(teamColorGradient(match: cancelGameInfo))
+        .cornerRadius(24)
     }
 }
+
+// MARK: - teamColorGradient
+
+private func teamColorGradient(match: Match) -> some View {
+
+    let homeTeamColorString = match.homeTeam.color
+    let awayTeamColorString = match.awayTeam.color
+
+    let homeColor = Color.teamColor(for: homeTeamColorString)
+    let awayColor = Color.teamColor(for: awayTeamColorString)
+
+    let gradient = LinearGradient.gradient(
+        startColor: awayColor ?? Color.brandPrimary,
+        endColor: homeColor ?? Color.brandPrimaryGd
+    )
+    
+    return AnyView(Rectangle().fill(gradient))
+}
+
 
 #Preview {
     CancelGameInfo(
