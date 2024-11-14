@@ -1,23 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "ssgBg.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "ssgBg@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "ssgBg@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "ssgBg.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }

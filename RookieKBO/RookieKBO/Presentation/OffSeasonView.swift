@@ -16,7 +16,7 @@ struct OffSeasonView: View {
     var body: some View {
         ZStack {
             // 상단 배경
-            Color.brandPrimary
+            Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "")
                 .ignoresSafeArea()
             
             // 하단 배경
@@ -33,10 +33,13 @@ struct OffSeasonView: View {
 // MARK: - GameInfoView
 
 private struct GameInfoView: View {
+    
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
     var body: some View {
         ScrollView {
             ZStack(alignment: .top) {
-                Image(.allTeamBg)
+                Image(selectTeamUseCase.state.selectedTeam?.backgroundImage ?? "allTeamBg")
                     .resizable()
                     .scaledToFit()
                     .offset(y: -52)
@@ -58,6 +61,9 @@ private struct GameInfoView: View {
 // MARK: - HeaderView
 
 private struct HeaderView: View {
+    
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
@@ -71,7 +77,7 @@ private struct HeaderView: View {
             }
             .padding()
         }
-        .background(.brandPrimary)
+        .background(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? ""))
     }
 }
 
@@ -99,7 +105,7 @@ private struct OffSeasonInfoView: View {
                 .padding(.vertical, 12)
                 .padding(.horizontal, 20)
                 .background(RoundedRectangle(cornerRadius: 16)
-                    .fill(.brandPrimaryGd.opacity(0.8)))
+                    .fill(Color.teamGdColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
                 
                 Button {
                     // TODO: 순위 페이지 모달
@@ -116,10 +122,10 @@ private struct OffSeasonInfoView: View {
                     .padding(.vertical, 12)
                     .padding(.horizontal, 20)
                     .background(RoundedRectangle(cornerRadius: 16)
-                        .fill(.brandPrimaryGd.opacity(0.8)))
+                        .fill(Color.teamGdColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
                 }
                 
-                Spacer()
+                Spacer(minLength: 0)
             }
             .padding(.horizontal)
             .padding(.bottom, 24)

@@ -1,23 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "ncBg.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "ncBg@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "ncBg@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "ncBg.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }
