@@ -232,11 +232,15 @@ private struct DateInfoView: View {
                 
                 Spacer(minLength: 0)
             }
-            
-            Image(systemName: "arrow.counterclockwise.circle.fill")
-                .resizable()
-                .foregroundColor(.gray4)
-                .frame(width: 32, height: 32)
+            Button {
+                // TODO: 오늘로 초기화 및 뉴스 제공
+                matchUseCase.fetchSelectedDate(nil)
+            } label: {
+                Image(systemName: "arrow.counterclockwise.circle.fill")
+                    .resizable()
+                    .foregroundColor(.gray4)
+                    .frame(width: 32, height: 32)
+            }
             
             Button {
                 isShowingSetCalendar = true
