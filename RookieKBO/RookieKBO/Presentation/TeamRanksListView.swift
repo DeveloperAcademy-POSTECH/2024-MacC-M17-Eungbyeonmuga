@@ -8,8 +8,21 @@
 import SwiftUI
 
 struct TeamRanksListView: View {
+    @Environment(RankUseCase.self) private var rankUseCase
     
     @State var ranks: [TeamRank] = []
+    
+    private func updateTeamRanks() {
+        Task {
+            let result = await rankUseCase.fetchRanks()
+            switch result {
+            case .success (let teamRanks):
+                rankUseCase.updateTeamRanks(from: teamRanks)
+                self.ranks = rankUseCase.ranks
+            case .failure(let error): print(error)
+            }
+        }
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -23,7 +36,7 @@ struct TeamRanksListView: View {
             }
         }
         .onAppear {
-            self.ranks = MockDataBuilder.mockTeamRanks
+            updateTeamRanks()
         }
     }
 }
@@ -78,12 +91,11 @@ private struct RankInfo: View {
                     .frame(width: 52)
                     .padding(.trailing, 36)
             }
-            
         }
-        
     }
 }
 
 #Preview {
     TeamRanksListView()
+        .environment(RankUseCase(rankService: RankServiceImpl()))
 }

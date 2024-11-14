@@ -87,6 +87,7 @@
 				Domain/Entity/TeamRank.swift,
 				Domain/Interface/HighlightServiceInterface.swift,
 				Domain/Interface/MatchServiceInterface.swift,
+				Domain/Interface/RankServiceInterface.swift,
 				Domain/Interface/SelectTeamServiceInterface.swift,
 				Domain/UseCase/MatchUseCase.swift,
 				"Helper/Helper+Color.swift",
