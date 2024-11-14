@@ -101,19 +101,23 @@ private struct OffSeasonInfoView: View {
                 .background(RoundedRectangle(cornerRadius: 16)
                     .fill(.brandPrimaryGd.opacity(0.8)))
                 
-                HStack(spacing: 8) {
-                    Text("순위")
-                    Rectangle()
-                        .frame(width: 2, height: 16)
-                    // TODO: 순위 설정
-                    Text(selectTeamUseCase.state.selectedTeam?.name ?? "전체 구단")
+                Button {
+                    // TODO: 순위 페이지 모달
+                } label: {
+                    HStack(spacing: 8) {
+                        Text("순위")
+                        Rectangle()
+                            .frame(width: 2, height: 16)
+                        // TODO: 순위 애니메이션 적용
+                        Text(selectTeamUseCase.state.selectedTeam?.name ?? "전체 구단")
+                    }
+                    .font(.Body.body1)
+                    .foregroundColor(.white0)
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 20)
+                    .background(RoundedRectangle(cornerRadius: 16)
+                        .fill(.brandPrimaryGd.opacity(0.8)))
                 }
-                .font(.Body.body1)
-                .foregroundColor(.white0)
-                .padding(.vertical, 12)
-                .padding(.horizontal, 20)
-                .background(RoundedRectangle(cornerRadius: 16)
-                    .fill(.brandPrimaryGd.opacity(0.8)))
                 
                 Spacer()
             }
