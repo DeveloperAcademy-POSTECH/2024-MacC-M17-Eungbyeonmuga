@@ -26,8 +26,8 @@ extension PathModel {
         case .videoTranscript:
             VideoTranscriptView()
         case .myPage:
-//            MyPageView()
-            SavedTermsView()
+            MyPageView()
+//            SavedTermsView()
         case .savedTerms:
             SavedTermsView()
         }

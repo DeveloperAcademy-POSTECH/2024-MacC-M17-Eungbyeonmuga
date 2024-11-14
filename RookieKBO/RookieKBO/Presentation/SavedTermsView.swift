@@ -6,27 +6,39 @@
 //
 
 import SwiftUI
+import SwiftData
+
 
 struct SavedTermsView: View {
     @Environment(TermUseCase.self) private var termUseCase
     @Environment(PathModel.self) private var pathModel
     
-    @State private var savedTermEntry: [TermEntry] = []
     @State private var isSaved: Bool = false
+    
+    @Query var savedTermEntry: [TermEntry]
+    @Environment(\.modelContext) var modelContext
     
     var body: some View {
         ZStack {
             Color.gray2
                 .ignoresSafeArea(.all)
             
-            if savedTermEntry.isEmpty {
+            if termUseCase.state.savedTerms.isEmpty {
                 NoSavedTermsView()
+                    .navigationBarBackButtonHidden(true)
+                    .navigationBarItems(leading: Button {
+                        pathModel.pop()
+                    } label : {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.gray7)
+                    })
+                    .navigationBarTitle("저장된 야구 용어", displayMode: .inline)
             }
             else {
                 ScrollView {
                     VStack {
                         ForEach(savedTermEntry, id: \.term) { termEntry in
-                            let isTermSaved = termUseCase.isTermSaved(term: termEntry.term)
+                            let isTermSaved = isTermSaved(term: termEntry.term)
                             
                             SavedTermView(
                                 isSaved: Binding(
@@ -35,10 +47,8 @@ struct SavedTermsView: View {
                                         if newValue {
                                             termUseCase.createTermEntry(term: termEntry.term)
                                         } else {
-                                            termUseCase.deleteTermEntry(term: termEntry.term)
+                                            deleteTermEntry(term: termEntry.term)
                                         }
-                                        self.savedTermEntry = termUseCase.state.savedTerms
-                                        termUseCase.printTermEntries()
                                     }
                                 ),
                                 term: termEntry.term,
@@ -51,7 +61,10 @@ struct SavedTermsView: View {
                     .padding(.top, 24)
                 }
                 .onAppear {
-                    self.savedTermEntry = termUseCase.state.savedTerms
+                    print("👍👍👍👍", savedTermEntry)
+                }
+                .onChange(of: savedTermEntry) {
+                    print("👍👍👍👍", savedTermEntry)
                 }
                 .navigationBarBackButtonHidden(true)
                 .navigationBarItems(leading: Button {
@@ -63,6 +76,23 @@ struct SavedTermsView: View {
                 .navigationBarTitle("저장된 야구 용어", displayMode: .inline)
                 .background(Color.gray2)
             }
+        }
+    }
+    
+    private func isTermSaved(term: String) -> Bool {
+        return savedTermEntry.contains { $0.term == term }
+    }
+    
+    private func deleteTermEntry(term: String) {
+        do {
+            if let termToDelete = savedTermEntry.first(where: { $0.term == term }) {
+                modelContext.delete(termToDelete)
+                print("✅ \(term) 용어가 삭제됨")
+            } else {
+                print("❌ 삭제할 용어를 찾을 수 없음")
+            }
+        } catch {
+            print("❌ TermEntry 삭제 중 오류 발생: \(error)")
         }
     }
 }

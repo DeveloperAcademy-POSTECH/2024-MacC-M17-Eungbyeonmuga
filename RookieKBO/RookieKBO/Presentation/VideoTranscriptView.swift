@@ -7,11 +7,15 @@
 
 import SwiftUI
 import YouTubePlayerKit
+import SwiftData
 
 struct VideoTranscriptView: View {
     
     @Environment(TermUseCase.self) private var termUseCase
     @Environment(PathModel.self) private var pathModel
+    @Environment(\.modelContext) var modelContext
+    
+    @Query var savedTermEntry: [TermEntry]
     
     // 데이터 변경
     @StateObject private var youtubePlayer = YouTubePlayer(
@@ -50,6 +54,25 @@ struct VideoTranscriptView: View {
             isPlaying = false
             print("매칭 안됐어 짜식아 \(time)")
         }
+    }
+    
+    private func deleteTermEntry(term: String) {
+        if let termToDelete = savedTermEntry.first(where: { $0.term == term }) {
+            modelContext.delete(termToDelete)
+            print("✅ \(term) 용어가 삭제됨")
+        } else {
+            print("❌ 삭제할 용어를 찾을 수 없음")
+        }
+    }
+    
+    private func createTermEntry(term: String, definition: String) {
+        let newTermEntry = TermEntry(term: term, definition: definition)
+        modelContext.insert(newTermEntry)
+        print("✅ \(term) 용어가 추가됨")
+    }
+    
+    private func isTermSaved(term: String) -> Bool {
+        return savedTermEntry.contains { $0.term == term }
     }
     
     /// 검색 결과로 뷰를 그리는 함수
@@ -155,7 +178,7 @@ struct VideoTranscriptView: View {
                     VStack {
                         ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
                             if let description = termDictionary[transcriptItem.text] {
-                                let isTermSaved = termUseCase.isTermSaved(term: transcriptItem.text)
+                                let isTermSaved = isTermSaved(term: transcriptItem.text)
                                 
                                 TermView(
                                     isPlaying: Binding(
@@ -174,11 +197,10 @@ struct VideoTranscriptView: View {
                                         get: { isTermSaved },
                                         set: { newValue in
                                             if newValue {
-                                                termUseCase.createTermEntry(term: transcriptItem.text)
+                                                createTermEntry(term: transcriptItem.text, definition: description)
                                             } else {
-                                                termUseCase.deleteTermEntry(term: transcriptItem.text)
+                                                deleteTermEntry(term: transcriptItem.text)
                                             }
-                                            termUseCase.printTermEntries()
                                         }
                                     ),
                                     term: transcriptItem.text,

@@ -78,6 +78,8 @@ final class TermServiceImpl: TermServiceInterface {
             if let entryToDelete = termEntries.first(where: { $0.term == term }) {
                 modelContainer?.mainContext.delete(entryToDelete)
                 print("✅ \(term) 용어가 삭제")
+                let termEntries = try readTermSet()
+                print("✅", termEntries)
             } else {
                 print("⚠️ 삭제할 용어 없음 \(term)")
             }

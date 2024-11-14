@@ -36,6 +36,7 @@ private struct TeamInfo: View {
             Text("\(teamRank.rank)")
                 .font(.Head.head5)
                 .foregroundColor(.white60)
+                .frame(width: 20)
                 .padding(.trailing, 10)
             
             Text("\(teamRank.team)")

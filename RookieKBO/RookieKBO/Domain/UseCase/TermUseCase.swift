@@ -15,6 +15,7 @@ final class TermUseCase {
     
     private(set) var state: State
     
+
     init(termService: TermServiceInterface) {
         self.termService = termService
         self.state = State(
@@ -51,7 +52,7 @@ extension TermUseCase {
     // 저장된 용어 삭제하는 함수
     func deleteTermEntry(term: String) {
         termService.deleteTermEntry(term: term)
-        filterAndUpdateSavedTerms()
+//        filterAndUpdateSavedTerms()
     }
     
     // 저장된 용어 읽는 함수
@@ -68,13 +69,8 @@ extension TermUseCase {
     private func filterAndUpdateSavedTerms() {
         do {
             let allTerms = try termService.readTermSet()
-            self.state.savedTerms = allTerms
-            print("🥹 savedTerms 배열 내용: ", self.state.savedTerms)
-            debugPrint("🥹 savedTerms 객체 내용: ", self.state.savedTerms)
             
-            self.state.savedTerms.forEach { term in
-                print("term: \(term.term), definition: \(term.definition)")
-            }
+            self.state.savedTerms = allTerms
             
         } catch {
             print("저장된 용어를 불러오는 중 오류 발생: \(error)")
