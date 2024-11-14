@@ -125,4 +125,18 @@ extension MatchUseCase {
             return .failure(error)
         }
     }
+    
+    func fetchSelectedDate(_ selectedDate: Date?) {
+        self.selectedDate = selectedDate
+    }
+    
+    // 해당 날짜에 맞는 match 매칭
+    func filterMatches(for selectedDate: Date, in matchInfo: [Match]) -> [Match] {
+        matchService.filterMatches(for: selectedDate, in: matchInfo)
+    }
+    
+    // 유효한 날짜인지 확인
+    func isValidDate(_ date: Date, from matchInfo: [Match]) -> Bool {
+        matchService.isValidDate(date, from: matchInfo)
+    }
 }

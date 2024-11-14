@@ -106,4 +106,15 @@ final class MatchServiceImpl: MatchServiceInterface {
     func isMyTeam(_ team: Team, _ myTeam: Team) -> Bool {
         return team.name.lowercased().contains(myTeam.name.lowercased())
     }
+    
+    func isValidDate(_ date: Date, from matchInfo: [Match]) -> Bool {
+        let validDates = matchInfo.compactMap { $0.startDateTime }
+        return validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: date) })
+    }
+    
+    func filterMatches(for selectedDate: Date, in matchInfo: [Match]) -> [Match] {
+        matchInfo.filter {
+            Calendar.current.isDate($0.startDateTime, inSameDayAs: selectedDate)
+        }
+    }
 }

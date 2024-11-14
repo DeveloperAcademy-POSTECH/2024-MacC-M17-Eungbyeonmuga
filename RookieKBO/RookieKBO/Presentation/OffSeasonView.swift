@@ -188,6 +188,8 @@ private struct DateInfoView: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
     
+    @State private var isShowingSetCalendar = false
+    
     var body: some View {
         HStack(spacing: 8) {
             HStack(alignment: .bottom, spacing: 8) {
@@ -208,29 +210,110 @@ private struct DateInfoView: View {
                 .foregroundColor(.gray4)
                 .frame(width: 32, height: 32)
             
-            HStack(spacing: 8) {
-                Image(systemName: "calendar")
-                    .font(.Caption.caption1)
-                    .foregroundColor(.gray7)
-                
-                Text(matchUseCase.selectedDate == nil ? "날짜" : "\(matchUseCase.selectedDate!.toMonthDayString())")
-                    .font(.Body.body1)
-                    .foregroundColor(.gray7)
-                
-                Image(systemName: "chevron.down")
-                    .font(.Caption.caption1)
-                    .foregroundColor(.gray5)
+            Button {
+                isShowingSetCalendar = true
+            } label: {
+                HStack(spacing: 8) {
+                                Image(systemName: "calendar")
+                                    .font(.Caption.caption1)
+                                    .foregroundColor(.gray7)
+                                
+                                Text(matchUseCase.selectedDate == nil ? "날짜" : "\(matchUseCase.selectedDate!.toMonthDayString())")
+                                    .font(.Body.body1)
+                                    .foregroundColor(.gray7)
+                                
+                                Image(systemName: "chevron.down")
+                                    .font(.Caption.caption1)
+                                    .foregroundColor(.gray5)
+                            }
+                            .padding(.vertical, 12)
+                            .padding(.leading, 20)
+                            .padding(.trailing, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 99)
+                                    .fill(.white0)
+                                    .stroke(.gray2, lineWidth: 2)
+                            )
             }
-            .padding(.vertical, 12)
-            .padding(.leading, 20)
-            .padding(.trailing, 14)
-            .background(
-                RoundedRectangle(cornerRadius: 99)
-                    .fill(.white0)
-                    .stroke(.gray2, lineWidth: 2)
-            )
         }
         .padding(.bottom, 8)
+        .sheet(isPresented: $isShowingSetCalendar) {
+            SetCalendarView()
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.height(535)])
+        }
+    }
+}
+
+// MARK: - SetCalendarView
+
+private struct SetCalendarView: View {
+    
+    @Environment(MatchUseCase.self) private var matchUseCase
+    @Environment(\.presentationMode) var presentationMode
+    
+    @State private var currentDate = Date()
+    @State private var isValidDate = false
+    
+    // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
+    let matchInfo = MockDataBuilder.mockMatchList
+    
+    private var matchingMatchs: [Match] {
+        matchUseCase.filterMatches(for: currentDate, in: matchInfo)
+    }
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            DatePicker(
+                "경기 날짜 선택",
+                selection: $currentDate,
+                displayedComponents: .date
+            )
+            .datePickerStyle(.graphical)
+            .environment(\.locale, Locale(identifier: String(Locale.preferredLanguages[0])))
+            .tint(.brandPrimary)
+            .onAppear {
+                currentDate = matchUseCase.selectedDate ?? Date()
+                isValidDate = matchUseCase.isValidDate(currentDate, from: matchInfo)
+            }
+            .onChange(of: currentDate) { newDate in
+                isValidDate = matchUseCase.isValidDate(newDate, from: matchInfo)
+            }
+            
+            Spacer()
+            
+            if isValidDate {
+                Button {
+                    matchUseCase.fetchSelectedDate(currentDate)
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Text("이 날의 경기 정보를 볼래요!")
+                        .font(.Head.head3)
+                        .frame(width: 361, height: 54)
+                        .foregroundColor(.white0)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(
+                                    LinearGradient.gradient(
+                                        startColor: .brandPrimary,
+                                        endColor: .brandPrimaryGd
+                                    )
+                                )
+                        )
+                }
+                .padding(.vertical)
+            } else {
+                Text("이 날은 경기가 없어요!")
+                    .font(.Head.head3)
+                    .frame(width: 361, height: 54)
+                    .foregroundColor(.white0)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(.gray4))
+                    .padding(.vertical)
+            }
+        }
+        .padding()
     }
 }
 
