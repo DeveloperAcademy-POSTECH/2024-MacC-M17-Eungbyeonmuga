@@ -16,14 +16,13 @@ struct OffSeasonView: View {
     var body: some View {
         ZStack {
             // 상단 배경
-            Image(.allTeamBg)
-                .resizable()
+            Color.brandPrimary
                 .ignoresSafeArea()
             
             // 하단 배경
             Color.gray1
                 .ignoresSafeArea(edges: .bottom)
-                .offset(y: UIScreen.main.bounds.height / 3)
+                .offset(y: UIScreen.main.bounds.height / 2)
             
             GameInfoView()
                 .clipped()
@@ -36,10 +35,20 @@ struct OffSeasonView: View {
 private struct GameInfoView: View {
     var body: some View {
         ScrollView {
-            LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                Section(header: HeaderView()) {
-                    OffSeasonInfoView()
-                    ContentView()
+            ZStack(alignment: .top) {
+                Image(.allTeamBg)
+                    .resizable()
+                    .scaledToFit()
+                    .offset(y: -52)
+                
+                Color.gray1
+                    .offset(y: UIScreen.main.bounds.height / 3)
+                
+                LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                    Section(header: HeaderView()) {
+                        OffSeasonInfoView()
+                        ContentView()
+                    }
                 }
             }
         }
@@ -125,31 +134,11 @@ private struct ContentView: View {
     let games: [Match] = MockDataBuilder.mockMatchList
     
     var myTeamGames: [Match] {
-        return games.filter { game in
-            guard let selectedTeam = selectTeamUseCase.state.selectedTeam else { return false }
-            
-            // 전체 구단 선택 시 모든 게임 반환
-            if selectedTeam.name == "전체 구단" {
-                return true
-            } else {
-                // 선택된 팀과 관련된 경기만 필터링
-                return matchUseCase.isMyTeam(game.homeTeam, selectedTeam) || matchUseCase.isMyTeam(game.awayTeam, selectedTeam)
-            }
-        }
+        filteredGames(myTeamGames: true)
     }
-
+    
     var otherTeamGames: [Match] {
-        return games.filter { game in
-            guard let selectedTeam = selectTeamUseCase.state.selectedTeam else { return true }
-            
-            // 전체 구단 선택 시 다른 팀 게임을 필터링 x
-            if selectedTeam.name == "전체 구단" {
-                return false
-            } else {
-                // 선택된 팀과 관련 없는 경기만 필터링
-                return !(matchUseCase.isMyTeam(game.homeTeam, selectedTeam) || matchUseCase.isMyTeam(game.awayTeam, selectedTeam))
-            }
-        }
+        filteredGames(myTeamGames: false)
     }
     
     var body: some View {
@@ -157,7 +146,7 @@ private struct ContentView: View {
             DateInfoView()
             
             HStack(spacing: 0) {
-                Text("종료된 경기")
+                Text(selectTeamUseCase.state.selectedTeam?.name == "전체 구단" ? "종료된 경기" : "종료된 우리팀 경기")
                     .font(.Body.body1)
                     .foregroundColor(.gray7)
                 
@@ -169,16 +158,55 @@ private struct ContentView: View {
             }
             .padding(.vertical)
             
-//            if selectTeamUseCase.state.selectedTeam?.name == "전체 구단" {
-                ForEach(games) { game in
+            ForEach(myTeamGames) { game in
+                EndGameInfo(endGameInfo: game)
+                    .padding(.vertical, 4)
+            }
+            if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
+                HStack(spacing: 0) {
+                    Text("종료된 다른팀 경기")
+                        .font(.Body.body1)
+                        .foregroundColor(.gray7)
+                    
+                    Spacer()
+                    
+                    Text("스탯티즈 출처")
+                        .font(.Body.body5)
+                        .foregroundColor(.gray5)
+                }
+                .padding(.vertical)
+                
+                ForEach(otherTeamGames) { game in
                     EndGameInfo(endGameInfo: game)
                         .padding(.vertical, 4)
                 }
-//            }
-            
+            }
         }
         .padding()
         .background(.gray1)
+    }
+    
+    private func filteredGames(myTeamGames: Bool) -> [Match] {
+        games.filter { game in
+            // 모든 게임이 과거 날짜인지 확인
+            matchUseCase.isDateInPast(game.startDateTime)
+        }
+        .filter { game in
+            guard let selectedDate = matchUseCase.selectedDate else { return true }
+            return Calendar.current.isDate(game.startDateTime, inSameDayAs: selectedDate)
+        }
+        .filter { game in
+            guard let selectedTeam = selectTeamUseCase.state.selectedTeam else { return false }
+            
+            if selectedTeam.name == "전체 구단" {
+                // 전체 구단 선택 시 모든 게임 포함 또는 제외
+                return myTeamGames
+            } else {
+                // 선택된 팀과 관련된 게임만 포함하거나 제외
+                let isMyTeamGame = matchUseCase.isMyTeam(game.homeTeam, selectedTeam) || matchUseCase.isMyTeam(game.awayTeam, selectedTeam)
+                return myTeamGames ? isMyTeamGame : !isMyTeamGame
+            }
+        }
     }
 }
 
@@ -214,26 +242,26 @@ private struct DateInfoView: View {
                 isShowingSetCalendar = true
             } label: {
                 HStack(spacing: 8) {
-                                Image(systemName: "calendar")
-                                    .font(.Caption.caption1)
-                                    .foregroundColor(.gray7)
-                                
-                                Text(matchUseCase.selectedDate == nil ? "날짜" : "\(matchUseCase.selectedDate!.toMonthDayString())")
-                                    .font(.Body.body1)
-                                    .foregroundColor(.gray7)
-                                
-                                Image(systemName: "chevron.down")
-                                    .font(.Caption.caption1)
-                                    .foregroundColor(.gray5)
-                            }
-                            .padding(.vertical, 12)
-                            .padding(.leading, 20)
-                            .padding(.trailing, 14)
-                            .background(
-                                RoundedRectangle(cornerRadius: 99)
-                                    .fill(.white0)
-                                    .stroke(.gray2, lineWidth: 2)
-                            )
+                    Image(systemName: "calendar")
+                        .font(.Caption.caption1)
+                        .foregroundColor(.gray7)
+                    
+                    Text(matchUseCase.selectedDate == nil ? "날짜" : "\(matchUseCase.selectedDate!.toMonthDayString())")
+                        .font(.Body.body1)
+                        .foregroundColor(.gray7)
+                    
+                    Image(systemName: "chevron.down")
+                        .font(.Caption.caption1)
+                        .foregroundColor(.gray5)
+                }
+                .padding(.vertical, 12)
+                .padding(.leading, 20)
+                .padding(.trailing, 14)
+                .background(
+                    RoundedRectangle(cornerRadius: 99)
+                        .fill(.white0)
+                        .stroke(.gray2, lineWidth: 2)
+                )
             }
         }
         .padding(.bottom, 8)
