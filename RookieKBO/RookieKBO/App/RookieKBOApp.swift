@@ -19,8 +19,7 @@ struct RookieKBOApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            InitialScreenView()
-            OffSeasonView()
+            InitialScreenView()
                 .environment(PathModel())
                 .environment(MatchUseCase(matchService: MatchServiceImpl()))
                 .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))

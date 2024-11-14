@@ -50,14 +50,15 @@ struct TeamScreenView: View {
         NavigationStack(path: $pathModel.path) {
             ZStack {
                 TabView(selection: $selectedTab) {
-                    // TODO: 수정 필요 (모든 뷰를 myTeamGameInfo로)
-                    if selectTeamUseCase.state.selectedTeam?.name == "전체 구단" {
-                        pathModel.build(.allGameInfo)
-                            .tag(Tab.match)
-                    } else {
-                        pathModel.build(.myTeamGameInfo)
-                            .tag(Tab.match)
-                    }
+//                    if selectTeamUseCase.state.selectedTeam?.name == "전체 구단" {
+//                        pathModel.build(.allGameInfo)
+//                            .tag(Tab.match)
+//                    } else {
+//                        pathModel.build(.myTeamGameInfo)
+//                            .tag(Tab.match)
+//                    }
+                    pathModel.build(.offSeason)
+                        .tag(Tab.match)
                     
                     pathModel.build(.highlight)
                         .tag(Tab.highlight)
