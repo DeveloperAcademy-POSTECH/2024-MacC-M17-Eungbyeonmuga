@@ -61,11 +61,108 @@ struct MockDataBuilder {
     
     static var mockTeamRank: TeamRank {
         return TeamRank(
+            id: UUID(),
             rank: "3",
             team: "LG",
             wins: "76",
             draws: "2",
             losses: "66",
-            win_rate: "0.535")
+            winRate: "0.535"
+        )
+    }
+    
+    static var mockTeamRanks: [TeamRank] {
+        return [
+            TeamRank(
+                id: UUID(),
+                rank: "1",
+                team: "KIA",
+                wins: "87",
+                draws: "2",
+                losses: "55",
+                winRate: "0.613"
+            ),
+            TeamRank(
+                id: UUID(),
+                rank: "2",
+                team: "삼성",
+                wins: "78",
+                draws: "2",
+                losses: "64",
+                winRate: "0.549"
+            ),
+            TeamRank(
+                id: UUID(),
+                rank: "3",
+                team: "LG",
+                wins: "76",
+                draws: "2",
+                losses: "66",
+                winRate: "0.535"
+            ),
+            TeamRank(
+                id: UUID(),
+                rank: "4",
+                team: "두산",
+                wins: "74",
+                draws: "2",
+                losses: "68",
+                winRate: "0.521"
+            ),
+            TeamRank(
+                id: UUID(),
+                rank: "5",
+                team: "KT",
+                wins: "72",
+                draws: "2",
+                losses: "70",
+                winRate: "0.507"
+            ),
+            TeamRank(
+                id: UUID(),
+                rank: "5",
+                team: "SSG",
+                wins: "72",
+                draws: "2",
+                losses: "70",
+                winRate: "0.507"
+            ),
+            TeamRank(
+                id: UUID(),
+                rank: "7",
+                team: "롯데",
+                wins: "66",
+                draws: "4",
+                losses: "74",
+                winRate: "0.471"
+            ),
+            TeamRank(
+                id: UUID(),
+                rank: "8",
+                team: "한화",
+                wins: "66",
+                draws: "2",
+                losses: "76",
+                winRate: "0.465"
+            ),
+            TeamRank(
+                id: UUID(),
+                rank: "9",
+                team: "NC",
+                wins: "61",
+                draws: "2",
+                losses: "81",
+                winRate: "0.430"
+            ),
+            TeamRank(
+                id: UUID(),
+                rank: "10",
+                team: "키움",
+                wins: "58",
+                draws: "0",
+                losses: "86",
+                winRate: "0.403"
+            )
+        ]
     }
 }

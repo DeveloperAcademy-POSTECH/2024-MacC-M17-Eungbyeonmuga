@@ -7,11 +7,12 @@
 
 import Foundation
 
-struct TeamRank: Codable {
+struct TeamRank: Codable, Identifiable {
+    let id: UUID
     let rank: String
     let team: String
     let wins: String
     let draws: String
     let losses: String
-    let win_rate: String
+    let winRate: String
 }

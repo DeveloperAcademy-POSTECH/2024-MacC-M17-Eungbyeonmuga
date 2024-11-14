@@ -12,8 +12,9 @@ struct TeamRankRow: View {
     let teamRank: TeamRank
     
     var body: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: 0) {
             TeamInfo(teamRank: teamRank)
+            Spacer()
             TeamRankInfo(teamRank: teamRank)
         }
     }
@@ -40,6 +41,7 @@ private struct TeamInfo: View {
             Text("\(teamRank.team)")
                 .font(.Head.head5)
                 .foregroundColor(.white0)
+                .frame(width: 36)
         }
         .padding(.vertical, 4)
         .padding(.leading, 12)
@@ -58,25 +60,25 @@ private struct TeamRankInfo: View {
             Text("\(teamRank.wins)")
                 .font(.Body.body1)
                 .foregroundColor(.gray7)
-                .padding(.trailing, 10)
+                .frame(width: 24)
             
             Text("\(teamRank.draws)")
                 .font(.Body.body1)
                 .foregroundColor(.gray7)
-                .padding(.trailing, 10)
+                .frame(width: 24)
             
             Text("\(teamRank.losses)")
                 .font(.Body.body1)
                 .foregroundColor(.gray7)
-                .padding(.trailing, 10)
+                .frame(width: 24)
             
-            Text("\(teamRank.win_rate)")
+            Text("\(teamRank.winRate)")
                 .font(.Body.body1)
                 .foregroundColor(.gray7)
-                .padding(.trailing, 10)
+                .frame(width: 52)
         }
-        .padding(.vertical, 16)
         .padding(.horizontal, 20)
+        .padding(.vertical, 16)
         .background(Color.gray2)
         .cornerRadius(16)
     }
