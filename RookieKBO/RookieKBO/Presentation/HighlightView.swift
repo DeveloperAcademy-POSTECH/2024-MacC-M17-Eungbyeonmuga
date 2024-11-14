@@ -57,7 +57,7 @@ private struct HighlightContentView: View {
                     
                     ForEach(filteredHighlights, id: \.self) { info in
                         HighlightContent(videoInfo: info) {
-                            // TODO: 네비게이션 시 정보 넘겨주는 것 설정
+                            highlightUseCase.updateSelectedeHighlight(highlight: info)
                             pathModel.push(.videoTranscript)
                         }
                         .padding(.horizontal, 16)

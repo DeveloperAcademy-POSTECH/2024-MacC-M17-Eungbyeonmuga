@@ -45,32 +45,41 @@ struct VideoTranscriptView: View {
             if termDictionary[matchingItem.text] != nil {
                 playingItemId = matchingItem.id
                 isPlaying = true
-                print("재생중~ \(matchingItem.text) 지금 시간은~ \(time)")
+//                print("재생중~ \(matchingItem.text) 지금 시간은~ \(time)")
             } else {
                 isPlaying = false
-                print("매칭 안된 항목: \(matchingItem.text), time: \(time)")
+//                print("매칭 안된 항목: \(matchingItem.text), time: \(time)")
             }
         } else {
             isPlaying = false
-            print("매칭 안됐어 짜식아 \(time)")
+//            print("매칭 안됐어 짜식아 \(time)")
         }
     }
     
+    /// 용어 삭제
     private func deleteTermEntry(term: String) {
         if let termToDelete = savedTermEntry.first(where: { $0.term == term }) {
             modelContext.delete(termToDelete)
-            print("✅ \(term) 용어가 삭제됨")
+            print("✅ \(term) 용어 삭제")
         } else {
             print("❌ 삭제할 용어를 찾을 수 없음")
         }
     }
     
+    /// 용어 저장
     private func createTermEntry(term: String, definition: String) {
-        let newTermEntry = TermEntry(term: term, definition: definition)
-        modelContext.insert(newTermEntry)
-        print("✅ \(term) 용어가 추가됨")
+        if savedTermEntry.contains(where: { $0.term == term }) {
+            print("⚠️ 이미 저장된 용어 \(term)")
+            return
+        }
+        else {
+            let newTermEntry = TermEntry(term: term, definition: definition)
+            modelContext.insert(newTermEntry)
+            print("✅ \(term) 용어 추가")
+        }
     }
     
+    /// 용어 저장 여부 판단
     private func isTermSaved(term: String) -> Bool {
         return savedTermEntry.contains { $0.term == term }
     }
@@ -176,6 +185,9 @@ struct VideoTranscriptView: View {
             ZStack {
                 ScrollView {
                     VStack {
+                        Spacer()
+                            .frame(height: 16)
+                        
                         ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
                             if let description = termDictionary[transcriptItem.text] {
                                 let isTermSaved = isTermSaved(term: transcriptItem.text)
@@ -253,7 +265,6 @@ struct VideoTranscriptView: View {
                         .edgesIgnoringSafeArea(.all)
                 }
             }
-            .padding(.top, 16)
         }
     }
     
@@ -264,17 +275,18 @@ struct VideoTranscriptView: View {
 
 private struct TopView: View {
     
+    @Environment(HighlightUseCase.self) private var highlightUseCase
     @Environment(PathModel.self) private var pathModel
     
     var body: some View {
         HStack(spacing: 0) {
             HStack(alignment: .lastTextBaseline, spacing: 0) {
-                Text("삼성 vs KIA")
+                Text( highlightUseCase.state.selectedHighlight?.title ?? "")
                     .font(.CustomTitle.customTitle2)
                     .foregroundColor(.gray1)
                     .padding(.trailing, 16)
                 
-                Text("2024.10.28")
+                Text(highlightUseCase.state.selectedHighlight?.date ?? "" .replacingOccurrences(of: "-", with: "."))
                     .font(.Body.body5)
                     .foregroundColor(.gray1)
             }
@@ -285,7 +297,6 @@ private struct TopView: View {
                 .font(.Head.head3)
                 .foregroundStyle(.white0)
                 .onTapGesture {
-                    // 창닫기 기능
                     pathModel.pop()
                 }
         }
@@ -372,4 +383,5 @@ private struct SearchBar: View {
     VideoTranscriptView()
         .environment(PreviewHelper.mockTermUseCase)
         .environment(PathModel())
+        .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
 }

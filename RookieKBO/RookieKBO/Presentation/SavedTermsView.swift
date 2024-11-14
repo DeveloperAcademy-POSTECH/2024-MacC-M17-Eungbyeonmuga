@@ -8,22 +8,21 @@
 import SwiftUI
 import SwiftData
 
-
 struct SavedTermsView: View {
     @Environment(TermUseCase.self) private var termUseCase
     @Environment(PathModel.self) private var pathModel
+    @Environment(\.modelContext) var modelContext
     
     @State private var isSaved: Bool = false
     
     @Query var savedTermEntry: [TermEntry]
-    @Environment(\.modelContext) var modelContext
     
     var body: some View {
         ZStack {
             Color.gray2
                 .ignoresSafeArea(.all)
             
-            if termUseCase.state.savedTerms.isEmpty {
+            if savedTermEntry.isEmpty {
                 NoSavedTermsView()
                     .navigationBarBackButtonHidden(true)
                     .navigationBarItems(leading: Button {
@@ -43,13 +42,7 @@ struct SavedTermsView: View {
                             SavedTermView(
                                 isSaved: Binding(
                                     get: { isTermSaved },
-                                    set: { newValue in
-                                        if newValue {
-                                            termUseCase.createTermEntry(term: termEntry.term)
-                                        } else {
-                                            deleteTermEntry(term: termEntry.term)
-                                        }
-                                    }
+                                    set: { _ in deleteTermEntry(term: termEntry.term) }
                                 ),
                                 term: termEntry.term,
                                 description: termEntry.definition
@@ -59,12 +52,6 @@ struct SavedTermsView: View {
                         }
                     }
                     .padding(.top, 24)
-                }
-                .onAppear {
-                    print("👍👍👍👍", savedTermEntry)
-                }
-                .onChange(of: savedTermEntry) {
-                    print("👍👍👍👍", savedTermEntry)
                 }
                 .navigationBarBackButtonHidden(true)
                 .navigationBarItems(leading: Button {
@@ -83,16 +70,12 @@ struct SavedTermsView: View {
         return savedTermEntry.contains { $0.term == term }
     }
     
-    private func deleteTermEntry(term: String) {
-        do {
-            if let termToDelete = savedTermEntry.first(where: { $0.term == term }) {
-                modelContext.delete(termToDelete)
-                print("✅ \(term) 용어가 삭제됨")
-            } else {
-                print("❌ 삭제할 용어를 찾을 수 없음")
-            }
-        } catch {
-            print("❌ TermEntry 삭제 중 오류 발생: \(error)")
+    func deleteTermEntry(term: String) {
+        if let termToDelete = savedTermEntry.first(where: { $0.term == term }) {
+            modelContext.delete(termToDelete)
+            print("✅ \(term) 용어가 삭제")
+        } else {
+            print("❌ 삭제할 용어를 찾을 수 없음")
         }
     }
 }

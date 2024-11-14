@@ -30,6 +30,7 @@ extension HighlightUseCase {
     struct State {
         var HighlightInfo: [Highlight]?
         var selectedDate: Date?
+        var selectedHighlight: Highlight?
     }
 }
 
@@ -54,5 +55,12 @@ extension HighlightUseCase {
     // 특정 단어 추출
     func extractHomeAway(from title: String) -> String {
         highlightService.extractHomeAway(from: title)
+    }
+    
+    // 선택한 하이라이트 영상 정보 업데이트
+    func updateSelectedeHighlight(highlight: Highlight) {
+        var currentHighlight = highlight
+        currentHighlight.title = extractHomeAway(from: highlight.title)
+        state.selectedHighlight = currentHighlight
     }
 }
