@@ -10,7 +10,7 @@ import SwiftUI
 extension Color {
     
     static func teamColor(for name: String) -> Color? {
-        switch name {
+        switch name.lowercased() {
         case "ssg":
             return .ssg
         case "kia":
@@ -21,15 +21,15 @@ extension Color {
             return .lg
         case "nc":
             return .nc
-        case "doosan":
+        case "doosan", "두산":
             return .doosan
-        case "lotte":
+        case "lotte", "롯데":
             return .lotte
-        case "samsung":
+        case "samsung", "삼성":
             return .samsung
-        case "kiwoom":
+        case "kiwoom", "키움":
             return .kiwoom
-        case "hanwha":
+        case "hanwha", "한화":
             return .hanwha
         case "primary":
             return .brandPrimary
@@ -67,3 +67,4 @@ extension Color {
         }
     }
 }
+

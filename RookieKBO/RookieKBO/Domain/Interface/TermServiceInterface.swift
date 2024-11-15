@@ -8,8 +8,5 @@
 import Foundation
 
 protocol TermServiceInterface {
-    func printTermEntries()
-    func readTermSet() throws -> [TermEntry]
-    func createTermEntry(term: String)
-    func deleteTermEntry(term: String)
+    // 함수 작성
 }

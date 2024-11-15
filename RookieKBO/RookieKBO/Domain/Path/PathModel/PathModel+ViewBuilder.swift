@@ -31,6 +31,16 @@ extension PathModel {
             SavedTermsView()
         case .offSeason:
             OffSeasonView()
+        case .teamRanks:
+            TeamRanksListView()
+        }
+    }
+    
+    @ViewBuilder
+    func build(_ sheet: Sheet) -> some View {
+        switch sheet {
+        case .teamRanking:
+            TeamRanksListView()
         }
     }
 }

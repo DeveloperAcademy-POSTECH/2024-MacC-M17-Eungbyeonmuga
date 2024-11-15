@@ -273,3 +273,15 @@ extension NetworkClient {
         return request
     }
 }
+
+private class TimeStampWidget {
+    lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH::mm:ss.SSS"
+        return formatter
+    }()
+    
+    func printTime(_ message: String = "") {
+        print("\(message) : \(dateFormatter.string(from: Date()))")
+    }
+}
