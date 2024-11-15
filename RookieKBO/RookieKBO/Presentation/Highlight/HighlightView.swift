@@ -268,7 +268,6 @@ private struct HighlightHeaderView: View {
                     .foregroundColor(.white0)
                     .font(.CustomTitle.customTitle2)
                 
-                // TODO: 자막화면과 크기 맞추기
                 Spacer()
             }
             .padding()

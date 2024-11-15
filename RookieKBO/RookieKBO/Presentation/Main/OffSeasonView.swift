@@ -94,7 +94,6 @@ private struct HeaderView: View {
                         .foregroundColor(.white0)
                 }
                 
-                // TODO: 자막화면과 크기 맞추기
                 Spacer()
             }
             .padding()
@@ -164,12 +163,24 @@ private struct ContentView: View {
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
     let games: [Match] = MockDataBuilderForWidget.mockMatchList
     
-    var myTeamGames: [Match] {
-        filteredGames(myTeamGames: true)
+    // 종료된 우리 팀 경기
+    var myTeamEndGames: [Match] {
+        filteredGames(myTeamGames: true).filter { $0.gameState == .END }
     }
     
-    var otherTeamGames: [Match] {
-        filteredGames(myTeamGames: false)
+    // 취소된 우리 팀 경기
+    var myTeamCancelGames: [Match] {
+        filteredGames(myTeamGames: true).filter { $0.gameState == .CANCEL }
+    }
+    
+    // 종료된 다른 팀 경기
+    var otherTeamEndGames: [Match] {
+        filteredGames(myTeamGames: false).filter { $0.gameState == .END }
+    }
+    
+    // 취소된 다른 팀 경기
+    var otherTeamCancelGames: [Match] {
+        filteredGames(myTeamGames: false).filter { $0.gameState == .CANCEL }
     }
     
     var body: some View {
@@ -189,11 +200,16 @@ private struct ContentView: View {
             }
             .padding(.vertical)
             
-            // TODO: 취소 경기도!! 넣어주셔야 해요!!!
-            ForEach(myTeamGames) { game in
+            ForEach(myTeamEndGames) { game in
                 EndGameInfo(endGameInfo: game)
                     .padding(.vertical, 4)
             }
+            
+            ForEach(myTeamCancelGames) { game in
+                CancelGameInfo(cancelGameInfo: game)
+                    .padding(.vertical, 4)
+            }
+            
             if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
                 HStack(spacing: 0) {
                     Text("종료된 다른팀 경기")
@@ -208,8 +224,13 @@ private struct ContentView: View {
                 }
                 .padding(.vertical)
                 
-                ForEach(otherTeamGames) { game in
+                ForEach(otherTeamEndGames) { game in
                     EndGameInfo(endGameInfo: game)
+                        .padding(.vertical, 4)
+                }
+                
+                ForEach(otherTeamCancelGames) { game in
+                    CancelGameInfo(cancelGameInfo: game)
                         .padding(.vertical, 4)
                 }
             }
