@@ -70,7 +70,7 @@ struct SavedTermsView: View {
         return savedTermEntry.contains { $0.term == term }
     }
     
-    func deleteTermEntry(term: String) {
+    private func deleteTermEntry(term: String) {
         if let termToDelete = savedTermEntry.first(where: { $0.term == term }) {
             modelContext.delete(termToDelete)
             print("✅ \(term) 용어가 삭제")

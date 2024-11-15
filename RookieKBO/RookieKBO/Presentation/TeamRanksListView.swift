@@ -10,36 +10,25 @@ import SwiftUI
 struct TeamRanksListView: View {
     @Environment(RankUseCase.self) private var rankUseCase
     
-    @State var ranks: [TeamRank] = []
-    
-    private func updateTeamRanks() {
-        Task {
-            let result = await rankUseCase.fetchRanks()
-            switch result {
-            case .success (let teamRanks):
-                rankUseCase.updateTeamRanks(from: teamRanks)
-                self.ranks = rankUseCase.ranks
-            case .failure(let error): print(error)
-            }
-        }
-    }
-    
     var body: some View {
         VStack(spacing: 0) {
             RankInfo()
                 .padding(.bottom, 16)
             
-            ForEach(ranks) { rank in
+            ForEach(rankUseCase.ranks) { rank in
                 TeamRankRow(teamRank: rank)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 8)
             }
         }
         .onAppear {
-            updateTeamRanks()
+            Task {
+                await rankUseCase.fetchRanks()
+            }
         }
     }
 }
+
 private struct RankInfo: View {
     var body: some View {
         VStack(spacing: 0) {

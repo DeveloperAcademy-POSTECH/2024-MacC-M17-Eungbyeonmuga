@@ -26,13 +26,23 @@ private struct TeamInfo: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            Image("\(String.teamImage(for: teamRank.team) ?? "allTeamImage")")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 40, height: 40)
-                .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
-                .padding(.trailing, 10)
             
+            if let teamImage = teamImage(for: teamRank.team) {
+                Image(uiImage: teamImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
+                    .padding(.trailing, 10)
+            } else {
+                Image("allTeam")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
+                    .padding(.trailing, 10)
+            }
+      
             Text("\(teamRank.rank)")
                 .font(.Head.head5)
                 .foregroundColor(.white60)
@@ -53,6 +63,8 @@ private struct TeamInfo: View {
 }
 
 private struct TeamRankInfo: View {
+    
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     let teamRank: TeamRank
     
@@ -82,6 +94,15 @@ private struct TeamRankInfo: View {
         .padding(.vertical, 16)
         .background(Color.gray2)
         .cornerRadius(16)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(
+                    ((selectTeamUseCase.state.selectedTeam?.name.contains(teamRank.team) ?? false)
+                     ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "")
+                     : .gray2)!,
+                    lineWidth: 2
+                )
+        )
     }
 }
 

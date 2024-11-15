@@ -38,19 +38,19 @@ extension RankUseCase {
 extension RankUseCase {
     
     // 서버에서 순위를 받아오는 함수
-    func fetchRanks() async -> Result<[TeamRank], Error> {
+    func fetchRanks() async -> [TeamRank] {
         let result = await rankService.fetchRanks()
         switch result {
         case .success(let fetchedRanks):
             self.ranks = fetchedRanks
-            return .success(fetchedRanks)
-            
+            return fetchedRanks
         case .failure(let error):
             print(error)
-            return .failure(error)
+            return []
         }
     }
     
+    // state에 업데이트 함수
     func updateTeamRanks(from teamRanks: [TeamRank]) {
         state.teamRanks = teamRanks
     }

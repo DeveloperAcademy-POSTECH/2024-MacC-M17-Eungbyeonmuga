@@ -6,37 +6,34 @@
 //
 
 import Foundation
+import UIKit
 
 extension String {
     func firstWord() -> String {
         return self.components(separatedBy: " ").first ?? ""
     }
     
+    static let teamImages: [String: String] = [
+        "ssg": "ssg",
+        "kia": "kia",
+        "kt": "kt",
+        "lg": "lg",
+        "nc": "nc",
+        "doosan": "doosan", "두산": "doosan",
+        "lotte": "lotte", "롯데": "lotte",
+        "samsung": "samsung", "삼성": "samsung",
+        "kiwoom": "kiwoom", "키움": "kiwoom",
+        "hanwha": "hanwha", "한화": "hanwha"
+    ]
+
     static func teamImage(for name: String) -> String? {
-        switch name.lowercased() {
-        case "ssg":
-            return "ssg"
-        case "kia":
-            return "kia"
-        case "kt":
-            return "kt"
-        case "lg":
-            return "lg"
-        case "nc":
-            return "nc"
-        case "doosan", "두산":
-            return "doosan"
-        case "lotte", "롯데":
-            return "lotte"
-        case "samsung", "삼성":
-            return "samsung"
-        case "kiwoom", "키움":
-            return "kiwoom"
-        case "hanwha", "한화":
-            return "hanwha"
-        default:
-            return "allTeamImage"
-        }
+        return teamImages[name.lowercased()] ?? "allTeam"
     }
-    
 }
+
+func teamImage(for name: String) -> UIImage? {
+    let imageName = "\(String.teamImage(for: name) ?? "allTeam")"
+    return UIImage(named: imageName)
+}
+
+

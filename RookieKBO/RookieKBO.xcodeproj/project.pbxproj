@@ -99,6 +99,7 @@
 				"Helper/Helper+StringFormatter.swift",
 				"Helper/Helper+UserDefaults.swift",
 				"Helper/Preview/Helper+WidgetPreview.swift",
+				Helper/TimeStamp.swift,
 				Resource/Assets/Colors.xcassets,
 				"Resource/Fonts/Pretendard-Black.ttf",
 				"Resource/Fonts/Pretendard-Bold.ttf",
