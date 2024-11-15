@@ -18,4 +18,6 @@ protocol MatchServiceInterface {
     func isDateToday(_ date: Date) -> Bool
     func isDateInFuture(_ date: Date) -> Bool
     func isMyTeam(_ team: Team, _ myTeam: Team) -> Bool
+    func isValidDate(_ date: Date, from matchInfo: [Match]) -> Bool
+    func filterMatches(for selectedDate: Date, in matchInfo: [Match]) -> [Match]
 }
