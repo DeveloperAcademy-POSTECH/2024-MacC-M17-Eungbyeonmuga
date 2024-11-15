@@ -13,10 +13,12 @@ struct OffSeasonView: View {
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(MatchUseCase.self) private var matchUseCase
     
+    var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
+    
     var body: some View {
         ZStack {
             // 상단 배경
-            Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "")
+            Color.teamColor(for: currentTeam?.color ?? "")
                 .ignoresSafeArea()
             
             // 하단 배경
@@ -36,14 +38,16 @@ private struct GameInfoView: View {
     
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
+    var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
+    
     var body: some View {
         ScrollView {
             ZStack(alignment: .top) {
-                Image(selectTeamUseCase.state.selectedTeam?.backgroundImage ?? "allTeamBg")
+                Image(currentTeam?.backgroundImage ?? "allTeamBg")
                     .resizable()
                     .scaledToFit()
                     .offset(
-                        selectTeamUseCase.state.selectedTeam?.name == "전체 구단"
+                        currentTeam?.name == "전체 구단"
                         ? CGSize(width: 0, height: -52)
                         : CGSize(width: 0, height: -16)
                     )
@@ -52,7 +56,7 @@ private struct GameInfoView: View {
                     .offset(y: UIScreen.main.bounds.height / 2)
                 
                 LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                    if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
+                    if currentTeam?.name != "전체 구단" {
                         HStack(spacing: 0) {
                             Image(.titleLogoWhite)
                                 .resizable()
@@ -80,16 +84,18 @@ private struct HeaderView: View {
     
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
+    var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                if selectTeamUseCase.state.selectedTeam?.name == "전체 구단" {
+                if currentTeam?.name == "전체 구단" {
                     Image(.titleLogoWhite)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 140)
                 } else {
-                    Text(selectTeamUseCase.state.selectedTeam?.name ?? "SSG 랜더스")
+                    Text(currentTeam?.name ?? "SSG 랜더스")
                         .font(.CustomTitle.customTitle1)
                         .foregroundColor(.white0)
                 }
@@ -98,7 +104,7 @@ private struct HeaderView: View {
             }
             .padding()
         }
-        .background(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? ""))
+        .background(Color.teamColor(for: currentTeam?.color ?? ""))
     }
 }
 
@@ -109,6 +115,8 @@ private struct OffSeasonInfoView: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(RankUseCase.self) private var rankUseCase
+    
+    var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -126,7 +134,7 @@ private struct OffSeasonInfoView: View {
                 .padding(.vertical, 12)
                 .padding(.horizontal, 20)
                 .background(RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.teamGdColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
+                    .fill(Color.teamGdColor(for: currentTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
                 
                 Button {
                     pathModel.presentSheet(.teamRanking)
@@ -162,7 +170,7 @@ private struct OffSeasonInfoView: View {
                     .padding(.horizontal, 20)
                     .frame(maxWidth: 150)
                     .background(RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.teamGdColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
+                        .fill(Color.teamGdColor(for: currentTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
                 }
                 
                 Spacer(minLength: 0)
@@ -192,6 +200,8 @@ private struct ContentView: View {
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
     let games: [Match] = MockDataBuilderForWidget.mockMatchList
     
+    var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
+    
     // 종료된 우리 팀 경기
     var myTeamEndGames: [Match] {
         filteredGames(myTeamGames: true).filter { $0.gameState == .END }
@@ -217,7 +227,7 @@ private struct ContentView: View {
             DateInfoView()
             
             HStack(spacing: 0) {
-                Text(selectTeamUseCase.state.selectedTeam?.name == "전체 구단" ? "종료된 경기" : "종료된 우리팀 경기")
+                Text(currentTeam?.name == "전체 구단" ? "종료된 경기" : "종료된 우리팀 경기")
                     .font(.Body.body1)
                     .foregroundColor(.gray7)
                 
@@ -239,7 +249,7 @@ private struct ContentView: View {
                     .padding(.vertical, 4)
             }
             
-            if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
+            if currentTeam?.name != "전체 구단" {
                 HStack(spacing: 0) {
                     Text("종료된 다른팀 경기")
                         .font(.Body.body1)
