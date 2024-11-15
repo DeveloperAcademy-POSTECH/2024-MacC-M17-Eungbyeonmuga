@@ -28,7 +28,6 @@ extension Config {
             print("Config.baseURL 오류: BASE_URL 키를 찾을 수 없음")
             return "기본 URL" 
         }
-        print("Base URL: \(key)")
         return key
     }()
 }
