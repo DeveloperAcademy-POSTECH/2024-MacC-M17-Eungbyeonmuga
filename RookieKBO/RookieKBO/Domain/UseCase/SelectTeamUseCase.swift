@@ -59,4 +59,17 @@ extension SelectTeamUseCase {
     func getUserDefaultsTeamObject() -> Team? {
         return selectTeamService.getUserDefaultsTeamObject()
     }
+    
+    func fetchSelectedTeamAsync(for team: Team) async {
+        // 데이터를 가져오는 비동기 작업 수행
+        await withCheckedContinuation { continuation in
+            DispatchQueue.global().async {
+                // 데이터를 로드한 후 SelectTeamState 업데이트
+                DispatchQueue.main.async {
+                    self.state.selectedTeam = team
+                    continuation.resume()
+                }
+            }
+        }
+    }
 }

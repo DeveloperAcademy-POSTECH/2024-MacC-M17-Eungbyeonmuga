@@ -14,7 +14,7 @@ struct MyPageView: View {
     
     var body: some View {
         ZStack {
-            Color.brandPrimary
+            Color(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary)
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -40,7 +40,7 @@ private struct HeaderView: View {
                         .font(.CustomTitle.customTitle2)
                         .foregroundColor(.white0)
                 }
-                .padding(.vertical, 24)
+                .padding(.vertical)
                 
                 HStack(spacing: 8) {
                     Text("응원팀")

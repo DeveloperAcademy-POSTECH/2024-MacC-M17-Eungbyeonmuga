@@ -12,6 +12,7 @@ struct VideoTranscriptView: View {
     
     @Environment(TermUseCase.self) private var termUseCase
     @Environment(PathModel.self) private var pathModel
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     // 데이터 변경
     @StateObject private var youtubePlayer = YouTubePlayer(
@@ -82,37 +83,49 @@ struct VideoTranscriptView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            TopView()
+        ZStack {
             
-            YouTubePlayerView(youtubePlayer)
-                .frame(height: 220)
+            // 상단 배경
+            Color(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary)
+                .ignoresSafeArea(edges: .top)
             
-            if isSearchActive {
-                SearchBar(text: $searchText)
-            } else {
-                TermRow()
-                    .onTapGesture {
-                        withAnimation {
-                            isSearchActive.toggle()
+            // 하단 배경
+            Color.gray1
+                .ignoresSafeArea(edges: .bottom)
+                .offset(y: UIScreen.main.bounds.height / 3.5)
+            
+            VStack(spacing: 0) {
+                TopView()
+                
+                YouTubePlayerView(youtubePlayer)
+                    .frame(height: 220)
+                
+                if isSearchActive {
+                    SearchBar(text: $searchText)
+                } else {
+                    TermRow()
+                        .onTapGesture {
+                            withAnimation {
+                                isSearchActive.toggle()
+                            }
                         }
+                }
+                
+                if isSearchActive {
+                    searchContent
+                } else {
+                    termContent
+                }
+            }
+            .onReceive(timer) { _ in
+                youtubePlayer.getCurrentTime { result in
+                    switch result {
+                    case .success(let time):
+                        currentPlaybackTime = time.value
+                        updateIsPlaying(for: currentPlaybackTime)
+                    case .failure(let error):
+                        print("재생 시간 가져오는 에러다 짜식아 \(error)")
                     }
-            }
-            
-            if isSearchActive {
-                searchContent
-            } else {
-                termContent
-            }
-        }
-        .onReceive(timer) { _ in
-            youtubePlayer.getCurrentTime { result in
-                switch result {
-                case .success(let time):
-                    currentPlaybackTime = time.value
-                    updateIsPlaying(for: currentPlaybackTime)
-                case .failure(let error):
-                    print("재생 시간 가져오는 에러다 짜식아 \(error)")
                 }
             }
         }
@@ -243,6 +256,7 @@ struct VideoTranscriptView: View {
 private struct TopView: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     var body: some View {
         HStack(spacing: 0) {
@@ -267,9 +281,8 @@ private struct TopView: View {
                     pathModel.pop()
                 }
         }
-        .padding(.bottom, 24)
-        .padding(.horizontal, 16)
-        .background(Color.brandPrimary)
+        .padding()
+        .background(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? ""))
     }
 }
 
@@ -350,4 +363,5 @@ private struct SearchBar: View {
     VideoTranscriptView()
         .environment(PreviewHelper.mockTermUseCase)
         .environment(PathModel())
+        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
 }

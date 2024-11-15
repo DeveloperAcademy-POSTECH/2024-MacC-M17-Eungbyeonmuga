@@ -10,7 +10,6 @@ import WidgetKit
 
 struct SelectTeamView: View {
     
-    @Environment(MatchUseCase.self) private var matchUseCase
     @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
@@ -247,7 +246,6 @@ private struct StartTeam: View {
 #Preview {
     SelectTeamView()
         .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
-        .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(PathModel())
         .environment(PreviewHelperForWidget.mockMatchUseCase)
 }
