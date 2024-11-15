@@ -42,12 +42,28 @@ private struct GameInfoView: View {
                 Image(selectTeamUseCase.state.selectedTeam?.backgroundImage ?? "allTeamBg")
                     .resizable()
                     .scaledToFit()
-                    .offset(y: -52)
+                    .offset(
+                        selectTeamUseCase.state.selectedTeam?.name == "전체 구단"
+                        ? CGSize(width: 0, height: -52)
+                        : CGSize(width: 0, height: -16)
+                    )
                 
                 Color.gray1
-                    .offset(y: UIScreen.main.bounds.height / 3)
+                    .offset(y: UIScreen.main.bounds.height / 2)
                 
                 LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                    if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
+                        HStack(spacing: 0) {
+                            Image(.titleLogoWhite)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 75)
+                            
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 4)
+                    }
                     Section(header: HeaderView()) {
                         OffSeasonInfoView()
                         ContentView()
@@ -67,10 +83,16 @@ private struct HeaderView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                Image(.titleLogoWhite)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 140)
+                if selectTeamUseCase.state.selectedTeam?.name == "전체 구단" {
+                    Image(.titleLogoWhite)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 140)
+                } else {
+                    Text(selectTeamUseCase.state.selectedTeam?.name ?? "SSG 랜더스")
+                        .font(.CustomTitle.customTitle1)
+                        .foregroundColor(.white0)
+                }
                 
                 // TODO: 자막화면과 크기 맞추기
                 Spacer()
