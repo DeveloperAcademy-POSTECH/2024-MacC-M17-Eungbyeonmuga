@@ -91,8 +91,7 @@ private struct OffSeasonInfoView: View {
                     Text("KBO 개막")
                     Rectangle()
                         .frame(width: 2, height: 16)
-                    // TODO: 개막일 설정
-                    Text("D-137")
+                    Text("\(Date.getDdayToOpeningDate())")
                 }
                 .font(.Body.body1)
                 .foregroundColor(.white0)
@@ -162,6 +161,7 @@ private struct ContentView: View {
             }
             .padding(.vertical)
             
+            // TODO: 취소 경기도!! 넣어주셔야 해요!!!
             ForEach(myTeamGames) { game in
                 EndGameInfo(endGameInfo: game)
                     .padding(.vertical, 4)

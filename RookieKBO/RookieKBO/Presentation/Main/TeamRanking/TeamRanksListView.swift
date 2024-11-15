@@ -12,13 +12,23 @@ struct TeamRanksListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            RankInfo()
-                .padding(.bottom, 16)
             
-            ForEach(rankUseCase.ranks) { rank in
-                TeamRankRow(teamRank: rank)
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
+            if rankUseCase.ranks.isEmpty {
+                Spacer()
+                
+                ProgressView()
+                    .tint(.brandPrimary)
+                
+                Spacer()
+            } else {
+                RankInfo()
+                    .padding(.bottom, 16)
+                
+                ForEach(rankUseCase.ranks) { rank in
+                    TeamRankRow(teamRank: rank)
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 8)
+                }
             }
         }
         .onAppear {
