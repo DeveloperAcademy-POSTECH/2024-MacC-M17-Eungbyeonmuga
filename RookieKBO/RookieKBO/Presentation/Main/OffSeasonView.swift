@@ -108,6 +108,7 @@ private struct OffSeasonInfoView: View {
     
     @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @Environment(RankUseCase.self) private var rankUseCase
     
     var body: some View {
         VStack(spacing: 0) {
@@ -134,13 +135,32 @@ private struct OffSeasonInfoView: View {
                         Text("순위")
                         Rectangle()
                             .frame(width: 2, height: 16)
-                        // TODO: 순위 애니메이션 적용
-                        Text(selectTeamUseCase.state.selectedTeam?.name ?? "전체 구단")
+                        
+                        // 순위 애니메이션 적용
+                        if let teamRanks = rankUseCase.state.teamRanks, !teamRanks.isEmpty {
+                            GeometryReader { geometry in
+                                VStack(spacing: 0) {
+                                    ForEach(0..<teamRanks.count, id: \.self) { index in
+                                        let teamRank = teamRanks[index]
+                                        Text("\(teamRank.rank)위 \(teamRank.team)")
+                                    }
+                                }
+                                .offset(y: -CGFloat(rankUseCase.currentRankIndex) * geometry.size.height)
+                                .animation(.easeInOut(duration: 0.5), value: rankUseCase.currentRankIndex)
+                            }
+                            .clipped()
+                        } else {
+                            Spacer(minLength: 0)
+                            ProgressView()
+                                .tint(.white0)
+                            Spacer(minLength: 0)
+                        }
                     }
                     .font(.Body.body1)
                     .foregroundColor(.white0)
                     .padding(.vertical, 12)
                     .padding(.horizontal, 20)
+                    .frame(maxWidth: 150)
                     .background(RoundedRectangle(cornerRadius: 16)
                         .fill(Color.teamGdColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
                 }
@@ -149,6 +169,15 @@ private struct OffSeasonInfoView: View {
             }
             .padding(.horizontal)
             .padding(.bottom, 24)
+        }
+        .onAppear {
+            Task {
+                await rankUseCase.fetchRanks()
+                rankUseCase.startTimer()
+            }
+        }
+        .onDisappear {
+            rankUseCase.stopTimer()
         }
     }
 }
@@ -407,4 +436,5 @@ private struct SetCalendarView: View {
         .environment(PathModel())
         .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
+        .environment(RankUseCase(rankService: RankServiceImpl()))
 }

@@ -14,12 +14,18 @@ final class RankUseCase {
     
     private(set) var state: State
     private(set) var ranks: [TeamRank]
+    private(set) var currentRankIndex: Int
+    
+    private var timer: Timer?
+    
     
     init(rankService: RankServiceInterface) {
         self.rankService = rankService
         self.ranks = []
+        self.currentRankIndex = 0
         self.state = State(
-            teamRanks: nil
+            teamRanks: nil,
+            currentRank: nil
         )
     }
 }
@@ -30,6 +36,7 @@ extension RankUseCase {
     
     struct State {
         var teamRanks: [TeamRank]?
+        var currentRank: TeamRank?
     }
 }
 
@@ -54,6 +61,24 @@ extension RankUseCase {
     // state에 업데이트 함수
     func updateTeamRanks(from teamRanks: [TeamRank]) {
         state.teamRanks = teamRanks
+    }
+    
+    func startTimer() {
+        // 기존 타이머 종료
+        stopTimer()
+        
+        guard !ranks.isEmpty else { return }
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 4.0, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            self.currentRankIndex = (self.currentRankIndex + 1) % self.ranks.count
+            self.state.currentRank = self.ranks[self.currentRankIndex]
+        }
+    }
+    
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
     }
 }
 
