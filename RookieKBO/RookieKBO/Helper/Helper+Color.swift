@@ -31,7 +31,7 @@ extension Color {
             return .kiwoom
         case "hanwha", "한화":
             return .hanwha
-        case "primary":
+        case "allTeam":
             return .brandPrimary
         default:
             return .brandPrimary
@@ -60,7 +60,7 @@ extension Color {
             return .kiwoomGd
         case "hanwha":
             return .hanwhaGd
-        case "primary":
+        case "allTeam":
             return .brandPrimaryGd
         default:
             return .brandPrimaryGd

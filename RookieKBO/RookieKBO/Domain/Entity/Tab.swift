@@ -37,9 +37,9 @@ enum Tab: Identifiable, CaseIterable {
     
     var selectedIcon: String {
         switch self {
-        case .match: return "selectedHome"
-        case .highlight: return "selectedPlayBox"
-        case .user:  return "selectedUser"
+        case .match: return "SelectedHome"
+        case .highlight: return "SelectedPlayBox"
+        case .user:  return "SelectedUser"
         }
     }
 }

@@ -66,7 +66,7 @@ struct TeamScreenView: View {
                         .modifier(TabBarModifier(currentTab: selectedTab, selectedTab: .user))
                 }
             }
-            .tint(.brandPrimary)
+            .tint(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "allTeam"))
             .sheet(item: $pathModel.sheet) { sheet in
                 pathModel.build(sheet)
             }
@@ -81,6 +81,8 @@ struct TeamScreenView: View {
 
 private struct TabBarModifier: ViewModifier {
     
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
     let currentTab: Tab
     let selectedTab: Tab
     
@@ -90,7 +92,7 @@ private struct TabBarModifier: ViewModifier {
             .tabItem {
                 VStack {
                     // 선택된 탭에 따라 아이콘 변경
-                    Image(currentTab == selectedTab ? selectedTab.selectedIcon : selectedTab.defaultIcon)
+                    Image(currentTab == selectedTab ? "\(selectTeamUseCase.state.selectedTeam?.color ?? "allTeam")\(selectedTab.selectedIcon)" : selectedTab.defaultIcon)
                         .resizable()
                         .frame(width: 32, height: 32)
                     
