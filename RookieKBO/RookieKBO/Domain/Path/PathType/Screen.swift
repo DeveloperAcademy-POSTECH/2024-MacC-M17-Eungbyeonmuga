@@ -19,4 +19,5 @@ enum Screen: Identifiable, Hashable {
     case myPage
     case savedTerms
     case offSeason
+    case teamRanks
 }

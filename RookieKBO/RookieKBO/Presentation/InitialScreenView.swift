@@ -76,6 +76,9 @@ struct TeamScreenView: View {
                     }
                 }
             }
+            .sheet(item: $pathModel.sheet) { sheet in
+                pathModel.build(sheet)
+            }
             .navigationDestination(for: Screen.self) { screen in
                 pathModel.build(screen)
                     .onAppear { isTabBarHidden = true }

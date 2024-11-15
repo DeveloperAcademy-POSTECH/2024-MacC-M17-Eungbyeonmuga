@@ -39,7 +39,7 @@ struct SavedTermsView: View {
                         ForEach(savedTermEntry, id: \.term) { termEntry in
                             let isTermSaved = isTermSaved(term: termEntry.term)
                             
-                            SavedTermView(
+                            SavedTermRow(
                                 isSaved: Binding(
                                     get: { isTermSaved },
                                     set: { _ in deleteTermEntry(term: termEntry.term) }

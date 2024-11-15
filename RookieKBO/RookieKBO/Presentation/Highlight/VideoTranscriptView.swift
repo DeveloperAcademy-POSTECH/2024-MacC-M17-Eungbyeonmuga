@@ -88,7 +88,7 @@ struct VideoTranscriptView: View {
     private func searchResultsView(_ items: [TranscriptItem]) -> some View {
         ScrollView {
             ForEach(items.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
-                SearchResult(
+                SearchResultRow(
                     isPlaying: Binding(
                         get: { playingItemId == transcriptItem.id },
                         set: { isPlaying in
@@ -123,7 +123,7 @@ struct VideoTranscriptView: View {
             if isSearchActive {
                 SearchBar(text: $searchText)
             } else {
-                TermRow()
+                TermInfoRow()
                     .onTapGesture {
                         withAnimation {
                             isSearchActive.toggle()
@@ -192,7 +192,7 @@ struct VideoTranscriptView: View {
                             if let description = termDictionary[transcriptItem.text] {
                                 let isTermSaved = isTermSaved(term: transcriptItem.text)
                                 
-                                TermView(
+                                TermRow(
                                     isPlaying: Binding(
                                         get: { playingItemId == transcriptItem.id },
                                         set: { isPlaying in
@@ -306,9 +306,9 @@ private struct TopView: View {
     }
 }
 
-// MARK: - TermRow
+// MARK: - TermInfoRow
 
-private struct TermRow: View {
+private struct TermInfoRow: View {
     var body: some View {
         HStack(spacing: 0) {
             Image(systemName: "baseball")

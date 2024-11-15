@@ -102,7 +102,7 @@ private struct OffSeasonInfoView: View {
                     .fill(.brandPrimaryGd.opacity(0.8)))
                 
                 Button {
-                    // TODO: 순위 페이지 모달
+                    pathModel.presentSheet(.teamRanking)
                 } label: {
                     HStack(spacing: 8) {
                         Text("순위")
@@ -135,7 +135,7 @@ private struct ContentView: View {
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
-    let games: [Match] = MockDataBuilder.mockMatchList
+    let games: [Match] = MockDataBuilderForWidget.mockMatchList
     
     var myTeamGames: [Match] {
         filteredGames(myTeamGames: true)
@@ -292,7 +292,7 @@ private struct SetCalendarView: View {
     @State private var isValidDate = false
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
-    let matchInfo = MockDataBuilder.mockMatchList
+    let matchInfo = MockDataBuilderForWidget.mockMatchList
     
     private var matchingMatchs: [Match] {
         matchUseCase.filterMatches(for: currentDate, in: matchInfo)

@@ -1,5 +1,5 @@
 //
-//  SavedTermView.swift
+//  SavedTermRow.swift
 //  RookieKBO
 //
 //  Created by crownjoe on 11/12/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SavedTermView: View {
+struct SavedTermRow: View {
     @Binding var isSaved: Bool
     
     var term: String
@@ -51,7 +51,7 @@ struct SavedTermView: View {
 }
 
 #Preview {
-    SavedTermView(isSaved: .constant(true),
+    SavedTermRow(isSaved: .constant(true),
                   term: "백투백 홈런",
                   description: "어쩌고")
 }

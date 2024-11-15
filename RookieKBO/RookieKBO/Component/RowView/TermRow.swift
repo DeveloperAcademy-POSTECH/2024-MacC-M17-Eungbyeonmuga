@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TermView: View {
+struct TermRow: View {
     @Environment(TermUseCase.self) private var termUseCase
     
     @Binding var isPlaying: Bool
@@ -62,7 +62,7 @@ struct TermView: View {
 }
 
 #Preview {
-    TermView(
+    TermRow(
         isPlaying: .constant(true),
         isSaved: .constant(true),
         term: "백투백 홈런",

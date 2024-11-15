@@ -64,7 +64,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				App/Config.swift,
-				Component/ScoreBoardView.swift,
+				Component/GameInfo/ScoreBoardView.swift,
 				Data/API/API.swift,
 				Data/API/RookieKBOAPI.swift,
 				Data/DTO/Base/BaseResponse.swift,

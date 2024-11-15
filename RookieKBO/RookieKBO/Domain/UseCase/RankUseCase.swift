@@ -43,6 +43,7 @@ extension RankUseCase {
         switch result {
         case .success(let fetchedRanks):
             self.ranks = fetchedRanks
+            updateTeamRanks(from: fetchedRanks)
             return fetchedRanks
         case .failure(let error):
             print(error)

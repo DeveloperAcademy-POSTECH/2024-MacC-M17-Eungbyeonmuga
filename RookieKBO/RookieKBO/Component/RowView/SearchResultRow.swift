@@ -1,5 +1,5 @@
 //
-//  SearchResult.swift
+//  SearchResultRow.swift
 //  RookieKBO
 //
 //  Created by crownjoe on 11/7/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchResult: View {
+struct SearchResultRow: View {
     
     @Binding var isPlaying: Bool
     
@@ -45,7 +45,7 @@ struct SearchResult: View {
 }
 
 #Preview {
-    SearchResult(
+    SearchResultRow(
         isPlaying: .constant(true),
         searchText: "박성한",
         time: 5.98

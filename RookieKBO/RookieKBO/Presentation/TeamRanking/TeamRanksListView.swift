@@ -26,6 +26,8 @@ struct TeamRanksListView: View {
                 await rankUseCase.fetchRanks()
             }
         }
+        .presentationDetents([.fraction(0.985)])
+        .presentationDragIndicator(.visible)
     }
 }
 

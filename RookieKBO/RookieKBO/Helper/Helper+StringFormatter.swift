@@ -31,9 +31,8 @@ extension String {
     }
 }
 
+/// 이미지를 반환해서 여기 파일에는 맞지 않지만 위에 코드들이랑 같이 있는게 이해하기 쉬울 것 같아서 여기에 두었습니다!
 func teamImage(for name: String) -> UIImage? {
     let imageName = "\(String.teamImage(for: name) ?? "allTeam")"
     return UIImage(named: imageName)
 }
-
-
