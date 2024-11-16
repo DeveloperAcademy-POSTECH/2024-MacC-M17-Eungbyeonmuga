@@ -15,7 +15,6 @@ struct News: Codable, Identifiable {
     var link: String
     
     init(
-        id: UUID,
         title: String,
         imageUrl: String,
         publisher: String,
