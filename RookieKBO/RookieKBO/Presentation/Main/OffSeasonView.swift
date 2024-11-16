@@ -290,7 +290,10 @@ private struct ContentView: View {
                 .padding(.vertical)
                 
                 ForEach(totalNews) { news in
-                    NewsBoard(newsInfo: news)
+                    NewsBoard(newsInfo: news) {
+                        // TODO: 뉴스 화면 이동
+                        print("뉴스 화면 이동")
+                    }
                         .padding(.bottom)
                 }
             }
