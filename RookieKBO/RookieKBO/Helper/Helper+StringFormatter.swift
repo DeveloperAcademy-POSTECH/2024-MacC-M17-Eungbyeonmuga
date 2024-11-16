@@ -36,3 +36,7 @@ func teamImage(for name: String) -> UIImage? {
     let imageName = "\(String.teamImage(for: name) ?? "allTeam")"
     return UIImage(named: imageName)
 }
+
+func convertUIImage(for name: String) -> UIImage? {
+    return UIImage(named: name)
+}
