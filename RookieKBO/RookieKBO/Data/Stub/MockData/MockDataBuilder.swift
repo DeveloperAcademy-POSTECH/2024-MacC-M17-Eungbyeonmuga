@@ -166,7 +166,16 @@ struct MockDataBuilder {
         ]
     }
     
-    static var mockNews: [News] {
+    static var mockNews: News {
+        return News(
+            title: "'김도영 펄펄 날다' 그랜드슬램→호수비 2회→솔로포 5타점 대폭발!…류중일호 쿠바에 8-4 승리, 슈퍼라운드 위한 첫발 디뎠다 [MD타이베이]",
+            imageUrl: "https://static-cdn.sporki.com/news/mydaily/202411/2378328/l_2024110118585792408_l.jpg",
+            publisher: "마이데일리",
+            link: "https://sporki.com/kbaseball/news/2037531"
+        )
+    }
+    
+    static var mockEntireNews: [News] {
         return [
             News(
                 title: "'김도영 펄펄 날다' 그랜드슬램→호수비 2회→솔로포 5타점 대폭발!…류중일호 쿠바에 8-4 승리, 슈퍼라운드 위한 첫발 디뎠다 [MD타이베이]",
