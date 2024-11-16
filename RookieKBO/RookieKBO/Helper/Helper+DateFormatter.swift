@@ -51,7 +51,8 @@ extension Date {
         return dateFormatter.date(from: dateString)
     }
     
-    static func getDdayToOpeningDate() -> String {
+    /// 개막일까지 남은 기간 반환
+    func getDdayToOpeningDate() -> String {
         let calendar = Calendar.current
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
@@ -73,6 +74,28 @@ extension Date {
             }
         } else {
             return "오류"
+        }
+    }
+    
+    /// 포스트 시즌 및 정규 시즌 판별
+    func getSeasonType() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        
+        guard let regularSeasonStart = formatter.date(from: "2024/03/23"),
+              let regularSeasonEnd = formatter.date(from: "2024/10/01"),
+              let postSeasonStart = formatter.date(from: "2024/10/02"),
+              let postSeasonEnd = formatter.date(from: "2024/10/28")
+        else {
+            return "시즌 판별 오류"
+        }
+        
+        if self >= regularSeasonStart && self <= regularSeasonEnd {
+            return "정규 시즌"
+        } else if self >= postSeasonStart && self <= postSeasonEnd {
+            return "포스트 시즌"
+        } else {
+            return "비시즌"
         }
     }
 }
