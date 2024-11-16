@@ -95,7 +95,7 @@ extension Date {
         } else if self >= postSeasonStart && self <= postSeasonEnd {
             return "포스트 시즌"
         } else {
-            return "비시즌"
+            return "TODAY"
         }
     }
 }

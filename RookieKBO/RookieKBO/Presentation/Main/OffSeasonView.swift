@@ -227,7 +227,7 @@ private struct ContentView: View {
         VStack(spacing: 0) {
             DateInfoView()
             
-            if matchUseCase.getSeason() != "비시즌" {
+            if matchUseCase.getSeason() != "TODAY" {
                 HStack(spacing: 0) {
                     Text(currentTeam?.name == "전체 구단" ? "종료된 경기" : "종료된 우리팀 경기")
                         .font(.Body.body1)
