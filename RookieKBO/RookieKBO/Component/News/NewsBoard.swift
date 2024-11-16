@@ -17,13 +17,12 @@ struct NewsBoard: View {
                 AsyncImage(url: URL(string: newsInfo.imageUrl)) { image in
                     image
                         .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .scaledToFill()
+                        .frame(height: 208)
                 } placeholder: {
                     ProgressView()
+                        .frame(height: 208)
                 }
-                
-                Spacer(minLength: 0)
             }
             VStack(spacing: 0) {
                 Spacer()
@@ -37,6 +36,7 @@ struct NewsBoard: View {
                     .background(.white0)
             }
         }
+        .clipShape(RoundedRectangle(cornerRadius: 16))
         .frame(height: 208)
     }
 }

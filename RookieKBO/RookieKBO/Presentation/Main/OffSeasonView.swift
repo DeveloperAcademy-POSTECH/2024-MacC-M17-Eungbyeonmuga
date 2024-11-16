@@ -199,6 +199,7 @@ private struct ContentView: View {
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
     let games: [Match] = MockDataBuilderForWidget.mockMatchList
+    let totalNews: [News] = MockDataBuilder.mockEntireNews
     
     var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
     
@@ -226,32 +227,9 @@ private struct ContentView: View {
         VStack(spacing: 0) {
             DateInfoView()
             
-            HStack(spacing: 0) {
-                Text(currentTeam?.name == "전체 구단" ? "종료된 경기" : "종료된 우리팀 경기")
-                    .font(.Body.body1)
-                    .foregroundColor(.gray7)
-                
-                Spacer()
-                
-                Text("스탯티즈 출처")
-                    .font(.Body.body5)
-                    .foregroundColor(.gray5)
-            }
-            .padding(.vertical)
-            
-            ForEach(myTeamEndGames) { game in
-                EndGameInfo(endGameInfo: game)
-                    .padding(.vertical, 4)
-            }
-            
-            ForEach(myTeamCancelGames) { game in
-                CancelGameInfo(cancelGameInfo: game)
-                    .padding(.vertical, 4)
-            }
-            
-            if currentTeam?.name != "전체 구단" {
+            if matchUseCase.getSeason() != "비시즌" {
                 HStack(spacing: 0) {
-                    Text("종료된 다른팀 경기")
+                    Text(currentTeam?.name == "전체 구단" ? "종료된 경기" : "종료된 우리팀 경기")
                         .font(.Body.body1)
                         .foregroundColor(.gray7)
                     
@@ -263,14 +241,57 @@ private struct ContentView: View {
                 }
                 .padding(.vertical)
                 
-                ForEach(otherTeamEndGames) { game in
+                ForEach(myTeamEndGames) { game in
                     EndGameInfo(endGameInfo: game)
-                        .padding(.vertical, 4)
+                        .padding(.bottom, 4)
                 }
                 
-                ForEach(otherTeamCancelGames) { game in
+                ForEach(myTeamCancelGames) { game in
                     CancelGameInfo(cancelGameInfo: game)
-                        .padding(.vertical, 4)
+                        .padding(.bottom, 4)
+                }
+                
+                if currentTeam?.name != "전체 구단" {
+                    HStack(spacing: 0) {
+                        Text("종료된 다른팀 경기")
+                            .font(.Body.body1)
+                            .foregroundColor(.gray7)
+                        
+                        Spacer()
+                        
+                        Text("스탯티즈 출처")
+                            .font(.Body.body5)
+                            .foregroundColor(.gray5)
+                    }
+                    .padding(.vertical)
+                    
+                    ForEach(otherTeamEndGames) { game in
+                        EndGameInfo(endGameInfo: game)
+                            .padding(.bottom, 4)
+                    }
+                    
+                    ForEach(otherTeamCancelGames) { game in
+                        CancelGameInfo(cancelGameInfo: game)
+                            .padding(.bottom, 4)
+                    }
+                }
+            } else {
+                HStack(spacing: 0) {
+                    Text("비시즌 KBO NEWS")
+                        .font(.Body.body1)
+                        .foregroundColor(.gray7)
+                    
+                    Spacer()
+                    
+                    Text("스탯티즈 출처")
+                        .font(.Body.body5)
+                        .foregroundColor(.gray5)
+                }
+                .padding(.vertical)
+                
+                ForEach(totalNews) { news in
+                    NewsBoard(newsInfo: news)
+                        .padding(.bottom)
                 }
             }
         }
@@ -317,7 +338,7 @@ private struct DateInfoView: View {
                     .font(.CustomTitle.customTitle2)
                     .foregroundColor(.gray7)
                 
-                Text(matchUseCase.selectedDate?.getSeasonType() ?? "비시즌")
+                Text(matchUseCase.getSeason())
                     .font(.Head.head4b)
                     .foregroundColor(.gray5)
                     .padding(.bottom, 4)
