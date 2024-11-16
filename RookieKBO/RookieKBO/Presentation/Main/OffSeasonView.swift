@@ -361,7 +361,6 @@ private struct DateInfoView: View {
                         
                         RoundedRectangle(cornerRadius: 99)
                             .fill(.white0)
-                            .stroke(.gray2, lineWidth: 2)
                     }
                 )
             }
