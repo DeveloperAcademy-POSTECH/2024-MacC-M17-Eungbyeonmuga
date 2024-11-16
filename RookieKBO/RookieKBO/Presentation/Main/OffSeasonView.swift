@@ -127,7 +127,7 @@ private struct OffSeasonInfoView: View {
                     Text("KBO 개막")
                     Rectangle()
                         .frame(width: 2, height: 16)
-                    Text("\(Date.getDdayToOpeningDate())")
+                    Text((Date().getDdayToOpeningDate()))
                 }
                 .font(.Body.body1)
                 .foregroundColor(.white0)
@@ -317,7 +317,7 @@ private struct DateInfoView: View {
                     .font(.CustomTitle.customTitle2)
                     .foregroundColor(.gray7)
                 
-                Text("포스트 시즌")
+                Text(matchUseCase.selectedDate?.getSeasonType() ?? "비시즌")
                     .font(.Head.head4b)
                     .foregroundColor(.gray5)
                     .padding(.bottom, 4)
