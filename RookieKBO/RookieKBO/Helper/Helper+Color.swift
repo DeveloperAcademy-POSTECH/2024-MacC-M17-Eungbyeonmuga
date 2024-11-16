@@ -31,10 +31,39 @@ extension Color {
             return .kiwoom
         case "hanwha", "한화":
             return .hanwha
-        case "primary":
+        case "allTeam":
             return .brandPrimary
         default:
             return .brandPrimary
+        }
+    }
+    
+    static func teamGdColor(for name: String) -> Color? {
+        switch name {
+        case "ssg":
+            return .ssgGd
+        case "kia":
+            return .kiaGd
+        case "kt":
+            return .ktGd
+        case "lg":
+            return .lgGd
+        case "nc":
+            return .ncGd
+        case "doosan":
+            return .doosanGd
+        case "lotte":
+            return .lotteGd
+        case "samsung":
+            return .samsungGd
+        case "kiwoom":
+            return .kiwoomGd
+        case "hanwha":
+            return .hanwhaGd
+        case "allTeam":
+            return .brandPrimaryGd
+        default:
+            return .brandPrimaryGd
         }
     }
 }

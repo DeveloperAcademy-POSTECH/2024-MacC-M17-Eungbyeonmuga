@@ -113,7 +113,7 @@ private func BackgroundView(image: String) -> some View {
 
 private func allTypeBackgroundView(entry: Provider.Entry) -> some View {
 
-    let defaultColorString = "primary"
+    let defaultColorString = "allTeam"
     let homeTeamColorString = entry.match?.homeTeam.color ?? defaultColorString
     let awayTeamColorString = entry.match?.awayTeam.color ?? defaultColorString
 

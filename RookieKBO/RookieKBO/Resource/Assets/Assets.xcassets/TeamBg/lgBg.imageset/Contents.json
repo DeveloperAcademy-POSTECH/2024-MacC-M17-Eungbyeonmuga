@@ -1,23 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "lgBg.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "lgBg@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "lgBg@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "lgBg.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }

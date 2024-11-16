@@ -11,11 +11,12 @@ struct HighlightView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
     @Environment(PathModel.self) private var pathModel
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     var body: some View {
         ZStack {
             // 상단 배경
-            Color.brandPrimary
+            Color(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary)
                 .ignoresSafeArea(edges: .top)
             
             // 하단 배경
@@ -76,6 +77,9 @@ private struct HighlightContentView: View {
 // MARK: - HighlightHeaderDetailView
 
 private struct HighlightHeaderDetailView: View {
+    
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
@@ -89,7 +93,7 @@ private struct HighlightHeaderDetailView: View {
             .padding(.leading)
             .padding(.bottom)
         }
-        .background(.brandPrimary)
+        .background(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? ""))
     }
 }
 
@@ -98,6 +102,7 @@ private struct HighlightHeaderDetailView: View {
 private struct HighlightContentSettingView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     @State private var isShowingSetCalendar = false
     
@@ -115,7 +120,7 @@ private struct HighlightContentSettingView: View {
             .padding(.horizontal, 20)
             .background(
                 RoundedRectangle(cornerRadius: 99)
-                    .fill(.brandPrimary)
+                    .fill(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary)
             )
             
             Button {
@@ -253,6 +258,9 @@ private struct SetCalendarView: View {
 // MARK: - HighlightHeaderView
 
 private struct HighlightHeaderView: View {
+    
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
@@ -260,12 +268,11 @@ private struct HighlightHeaderView: View {
                     .foregroundColor(.white0)
                     .font(.CustomTitle.customTitle2)
                 
-                // TODO: 자막화면과 크기 맞추기
                 Spacer()
             }
             .padding()
         }
-        .background(.brandPrimary)
+        .background(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? ""))
     }
 }
 
@@ -328,4 +335,5 @@ private struct HighlightContent: View {
     HighlightView()
         .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
         .environment(PathModel())
+        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
 }

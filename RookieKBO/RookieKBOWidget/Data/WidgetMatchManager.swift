@@ -85,7 +85,7 @@ func getSelectTeam() -> SelectTeamType {
 func colorString(for teamType: SelectTeamType) -> String {
     switch teamType {
     case .allType:
-        return "primary"
+        return "allTeam"
     case .ssgType:
         return "ssg"
     case .lgType:

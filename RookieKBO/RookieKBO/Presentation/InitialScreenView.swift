@@ -42,7 +42,6 @@ struct TeamScreenView: View {
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     @State private var selectedTab: Tab = .match
-    @State private var isTabBarHidden: Bool = false
     
     var body: some View {
         @Bindable var pathModel = pathModel
@@ -58,74 +57,49 @@ struct TeamScreenView: View {
 //                            .tag(Tab.match)
 //                    }
                     pathModel.build(.offSeason)
-                        .tag(Tab.match)
+                        .modifier(TabBarModifier(currentTab: selectedTab, selectedTab: .match))
                     
                     pathModel.build(.highlight)
-                        .tag(Tab.highlight)
+                        .modifier(TabBarModifier(currentTab: selectedTab, selectedTab: .highlight))
                     
                     pathModel.build(.myPage)
-                        .tag(Tab.user)
-                }
-                
-                VStack(spacing: 0) {
-                    Spacer()
-                    
-                    if !isTabBarHidden {
-                        TabBar(selectedTab: $selectedTab)
-                            .frame(height: 60)
-                    }
+                        .modifier(TabBarModifier(currentTab: selectedTab, selectedTab: .user))
                 }
             }
+            .tint(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "allTeam"))
             .sheet(item: $pathModel.sheet) { sheet in
                 pathModel.build(sheet)
             }
             .navigationDestination(for: Screen.self) { screen in
                 pathModel.build(screen)
-                    .onAppear { isTabBarHidden = true }
-                    .onDisappear { isTabBarHidden = false }
             }
         }
     }
 }
 
-// MARK: - TabBar
-
-private struct TabBar: View {
-    @Binding var selectedTab: Tab
-    
-    var body: some View {
-        HStack(spacing: 0) {
-            TabBarButton(selectedTab: $selectedTab, tab: .match)
-            Spacer()
-            TabBarButton(selectedTab: $selectedTab, tab: .highlight)
-            Spacer()
-            TabBarButton(selectedTab: $selectedTab, tab: .user)
-        }
-        .padding(.horizontal, 44)
-        .padding(.vertical)
-        .background(Color.gray1)
-    }
-}
-
 // MARK: - TabBarButton
 
-private struct TabBarButton: View {
-    @Binding var selectedTab: Tab
-    let tab: Tab
+private struct TabBarModifier: ViewModifier {
     
-    var body: some View {
-        VStack {
-            Image(selectedTab == tab ? tab.selectedIcon : tab.defaultIcon)
-                .resizable()
-                .frame(width: 32, height: 32)
-            
-            Text(tab.title)
-                .font(.Caption.caption3b)
-                .foregroundColor(selectedTab == tab ? .brandPrimary : .gray6)
-        }
-        .onTapGesture {
-            selectedTab = tab
-        }
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
+    let currentTab: Tab
+    let selectedTab: Tab
+    
+    func body(content: Content) -> some View {
+        content
+            .tag(selectedTab)
+            .tabItem {
+                VStack {
+                    // 선택된 탭에 따라 아이콘 변경
+                    Image(currentTab == selectedTab ? "\(selectTeamUseCase.state.selectedTeam?.color ?? "allTeam")\(selectedTab.selectedIcon)" : selectedTab.defaultIcon)
+                        .resizable()
+                        .frame(width: 32, height: 32)
+                    
+                    Text(selectedTab.title)
+                        .font(.Caption.caption3b)
+                }
+            }
     }
 }
 

@@ -116,24 +116,24 @@ private struct GameScore: View {
             
             Text("\(awayScore)")
                 .font(.CustomTitle.customTitle1)
-                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
+                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "allTeam") : .gray5)
                 .padding(.vertical, 4)
                 .padding(.horizontal, 9)
             
             Text("\(awayResult.description)")
                 .font(.Head.head4)
-                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
+                .foregroundColor(awayResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "allTeam") : .gray5)
                 .padding(.leading, 16)
             
             Spacer()
             
             Text("\(homeResult.description)")
                 .font(.Head.head4)
-                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
+                .foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "allTeam") : .gray5)
                 .padding(.trailing, 16)
             
             Text("\(homeScore)")
-                .font(.CustomTitle.customTitle1).foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "primary") : .gray5)
+                .font(.CustomTitle.customTitle1).foregroundColor(homeResult.description == "승" ? Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "allTeam") : .gray5)
                 .padding(.vertical, 4)
                 .padding(.horizontal, 9)
         }

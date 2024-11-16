@@ -197,15 +197,12 @@ struct MockDataBuilderForWidget {
             ),
             Match(
                 startDateTime: calendar.date(bySettingHour: 18, minute: 30, second: 0, of: calendar.date(byAdding: .day, value: -3, to: now)!)!,
-                gameState: .END,
+                gameState: .CANCEL,
                 homeTeam: Team(name: "삼성 라이온즈", image: "samsungUnder", color: "samsung", backgroundImage: "samsungBg"),
                 awayTeam: Team(name: "KIA 타이거즈", image: "kiaUnder", color: "kia", backgroundImage: "kiaBg"),
                 place: "대구 삼성 라이온즈 파크",
                 season: "정규 시즌",
-                scoreBoard: [
-                    ScoreBoard(homeAndAway: .HOME, runs: 3, hits: 8, errors: 1, balls: 15, scores: [1, 0, 0, 0, 1, 0, 1, 0 ]),
-                    ScoreBoard(homeAndAway: .AWAY, runs: 2, hits: 7, errors: 0, balls: 5, scores: [0, 0, 0, 0, 0, 0, 0, 1, 1])
-                ]
+                scoreBoard: []
             ),
             Match(
                 startDateTime: calendar.date(bySettingHour: 18, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -3, to: now)!)!,

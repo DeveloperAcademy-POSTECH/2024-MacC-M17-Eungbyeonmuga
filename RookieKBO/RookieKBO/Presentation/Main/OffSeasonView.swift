@@ -13,10 +13,12 @@ struct OffSeasonView: View {
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(MatchUseCase.self) private var matchUseCase
     
+    var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
+    
     var body: some View {
         ZStack {
             // 상단 배경
-            Color.brandPrimary
+            Color.teamColor(for: currentTeam?.color ?? "")
                 .ignoresSafeArea()
             
             // 하단 배경
@@ -33,18 +35,39 @@ struct OffSeasonView: View {
 // MARK: - GameInfoView
 
 private struct GameInfoView: View {
+    
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
+    var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
+    
     var body: some View {
         ScrollView {
             ZStack(alignment: .top) {
-                Image(.allTeamBg)
+                Image(currentTeam?.backgroundImage ?? "allTeamBg")
                     .resizable()
                     .scaledToFit()
-                    .offset(y: -52)
+                    .offset(
+                        currentTeam?.name == "전체 구단"
+                        ? CGSize(width: 0, height: -52)
+                        : CGSize(width: 0, height: -16)
+                    )
                 
                 Color.gray1
-                    .offset(y: UIScreen.main.bounds.height / 3)
+                    .offset(y: UIScreen.main.bounds.height / 2)
                 
                 LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                    if currentTeam?.name != "전체 구단" {
+                        HStack(spacing: 0) {
+                            Image(.titleLogoWhite)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 75)
+                            
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 4)
+                    }
                     Section(header: HeaderView()) {
                         OffSeasonInfoView()
                         ContentView()
@@ -58,20 +81,30 @@ private struct GameInfoView: View {
 // MARK: - HeaderView
 
 private struct HeaderView: View {
+    
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
+    var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                Image(.titleLogoWhite)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 140)
+                if currentTeam?.name == "전체 구단" {
+                    Image(.titleLogoWhite)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 140)
+                } else {
+                    Text(currentTeam?.name ?? "SSG 랜더스")
+                        .font(.CustomTitle.customTitle1)
+                        .foregroundColor(.white0)
+                }
                 
-                // TODO: 자막화면과 크기 맞추기
                 Spacer()
             }
             .padding()
         }
-        .background(.brandPrimary)
+        .background(Color.teamColor(for: currentTeam?.color ?? ""))
     }
 }
 
@@ -81,6 +114,9 @@ private struct OffSeasonInfoView: View {
     
     @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @Environment(RankUseCase.self) private var rankUseCase
+    
+    var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -98,7 +134,7 @@ private struct OffSeasonInfoView: View {
                 .padding(.vertical, 12)
                 .padding(.horizontal, 20)
                 .background(RoundedRectangle(cornerRadius: 16)
-                    .fill(.brandPrimaryGd.opacity(0.8)))
+                    .fill(Color.teamGdColor(for: currentTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
                 
                 Button {
                     pathModel.presentSheet(.teamRanking)
@@ -107,21 +143,49 @@ private struct OffSeasonInfoView: View {
                         Text("순위")
                         Rectangle()
                             .frame(width: 2, height: 16)
-                        // TODO: 순위 애니메이션 적용
-                        Text(selectTeamUseCase.state.selectedTeam?.name ?? "전체 구단")
+                        
+                        // 순위 애니메이션 적용
+                        if let teamRanks = rankUseCase.state.teamRanks, !teamRanks.isEmpty {
+                            GeometryReader { geometry in
+                                VStack(spacing: 0) {
+                                    ForEach(0..<teamRanks.count, id: \.self) { index in
+                                        let teamRank = teamRanks[index]
+                                        Text("\(teamRank.rank)위 \(teamRank.team)")
+                                    }
+                                }
+                                .offset(y: -CGFloat(rankUseCase.currentRankIndex) * geometry.size.height)
+                                .animation(.easeInOut(duration: 0.5), value: rankUseCase.currentRankIndex)
+                            }
+                            .clipped()
+                        } else {
+                            Spacer(minLength: 0)
+                            ProgressView()
+                                .tint(.white0)
+                            Spacer(minLength: 0)
+                        }
                     }
                     .font(.Body.body1)
                     .foregroundColor(.white0)
                     .padding(.vertical, 12)
                     .padding(.horizontal, 20)
+                    .frame(maxWidth: 150)
                     .background(RoundedRectangle(cornerRadius: 16)
-                        .fill(.brandPrimaryGd.opacity(0.8)))
+                        .fill(Color.teamGdColor(for: currentTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
                 }
                 
-                Spacer()
+                Spacer(minLength: 0)
             }
             .padding(.horizontal)
             .padding(.bottom, 24)
+        }
+        .onAppear {
+            Task {
+                await rankUseCase.fetchRanks()
+                rankUseCase.startTimer()
+            }
+        }
+        .onDisappear {
+            rankUseCase.stopTimer()
         }
     }
 }
@@ -136,12 +200,26 @@ private struct ContentView: View {
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
     let games: [Match] = MockDataBuilderForWidget.mockMatchList
     
-    var myTeamGames: [Match] {
-        filteredGames(myTeamGames: true)
+    var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
+    
+    // 종료된 우리 팀 경기
+    var myTeamEndGames: [Match] {
+        filteredGames(myTeamGames: true).filter { $0.gameState == .END }
     }
     
-    var otherTeamGames: [Match] {
-        filteredGames(myTeamGames: false)
+    // 취소된 우리 팀 경기
+    var myTeamCancelGames: [Match] {
+        filteredGames(myTeamGames: true).filter { $0.gameState == .CANCEL }
+    }
+    
+    // 종료된 다른 팀 경기
+    var otherTeamEndGames: [Match] {
+        filteredGames(myTeamGames: false).filter { $0.gameState == .END }
+    }
+    
+    // 취소된 다른 팀 경기
+    var otherTeamCancelGames: [Match] {
+        filteredGames(myTeamGames: false).filter { $0.gameState == .CANCEL }
     }
     
     var body: some View {
@@ -149,7 +227,7 @@ private struct ContentView: View {
             DateInfoView()
             
             HStack(spacing: 0) {
-                Text(selectTeamUseCase.state.selectedTeam?.name == "전체 구단" ? "종료된 경기" : "종료된 우리팀 경기")
+                Text(currentTeam?.name == "전체 구단" ? "종료된 경기" : "종료된 우리팀 경기")
                     .font(.Body.body1)
                     .foregroundColor(.gray7)
                 
@@ -161,12 +239,17 @@ private struct ContentView: View {
             }
             .padding(.vertical)
             
-            // TODO: 취소 경기도!! 넣어주셔야 해요!!!
-            ForEach(myTeamGames) { game in
+            ForEach(myTeamEndGames) { game in
                 EndGameInfo(endGameInfo: game)
                     .padding(.vertical, 4)
             }
-            if selectTeamUseCase.state.selectedTeam?.name != "전체 구단" {
+            
+            ForEach(myTeamCancelGames) { game in
+                CancelGameInfo(cancelGameInfo: game)
+                    .padding(.vertical, 4)
+            }
+            
+            if currentTeam?.name != "전체 구단" {
                 HStack(spacing: 0) {
                     Text("종료된 다른팀 경기")
                         .font(.Body.body1)
@@ -180,8 +263,13 @@ private struct ContentView: View {
                 }
                 .padding(.vertical)
                 
-                ForEach(otherTeamGames) { game in
+                ForEach(otherTeamEndGames) { game in
                     EndGameInfo(endGameInfo: game)
+                        .padding(.vertical, 4)
+                }
+                
+                ForEach(otherTeamCancelGames) { game in
+                    CancelGameInfo(cancelGameInfo: game)
                         .padding(.vertical, 4)
                 }
             }
@@ -358,4 +446,5 @@ private struct SetCalendarView: View {
         .environment(PathModel())
         .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
+        .environment(RankUseCase(rankService: RankServiceImpl()))
 }

@@ -13,7 +13,7 @@ struct DateLabel: View {
     
     let date: Date
     var isAllTeam: Bool {
-        selectTeamUseCase.getUserDefaultsTeamObject()?.name == "전체 구단"
+        selectTeamUseCase.state.selectedTeam?.name == "전체 구단"
     }
 
     var body: some View {
