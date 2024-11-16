@@ -354,9 +354,15 @@ private struct DateInfoView: View {
                 .padding(.leading, 20)
                 .padding(.trailing, 14)
                 .background(
-                    RoundedRectangle(cornerRadius: 99)
-                        .fill(.white0)
-                        .stroke(.gray2, lineWidth: 2)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(.black8.opacity(0.05))
+                            .blur(radius: 10)
+                        
+                        RoundedRectangle(cornerRadius: 99)
+                            .fill(.white0)
+                            .stroke(.gray2, lineWidth: 2)
+                    }
                 )
             }
         }
