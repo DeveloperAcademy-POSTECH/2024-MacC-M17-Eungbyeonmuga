@@ -171,7 +171,7 @@ private struct SelectTeamListView: View {
                                 Spacer()
                             }
                             
-                            Image(team.image)
+                            Image(uiImage: convertUIImage(for: team.image)!)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .opacity(selectedTeam == team ? 1 : 0.5)
