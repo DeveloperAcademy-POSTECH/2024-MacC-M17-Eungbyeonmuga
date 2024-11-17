@@ -396,6 +396,6 @@ private struct SearchBar: View {
     VideoTranscriptView()
         .environment(PreviewHelper.mockTermUseCase)
         .environment(PathModel())
-        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
         .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
 }

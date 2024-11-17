@@ -473,7 +473,7 @@ private struct SetCalendarView: View {
 #Preview {
     OffSeasonView()
         .environment(PathModel())
-        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(RankUseCase(rankService: RankServiceImpl()))
 }

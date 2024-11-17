@@ -108,5 +108,5 @@ private struct TeamRankInfo: View {
 
 #Preview {
     TeamRankRow(teamRank: MockDataBuilder.mockTeamRank)
-        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
 }

@@ -340,5 +340,5 @@ private struct HighlightContent: View {
     HighlightView()
         .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
         .environment(PathModel())
-        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
 }
