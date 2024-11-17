@@ -13,8 +13,8 @@ struct MockDataBuilder {
             videoId: "video1",
             transcript: [
                 TranscriptItem(id: UUID(), text: "박성한이 백투백 홈런", start: 0.0),
-                TranscriptItem(id: UUID(), text: "백투백 홈런", start: 10.0),
-                TranscriptItem(id: UUID(), text: "중견수", start: 5.5),
+                TranscriptItem(id: UUID(), text: "백투 홈런", start: 10.0),
+                TranscriptItem(id: UUID(), text: "않타", start: 5.5),
                 TranscriptItem(id: UUID(), text: "중견수", start: 15.5),
                 TranscriptItem(id: UUID(), text: "박성한이 도루함", start: 12.0),
                 TranscriptItem(id: UUID(), text: "도루", start: 22.0),

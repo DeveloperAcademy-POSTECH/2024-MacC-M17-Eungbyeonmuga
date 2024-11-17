@@ -73,3 +73,37 @@ let termDictionary: [String: String] = [
     "클러치 히터": "중요한 순간에 타격 실력이 뛰어난 타자",
     "승부수": "경기의 흐름을 바꾸는 결정적인 플레이"
 ]
+
+let normalizedTerms: [String: String] = [
+    "코리안 시리즈": "한국 시리즈",
+    "준피 올로프": "준플레이오프",
+    "와일드 카드": "와일드카드 결정전",
+    "포스 시즌": "포스트 시즌",
+    "그랜 슬램": "그랜드 슬램",
+    "백투 홈런": "백투백 홈런",
+    "솔로": "솔로 홈런",
+    "투런": "투런 홈런",
+    "쓰리런": "쓰리런 홈런",
+    "않타": "안타",
+    "말루": "만루",
+    "포크 볼": "포크볼",
+    "슬라이드": "슬라이더",
+    "커브 볼": "커브볼",
+    "백투 백 홈런": "백투백 홈런"
+]
+
+/// 옳은 용어로 반환
+func getTermDescription(for term: String) -> [String: String]? {
+    let normalizedTerm = normalizedTerms[term] ?? term
+
+    if let description = termDictionary[normalizedTerm] {
+        if normalizedTerm != term {
+            return [normalizedTerm: description]
+        } else {
+            return [term: description]
+        }
+    } else {
+        return nil
+    }
+}
+

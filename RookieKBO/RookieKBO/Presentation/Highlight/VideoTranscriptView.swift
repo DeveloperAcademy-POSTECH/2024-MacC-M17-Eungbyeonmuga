@@ -208,9 +208,12 @@ struct VideoTranscriptView: View {
                             .frame(height: 16)
                         
                         ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
-                            if let description = termDictionary[transcriptItem.text] {
+                            if let description = getTermDescription(for: transcriptItem.text), !description.isEmpty {
+                                let normalizedTerm = description.keys.first!
+                                let descriptionText = description[normalizedTerm]!
+
                                 let isTermSaved = isTermSaved(term: transcriptItem.text)
-                                
+
                                 TermRow(
                                     isPlaying: Binding(
                                         get: { playingItemId == transcriptItem.id },
@@ -221,21 +224,20 @@ struct VideoTranscriptView: View {
                                                     scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
                                                 }
                                             }
-                                            
                                         }
                                     ),
                                     isSaved: Binding(
                                         get: { isTermSaved },
                                         set: { newValue in
                                             if newValue {
-                                                createTermEntry(term: transcriptItem.text, definition: description)
+                                                createTermEntry(term: transcriptItem.text, definition: descriptionText)
                                             } else {
                                                 deleteTermEntry(term: transcriptItem.text)
                                             }
                                         }
                                     ),
-                                    term: transcriptItem.text,
-                                    description: description,
+                                    term: normalizedTerm,
+                                    description: descriptionText,
                                     time: transcriptItem.start
                                 )
                                 .id(transcriptItem.id)
@@ -250,7 +252,6 @@ struct VideoTranscriptView: View {
                                 )
                                 .padding(.bottom, 8)
                                 .padding(.horizontal, 16)
-                                
                                 .onAppear {
                                     if playingItemId == transcriptItem.id {
                                         withAnimation {
@@ -269,6 +270,7 @@ struct VideoTranscriptView: View {
                                 EmptyView()
                             }
                         }
+
                     }
                 }
                 
