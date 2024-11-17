@@ -241,17 +241,34 @@ private struct ContentView: View {
                 }
                 .padding(.vertical)
                 
-                ForEach(myTeamEndGames) { game in
-                    EndGameInfo(endGameInfo: game)
-                        .padding(.bottom, 4)
+                if myTeamEndGames.isEmpty && myTeamCancelGames.isEmpty {
+                    VStack(spacing: 0) {
+                        Image(selectTeamUseCase.state.selectedTeam?.image ?? "allTeamUnder")
+                            .resizable()
+                            .frame(width: 96, height: 96)
+                        
+                        Text("우리팀 경기가 없었어요!")
+                            .font(.Head.head5)
+                            .foregroundColor(.gray5)
+                            .padding(.vertical)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(RoundedRectangle(cornerRadius: 24)
+                        .fill(.white0))
+                    
+                } else {
+                    ForEach(myTeamEndGames) { game in
+                        EndGameInfo(endGameInfo: game)
+                            .padding(.bottom, 4)
+                    }
+                    
+                    ForEach(myTeamCancelGames) { game in
+                        CancelGameInfo(cancelGameInfo: game)
+                            .padding(.bottom, 4)
+                    }
                 }
                 
-                ForEach(myTeamCancelGames) { game in
-                    CancelGameInfo(cancelGameInfo: game)
-                        .padding(.bottom, 4)
-                }
-                
-                if currentTeam?.name != "전체 구단" {
+                if currentTeam?.name != "전체 구단" && (!otherTeamEndGames.isEmpty || !otherTeamCancelGames.isEmpty) {
                     HStack(spacing: 0) {
                         Text("종료된 다른팀 경기")
                             .font(.Body.body1)
