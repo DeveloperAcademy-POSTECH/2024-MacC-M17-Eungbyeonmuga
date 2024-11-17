@@ -31,6 +31,8 @@ struct VideoTranscriptView: View {
     @State private var isSaved: Bool = false
     @State private var savedTerms: [String: Bool] = [:]
     @State private var currentPlaybackTime: TimeInterval = 0
+    @State private var isShowToastMessage: Bool = false
+    @State private var toastMessage: String = ""
     
     // 데이터 변경
     private let currentTranscript = MockDataBuilder.mockTranscript
@@ -61,6 +63,8 @@ struct VideoTranscriptView: View {
     private func deleteTermEntry(term: String) {
         if let termToDelete = savedTermEntry.first(where: { $0.term == term }) {
             modelContext.delete(termToDelete)
+            isShowToastMessage = true
+            toastMessage = "'\(term)' 삭제되었어요."
             print("✅ \(term) 용어 삭제")
         } else {
             print("❌ 삭제할 용어를 찾을 수 없음")
@@ -76,6 +80,8 @@ struct VideoTranscriptView: View {
         else {
             let newTermEntry = TermEntry(term: term, definition: definition)
             modelContext.insert(newTermEntry)
+            isShowToastMessage = true
+            toastMessage = "'\(term)' 추가되었어요."
             print("✅ \(term) 용어 추가")
         }
     }
@@ -265,6 +271,17 @@ struct VideoTranscriptView: View {
                         }
                     }
                 }
+                
+                VStack {
+                    Spacer()
+                    
+                    ToastMessage(
+                        message: toastMessage,
+                        isToastPresented: $isShowToastMessage
+                    )
+                    .padding(.bottom, 35)
+                }
+                
                 if isSearchActive {
                     Rectangle()
                         .foregroundColor(.gray6)
