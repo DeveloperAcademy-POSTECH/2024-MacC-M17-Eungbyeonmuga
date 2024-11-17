@@ -218,7 +218,6 @@ private struct StartTeam: View {
             Spacer()
             Button {
                 if let selectedTeam = selectedTeam {
-                    selectTeamUseCase.updateUserDefaultsTeam()
                     selectTeamUseCase.updateUserDefaultsTeamObject(selectedTeam)
                     
                     // InitialScreenView의 if문으로 인해 화면 변경
