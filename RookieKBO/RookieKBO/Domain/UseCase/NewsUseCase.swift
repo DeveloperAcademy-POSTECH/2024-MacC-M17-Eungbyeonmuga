@@ -17,7 +17,7 @@ final class NewsUseCase {
     init(newsService: NewsServiceInterface) {
         self.newsService = newsService
         self.state = State(
-            totalNews: nil
+            totalNews: newsService.fetchMockTotalNews()
         )
     }
 }
@@ -27,7 +27,7 @@ final class NewsUseCase {
 extension NewsUseCase {
     
     struct State {
-        var totalNews: [News]?
+        var totalNews: [News]
     }
 }
 

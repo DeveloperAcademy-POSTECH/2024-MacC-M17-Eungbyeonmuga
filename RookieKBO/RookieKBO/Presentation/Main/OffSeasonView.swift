@@ -196,10 +196,10 @@ private struct ContentView: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @Environment(NewsUseCase.self) private var newsUseCase
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
     let games: [Match] = MockDataBuilderForWidget.mockMatchList
-    let totalNews: [News] = MockDataBuilder.mockEntireNews
     
     var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
     
@@ -306,7 +306,7 @@ private struct ContentView: View {
                 }
                 .padding(.vertical)
                 
-                ForEach(totalNews) { news in
+                ForEach(newsUseCase.state.totalNews ?? []) { news in
                     NewsBoard(newsInfo: news) {
                         // TODO: 뉴스 화면 이동
                         print("뉴스 화면 이동")
@@ -503,4 +503,5 @@ private struct SetCalendarView: View {
         .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(RankUseCase(rankService: RankServiceImpl()))
+        .environment(NewsUseCase(newsService: NewsServiceImpl()))
 }

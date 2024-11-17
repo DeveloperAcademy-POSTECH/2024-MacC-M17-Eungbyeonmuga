@@ -160,7 +160,7 @@ struct MockDataBuilderForWidget {
         let calendar = Calendar.current
         return [
             Match(
-                startDateTime: calendar.date(bySettingHour: 18, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -3, to: now)!)!,
+                startDateTime: calendar.date(from: DateComponents(year: 2024, month: 9, day: 28, hour: 18, minute: 30, second: 0))!,
                 gameState: GameState.END,
                 homeTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 awayTeam: Team(name: "NC 다이노스", image: "ncUnder", color: "nc", backgroundImage: "ncBg"),
@@ -172,7 +172,7 @@ struct MockDataBuilderForWidget {
                 ]
             ),
             Match(
-                startDateTime: calendar.date(bySettingHour: 18, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -3, to: now)!)!,
+                startDateTime: calendar.date(from: DateComponents(year: 2024, month: 9, day: 28, hour: 18, minute: 30, second: 0))!,
                 gameState: .END,
                 homeTeam: Team(name: "두산 베어스", image: "doosanUnder", color: "doosan", backgroundImage: "doosanBg"),
                 awayTeam: Team(name: "SSG 랜더스", image: "ssgUnder", color: "ssg", backgroundImage: "ssgBg"),
@@ -184,7 +184,7 @@ struct MockDataBuilderForWidget {
                 ]
             ),
             Match(
-                startDateTime: calendar.date(bySettingHour: 18, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -3, to: now)!)!,
+                startDateTime: calendar.date(from: DateComponents(year: 2024, month: 9, day: 28, hour: 18, minute: 30, second: 0))!,
                 gameState: GameState.END,
                 homeTeam: Team(name: "KT 위즈", image: "ktUnder", color: "kt", backgroundImage: "ktBg"),
                 awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte", backgroundImage: "lotteBg"),
@@ -196,7 +196,7 @@ struct MockDataBuilderForWidget {
                 ]
             ),
             Match(
-                startDateTime: calendar.date(bySettingHour: 18, minute: 30, second: 0, of: calendar.date(byAdding: .day, value: -3, to: now)!)!,
+                startDateTime: calendar.date(from: DateComponents(year: 2024, month: 9, day: 28, hour: 18, minute: 30, second: 0))!,
                 gameState: .CANCEL,
                 homeTeam: Team(name: "삼성 라이온즈", image: "samsungUnder", color: "samsung", backgroundImage: "samsungBg"),
                 awayTeam: Team(name: "KIA 타이거즈", image: "kiaUnder", color: "kia", backgroundImage: "kiaBg"),
@@ -205,7 +205,7 @@ struct MockDataBuilderForWidget {
                 scoreBoard: []
             ),
             Match(
-                startDateTime: calendar.date(bySettingHour: 18, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -3, to: now)!)!,
+                startDateTime: calendar.date(from: DateComponents(year: 2024, month: 10, day: 5, hour: 18, minute: 30, second: 0))!,
                 gameState: GameState.END,
                 homeTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
                 awayTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom", backgroundImage: "kiwoomBg"),
@@ -217,7 +217,7 @@ struct MockDataBuilderForWidget {
             
             // 8월 11일
             Match(
-                startDateTime: calendar.date(bySettingHour: 18, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -2, to: now)!)!,
+                startDateTime: calendar.date(from: DateComponents(year: 2024, month: 10, day: 5, hour: 18, minute: 30, second: 0))!,
                 gameState: .END,
                 homeTeam: Team(name: "LG 트윈스", image: "lgUnder", color: "lg", backgroundImage: "lgBg"),
                 awayTeam: Team(name: "NC 다이노스", image: "ncUnder", color: "nc", backgroundImage: "ncBg"),
@@ -229,7 +229,7 @@ struct MockDataBuilderForWidget {
                 ]
             ),
             Match(
-                startDateTime: calendar.date(bySettingHour: 18, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -2, to: now)!)!,
+                startDateTime: calendar.date(from: DateComponents(year: 2024, month: 10, day: 5, hour: 18, minute: 30, second: 0))!,
                 gameState: .END,
                 homeTeam: Team(name: "SSG 랜더스", image: "ssgUnder", color: "ssg", backgroundImage: "ssgBg"),
                 awayTeam: Team(name: "두산 베어스", image: "doosanUnder", color: "doosan", backgroundImage: "doosanBg"),
@@ -241,7 +241,7 @@ struct MockDataBuilderForWidget {
                 ]
             ),
             Match(
-                startDateTime: calendar.date(bySettingHour: 18, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -2, to: now)!)!,
+                startDateTime: calendar.date(from: DateComponents(year: 2024, month: 10, day: 10, hour: 18, minute: 30, second: 0))!,
                 gameState: .END,
                 homeTeam: Team(name: "KT 위즈", image: "ktUnder", color: "kt", backgroundImage: "ktBg"),
                 awayTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte", backgroundImage: "lotteBg"),
@@ -253,7 +253,7 @@ struct MockDataBuilderForWidget {
                 ]
             ),
             Match(
-                startDateTime: calendar.date(bySettingHour: 18, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -2, to: now)!)!,
+                startDateTime: calendar.date(from: DateComponents(year: 2024, month: 10, day: 10, hour: 18, minute: 30, second: 0))!,
                 gameState: .END,
                 homeTeam: Team(name: "삼성 라이온즈", image: "samsungUnder", color: "samsung", backgroundImage: "samsungBg"),
                 awayTeam: Team(name: "KIA 타이거즈", image: "kiaUnder", color: "kia", backgroundImage: "kiaBg"),
@@ -265,7 +265,7 @@ struct MockDataBuilderForWidget {
                 ]
             ),
             Match(
-                startDateTime: calendar.date(bySettingHour: 18, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -2, to: now)!)!,
+                startDateTime: calendar.date(from: DateComponents(year: 2024, month: 10, day: 10, hour: 18, minute: 30, second: 0))!,
                 gameState: .END,
                 homeTeam: Team(name: "키움 히어로즈", image: "kiwoomUnder", color: "kiwoom", backgroundImage: "kiwoomBg"),
                 awayTeam: Team(name: "한화 이글스", image: "hanwhaUnder", color: "hanwha", backgroundImage: "hanwhaBg"),
@@ -276,7 +276,6 @@ struct MockDataBuilderForWidget {
                     ScoreBoard(homeAndAway: .AWAY, runs: 3, hits: 7, errors: 1, balls: 9, scores: [1, 1, 0, 1, 0, 0, 0, 0])
                 ]
             ),
-            // 8월 13일
             Match(
                 startDateTime: calendar.date(bySettingHour: 18, minute: 30, second: 0, of: calendar.date(byAdding: .day, value: 0, to: now)!)!,
                 gameState: .PLAYING,
@@ -290,7 +289,7 @@ struct MockDataBuilderForWidget {
                 ]
             ),
             Match(
-                startDateTime: calendar.date(bySettingHour: 18, minute: 30, second: 0, of: calendar.date(byAdding: .day, value: 0, to: now)!)!,
+                startDateTime: calendar.date(from: DateComponents(year: 2024, month: 10, day: 15, hour: 18, minute: 30, second: 0))!,
                 gameState: .END,
                 homeTeam: Team(name: "SSG 랜더스", image: "ssgUnder", color: "ssg", backgroundImage: "ssgBg"),
                 awayTeam: Team(name: "NC 다이노스", image: "ncUnder", color: "nc", backgroundImage: "ncBg"),
@@ -326,7 +325,7 @@ struct MockDataBuilderForWidget {
                 ]
             ),
             Match(
-                startDateTime: calendar.date(bySettingHour: 18, minute: 30, second: 0, of: calendar.date(byAdding: .day, value: 0, to: now)!)!,
+                startDateTime: calendar.date(from: DateComponents(year: 2024, month: 10, day: 15, hour: 18, minute: 30, second: 0))!,
                 gameState: .CANCEL,
                 homeTeam: Team(name: "롯데 자이언츠", image: "lotteUnder", color: "lotte", backgroundImage: "lotteBg"),
                 awayTeam: Team(name: "두산 베어스", image: "doosanUnder", color: "doosan", backgroundImage: "doosanBg"),
@@ -426,7 +425,6 @@ struct MockDataBuilderForWidget {
                 season: "정규 시즌",
                 scoreBoard: []
             ),
-            // 8월 16일
             Match(
                 startDateTime: calendar.date(bySettingHour: 18, minute: 30, second: 0, of: calendar.date(byAdding: .day, value: 3, to: now)!)!,
                 gameState: .PREPARE,

@@ -17,7 +17,7 @@ final class HighlightUseCase {
     init(highlightService: HighlightServiceInterface) {
         self.highlightService = highlightService
         self.state = State(
-            HighlightInfo: nil,
+            HighlightInfo: highlightService.fetchMockHighlightsInfo(),
             selectedDate: nil
         )
     }
@@ -28,7 +28,7 @@ final class HighlightUseCase {
 extension HighlightUseCase {
     
     struct State {
-        var HighlightInfo: [Highlight]?
+        var HighlightInfo: [Highlight]
         var selectedDate: Date?
         var selectedHighlight: Highlight?
     }

@@ -29,5 +29,7 @@ final class HighlightServiceImpl: HighlightServiceInterface {
         return components[3...5].joined(separator: " ")
     }
     
-    
+    func fetchMockHighlightsInfo() -> [Highlight] {
+        return MockDataBuilder.mockHighlightInfo
+    }
 }
