@@ -1,5 +1,5 @@
 //
-//  StubSelectTeamService.swift
+//  SelectTeamServiceImpl.swift
 //  RookieKBO
 //
 //  Created by Simmons on 10/13/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StubSelectTeamService: SelectTeamServiceInterface {
+struct SelectTeamServiceImpl: SelectTeamServiceInterface {
     func fetchAllTeam() -> [Team] {
         return [
             Team(name: "SSG 랜더스", image: "ssgUnder", color: "ssg", backgroundImage: "ssgBg"),

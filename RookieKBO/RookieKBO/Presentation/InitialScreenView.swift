@@ -107,5 +107,5 @@ private struct TabBarModifier: ViewModifier {
     InitialScreenView()
         .environment(PathModel())
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
-        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
 }

@@ -168,7 +168,7 @@ private struct HeaderView: View {
 
 #Preview {
     MyTeamGameInfoView()
-        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(PathModel())
         .environment(PreviewHelperForWidget.mockMatchUseCase)

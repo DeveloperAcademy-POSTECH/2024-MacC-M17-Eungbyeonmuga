@@ -156,6 +156,6 @@ private struct SettingView: View {
 
 #Preview {
     MyPageView()
-        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
         .environment(PathModel())
 }

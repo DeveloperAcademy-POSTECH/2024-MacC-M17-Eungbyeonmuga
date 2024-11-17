@@ -50,7 +50,7 @@ enum WidgetMatchResult {
 
 // 선택한 팀 반환 함수
 func getSelectTeam() -> SelectTeamType {
-    let stubSelectTeamService = StubSelectTeamService()
+    let stubSelectTeamService = SelectTeamServiceImpl()
     guard let selectTeam = stubSelectTeamService.getUserDefaultsTeamObject() else {
         return .allType
     }
@@ -177,7 +177,7 @@ private func fetchMatchesFromServer() async -> Result<[Match], Error> {
 
 // 서버에서 받아온 매치 배열에서 필터링하는 함수
 func filterMatches() async -> Match? {
-    let stubSelectTeamService = StubSelectTeamService()
+    let stubSelectTeamService = SelectTeamServiceImpl()
     let selectedTeam = stubSelectTeamService.getUserDefaultsTeamObject()
     
     var filteredMatches: [Match] = []
@@ -207,7 +207,7 @@ func filterMatches() async -> Match? {
 
 // 목업 데이터 필터링 함수
 func filterMatches(matches: [Match]) -> Match? {
-    let stubSelectTeamService = StubSelectTeamService()
+    let stubSelectTeamService = SelectTeamServiceImpl()
     let selectedTeam = stubSelectTeamService.getUserDefaultsTeamObject()
     let filteredMatches: [Match]
     

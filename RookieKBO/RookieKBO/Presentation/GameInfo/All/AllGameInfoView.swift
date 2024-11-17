@@ -130,7 +130,7 @@ private struct HeaderView: View {
 
 #Preview {
     AllGameInfoView()
-        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(PathModel())
         .environment(PreviewHelperForWidget.mockMatchUseCase)

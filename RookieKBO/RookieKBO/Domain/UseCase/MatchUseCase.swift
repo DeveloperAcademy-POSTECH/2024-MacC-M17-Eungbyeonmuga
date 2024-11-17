@@ -139,4 +139,13 @@ extension MatchUseCase {
     func isValidDate(_ date: Date, from matchInfo: [Match]) -> Bool {
         matchService.isValidDate(date, from: matchInfo)
     }
+    
+    // 포스트시즌 및 정규시즌 확인
+    func getSeason() -> String {
+        if selectedDate?.getSeasonType() == nil {
+            return Date().getSeasonType()
+        } else {
+            return selectedDate!.getSeasonType()
+        }
+    }
 }

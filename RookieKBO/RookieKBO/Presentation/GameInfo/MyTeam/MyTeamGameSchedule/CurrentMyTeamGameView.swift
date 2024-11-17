@@ -68,7 +68,7 @@ struct CurrentMyTeamGameView: View {
 #Preview {
     CurrentMyTeamGameView(games: MockDataBuilderForWidget.mockMatchList)
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
-        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
         .environment(PathModel())
         .environment(PreviewHelperForWidget.mockMatchUseCase)
 }

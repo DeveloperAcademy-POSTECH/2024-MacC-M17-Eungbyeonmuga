@@ -16,7 +16,7 @@ struct RookieKBOApp: App {
             InitialScreenView()
                 .environment(PathModel())
                 .environment(MatchUseCase(matchService: MatchServiceImpl()))
-                .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+                .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
                 .environment(TermUseCase(termService: TermServiceImpl(termDictionary: termDictionary)))
                 .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
                 .environment(RankUseCase(rankService: RankServiceImpl()))

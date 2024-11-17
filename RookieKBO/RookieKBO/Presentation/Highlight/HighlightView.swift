@@ -123,6 +123,19 @@ private struct HighlightContentSettingView: View {
                     .fill(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary)
             )
             
+            Spacer(minLength: 0)
+            
+            if highlightUseCase.state.selectedDate != nil {
+                Button {
+                    highlightUseCase.fetchSelectedDate(nil)
+                } label: {
+                    Image(systemName: "arrow.counterclockwise.circle.fill")
+                        .resizable()
+                        .foregroundColor(.gray4)
+                        .frame(width: 32, height: 32)
+                }
+            }
+            
             Button {
                 isShowingSetCalendar = true
             } label: {
@@ -134,6 +147,7 @@ private struct HighlightContentSettingView: View {
                     Text(highlightUseCase.state.selectedDate == nil ? "날짜" : "\(highlightUseCase.state.selectedDate!.toMonthDayString())")
                         .font(.Body.body1)
                         .foregroundColor(.gray7)
+                        .frame(minWidth: 44)
                     
                     Image(systemName: "chevron.down")
                         .font(.Caption.caption1)
@@ -153,31 +167,6 @@ private struct HighlightContentSettingView: View {
                     }
                 )
             }
-            
-            if highlightUseCase.state.selectedDate != nil {
-                Button {
-                    highlightUseCase.fetchSelectedDate(nil)
-                } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: "arrow.counterclockwise")
-                            .font(.Caption.caption1)
-                            .foregroundColor(.gray7)
-                        
-                        Text("오늘")
-                            .font(.Body.body1)
-                            .foregroundColor(.gray7)
-                    }
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 20)
-                    .background(
-                        RoundedRectangle(cornerRadius: 99)
-                            .fill(.white0)
-                            .stroke(.gray2, lineWidth: 2)
-                    )
-                }
-            }
-            
-            Spacer(minLength: 0)
         }
         .padding()
         .sheet(isPresented: $isShowingSetCalendar) {
@@ -340,5 +329,5 @@ private struct HighlightContent: View {
     HighlightView()
         .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
         .environment(PathModel())
-        .environment(SelectTeamUseCase(selectTeamService: StubSelectTeamService()))
+        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
 }
