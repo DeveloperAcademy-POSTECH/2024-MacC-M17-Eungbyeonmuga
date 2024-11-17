@@ -25,9 +25,9 @@ struct SelectTeamView: View {
                     pathModel.pop()
                 } label: {
                     Image(systemName: "chevron.left")
-                        .foregroundColor(.black)
-                        .frame(width: 36, height: 44)
+                        .foregroundColor(.gray7)
                 }
+                .navigationBarTitle("응원 팀 설정", displayMode: .inline)
             } else {
                 EmptyView()
             }
