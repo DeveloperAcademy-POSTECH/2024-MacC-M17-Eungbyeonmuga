@@ -27,7 +27,7 @@ final class NewsUseCase {
 extension NewsUseCase {
     
     struct State {
-        var totalNews: [News]?
+        var totalNews: [News]
     }
 }
 
