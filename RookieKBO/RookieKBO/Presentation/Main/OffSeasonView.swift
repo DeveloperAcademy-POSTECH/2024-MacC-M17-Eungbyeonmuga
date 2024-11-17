@@ -407,10 +407,12 @@ private struct DateInfoView: View {
 private struct SetCalendarView: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(\.presentationMode) var presentationMode
     
     @State private var currentDate = Date()
     @State private var isValidDate = false
+    @State private var calendarColor: Color = .brandPrimary
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
     let matchInfo = MockDataBuilderForWidget.mockMatchList
@@ -428,14 +430,7 @@ private struct SetCalendarView: View {
             )
             .datePickerStyle(.graphical)
             .environment(\.locale, Locale(identifier: String(Locale.preferredLanguages[0])))
-            .tint(.brandPrimary)
-            .onAppear {
-                currentDate = matchUseCase.selectedDate ?? Date()
-                isValidDate = matchUseCase.isValidDate(currentDate, from: matchInfo)
-            }
-            .onChange(of: currentDate) { newDate in
-                isValidDate = matchUseCase.isValidDate(newDate, from: matchInfo)
-            }
+            .tint(calendarColor)
             
             Spacer()
             
@@ -450,12 +445,15 @@ private struct SetCalendarView: View {
                         .foregroundColor(.white0)
                         .background(
                             RoundedRectangle(cornerRadius: 16)
-                                .fill(
-                                    LinearGradient.gradient(
+                                .fill(selectTeamUseCase.state.selectedTeam?.name == "전체 구단" ?
+                                      LinearGradient.gradient(
                                         startColor: .brandPrimary,
                                         endColor: .brandPrimaryGd
-                                    )
-                                )
+                                      ) : LinearGradient.gradient(
+                                        startColor: calendarColor,
+                                        endColor: calendarColor
+                                      )
+                                     )
                         )
                 }
                 .padding(.vertical)
@@ -471,6 +469,14 @@ private struct SetCalendarView: View {
             }
         }
         .padding()
+        .onAppear {
+            calendarColor = Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary
+            currentDate = matchUseCase.selectedDate ?? Date()
+            isValidDate = matchUseCase.isValidDate(currentDate, from: matchInfo)
+        }
+        .onChange(of: currentDate) { newDate in
+            isValidDate = matchUseCase.isValidDate(newDate, from: matchInfo)
+        }
     }
 }
 
