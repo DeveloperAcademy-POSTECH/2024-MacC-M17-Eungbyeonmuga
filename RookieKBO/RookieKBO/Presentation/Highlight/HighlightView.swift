@@ -165,6 +165,7 @@ private struct HighlightContentSettingView: View {
                 )
             }
         }
+        .padding(.top, 8)
         .padding()
         .sheet(isPresented: $isShowingSetCalendar) {
             SetCalendarView()
