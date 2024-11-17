@@ -47,6 +47,7 @@ struct TermRow: View {
             Text(description)
                 .font(.Body.body2)
                 .foregroundColor(.gray7)
+                .frame(maxWidth: .infinity)
         }
         .padding(.all, 16)
         .background(.white0)

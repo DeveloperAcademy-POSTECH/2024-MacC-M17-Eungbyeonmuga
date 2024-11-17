@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ToastMessage: View {
-    
+
     let message: String
     
     @State private var opacity: CGFloat = 0
@@ -21,9 +21,9 @@ struct ToastMessage: View {
             .font(.Body.body1)
         
         .padding(.horizontal, 24)
-        .padding(.vertical, 22)
-        .background(.gray7)
-        .clipShape(RoundedRectangle(cornerRadius: 40))
+        .padding(.vertical, 16)
+        .background(.black70)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
         .opacity(opacity)
         .onChange(of: isToastPresented) { _, flag in
             if flag { toggleToast() }
