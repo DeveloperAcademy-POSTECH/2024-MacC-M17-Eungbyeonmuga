@@ -49,13 +49,6 @@ struct TeamScreenView: View {
         NavigationStack(path: $pathModel.path) {
             ZStack {
                 TabView(selection: $selectedTab) {
-//                    if selectTeamUseCase.state.selectedTeam?.name == "전체 구단" {
-//                        pathModel.build(.allGameInfo)
-//                            .tag(Tab.match)
-//                    } else {
-//                        pathModel.build(.myTeamGameInfo)
-//                            .tag(Tab.match)
-//                    }
                     pathModel.build(.offSeason)
                         .modifier(TabBarModifier(currentTab: selectedTab, selectedTab: .match))
                     
@@ -73,6 +66,11 @@ struct TeamScreenView: View {
             .navigationDestination(for: Screen.self) { screen in
                 pathModel.build(screen)
             }
+            .onOpenURL(perform: { (url) in
+                if url.absoluteString == "rookiekbo://highlight" {
+                    selectedTab = .highlight
+                }
+            })
         }
     }
 }

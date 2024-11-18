@@ -70,7 +70,9 @@ struct RookieKBOWidgetEntryView : View {
             }
             
             WidgetHighlight(entry: entry)
+            
         }
+        .widgetURL(URL(string: "rookiekbo://highlight"))
     }
 }
 
