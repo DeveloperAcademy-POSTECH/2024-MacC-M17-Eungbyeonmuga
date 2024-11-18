@@ -37,6 +37,7 @@ struct VideoTranscriptView: View {
     
     private var currentTranscript: VideoTranscript? {
         if let videoTranscript = termUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
+            print(videoTranscript)
             return videoTranscript
         } else {
             print("자막 생성 실패")
@@ -218,6 +219,7 @@ struct VideoTranscriptView: View {
                         ForEach(currentTranscript?.transcript.sorted(by: { $0.start < $1.start }) ?? [], id: \.id) { transcriptItem in
                             if let description = getTermDescription(for: transcriptItem.text), !description.isEmpty {
                                 let normalizedTerm = description.keys.first!
+                                
                                 let descriptionText = description[normalizedTerm]!
                                 
                                 let isTermSaved = isTermSaved(term: transcriptItem.text)

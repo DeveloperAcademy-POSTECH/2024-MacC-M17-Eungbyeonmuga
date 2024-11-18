@@ -71,7 +71,23 @@ let termDictionary: [String: String] = [
     "타격감": "타자의 현재 타격 상태",
     "리드오프": "경기의 첫 번째 타자",
     "클러치 히터": "중요한 순간에 타격 실력이 뛰어난 타자",
-    "승부수": "경기의 흐름을 바꾸는 결정적인 플레이"
+    "승부수": "경기의 흐름을 바꾸는 결정적인 플레이",
+    "중견수": "야구장에서 외야의 가운데를 수비하는 선수",
+    "볼카운트": "투수가 던진 공이 스트라이크와 볼로 얼마나 기록되었는지를 나타내는 수치",
+    "우중간": "야구장에서 우익수와 중견수 사이의 공간",
+    "최고 구속": "투수가 던진 공의 최고 속도",
+    "우익수": "야구장에서 외야의 오른쪽을 수비하는 선수",
+    "좌익수": "야구장에서 외야의 왼쪽을 수비하는 선수",
+    "이닝": "야구 경기에서 공격과 수비가 한 번씩 진행되는 단위",
+    "파인플레이": "수비수가 보여주는 뛰어나고 인상적인 수비 플레이",
+    "타석": "타자가 공을 치기 위해 서는 위치",
+    "마운드": "투수가 공을 던지는 야구장의 중심에 위치한 언덕",
+    "변화구": "투수가 직구와는 다르게 공을 회전시켜 궤적을 변화시키는 투구",
+    "유격수": "내야에서 2루와 3루 사이를 수비하는 선수",
+    "히팅 포인트": "타자가 공을 이상적으로 타격하는 지점",
+    "풀베이스": "베이스에 주자가 모두 있는 상태",
+    "삼구삼진": "투수가 세 번의 스트라이크만으로 타자를 아웃시키는 상황",
+    "고의 4구": "투수가 네 개의 볼을 던져 타자가 자동으로 1루로 진출하는 상황"
 ]
 
 let normalizedTerms: [String: String] = [
@@ -89,21 +105,32 @@ let normalizedTerms: [String: String] = [
     "포크 볼": "포크볼",
     "슬라이드": "슬라이더",
     "커브 볼": "커브볼",
-    "백투 백 홈런": "백투백 홈런"
+    "백투 백 홈런": "백투백 홈런",
+    "고의사구": "고의 4구"
 ]
 
 /// 옳은 용어로 반환
 func getTermDescription(for term: String) -> [String: String]? {
-    let normalizedTerm = normalizedTerms[term] ?? term
-
-    if let description = termDictionary[normalizedTerm] {
-        if normalizedTerm != term {
-            return [normalizedTerm: description]
-        } else {
-            return [term: description]
+    print("⚾️ \(term)")
+    
+    var result: [String: String] = [:]
+    
+    for definedTerm in termDictionary.keys {
+        if term.contains(definedTerm) {
+            if let description = termDictionary[definedTerm] {
+                result[definedTerm] = description
+            }
         }
-    } else {
-        return nil
     }
-}
+    
+    for normalizedTerm in normalizedTerms.keys {
+        if term.contains(normalizedTerm) {
+            let originalTerm = normalizedTerms[normalizedTerm] ?? normalizedTerm
+            if let description = termDictionary[originalTerm] {
+                result[originalTerm] = description
+            }
+        }
+    }
 
+    return result.isEmpty ? nil : result
+}
