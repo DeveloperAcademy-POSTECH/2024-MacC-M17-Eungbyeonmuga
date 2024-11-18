@@ -288,7 +288,6 @@ struct VideoTranscriptView: View {
                     Rectangle()
                         .foregroundColor(.gray6)
                         .opacity(0.3)
-                        .padding(.top, -16)
                         .onTapGesture {
                             withAnimation {
                                 isSearchActive.toggle()
