@@ -197,6 +197,7 @@ private struct ContentView: View {
     @Environment(MatchUseCase.self) private var matchUseCase
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(NewsUseCase.self) private var newsUseCase
+    @Environment(\.openURL) private var openURL
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
     let games: [Match] = MockDataBuilderForWidget.mockMatchList
@@ -308,10 +309,9 @@ private struct ContentView: View {
                 
                 ForEach(newsUseCase.state.totalNews ?? []) { news in
                     NewsBoard(newsInfo: news) {
-                        // TODO: 뉴스 화면 이동
-                        print("뉴스 화면 이동")
+                        openURL(URL(string: news.link)!)
                     }
-                        .padding(.bottom)
+                    .padding(.bottom)
                 }
             }
         }
