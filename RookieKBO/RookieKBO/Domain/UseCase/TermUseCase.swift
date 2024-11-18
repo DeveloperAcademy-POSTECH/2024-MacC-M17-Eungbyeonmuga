@@ -27,7 +27,7 @@ final class TermUseCase {
 extension TermUseCase {
     
     struct State {
-        var currentTranscript: [TranscriptItem]?
+        //
     }
 }
 
@@ -38,10 +38,5 @@ extension TermUseCase {
     /// txt 파일을 읽어서 해당 비디오 자막 반환
     func loadTranscript(from filename: String) -> VideoTranscript? {
         termService.loadTranscript(from: filename)
-    }
-    
-    /// 현재 비디오 자막 배열 반환
-    func updateCurrentTranscript(_ videoTranscript: VideoTranscript) {
-        state.currentTranscript = videoTranscript.transcript
     }
 }
