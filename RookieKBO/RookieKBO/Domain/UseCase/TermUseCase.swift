@@ -35,5 +35,8 @@ extension TermUseCase {
 
 extension TermUseCase {
     
-    // 함수 작성..
+    /// txt 파일을 읽어서 해당 비디오 자막 반환
+    func loadTranscript(from filename: String) -> VideoTranscript? {
+        termService.loadTranscript(from: filename)
+    }
 }
