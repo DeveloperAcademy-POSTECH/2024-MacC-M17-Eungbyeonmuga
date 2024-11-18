@@ -352,7 +352,7 @@ private struct DateInfoView: View {
     @State private var isShowingSetCalendar = false
     
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 0) {
             HStack(alignment: .bottom, spacing: 8) {
                 Text(matchUseCase.selectedDate == nil ? Date().toMonthDayString() : matchUseCase.selectedDate!.toMonthDayString())
                     .font(.CustomTitle.customTitle2)
@@ -362,13 +362,12 @@ private struct DateInfoView: View {
                     .font(.Head.head4b)
                     .foregroundColor(.gray5)
                     .padding(.bottom, 4)
-                
-                Spacer(minLength: 0)
             }
+            
+            Spacer(minLength: 0)
             
             if matchUseCase.selectedDate != nil {
                 Button {
-                    // TODO: 오늘로 초기화 및 뉴스 제공
                     matchUseCase.fetchSelectedDate(nil)
                 } label: {
                     Image(systemName: "arrow.counterclockwise.circle.fill")
@@ -376,6 +375,7 @@ private struct DateInfoView: View {
                         .foregroundColor(.gray4)
                         .frame(width: 32, height: 32)
                 }
+                .padding(.trailing, 8)
             }
             
             Button {
