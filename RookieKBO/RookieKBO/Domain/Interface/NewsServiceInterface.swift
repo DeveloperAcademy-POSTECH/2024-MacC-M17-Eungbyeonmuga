@@ -9,4 +9,5 @@ import Foundation
 
 protocol NewsServiceInterface {
     func fetchTotalNews() -> [News]
+    func fetchMockTotalNews() -> [News]
 }

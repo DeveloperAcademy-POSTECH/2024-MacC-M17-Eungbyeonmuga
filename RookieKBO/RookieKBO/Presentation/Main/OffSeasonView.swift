@@ -196,10 +196,10 @@ private struct ContentView: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @Environment(NewsUseCase.self) private var newsUseCase
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
     let games: [Match] = MockDataBuilderForWidget.mockMatchList
-    let totalNews: [News] = MockDataBuilder.mockEntireNews
     
     var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
     
@@ -241,17 +241,34 @@ private struct ContentView: View {
                 }
                 .padding(.vertical)
                 
-                ForEach(myTeamEndGames) { game in
-                    EndGameInfo(endGameInfo: game)
-                        .padding(.bottom, 4)
+                if myTeamEndGames.isEmpty && myTeamCancelGames.isEmpty {
+                    VStack(spacing: 0) {
+                        Image(selectTeamUseCase.state.selectedTeam?.image ?? "allTeamUnder")
+                            .resizable()
+                            .frame(width: 96, height: 96)
+                        
+                        Text("우리팀 경기가 없었어요!")
+                            .font(.Head.head5)
+                            .foregroundColor(.gray5)
+                            .padding(.vertical)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(RoundedRectangle(cornerRadius: 24)
+                        .fill(.white0))
+                    
+                } else {
+                    ForEach(myTeamEndGames) { game in
+                        EndGameInfo(endGameInfo: game)
+                            .padding(.bottom, 4)
+                    }
+                    
+                    ForEach(myTeamCancelGames) { game in
+                        CancelGameInfo(cancelGameInfo: game)
+                            .padding(.bottom, 4)
+                    }
                 }
                 
-                ForEach(myTeamCancelGames) { game in
-                    CancelGameInfo(cancelGameInfo: game)
-                        .padding(.bottom, 4)
-                }
-                
-                if currentTeam?.name != "전체 구단" {
+                if currentTeam?.name != "전체 구단" && (!otherTeamEndGames.isEmpty || !otherTeamCancelGames.isEmpty) {
                     HStack(spacing: 0) {
                         Text("종료된 다른팀 경기")
                             .font(.Body.body1)
@@ -289,7 +306,7 @@ private struct ContentView: View {
                 }
                 .padding(.vertical)
                 
-                ForEach(totalNews) { news in
+                ForEach(newsUseCase.state.totalNews ?? []) { news in
                     NewsBoard(newsInfo: news) {
                         // TODO: 뉴스 화면 이동
                         print("뉴스 화면 이동")
@@ -407,10 +424,12 @@ private struct DateInfoView: View {
 private struct SetCalendarView: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(\.presentationMode) var presentationMode
     
     @State private var currentDate = Date()
     @State private var isValidDate = false
+    @State private var calendarColor: Color = .brandPrimary
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
     let matchInfo = MockDataBuilderForWidget.mockMatchList
@@ -428,14 +447,7 @@ private struct SetCalendarView: View {
             )
             .datePickerStyle(.graphical)
             .environment(\.locale, Locale(identifier: String(Locale.preferredLanguages[0])))
-            .tint(.brandPrimary)
-            .onAppear {
-                currentDate = matchUseCase.selectedDate ?? Date()
-                isValidDate = matchUseCase.isValidDate(currentDate, from: matchInfo)
-            }
-            .onChange(of: currentDate) { newDate in
-                isValidDate = matchUseCase.isValidDate(newDate, from: matchInfo)
-            }
+            .tint(calendarColor)
             
             Spacer()
             
@@ -450,12 +462,15 @@ private struct SetCalendarView: View {
                         .foregroundColor(.white0)
                         .background(
                             RoundedRectangle(cornerRadius: 16)
-                                .fill(
-                                    LinearGradient.gradient(
+                                .fill(selectTeamUseCase.state.selectedTeam?.name == "전체 구단" ?
+                                      LinearGradient.gradient(
                                         startColor: .brandPrimary,
                                         endColor: .brandPrimaryGd
-                                    )
-                                )
+                                      ) : LinearGradient.gradient(
+                                        startColor: calendarColor,
+                                        endColor: calendarColor
+                                      )
+                                     )
                         )
                 }
                 .padding(.vertical)
@@ -471,6 +486,14 @@ private struct SetCalendarView: View {
             }
         }
         .padding()
+        .onAppear {
+            calendarColor = Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary
+            currentDate = matchUseCase.selectedDate ?? Date()
+            isValidDate = matchUseCase.isValidDate(currentDate, from: matchInfo)
+        }
+        .onChange(of: currentDate) { newDate in
+            isValidDate = matchUseCase.isValidDate(newDate, from: matchInfo)
+        }
     }
 }
 
@@ -480,4 +503,5 @@ private struct SetCalendarView: View {
         .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
         .environment(MatchUseCase(matchService: MatchServiceImpl()))
         .environment(RankUseCase(rankService: RankServiceImpl()))
+        .environment(NewsUseCase(newsService: NewsServiceImpl()))
 }

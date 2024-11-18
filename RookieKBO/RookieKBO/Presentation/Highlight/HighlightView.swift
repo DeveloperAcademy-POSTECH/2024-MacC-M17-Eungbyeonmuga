@@ -37,14 +37,11 @@ private struct HighlightContentView: View {
     @Environment(HighlightUseCase.self) private var highlightUseCase
     @Environment(PathModel.self) private var pathModel
     
-    // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
-    let highlightInfo = MockDataBuilder.mockHighlightInfo
-    
     private var filteredHighlights: [Highlight] {
         guard let selectedDate = highlightUseCase.state.selectedDate else {
-            return highlightInfo
+            return highlightUseCase.state.HighlightInfo
         }
-        return highlightUseCase.filterHighlights(for: selectedDate, in: highlightInfo)
+        return highlightUseCase.filterHighlights(for: selectedDate, in: highlightUseCase.state.HighlightInfo)
     }
     
     var body: some View {
@@ -168,6 +165,7 @@ private struct HighlightContentSettingView: View {
                 )
             }
         }
+        .padding(.top, 8)
         .padding()
         .sheet(isPresented: $isShowingSetCalendar) {
             SetCalendarView()
@@ -182,16 +180,15 @@ private struct HighlightContentSettingView: View {
 private struct SetCalendarView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(\.presentationMode) var presentationMode
     
     @State private var currentDate = Date()
     @State private var isValidDate = false
-    
-    // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
-    let highlightInfo = MockDataBuilder.mockHighlightInfo
+    @State private var calendarColor: Color = .brandPrimary
     
     private var matchingHighlights: [Highlight] {
-        highlightUseCase.filterHighlights(for: currentDate, in: highlightInfo)
+        highlightUseCase.filterHighlights(for: currentDate, in: highlightUseCase.state.HighlightInfo)
     }
     
     var body: some View {
@@ -203,14 +200,7 @@ private struct SetCalendarView: View {
             )
             .datePickerStyle(.graphical)
             .environment(\.locale, Locale(identifier: String(Locale.preferredLanguages[0])))
-            .tint(.brandPrimary)
-            .onAppear {
-                currentDate = highlightUseCase.state.selectedDate ?? Date()
-                isValidDate = highlightUseCase.isValidDate(currentDate, from: highlightInfo)
-            }
-            .onChange(of: currentDate) { newDate in
-                isValidDate = highlightUseCase.isValidDate(newDate, from: highlightInfo)
-            }
+            .tint(calendarColor)
             
             Spacer()
             
@@ -225,12 +215,15 @@ private struct SetCalendarView: View {
                         .foregroundColor(.white0)
                         .background(
                             RoundedRectangle(cornerRadius: 16)
-                                .fill(
-                                    LinearGradient.gradient(
+                                .fill(selectTeamUseCase.state.selectedTeam?.name == "전체 구단" ?
+                                      LinearGradient.gradient(
                                         startColor: .brandPrimary,
                                         endColor: .brandPrimaryGd
-                                    )
-                                )
+                                      ) : LinearGradient.gradient(
+                                        startColor: calendarColor,
+                                        endColor: calendarColor
+                                      )
+                                     )
                         )
                 }
                 .padding(.vertical)
@@ -246,6 +239,14 @@ private struct SetCalendarView: View {
             }
         }
         .padding()
+        .onAppear {
+            calendarColor = Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary
+            currentDate = highlightUseCase.state.selectedDate ?? Date()
+            isValidDate = highlightUseCase.isValidDate(currentDate, from: highlightUseCase.state.HighlightInfo)
+        }
+        .onChange(of: currentDate) { newDate in
+            isValidDate = highlightUseCase.isValidDate(newDate, from: highlightUseCase.state.HighlightInfo)
+        }
     }
 }
 

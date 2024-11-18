@@ -55,6 +55,108 @@ struct MockDataBuilder {
                 date: "2024-10-25",
                 thumbnail: "https://img.youtube.com/vi/KX9a8IufZzk/maxresdefault.jpg",
                 videoId: "KX9a8IufZzk"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.23 삼성 vs KIA | KS 2차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-23",
+                thumbnail: "https://img.youtube.com/vi/h2sSFb4iO5w/maxresdefault.jpg",
+                videoId: "h2sSFb4iO5w"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.21, 23 삼성 vs KIA | KS 1차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-21",
+                thumbnail: "https://img.youtube.com/vi/CPjtZBpAAiM/maxresdefault.jpg",
+                videoId: "CPjtZBpAAiM"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.19 삼성 vs LG | PO 4차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-19",
+                thumbnail: "https://img.youtube.com/vi/wFm3TGtGGe0/maxresdefault.jpg",
+                videoId: "wFm3TGtGGe0"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.17 삼성 vs LG | PO 3차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-17",
+                thumbnail: "https://img.youtube.com/vi/KlG1g-Qifvk/maxresdefault.jpg",
+                videoId: "KlG1g-Qifvk"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.15 LG vs 삼성 | PO 2차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-15",
+                thumbnail: "https://img.youtube.com/vi/fKadbXi2ziA/maxresdefault.jpg",
+                videoId: "fKadbXi2ziA"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.13 LG vs 삼성 | PO 1차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-13",
+                thumbnail: "https://img.youtube.com/vi/JPlJDQq9mAk/maxresdefault.jpg",
+                videoId: "JPlJDQq9mAk"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.11 KT vs LG | 준PO 5차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-11",
+                thumbnail: "https://img.youtube.com/vi/HY3nhUc23qQ/maxresdefault.jpg",
+                videoId: "HY3nhUc23qQ"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.9 LG vs KT | 준PO 4차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-09",
+                thumbnail: "https://img.youtube.com/vi/dO_HtRbaUf4/maxresdefault.jpg",
+                videoId: "dO_HtRbaUf4"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.8 LG vs KT | 준PO 3차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-08",
+                thumbnail: "https://img.youtube.com/vi/q1GKlVUfmvI/maxresdefault.jpg",
+                videoId: "q1GKlVUfmvI"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.6 KT vs LG | 준PO 2차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-06",
+                thumbnail: "https://img.youtube.com/vi/wMNCED6dOuE/maxresdefault.jpg",
+                videoId: "wMNCED6dOuE"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.5 KT vs LG | 준PO 1차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-05",
+                thumbnail: "https://img.youtube.com/vi/A4s_8HnDKkQ/maxresdefault.jpg",
+                videoId: "A4s_8HnDKkQ"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.3 KT vs 두산 | WC 2차전 | 2024 KBO 포스트시즌 | 야구",
+                date: "2024-10-03",
+                thumbnail: "https://img.youtube.com/vi/qtWxM9Pka4s/maxresdefault.jpg",
+                videoId: "qtWxM9Pka4s"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 10.2 KT vs 두산 | WC 1차전 | 2024 신한 SOL뱅크 KBO 포스트시즌 | 야구",
+                date: "2024-10-02",
+                thumbnail: "https://img.youtube.com/vi/BjPizSf4m2M/maxresdefault.jpg",
+                videoId: "BjPizSf4m2M"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 9.30 키움 vs SSG | 2024 신한 SOL뱅크 KBO 리그 | 야구",
+                date: "2024-09-30",
+                thumbnail: "https://img.youtube.com/vi/Lc0qABAPNYk/maxresdefault.jpg",
+                videoId: "Lc0qABAPNYk"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 9.30 NC vs KIA | 2024 신한 SOL뱅크 KBO 리그 | 야구",
+                date: "2024-09-30",
+                thumbnail: "https://img.youtube.com/vi/xqMXms9ZYrI/maxresdefault.jpg",
+                videoId: "xqMXms9ZYrI"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 9.29 NC vs 한화 | 2024 신한 SOL뱅크 KBO 리그 | 야구",
+                date: "2024-09-29",
+                thumbnail: "https://img.youtube.com/vi/EAsa-OEEnpQ/maxresdefault.jpg",
+                videoId: "EAsa-OEEnpQ"
+            ),
+            Highlight(
+                title: "[KBO 하이라이트] 9.28 키움 vs KT | 2024 신한 SOL뱅크 KBO 리그 | 야구",
+                date: "2024-09-28",
+                thumbnail: "https://img.youtube.com/vi/P9eP5iq27vE/maxresdefault.jpg",
+                videoId: "P9eP5iq27vE"
             )
         ]
     }
