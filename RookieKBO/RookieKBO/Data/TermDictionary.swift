@@ -110,9 +110,7 @@ let normalizedTerms: [String: String] = [
 ]
 
 /// 옳은 용어로 반환
-func getTermDescription(for term: String) -> [String: String]? {
-    print("⚾️ \(term)")
-    
+func getTermDescription(for term: String) -> [String: String]? {    
     var result: [String: String] = [:]
     
     for definedTerm in termDictionary.keys {

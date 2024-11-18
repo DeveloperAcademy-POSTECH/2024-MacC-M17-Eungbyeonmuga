@@ -40,6 +40,7 @@ struct TermRow: View {
                     Image(.iconFullbookmark) :
                     Image(.iconBookmark)
                 }
+                .padding(.leading, 8)
                 .onTapGesture {
                     isSaved.toggle()
                 }

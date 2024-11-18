@@ -37,7 +37,6 @@ struct VideoTranscriptView: View {
     
     private var currentTranscript: VideoTranscript? {
         if let videoTranscript = termUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
-            print(videoTranscript)
             return videoTranscript
         } else {
             print("자막 생성 실패")
@@ -57,14 +56,11 @@ struct VideoTranscriptView: View {
             if termDictionary[matchingItem.text] != nil {
                 playingItemId = matchingItem.id
                 isPlaying = true
-                //                print("재생중~ \(matchingItem.text) 지금 시간은~ \(time)")
             } else {
                 isPlaying = false
-                //                print("매칭 안된 항목: \(matchingItem.text), time: \(time)")
             }
         } else {
             isPlaying = false
-            //            print("매칭 안됐어 짜식아 \(time)")
         }
     }
     
@@ -222,7 +218,7 @@ struct VideoTranscriptView: View {
                                 
                                 let descriptionText = description[normalizedTerm]!
                                 
-                                let isTermSaved = isTermSaved(term: transcriptItem.text)
+                                let isTermSaved = isTermSaved(term: normalizedTerm)
                                 
                                 TermRow(
                                     isPlaying: Binding(
@@ -240,9 +236,9 @@ struct VideoTranscriptView: View {
                                         get: { isTermSaved },
                                         set: { newValue in
                                             if newValue {
-                                                createTermEntry(term: transcriptItem.text, definition: descriptionText)
+                                                createTermEntry(term: normalizedTerm, definition: descriptionText)
                                             } else {
-                                                deleteTermEntry(term: transcriptItem.text)
+                                                deleteTermEntry(term: normalizedTerm)
                                             }
                                         }
                                     ),
