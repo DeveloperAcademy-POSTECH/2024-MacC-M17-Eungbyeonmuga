@@ -35,6 +35,7 @@ struct NewsBoard: View {
                         .font(.Body.body2)
                         .foregroundColor(.gray7)
                         .lineLimit(2)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .multilineTextAlignment(.leading)
                         .padding(12)
                         .frame(maxWidth: .infinity)

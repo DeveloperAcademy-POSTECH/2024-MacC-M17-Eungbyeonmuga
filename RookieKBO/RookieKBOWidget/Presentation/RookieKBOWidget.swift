@@ -25,7 +25,6 @@ struct Provider: AppIntentTimelineProvider {
         
         let currentDate = Date()
         let entryDate = Calendar.current.date(byAdding: .second, value: 1, to: currentDate)!
-//        let todayMatch = await filterMatches()
         let entry = WidgetEntry(date: entryDate, selectedTeamType: selectedTeamAppIntent, match: filterMatches(matches: MockDataBuilderForWidget.mockMatchList))
         entries.append(entry)
         
@@ -42,7 +41,6 @@ struct WidgetEntry: TimelineEntry {
 struct RookieKBOWidgetEntryView : View {
     
     var entry: Provider.Entry
-    var currentMatch: Match? { entry.match }
     
     var body: some View {
         ZStack {
@@ -68,34 +66,13 @@ struct RookieKBOWidgetEntryView : View {
             case .ncType:
                 BackgroundView(image: "img_widgetnc")
             case .allType:
-                if currentMatch == nil {
-                    let gradient = LinearGradient.gradient(startColor: .brandPrimary, endColor: .brandPrimaryGd)
-                    
-                    AnyView(Rectangle().fill(gradient))
-                } else {
-                    allTypeBackgroundView(entry: entry)
-                }
+                BackgroundView(image: "img_widgetall")
             }
             
-            if currentMatch?.gameState == .CANCEL.self {
-                WidgetCancelGame(entry: entry)
-            }
+            WidgetHighlight(entry: entry)
             
-            else if currentMatch?.gameState == .END.self {
-                WidgetEndGame(entry: entry)
-            }
-            
-            else if currentMatch?.gameState == .PLAYING.self {
-                WidgetPlayingGame(entry: entry)
-            }
-            
-            else if currentMatch?.gameState == .PREPARE {
-                WidgetPreparingGame(entry: entry)
-            }
-            else {
-                WidgetNoGame(entry: entry)
-            }
         }
+        .widgetURL(URL(string: "rookiekbo://highlight"))
     }
 }
 
@@ -106,33 +83,14 @@ private func BackgroundView(image: String) -> some View {
         .resizable()
         .scaledToFill()
         .containerBackground(for: .widget) {
+            
         }
 }
-
-// MARK: - allTypeBackgroundView
-
-private func allTypeBackgroundView(entry: Provider.Entry) -> some View {
-
-    let defaultColorString = "allTeam"
-    let homeTeamColorString = entry.match?.homeTeam.color ?? defaultColorString
-    let awayTeamColorString = entry.match?.awayTeam.color ?? defaultColorString
-
-    let homeColor = Color.teamColor(for: homeTeamColorString)
-    let awayColor = Color.teamColor(for: awayTeamColorString)
-
-    let gradient = LinearGradient.gradient(
-        startColor: awayColor ?? Color.widget30,
-        endColor: homeColor ?? Color.widget30
-    )
-    
-    return AnyView(Rectangle().fill(gradient))
-}
-
 
 struct RookieKBOWidget: Widget {
     
     // TODO: 각자 위젯 아이디로 변경
-    let kind: String = "com.rookiekbo.simmons.widget"
+    let kind: String = "com.rookiekbo.widget"
     
     var body: some WidgetConfiguration {
         
@@ -141,7 +99,7 @@ struct RookieKBOWidget: Widget {
                 .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("루키크보 위젯")
-        .description("곧 다가올 경기 일정부터 실시간 경기 정보까지, \n응원 팀의 정보를 한눈에 확인하세요!")
+        .description("곧 다가올 경기 일정부터 하이라이트까지, \n응원 팀의 정보를 한눈에 확인하세요!")
         .supportedFamilies([.systemSmall])
         .contentMarginsDisabled()
     }

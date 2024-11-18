@@ -14,24 +14,15 @@ struct SavedTermsView: View {
     @Environment(\.modelContext) var modelContext
     
     @State private var isSaved: Bool = false
+    @State private var isShowToastMessage: Bool = false
+    @State private var toastMessage: String = ""
     
     @Query var savedTermEntry: [TermEntry]
     
     var body: some View {
         ZStack {
-            Color.gray2
-                .ignoresSafeArea(.all)
-            
             if savedTermEntry.isEmpty {
                 NoSavedTermsView()
-                    .navigationBarBackButtonHidden(true)
-                    .navigationBarItems(leading: Button {
-                        pathModel.pop()
-                    } label : {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.gray7)
-                    })
-                    .navigationBarTitle("저장된 야구 용어", displayMode: .inline)
             }
             else {
                 ScrollView {
@@ -42,7 +33,9 @@ struct SavedTermsView: View {
                             SavedTermRow(
                                 isSaved: Binding(
                                     get: { isTermSaved },
-                                    set: { _ in deleteTermEntry(term: termEntry.term) }
+                                    set: { _ in
+                                        deleteTermEntry(term: termEntry.term)
+                                    }
                                 ),
                                 term: termEntry.term,
                                 description: termEntry.definition
@@ -53,17 +46,28 @@ struct SavedTermsView: View {
                     }
                     .padding(.top, 24)
                 }
-                .navigationBarBackButtonHidden(true)
-                .navigationBarItems(leading: Button {
-                    pathModel.pop()
-                } label : {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.gray7)
-                })
-                .navigationBarTitle("저장된 야구 용어", displayMode: .inline)
-                .background(Color.gray2)
+            }
+            
+            VStack {
+                Spacer()
+                
+                ToastMessage(
+                    message: toastMessage,
+                    isToastPresented: $isShowToastMessage
+                )
+                .padding(.bottom, 35)
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: Button {
+            pathModel.pop()
+        } label: {
+            Image(systemName: "chevron.left")
+                .foregroundColor(.gray7)
+        })
+        .navigationBarTitle("저장된 야구 용어", displayMode: .inline)
+        .background(.gray2)
+        
     }
     
     private func isTermSaved(term: String) -> Bool {
@@ -73,6 +77,8 @@ struct SavedTermsView: View {
     private func deleteTermEntry(term: String) {
         if let termToDelete = savedTermEntry.first(where: { $0.term == term }) {
             modelContext.delete(termToDelete)
+            isShowToastMessage = true
+            toastMessage = "'\(term)' 삭제되었어요."
             print("✅ \(term) 용어가 삭제")
         } else {
             print("❌ 삭제할 용어를 찾을 수 없음")
@@ -103,10 +109,9 @@ private struct NoSavedTermsView: View {
             
             Spacer()
         }
+        .frame(maxWidth: .infinity)
     }
-    
 }
-
 
 #Preview {
     SavedTermsView()
