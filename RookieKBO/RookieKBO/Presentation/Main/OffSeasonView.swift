@@ -489,10 +489,12 @@ private struct SetCalendarView: View {
         .onAppear {
             calendarColor = Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary
             currentDate = matchUseCase.selectedDate ?? Date()
-            isValidDate = matchUseCase.isValidDate(currentDate, from: matchInfo)
+//            isValidDate = matchUseCase.isValidDate(currentDate, from: matchInfo)
+            isValidDate = matchUseCase.isValidDate(currentDate)
         }
         .onChange(of: currentDate) { newDate in
-            isValidDate = matchUseCase.isValidDate(newDate, from: matchInfo)
+//            isValidDate = matchUseCase.isValidDate(newDate, from: matchInfo)
+            isValidDate = matchUseCase.isValidDate(currentDate)
         }
     }
 }

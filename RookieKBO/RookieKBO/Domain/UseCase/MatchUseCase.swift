@@ -135,9 +135,14 @@ extension MatchUseCase {
         matchService.filterMatches(for: selectedDate, in: matchInfo)
     }
     
+//    // 유효한 날짜인지 확인
+//    func isValidDate(_ date: Date, from matchInfo: [Match]) -> Bool {
+//        matchService.isValidDate(date, from: matchInfo)
+//    }
+    
     // 유효한 날짜인지 확인
-    func isValidDate(_ date: Date, from matchInfo: [Match]) -> Bool {
-        matchService.isValidDate(date, from: matchInfo)
+    func isValidDate(_ date: Date) -> Bool {
+        matchService.isValidDate(date)
     }
     
     // 포스트시즌 및 정규시즌 확인
