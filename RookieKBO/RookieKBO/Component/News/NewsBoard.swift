@@ -31,7 +31,7 @@ struct NewsBoard: View {
                 VStack(spacing: 0) {
                     Spacer()
                     
-                    Text(newsInfo.title)
+                    Text(newsInfo.title.forceCharWrapping)
                         .font(.Body.body2)
                         .foregroundColor(.gray7)
                         .lineLimit(2)
