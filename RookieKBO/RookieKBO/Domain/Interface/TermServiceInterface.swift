@@ -8,5 +8,6 @@
 import Foundation
 
 protocol TermServiceInterface {
-    // 함수 작성
+    
+    func loadTranscript(from filename: String) -> VideoTranscript? 
 }

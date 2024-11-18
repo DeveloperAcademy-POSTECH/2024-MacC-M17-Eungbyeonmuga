@@ -36,7 +36,12 @@ struct VideoTranscriptView: View {
     }
     
     private var currentTranscript: VideoTranscript? {
-        MockDataBuilder.mockTranscriptList.first(where: { $0.videoId == highlightUseCase.state.selectedHighlight?.videoId ?? "" })
+        if let videoTranscript = termUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
+            return videoTranscript
+        } else {
+            print("자막 생성 실패")
+            return nil
+        }
     }
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
