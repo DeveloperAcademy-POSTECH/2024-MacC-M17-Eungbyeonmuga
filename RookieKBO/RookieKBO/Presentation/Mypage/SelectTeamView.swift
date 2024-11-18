@@ -20,7 +20,7 @@ struct SelectTeamView: View {
     
     var backButton: some View {
         Group {
-            if UserDefaults.shared.string(forKey: "selectTeam") != nil {
+            if selectTeamUseCase.getUserDefaultsTeamObject() != nil {
                 Button {
                     pathModel.pop()
                 } label: {
