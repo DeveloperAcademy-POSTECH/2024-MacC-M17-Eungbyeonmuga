@@ -44,7 +44,7 @@ struct TermRow: View {
                     isSaved.toggle()
                 }
             }
-            Text(description)
+            Text(description.forceCharWrapping)
                 .font(.Body.body2)
                 .foregroundColor(.gray7)
         }

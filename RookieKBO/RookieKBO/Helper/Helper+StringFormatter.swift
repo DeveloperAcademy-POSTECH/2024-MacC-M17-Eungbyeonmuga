@@ -13,6 +13,11 @@ extension String {
         return self.components(separatedBy: " ").first ?? ""
     }
     
+    // byWordWrapping에서 byCharWrapping으로 변경 (200B: 가로폭 없는 공백문자)
+    var forceCharWrapping: Self {
+        self.map({ String($0) }).joined(separator: "\u{200B}")
+    }
+    
     static let teamImages: [String: String] = [
         "ssg": "ssg",
         "kia": "kia",

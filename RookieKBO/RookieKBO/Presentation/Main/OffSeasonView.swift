@@ -197,6 +197,7 @@ private struct ContentView: View {
     @Environment(MatchUseCase.self) private var matchUseCase
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(NewsUseCase.self) private var newsUseCase
+    @Environment(\.openURL) private var openURL
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
     let games: [Match] = MockDataBuilderForWidget.mockMatchList
@@ -308,10 +309,9 @@ private struct ContentView: View {
                 
                 ForEach(newsUseCase.state.totalNews ?? []) { news in
                     NewsBoard(newsInfo: news) {
-                        // TODO: 뉴스 화면 이동
-                        print("뉴스 화면 이동")
+                        openURL(URL(string: news.link)!)
                     }
-                        .padding(.bottom)
+                    .padding(.bottom)
                 }
             }
         }
@@ -352,7 +352,7 @@ private struct DateInfoView: View {
     @State private var isShowingSetCalendar = false
     
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 0) {
             HStack(alignment: .bottom, spacing: 8) {
                 Text(matchUseCase.selectedDate == nil ? Date().toMonthDayString() : matchUseCase.selectedDate!.toMonthDayString())
                     .font(.CustomTitle.customTitle2)
@@ -362,13 +362,12 @@ private struct DateInfoView: View {
                     .font(.Head.head4b)
                     .foregroundColor(.gray5)
                     .padding(.bottom, 4)
-                
-                Spacer(minLength: 0)
             }
+            
+            Spacer(minLength: 0)
             
             if matchUseCase.selectedDate != nil {
                 Button {
-                    // TODO: 오늘로 초기화 및 뉴스 제공
                     matchUseCase.fetchSelectedDate(nil)
                 } label: {
                     Image(systemName: "arrow.counterclockwise.circle.fill")
@@ -376,6 +375,7 @@ private struct DateInfoView: View {
                         .foregroundColor(.gray4)
                         .frame(width: 32, height: 32)
                 }
+                .padding(.trailing, 8)
             }
             
             Button {
