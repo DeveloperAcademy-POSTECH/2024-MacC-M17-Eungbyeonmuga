@@ -14,15 +14,10 @@ struct VideoTranscriptView: View {
     @Environment(TermUseCase.self) private var termUseCase
     @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @Environment(HighlightUseCase.self) private var highlightUseCase
     @Environment(\.modelContext) var modelContext
     
     @Query var savedTermEntry: [TermEntry]
-    
-    // 데이터 변경
-    @StateObject private var youtubePlayer = YouTubePlayer(
-        source: .url("https://www.youtube.com/watch?v=uaK6e95za0w"),
-        configuration: YouTubePlayer.Configuration(autoPlay: true)
-    )
     
     @State private var searchText = ""
     @State private var playingItemId: UUID?
@@ -34,28 +29,36 @@ struct VideoTranscriptView: View {
     @State private var isShowToastMessage: Bool = false
     @State private var toastMessage: String = ""
     
-    // 데이터 변경
-    private let currentTranscript = MockDataBuilder.mockTranscript
+    
+    private var youtubePlayer: YouTubePlayer {
+        YouTubePlayer( source: .url("https://www.youtube.com/watch?v=\(highlightUseCase.state.selectedHighlight?.videoId ?? "")"),
+                       configuration: YouTubePlayer.Configuration(autoPlay: true))
+    }
+    
+    private var currentTranscript: VideoTranscript? {
+        MockDataBuilder.mockTranscriptList.first(where: { $0.videoId == highlightUseCase.state.selectedHighlight?.videoId ?? "" })
+    }
+    
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     /// 재생될 때 업데이트 하는 함수
     private func updateIsPlaying(for time: TimeInterval) {
-        let matchingItems = currentTranscript.transcript.filter { transcriptItem in
+        let matchingItems = currentTranscript?.transcript.filter { transcriptItem in
             abs(transcriptItem.start - time) <= 1.0
         }
         
-        if let matchingItem = matchingItems.first {
+        if let matchingItem = matchingItems?.first {
             if termDictionary[matchingItem.text] != nil {
                 playingItemId = matchingItem.id
                 isPlaying = true
-//                print("재생중~ \(matchingItem.text) 지금 시간은~ \(time)")
+                //                print("재생중~ \(matchingItem.text) 지금 시간은~ \(time)")
             } else {
                 isPlaying = false
-//                print("매칭 안된 항목: \(matchingItem.text), time: \(time)")
+                //                print("매칭 안된 항목: \(matchingItem.text), time: \(time)")
             }
         } else {
             isPlaying = false
-//            print("매칭 안됐어 짜식아 \(time)")
+            //            print("매칭 안됐어 짜식아 \(time)")
         }
     }
     
@@ -176,14 +179,14 @@ struct VideoTranscriptView: View {
             if searchText.isEmpty {
                 termContent
             } else {
-                let filteredItems = currentTranscript.transcript.filter {
+                let filteredItems = currentTranscript?.transcript.filter {
                     $0.text.lowercased().contains(searchText.lowercased())
                 }
                 
-                if filteredItems.isEmpty {
+                if filteredItems?.isEmpty == true {
                     noSearchResults
                 } else {
-                    searchResultsView(filteredItems)
+                    searchResultsView(filteredItems ?? [])
                 }
             }
         }
@@ -207,13 +210,13 @@ struct VideoTranscriptView: View {
                         Spacer()
                             .frame(height: 16)
                         
-                        ForEach(currentTranscript.transcript.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
+                        ForEach(currentTranscript?.transcript.sorted(by: { $0.start < $1.start }) ?? [], id: \.id) { transcriptItem in
                             if let description = getTermDescription(for: transcriptItem.text), !description.isEmpty {
                                 let normalizedTerm = description.keys.first!
                                 let descriptionText = description[normalizedTerm]!
-
+                                
                                 let isTermSaved = isTermSaved(term: transcriptItem.text)
-
+                                
                                 TermRow(
                                     isPlaying: Binding(
                                         get: { playingItemId == transcriptItem.id },
@@ -270,7 +273,7 @@ struct VideoTranscriptView: View {
                                 EmptyView()
                             }
                         }
-
+                        
                     }
                 }
                 
