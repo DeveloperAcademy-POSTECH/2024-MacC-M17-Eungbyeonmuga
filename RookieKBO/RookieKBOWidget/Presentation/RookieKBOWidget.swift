@@ -10,11 +10,11 @@ import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> WidgetEntry {
-        WidgetEntry(date: Date(), selectedTeamType: .allType, match: MockDataBuilderForWidget.mockMatch)
+        WidgetEntry(date: Date(), selectedTeamType: .allType)
     }
     
     func snapshot(for configuration: SelectTeamAppIntent, in context: Context) async -> WidgetEntry {
-        WidgetEntry(date: Date(), selectedTeamType: configuration, match: MockDataBuilderForWidget.mockMatch)
+        WidgetEntry(date: Date(), selectedTeamType: configuration)
     }
     
     func timeline(for configuration: SelectTeamAppIntent, in context: Context) async -> Timeline<WidgetEntry> {
@@ -25,7 +25,7 @@ struct Provider: AppIntentTimelineProvider {
         
         let currentDate = Date()
         let entryDate = Calendar.current.date(byAdding: .second, value: 1, to: currentDate)!
-        let entry = WidgetEntry(date: entryDate, selectedTeamType: selectedTeamAppIntent, match: filterMatches(matches: MockDataBuilderForWidget.mockMatchList))
+        let entry = WidgetEntry(date: entryDate, selectedTeamType: selectedTeamAppIntent)
         entries.append(entry)
         
         return Timeline(entries: entries, policy: .atEnd)
@@ -35,7 +35,6 @@ struct Provider: AppIntentTimelineProvider {
 struct WidgetEntry: TimelineEntry {
     let date: Date
     var selectedTeamType: SelectTeamAppIntent
-    var match: Match?
 }
 
 struct RookieKBOWidgetEntryView : View {
@@ -178,5 +177,5 @@ extension SelectTeamAppIntent {
 #Preview(as: .systemSmall) {
     RookieKBOWidget()
 } timeline: {
-    WidgetEntry(date: .now, selectedTeamType: .allType, match: MockDataBuilderForWidget.mockMatch)
+    WidgetEntry(date: .now, selectedTeamType: .allType)
 }
