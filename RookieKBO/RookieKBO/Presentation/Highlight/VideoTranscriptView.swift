@@ -28,12 +28,18 @@ struct VideoTranscriptView: View {
     @State private var currentPlaybackTime: TimeInterval = 0
     @State private var isShowToastMessage: Bool = false
     @State private var toastMessage: String = ""
+    @State private var currentVideoId: String = ""
     
+    @State var youtubePlayer: YouTubePlayer
     
-    private var youtubePlayer: YouTubePlayer {
-        YouTubePlayer( source: .url("https://www.youtube.com/watch?v=\(highlightUseCase.state.selectedHighlight?.videoId ?? "")"),
-                       configuration: YouTubePlayer.Configuration(autoPlay: true))
+    init(videoId: String) {
+        youtubePlayer = YouTubePlayer(
+            source: .url("https://www.youtube.com/watch?v=\(videoId)"),
+            configuration: YouTubePlayer.Configuration(autoPlay: true)
+        )
     }
+//    @StateObject private var youtubePlayer: YouTubePlayer
+
     
     private var currentTranscript: VideoTranscript? {
         if let videoTranscript = termUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
@@ -47,14 +53,38 @@ struct VideoTranscriptView: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     /// 재생될 때 업데이트 하는 함수
+    
+//    private func updateIsPlaying(for time: TimeInterval) {
+//        let matchingItems = currentTranscript?.transcript.filter { transcriptItem in
+//            abs(transcriptItem.start - time) <= 1.0
+//        }
+//        
+//        if let matchingItem = matchingItems?.first {
+//            if termDictionary[matchingItem.text] != nil {
+//                playingItemId = matchingItem.id
+//                isPlaying = true
+//            } else {
+//                isPlaying = false
+//            }
+//        } else {
+//            isPlaying = false
+//        }
+//    }
+    
     private func updateIsPlaying(for time: TimeInterval) {
-        let matchingItems = currentTranscript?.transcript.filter { transcriptItem in
+        guard let currentTranscript = currentTranscript else { return }
+
+        let matchingItems = currentTranscript.transcript.filter { transcriptItem in
             abs(transcriptItem.start - time) <= 1.0
         }
         
-        if let matchingItem = matchingItems?.first {
-            if termDictionary[matchingItem.text] != nil {
+        print("🎀🎀🎀",matchingItems)
+
+        if let matchingItem = matchingItems.first {
+            if let description = getTermDescription(for: matchingItem.text), !description.isEmpty {
+
                 playingItemId = matchingItem.id
+                print("🎀",playingItemId)
                 isPlaying = true
             } else {
                 isPlaying = false
@@ -63,6 +93,7 @@ struct VideoTranscriptView: View {
             isPlaying = false
         }
     }
+
     
     /// 용어 삭제
     private func deleteTermEntry(term: String) {
@@ -127,7 +158,6 @@ struct VideoTranscriptView: View {
     
     var body: some View {
         ZStack {
-            
             // 상단 배경
             Color(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary)
                 .ignoresSafeArea(edges: .top)
@@ -153,7 +183,6 @@ struct VideoTranscriptView: View {
                             }
                         }
                 }
-                
                 if isSearchActive {
                     searchContent
                 } else {
@@ -161,14 +190,19 @@ struct VideoTranscriptView: View {
                 }
             }
             .onReceive(timer) { _ in
-                youtubePlayer.getCurrentTime { result in
-                    switch result {
-                    case .success(let time):
-                        currentPlaybackTime = time.value
-                        updateIsPlaying(for: currentPlaybackTime)
-                    case .failure(let error):
-                        print("재생 시간 가져오는 에러다 짜식아 \(error)")
+                if youtubePlayer.isPlaying {
+                    youtubePlayer.getCurrentTime { result in
+                        switch result {
+                        case .success(let time):
+                            print("🍮🍮🍮", time.value)
+                            currentPlaybackTime = time.value
+                            updateIsPlaying(for: currentPlaybackTime)
+                        case .failure(let error):
+                            print("재생 시간 가져오는 에러다 짜식아 \(error.localizedDescription)")
+                        }
                     }
+                } else {
+                    print("플레이어가 재생되지 않음")
                 }
             }
         }
@@ -416,10 +450,10 @@ private struct SearchBar: View {
 }
 
 
-#Preview {
-    VideoTranscriptView()
-        .environment(PreviewHelper.mockTermUseCase)
-        .environment(PathModel())
-        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
-        .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
-}
+//#Preview {
+//    VideoTranscriptView()
+//        .environment(PreviewHelper.mockTermUseCase)
+//        .environment(PathModel())
+//        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
+//        .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
+//}
