@@ -199,9 +199,6 @@ private struct ContentView: View {
     @Environment(NewsUseCase.self) private var newsUseCase
     @Environment(\.openURL) private var openURL
     
-    // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
-//    let games: [Match] = MockDataBuilderForWidget.mockMatchList
-    
     var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
     
     // 종료된 우리 팀 경기
