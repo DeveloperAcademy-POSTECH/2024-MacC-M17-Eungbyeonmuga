@@ -107,11 +107,6 @@ final class MatchServiceImpl: MatchServiceInterface {
         return team.name.lowercased().contains(myTeam.name.lowercased())
     }
     
-//    func isValidDate(_ date: Date, from matchInfo: [Match]) -> Bool {
-//        let validDates = matchInfo.compactMap { $0.startDateTime }
-//        return validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: date) })
-//    }
-    
     func isValidDate(_ date: Date) -> Bool {
         let validDates = MockDataBuilderForWidget.mockTotalGameDate()
         return validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: date) })
