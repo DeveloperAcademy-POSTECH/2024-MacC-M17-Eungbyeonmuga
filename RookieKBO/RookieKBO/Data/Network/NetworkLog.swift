@@ -7,7 +7,7 @@
 
 import Foundation
 
-#if DEBUG
+//#if DEBUG
 enum NetworkLog {
     
     private static let isPrint = true
@@ -54,4 +54,4 @@ enum NetworkLog {
         }
     }
 }
-#endif
+//#endif
