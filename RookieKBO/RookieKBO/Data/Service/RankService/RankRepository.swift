@@ -13,7 +13,7 @@ final class RankRepository {
     
     /// Ranks 정보를 패치합니다.
     func fetchRanks() async -> Result<FetchRanksResponse, Error> {
-        let url = APIs.RookieKBO.FastAPI.fetchRanks.url
+        let url = APIs.RookieKBO.Teams.fetchRanks.url
         let response: Result<BaseResponse<FetchRanksResponse>, Error> = await client.get(url: url)
         do {
             return try .success(response.get().result)
