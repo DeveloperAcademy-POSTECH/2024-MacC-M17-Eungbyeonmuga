@@ -12,7 +12,8 @@ struct FetchMatchesRequest: Encodable {
 }
 
 struct FetchMatchesResponse: Decodable {
-    let gameInfos: [GameInfo]
+    let isAvailable: Bool
+    let games: [GameInfo]
     
     struct GameInfo: Decodable {
         let season: String
@@ -88,10 +89,16 @@ struct FetchMatchesResponse: Decodable {
                 gameState = .END
             }
             
-            let scoreBoard = [
-                ScoreBoard(homeAndAway: .HOME, runs: homeRHEB[0], hits: homeRHEB[1], errors: homeRHEB[2], balls: homeRHEB[3], scores: homeScores),
-                ScoreBoard(homeAndAway: .AWAY, runs: awayRHEB[0], hits: awayRHEB[1], errors: awayRHEB[2], balls: awayRHEB[3], scores: awayScores)
-            ]
+            let scoreBoard: [ScoreBoard]
+            
+            if gameState != .CANCEL {
+                scoreBoard = [
+                    ScoreBoard(homeAndAway: .HOME, runs: homeRHEB[0], hits: homeRHEB[1], errors: homeRHEB[2], balls: homeRHEB[3], scores: homeScores),
+                    ScoreBoard(homeAndAway: .AWAY, runs: awayRHEB[0], hits: awayRHEB[1], errors: awayRHEB[2], balls: awayRHEB[3], scores: awayScores)
+                ]
+            } else {
+                scoreBoard = []
+            }
             
             let match = Match(
                 startDateTime: date,
@@ -110,8 +117,8 @@ struct FetchMatchesResponse: Decodable {
     func toMatches() -> Result<[Match], NetworkError> {
         var matches: [Match] = []
         
-        for gameInfo in gameInfos {
-            switch gameInfo.toMatch() {
+        for game in games {
+            switch game.toMatch() {
             case .success(let match):
                 if let scoreBoard = match.scoreBoard,
                    !(match.gameState == .END && scoreBoard[0].scores.isEmpty) {

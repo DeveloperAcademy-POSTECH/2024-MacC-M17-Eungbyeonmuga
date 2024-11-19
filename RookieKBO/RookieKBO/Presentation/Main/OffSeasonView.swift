@@ -200,7 +200,7 @@ private struct ContentView: View {
     @Environment(\.openURL) private var openURL
     
     // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
-    let games: [Match] = MockDataBuilderForWidget.mockMatchList
+//    let games: [Match] = MockDataBuilderForWidget.mockMatchList
     
     var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
     
@@ -320,7 +320,7 @@ private struct ContentView: View {
     }
     
     private func filteredGames(myTeamGames: Bool) -> [Match] {
-        games.filter { game in
+        matchUseCase.matches.filter { game in
             // 모든 게임이 과거 날짜인지 확인
             matchUseCase.isDateInPast(game.startDateTime)
         }
@@ -454,6 +454,9 @@ private struct SetCalendarView: View {
             if isValidDate {
                 Button {
                     matchUseCase.fetchSelectedDate(currentDate)
+                    Task {
+                        await matchUseCase.fetchMatches(date: currentDate.toFormattedString())
+                    }
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("이 날의 경기 정보를 볼래요!")

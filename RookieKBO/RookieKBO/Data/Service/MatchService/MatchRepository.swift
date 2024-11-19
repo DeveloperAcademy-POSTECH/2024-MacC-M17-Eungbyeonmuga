@@ -13,8 +13,8 @@ final class MatchRepository {
     
     /// Match 정보를 패치합니다.
     func fetchMatches(request: FetchMatchesRequest) async -> Result<FetchMatchesResponse, Error> {
-        let url = APIs.RookieKBO.Matchs.fetchMatch.url
-        let response: Result<BaseResponse<FetchMatchesResponse>, Error> = await client.post(url: url, body: request)
+        let url = APIs.RookieKBO.Matches.fetchMatch.url.appendingPathComponent(request.date)
+        let response: Result<BaseResponse<FetchMatchesResponse>, Error> = await client.get(url: url)
         do {
             return try .success(response.get().result)
         } catch {
