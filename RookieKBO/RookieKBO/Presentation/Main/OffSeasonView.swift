@@ -227,51 +227,15 @@ private struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             DateInfoView()
-            
-            if matchUseCase.getSeason() != "TODAY" {
-                HStack(spacing: 0) {
-                    Text(currentTeam?.name == "전체 구단" ? "종료된 경기" : "종료된 우리팀 경기")
-                        .font(.Body.body1)
-                        .foregroundColor(.gray7)
-                    
-                    Spacer()
-                    
-                    Text("스탯티즈 출처")
-                        .font(.Body.body5)
-                        .foregroundColor(.gray5)
-                }
-                .padding(.vertical)
-                
-                if myTeamEndGames.isEmpty && myTeamCancelGames.isEmpty {
-                    VStack(spacing: 0) {
-                        Image(selectTeamUseCase.state.selectedTeam?.image ?? "allTeamUnder")
-                            .resizable()
-                            .frame(width: 96, height: 96)
-                        
-                        Text("우리팀 경기가 없었어요!")
-                            .font(.Head.head5)
-                            .foregroundColor(.gray5)
-                            .padding(.vertical)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(RoundedRectangle(cornerRadius: 24)
-                        .fill(.white0))
-                    
-                } else {
-                    ForEach(myTeamEndGames) { game in
-                        EndGameInfo(endGameInfo: game)
-                            .padding(.bottom, 4)
-                    }
-                    
-                    ForEach(myTeamCancelGames) { game in
-                        CancelGameInfo(cancelGameInfo: game)
-                            .padding(.bottom, 4)
-                    }
-                }
-                
-                if currentTeam?.name != "전체 구단" && (!otherTeamEndGames.isEmpty || !otherTeamCancelGames.isEmpty) {
+            // 로딩 중일 때 표시할 뷰
+            if matchUseCase.isLoading {
+                ProgressView()
+                    .padding(.vertical, 40)
+                    .background(.gray1)
+            } else {
+                if matchUseCase.getSeason() != "TODAY" {
                     HStack(spacing: 0) {
-                        Text("종료된 다른팀 경기")
+                        Text(currentTeam?.name == "전체 구단" ? "종료된 경기" : "종료된 우리팀 경기")
                             .font(.Body.body1)
                             .foregroundColor(.gray7)
                         
@@ -283,35 +247,77 @@ private struct ContentView: View {
                     }
                     .padding(.vertical)
                     
-                    ForEach(otherTeamEndGames) { game in
-                        EndGameInfo(endGameInfo: game)
-                            .padding(.bottom, 4)
+                    if myTeamEndGames.isEmpty && myTeamCancelGames.isEmpty {
+                        VStack(spacing: 0) {
+                            Image(selectTeamUseCase.state.selectedTeam?.image ?? "allTeamUnder")
+                                .resizable()
+                                .frame(width: 96, height: 96)
+                            
+                            Text("우리팀 경기가 없었어요!")
+                                .font(.Head.head5)
+                                .foregroundColor(.gray5)
+                                .padding(.vertical)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(RoundedRectangle(cornerRadius: 24)
+                            .fill(.white0))
+                        
+                    } else {
+                        ForEach(myTeamEndGames) { game in
+                            EndGameInfo(endGameInfo: game)
+                                .padding(.bottom, 4)
+                        }
+                        
+                        ForEach(myTeamCancelGames) { game in
+                            CancelGameInfo(cancelGameInfo: game)
+                                .padding(.bottom, 4)
+                        }
                     }
                     
-                    ForEach(otherTeamCancelGames) { game in
-                        CancelGameInfo(cancelGameInfo: game)
-                            .padding(.bottom, 4)
+                    if currentTeam?.name != "전체 구단" && (!otherTeamEndGames.isEmpty || !otherTeamCancelGames.isEmpty) {
+                        HStack(spacing: 0) {
+                            Text("종료된 다른팀 경기")
+                                .font(.Body.body1)
+                                .foregroundColor(.gray7)
+                            
+                            Spacer()
+                            
+                            Text("스탯티즈 출처")
+                                .font(.Body.body5)
+                                .foregroundColor(.gray5)
+                        }
+                        .padding(.vertical)
+                        
+                        ForEach(otherTeamEndGames) { game in
+                            EndGameInfo(endGameInfo: game)
+                                .padding(.bottom, 4)
+                        }
+                        
+                        ForEach(otherTeamCancelGames) { game in
+                            CancelGameInfo(cancelGameInfo: game)
+                                .padding(.bottom, 4)
+                        }
                     }
-                }
-            } else {
-                HStack(spacing: 0) {
-                    Text("비시즌 KBO NEWS")
-                        .font(.Body.body1)
-                        .foregroundColor(.gray7)
-                    
-                    Spacer()
-                    
-                    Text("스탯티즈 출처")
-                        .font(.Body.body5)
-                        .foregroundColor(.gray5)
-                }
-                .padding(.vertical)
-                
-                ForEach(newsUseCase.state.totalNews ?? []) { news in
-                    NewsBoard(newsInfo: news) {
-                        openURL(URL(string: news.link)!)
+                } else {
+                    HStack(spacing: 0) {
+                        Text("비시즌 KBO NEWS")
+                            .font(.Body.body1)
+                            .foregroundColor(.gray7)
+                        
+                        Spacer()
+                        
+                        Text("스탯티즈 출처")
+                            .font(.Body.body5)
+                            .foregroundColor(.gray5)
                     }
-                    .padding(.bottom)
+                    .padding(.vertical)
+                    
+                    ForEach(newsUseCase.state.totalNews ?? []) { news in
+                        NewsBoard(newsInfo: news) {
+                            openURL(URL(string: news.link)!)
+                        }
+                        .padding(.bottom)
+                    }
                 }
             }
         }
@@ -451,10 +457,12 @@ private struct SetCalendarView: View {
             if isValidDate {
                 Button {
                     Task {
+                        matchUseCase.isLoadingToggle()
                         await matchUseCase.fetchMatches(date: currentDate.toFormattedString())
-                        matchUseCase.fetchSelectedDate(currentDate)
-                        presentationMode.wrappedValue.dismiss()
+                        matchUseCase.isLoadingToggle()
                     }
+                    matchUseCase.fetchSelectedDate(currentDate)
+                    presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("이 날의 경기 정보를 볼래요!")
                         .font(.Head.head3)

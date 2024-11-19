@@ -15,6 +15,7 @@ final class MatchUseCase {
     private(set) var state: State
     private(set) var matches: [Match]
     private(set) var selectedDate: Date?
+    private(set) var isLoading: Bool
     
     init(matchService: MatchServiceInterface) {
         self.matches = []
@@ -26,6 +27,7 @@ final class MatchUseCase {
             CancelGames: nil
         )
         self.selectedDate = nil
+        self.isLoading = false
     }
 }
 
@@ -147,5 +149,9 @@ extension MatchUseCase {
         } else {
             return selectedDate!.getSeasonType()
         }
+    }
+    
+    func isLoadingToggle() {
+        self.isLoading.toggle()
     }
 }
