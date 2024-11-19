@@ -85,7 +85,7 @@ extension Date {
         guard let regularSeasonStart = formatter.date(from: "2024/03/23"),
               let regularSeasonEnd = formatter.date(from: "2024/10/01"),
               let postSeasonStart = formatter.date(from: "2024/10/02"),
-              let postSeasonEnd = formatter.date(from: "2024/10/28")
+              let postSeasonEnd = formatter.date(from: "2024/10/29")
         else {
             return "시즌 판별 오류"
         }

@@ -77,13 +77,13 @@ struct FetchMatchesResponse: Decodable {
             
             let gameState: GameState
             switch gameStatus {
-            case "경기 예정":
+            case "경기예정":
                 gameState = .PREPARE
-            case "경기 중":
+            case "경기중":
                 gameState = .PLAYING
-            case "경기 종료":
+            case "경기종료":
                 gameState = .END
-            case "경기 취소":
+            case "경기취소":
                 gameState = .CANCEL
             default:
                 gameState = .END
@@ -120,8 +120,7 @@ struct FetchMatchesResponse: Decodable {
         for game in games {
             switch game.toMatch() {
             case .success(let match):
-                if let scoreBoard = match.scoreBoard,
-                   !(match.gameState == .END && scoreBoard[0].scores.isEmpty) {
+                if let scoreBoard = match.scoreBoard {
                     print("🎀toMatch🎀", match)
                     matches.append(match)
                 }

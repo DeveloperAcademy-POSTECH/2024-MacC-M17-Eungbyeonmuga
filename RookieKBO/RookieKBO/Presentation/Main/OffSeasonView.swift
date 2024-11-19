@@ -326,7 +326,11 @@ private struct ContentView: View {
         }
         .filter { game in
             guard let selectedDate = matchUseCase.selectedDate else { return true }
-            return Calendar.current.isDate(game.startDateTime, inSameDayAs: selectedDate)
+            // startDateTime에서 4시간 빼서 해당 날짜에 띄우기
+            guard let adjustedStartDateTime = Calendar.current.date(byAdding: .hour, value: -4, to: game.startDateTime) else {
+                return false
+            }
+            return Calendar.current.isDate(adjustedStartDateTime, inSameDayAs: selectedDate)
         }
         .filter { game in
             guard let selectedTeam = selectTeamUseCase.state.selectedTeam else { return false }
@@ -431,13 +435,6 @@ private struct SetCalendarView: View {
     @State private var isValidDate = false
     @State private var calendarColor: Color = .brandPrimary
     
-    // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
-    let matchInfo = MockDataBuilderForWidget.mockMatchList
-    
-    private var matchingMatchs: [Match] {
-        matchUseCase.filterMatches(for: currentDate, in: matchInfo)
-    }
-    
     var body: some View {
         VStack(spacing: 0) {
             DatePicker(
@@ -453,11 +450,11 @@ private struct SetCalendarView: View {
             
             if isValidDate {
                 Button {
-                    matchUseCase.fetchSelectedDate(currentDate)
                     Task {
                         await matchUseCase.fetchMatches(date: currentDate.toFormattedString())
+                        matchUseCase.fetchSelectedDate(currentDate)
+                        presentationMode.wrappedValue.dismiss()
                     }
-                    presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("이 날의 경기 정보를 볼래요!")
                         .font(.Head.head3)
