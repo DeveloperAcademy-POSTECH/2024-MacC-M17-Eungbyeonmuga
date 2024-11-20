@@ -306,7 +306,6 @@ struct VideoTranscriptView: View {
                     )
                 }
         )
-//        .padding(.bottom, 8)
         .padding(.horizontal, 16)
         .onAppear {
             if playingItemId == transcriptItem.id {
