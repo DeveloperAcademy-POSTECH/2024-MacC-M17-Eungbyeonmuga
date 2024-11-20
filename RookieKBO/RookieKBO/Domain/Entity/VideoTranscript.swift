@@ -15,5 +15,6 @@ struct VideoTranscript: Codable {
 struct TranscriptItem: Codable {
     let id: UUID
     let text: String
+    let description: String?
     let start: Double
 }

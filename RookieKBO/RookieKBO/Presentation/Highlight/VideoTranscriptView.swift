@@ -39,41 +39,39 @@ struct VideoTranscriptView: View {
         ))
     }
     
-    private var currentTranscript: VideoTranscript? {
+    private var currentTranscript: TranscriptItem? {
         if let videoTranscript = termUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
-            return videoTranscript
+            if let filteredTranscript = getTermDescription(videoTranscript: videoTranscript) {
+                return filteredTranscript
+            } else {
+                print("자막 필터링 실패")
+                return nil
+            }
         } else {
             print("자막 생성 실패")
             return nil
         }
     }
-    
+
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     /// 재생될 때 업데이트 하는 함수
     private func updateIsPlaying(for time: TimeInterval) {
         guard let currentTranscript = currentTranscript else { return }
-        
+
         let matchingItems = currentTranscript.transcript.filter { transcriptItem in
-            abs(transcriptItem.start - time) <= 1.0
+            abs(transcriptItem.start - time) <= 2.0
         }
-        
-        print("🎀🎀🎀",matchingItems)
+        print("🎀🎀🎀", matchingItems)
         
         if let matchingItem = matchingItems.first {
-            if let description = getTermDescription(for: matchingItem.text), !description.isEmpty {
-                
                 playingItemId = matchingItem.id
-                print("🎀",playingItemId)
                 isPlaying = true
             } else {
                 isPlaying = false
             }
-        } else {
-            isPlaying = false
-        }
     }
-    
+
     /// 용어 삭제
     private func deleteTermEntry(term: String) {
         if let termToDelete = savedTermEntry.first(where: { $0.term == term }) {
@@ -232,70 +230,14 @@ struct VideoTranscriptView: View {
                             .frame(height: 16)
                         
                         ForEach(currentTranscript?.transcript.sorted(by: { $0.start < $1.start }) ?? [], id: \.id) { transcriptItem in
-                            if let description = getTermDescription(for: transcriptItem.text), !description.isEmpty {
-                                let normalizedTerm = description.keys.first!
-                                
-                                let descriptionText = description[normalizedTerm]!
-                                
-                                let isTermSaved = isTermSaved(term: normalizedTerm)
-                                
-                                TermRow(
-                                    isPlaying: Binding(
-                                        get: { playingItemId == transcriptItem.id },
-                                        set: { isPlaying in
-                                            playingItemId = isPlaying ? transcriptItem.id : nil
-                                            if isPlaying {
-                                                withAnimation {
-                                                    scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
-                                                }
-                                            }
-                                        }
-                                    ),
-                                    isSaved: Binding(
-                                        get: { isTermSaved },
-                                        set: { newValue in
-                                            if newValue {
-                                                createTermEntry(term: normalizedTerm, definition: descriptionText)
-                                            } else {
-                                                deleteTermEntry(term: normalizedTerm)
-                                            }
-                                        }
-                                    ),
-                                    term: normalizedTerm,
-                                    description: descriptionText,
-                                    time: transcriptItem.start
+                                termRow(
+                                    for: transcriptItem,
+                                    scrollProxy: scrollProxy
                                 )
-                                .id(transcriptItem.id)
-                                .simultaneousGesture(
-                                    TapGesture()
-                                        .onEnded {
-                                            youtubePlayer.seek(
-                                                to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
-                                                allowSeekAhead: true
-                                            )
-                                        }
-                                )
-                                .padding(.bottom, 8)
-                                .padding(.horizontal, 16)
-                                .onAppear {
-                                    if playingItemId == transcriptItem.id {
-                                        withAnimation {
-                                            scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
-                                        }
-                                    }
-                                }
-                                .onChange(of: playingItemId) {
-                                    if let playingItemId {
-                                        withAnimation {
-                                            scrollProxy.scrollTo(playingItemId, anchor: .top)
-                                        }
-                                    }
-                                }
                             } else {
                                 EmptyView()
                             }
                         }
-                        
                     }
                 }
                 
@@ -323,9 +265,165 @@ struct VideoTranscriptView: View {
             }
         }
     }
-    
-    
-}
+
+    private func termRow(for transcriptItem: TranscriptItem, scrollProxy: ScrollViewProxy) -> some View {
+
+        let isTermSaved = isTermSaved(term: transcriptItem.text)
+        
+        return TermRow(
+            isPlaying: Binding(
+                get: { playingItemId == transcriptItem.id },
+                set: { isPlaying in
+                    playingItemId = isPlaying ? transcriptItem.id : nil
+                    if isPlaying {
+                        withAnimation {
+                            scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+                        }
+                    }
+                }
+            ),
+            isSaved: Binding(
+                get: { isTermSaved },
+                set: { newValue in
+                    if newValue {
+                        createTermEntry(term:  transcriptItem.text, definition:  transcriptItem.description)
+                    } else {
+                        deleteTermEntry(term: transcriptItem.text)
+                    }
+                }
+            ),
+            term: transcriptItem.text,
+            description: transcriptItem.description,
+            time: transcriptItem.start
+        )
+        .id(transcriptItem.id)
+        .simultaneousGesture(
+            TapGesture()
+                .onEnded {
+                    youtubePlayer.seek(
+                        to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                        allowSeekAhead: true
+                    )
+                }
+        )
+        .padding(.bottom, 8)
+        .padding(.horizontal, 16)
+        .onAppear {
+            if playingItemId == transcriptItem.id {
+                withAnimation {
+                    scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+                }
+            }
+        }
+        .onChange(of: playingItemId) {
+            if let playingItemId {
+                withAnimation {
+                    scrollProxy.scrollTo(playingItemId, anchor: .top)
+                }
+            }
+        }
+    }
+
+//    private var termContent: some View {
+//        ScrollViewReader { scrollProxy in
+//            ZStack {
+//                ScrollView {
+//                    VStack {
+//                        Spacer()
+//                            .frame(height: 16)
+//                        
+//                        ForEach(currentTranscript?.transcript.sorted(by: { $0.start < $1.start }) ?? [], id: \.id) { transcriptItem in
+//                            if let description = getTermDescription(for: transcriptItem.text), !description.isEmpty {
+//                                let normalizedTerm = description.keys.first!
+//                                
+//                                let descriptionText = description[normalizedTerm]!
+//                                
+//                                let isTermSaved = isTermSaved(term: normalizedTerm)
+//                                
+//                                TermRow(
+//                                    isPlaying: Binding(
+//                                        get: { playingItemId == normalizedTerm.id },
+//                                        set: { isPlaying in
+//                                            playingItemId = isPlaying ? normalizedTerm.id : nil
+//                                            if isPlaying {
+//                                                withAnimation {
+//                                                    scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+//                                                }
+//                                            }
+//                                        }
+//                                    ),
+//                                    isSaved: Binding(
+//                                        get: { isTermSaved },
+//                                        set: { newValue in
+//                                            if newValue {
+//                                                createTermEntry(term: normalizedTerm, definition: descriptionText)
+//                                            } else {
+//                                                deleteTermEntry(term: normalizedTerm)
+//                                            }
+//                                        }
+//                                    ),
+//                                    term: normalizedTerm,
+//                                    description: descriptionText,
+//                                    time: transcriptItem.start
+//                                )
+//                                .id(transcriptItem.id)
+//                                .simultaneousGesture(
+//                                    TapGesture()
+//                                        .onEnded {
+//                                            youtubePlayer.seek(
+//                                                to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+//                                                allowSeekAhead: true
+//                                            )
+//                                        }
+//                                )
+//                                .padding(.bottom, 8)
+//                                .padding(.horizontal, 16)
+//                                .onAppear {
+//                                    if playingItemId == transcriptItem.id {
+//                                        withAnimation {
+//                                            scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+//                                        }
+//                                    }
+//                                }
+//                                .onChange(of: playingItemId) {
+//                                    if let playingItemId {
+//                                        withAnimation {
+//                                            scrollProxy.scrollTo(playingItemId, anchor: .top)
+//                                        }
+//                                    }
+//                                }
+//                            } else {
+//                                EmptyView()
+//                            }
+//                        }
+//                        
+//                    }
+//                }
+//                
+//                VStack {
+//                    Spacer()
+//                    
+//                    ToastMessage(
+//                        message: toastMessage,
+//                        isToastPresented: $isShowToastMessage
+//                    )
+//                    .padding(.bottom, 35)
+//                }
+//                
+//                if isSearchActive {
+//                    Rectangle()
+//                        .foregroundColor(.gray6)
+//                        .opacity(0.3)
+//                        .onTapGesture {
+//                            withAnimation {
+//                                isSearchActive.toggle()
+//                            }
+//                        }
+//                        .edgesIgnoringSafeArea(.all)
+//                }
+//            }
+//        }
+//    }
 
 // MARK: - TopView
 

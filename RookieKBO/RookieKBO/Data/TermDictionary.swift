@@ -110,13 +110,19 @@ let normalizedTerms: [String: String] = [
 ]
 
 /// 옳은 용어로 반환
-func getTermDescription(for term: String) -> [String: String]? {    
-    var result: [String: String] = [:]
+func getTermDescription(videoTranscript: VideoTranscript) -> TranscriptItem? {
+    guard let term = videoTranscript.transcript.first?.text,
+          let start = videoTranscript.transcript.first?.start else {
+        return nil
+    }
+    
+    var description: String?
     
     for definedTerm in termDictionary.keys {
         if term.contains(definedTerm) {
-            if let description = termDictionary[definedTerm] {
-                result[definedTerm] = description
+            description = termDictionary[definedTerm]
+            if let description = description {
+                return TranscriptItem(id: UUID(), text: definedTerm, description: description, start: start)
             }
         }
     }
@@ -124,11 +130,12 @@ func getTermDescription(for term: String) -> [String: String]? {
     for normalizedTerm in normalizedTerms.keys {
         if term.contains(normalizedTerm) {
             let originalTerm = normalizedTerms[normalizedTerm] ?? normalizedTerm
-            if let description = termDictionary[originalTerm] {
-                result[originalTerm] = description
+            description = termDictionary[originalTerm]
+            if let description = description {
+                return TranscriptItem(id: UUID(), text: originalTerm, description: description, start: start)
             }
         }
     }
-
-    return result.isEmpty ? nil : result
+    return nil
 }
+

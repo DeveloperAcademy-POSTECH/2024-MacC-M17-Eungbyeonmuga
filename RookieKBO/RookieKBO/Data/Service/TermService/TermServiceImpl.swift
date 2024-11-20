@@ -44,7 +44,7 @@ final class TermServiceImpl: TermServiceInterface {
             let rawTranscript = try decoder.decode(RawTranscript.self, from: data)
             
             let transcriptItems = rawTranscript.transcript.map {
-                TranscriptItem(id: UUID(), text: $0.text, start: $0.start)
+                TranscriptItem(id: UUID(), text: $0.text, description: "", start: $0.start)
             }
             
             return VideoTranscript(videoId: rawTranscript.video_id, transcript: transcriptItems)
