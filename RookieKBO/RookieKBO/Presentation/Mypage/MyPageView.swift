@@ -41,6 +41,7 @@ private struct HeaderView: View {
                         .foregroundColor(.white0)
                 }
                 .padding(.vertical)
+                .padding(.bottom, 6)
                 
                 HStack(spacing: 8) {
                     Text("응원팀")
