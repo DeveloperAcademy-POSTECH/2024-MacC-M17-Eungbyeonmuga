@@ -31,6 +31,7 @@ extension HighlightUseCase {
         var HighlightInfo: [Highlight]
         var selectedDate: Date?
         var selectedHighlight: Highlight?
+        var videoUrl: String?
     }
 }
 
@@ -57,10 +58,16 @@ extension HighlightUseCase {
         highlightService.extractHomeAway(from: title)
     }
     
-    // 선택한 하이라이트 영상 정보 업데이트
+    /// 선택한 하이라이트 영상 정보 업데이트
     func updateSelectedeHighlight(highlight: Highlight) {
         var currentHighlight = highlight
         currentHighlight.title = extractHomeAway(from: highlight.title)
         state.selectedHighlight = currentHighlight
+    }
+    
+    /// 선택한 url 업데이트
+    func updateVideoUrl() {
+        let videoId = state.selectedHighlight?.videoId
+        state.videoUrl = "https://www.youtube.com/watch?v=\(videoId ?? "")"
     }
 }

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct HighlightView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
@@ -56,6 +55,7 @@ private struct HighlightContentView: View {
                     ForEach(filteredHighlights, id: \.self) { info in
                         HighlightContent(videoInfo: info) {
                             highlightUseCase.updateSelectedeHighlight(highlight: info)
+                            highlightUseCase.updateVideoUrl()
                             pathModel.push(.videoTranscript)
                         }
                         .padding(.horizontal, 16)

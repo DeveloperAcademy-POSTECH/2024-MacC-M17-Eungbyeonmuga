@@ -30,16 +30,14 @@ struct VideoTranscriptView: View {
     @State private var toastMessage: String = ""
     @State private var currentVideoId: String = ""
     
-    @State var youtubePlayer: YouTubePlayer
+    @State private var youtubePlayer: YouTubePlayer
     
-    init(videoId: String) {
-        youtubePlayer = YouTubePlayer(
-            source: .url("https://www.youtube.com/watch?v=\(videoId)"),
+    init() {
+        _youtubePlayer = State(initialValue: YouTubePlayer(
+            source: .url(""),
             configuration: YouTubePlayer.Configuration(autoPlay: true)
-        )
+        ))
     }
-//    @StateObject private var youtubePlayer: YouTubePlayer
-
     
     private var currentTranscript: VideoTranscript? {
         if let videoTranscript = termUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
@@ -53,36 +51,18 @@ struct VideoTranscriptView: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     /// 재생될 때 업데이트 하는 함수
-    
-//    private func updateIsPlaying(for time: TimeInterval) {
-//        let matchingItems = currentTranscript?.transcript.filter { transcriptItem in
-//            abs(transcriptItem.start - time) <= 1.0
-//        }
-//        
-//        if let matchingItem = matchingItems?.first {
-//            if termDictionary[matchingItem.text] != nil {
-//                playingItemId = matchingItem.id
-//                isPlaying = true
-//            } else {
-//                isPlaying = false
-//            }
-//        } else {
-//            isPlaying = false
-//        }
-//    }
-    
     private func updateIsPlaying(for time: TimeInterval) {
         guard let currentTranscript = currentTranscript else { return }
-
+        
         let matchingItems = currentTranscript.transcript.filter { transcriptItem in
             abs(transcriptItem.start - time) <= 1.0
         }
         
         print("🎀🎀🎀",matchingItems)
-
+        
         if let matchingItem = matchingItems.first {
             if let description = getTermDescription(for: matchingItem.text), !description.isEmpty {
-
+                
                 playingItemId = matchingItem.id
                 print("🎀",playingItemId)
                 isPlaying = true
@@ -93,7 +73,6 @@ struct VideoTranscriptView: View {
             isPlaying = false
         }
     }
-
     
     /// 용어 삭제
     private func deleteTermEntry(term: String) {
@@ -194,7 +173,6 @@ struct VideoTranscriptView: View {
                     youtubePlayer.getCurrentTime { result in
                         switch result {
                         case .success(let time):
-                            print("🍮🍮🍮", time.value)
                             currentPlaybackTime = time.value
                             updateIsPlaying(for: currentPlaybackTime)
                         case .failure(let error):
@@ -205,6 +183,13 @@ struct VideoTranscriptView: View {
                     print("플레이어가 재생되지 않음")
                 }
             }
+            .onAppear {
+                if let videoUrl = highlightUseCase.state.videoUrl {
+                    youtubePlayer.source = .url(videoUrl)
+                    youtubePlayer.play()
+                }
+            }
+            
         }
         .navigationBarBackButtonHidden()
     }
@@ -449,11 +434,10 @@ private struct SearchBar: View {
     }
 }
 
-
-//#Preview {
-//    VideoTranscriptView()
-//        .environment(PreviewHelper.mockTermUseCase)
-//        .environment(PathModel())
-//        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
-//        .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
-//}
+#Preview {
+    VideoTranscriptView()
+        .environment(PreviewHelper.mockTermUseCase)
+        .environment(PathModel())
+        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
+        .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
+}

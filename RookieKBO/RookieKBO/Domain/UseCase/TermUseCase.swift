@@ -27,7 +27,8 @@ final class TermUseCase {
 extension TermUseCase {
     
     struct State {
-        //
+//        var videoUrl: String?
+//        //
     }
 }
 
