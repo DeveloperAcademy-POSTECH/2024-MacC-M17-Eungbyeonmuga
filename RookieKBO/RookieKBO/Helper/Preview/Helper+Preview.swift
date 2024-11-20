@@ -13,10 +13,6 @@ import Foundation
 @MainActor
 enum PreviewHelper {
     
-    static let mockTermUseCase = TermUseCase(
-        termService: TermServiceImpl(termDictionary: termDictionary)
-    )
-    
     static let mockSelectTeamUseCase = SelectTeamUseCase(
         selectTeamService: SelectTeamServiceImpl())
 }

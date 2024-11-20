@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TermRow: View {
-    @Environment(TermUseCase.self) private var termUseCase
     
     @Binding var isPlaying: Bool
     @Binding var isSaved: Bool
@@ -72,5 +71,4 @@ struct TermRow: View {
         description: "어쩌고 저쩌고어쩌고어쩌고 저쩌고 저쩌고어쩌고 저쩌고어어쩌어쩌고 저쩌고고 저쩌고쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고어쩌고 저쩌고",
         time: 13.0
     )
-    .environment(PreviewHelper.mockTermUseCase)
 }

@@ -56,6 +56,7 @@ private struct HighlightContentView: View {
                         HighlightContent(videoInfo: info) {
                             highlightUseCase.updateSelectedeHighlight(highlight: info)
                             highlightUseCase.updateVideoUrl()
+                            highlightUseCase.filterData()
                             pathModel.push(.videoTranscript)
                         }
                         .padding(.horizontal, 16)

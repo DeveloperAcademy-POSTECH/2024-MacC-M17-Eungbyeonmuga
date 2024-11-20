@@ -116,19 +116,23 @@ func getTermDescription(videoTranscript: VideoTranscript) -> [TranscriptItem]? {
         let term = transcript.text
         let start = transcript.start
 
+        // 고정된 ID 생성: term + start 값을 결합하여 ID 생성
+        let fixedId = "\(term)-\(start)"
+
         for definedTerm in termDictionary.keys {
             if term.contains(definedTerm) {
                 if let description = termDictionary[definedTerm] {
-                    let item = TranscriptItem(id: UUID(), text: definedTerm, description: description, start: start)
+                    let item = TranscriptItem(id: fixedId, text: definedTerm, description: description, start: start)
                     transcriptItems.append(item)
                 }
             }
         }
+
         for normalizedTerm in normalizedTerms.keys {
             if term.contains(normalizedTerm) {
                 let originalTerm = normalizedTerms[normalizedTerm] ?? normalizedTerm
                 if let description = termDictionary[originalTerm] {
-                    let item = TranscriptItem(id: UUID(), text: originalTerm, description: description, start: start)
+                    let item = TranscriptItem(id: fixedId, text: originalTerm, description: description, start: start)
                     transcriptItems.append(item)
                 }
             }

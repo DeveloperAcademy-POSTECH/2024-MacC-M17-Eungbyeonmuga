@@ -11,7 +11,6 @@ import SwiftData
 
 struct VideoTranscriptView: View {
     
-    @Environment(TermUseCase.self) private var termUseCase
     @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(HighlightUseCase.self) private var highlightUseCase
@@ -20,7 +19,7 @@ struct VideoTranscriptView: View {
     @Query var savedTermEntry: [TermEntry]
     
     @State private var searchText = ""
-    @State private var playingItemId: UUID?
+    @State private var playingItemId: String = ""
     @State private var isSearchActive = false
     @State private var isPlaying: Bool = false
     @State private var isSaved: Bool = false
@@ -40,22 +39,11 @@ struct VideoTranscriptView: View {
     }
     
     private var filteredTranscript: [TranscriptItem]? {
-        if let videoTranscript = termUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
-            
-            if let filteredTranscript = getTermDescription(videoTranscript: videoTranscript) {
-                return filteredTranscript
-            } else {
-                print("자막 필터링 실패")
-                return nil
-            }
-        } else {
-            print("자막 생성 실패")
-            return nil
-        }
+        highlightUseCase.state.filterTranscript
     }
-    
+
     private var currentTranscript: VideoTranscript? {
-        if let videoTranscript = termUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
+        if let videoTranscript = highlightUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
             return videoTranscript
         } else {
             print("자막 생성 실패")
@@ -72,7 +60,6 @@ struct VideoTranscriptView: View {
         let matchingItems = currentTranscript.filter { transcriptItem in
             abs(transcriptItem.start - time) <= 2.0
         }
-        print("🎀🎀🎀", matchingItems)
         
         if let matchingItem = matchingItems.first {
             playingItemId = matchingItem.id
@@ -122,7 +109,7 @@ struct VideoTranscriptView: View {
                     isPlaying: Binding(
                         get: { playingItemId == transcriptItem.id },
                         set: { isPlaying in
-                            playingItemId = isPlaying ? transcriptItem.id : nil
+                            playingItemId = isPlaying ? transcriptItem.id : ""
                         }
                     ),
                     searchText: searchText,
@@ -274,28 +261,31 @@ struct VideoTranscriptView: View {
     }
     
     private func termRow(for transcriptItem: TranscriptItem, scrollProxy: ScrollViewProxy) -> some View {
-        
         let isTermSaved = isTermSaved(term: transcriptItem.text)
         
         return TermRow(
-            isPlaying: Binding(
-                get: { playingItemId == transcriptItem.id },
-                set: { isPlaying in
-                    playingItemId = isPlaying ? transcriptItem.id : nil
-                    if isPlaying {
-                        withAnimation {
-                            scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+            isPlaying:
+                Binding(
+                    get: {
+                        playingItemId == transcriptItem.id && isPlaying
+                    },
+                    set: { isPlaying in
+                        playingItemId = isPlaying ? transcriptItem.id : ""
+                        
+                        if isPlaying {
+                            withAnimation {
+                                scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+                            }
                         }
                     }
-                }
-            ),
+                ),
             isSaved: Binding(
                 get: { isTermSaved },
                 set: { newValue in
                     if newValue {
                         createTermEntry(
-                            term:  transcriptItem.text,
-                            definition:  transcriptItem.description ?? ""
+                            term: transcriptItem.text,
+                            definition: transcriptItem.description ?? ""
                         )
                     } else {
                         deleteTermEntry(term: transcriptItem.text)
@@ -326,13 +316,13 @@ struct VideoTranscriptView: View {
             }
         }
         .onChange(of: playingItemId) {
-            if let playingItemId {
                 withAnimation {
-                    scrollProxy.scrollTo(playingItemId, anchor: .top)
+                    scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
                 }
-            }
         }
     }
+
+
 }
 
 // MARK: - TopView
@@ -444,7 +434,6 @@ private struct SearchBar: View {
 
 #Preview {
     VideoTranscriptView()
-        .environment(PreviewHelper.mockTermUseCase)
         .environment(PathModel())
         .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
         .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))

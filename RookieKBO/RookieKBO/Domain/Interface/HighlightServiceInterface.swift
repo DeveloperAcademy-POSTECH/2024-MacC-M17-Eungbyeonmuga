@@ -12,4 +12,5 @@ protocol HighlightServiceInterface {
     func filterHighlights(for selectedDate: Date, in highlightInfo: [Highlight]) -> [Highlight]
     func extractHomeAway(from title: String) -> String
     func fetchMockHighlightsInfo() -> [Highlight]
+    func loadTranscript(from filename: String) -> VideoTranscript?
 }

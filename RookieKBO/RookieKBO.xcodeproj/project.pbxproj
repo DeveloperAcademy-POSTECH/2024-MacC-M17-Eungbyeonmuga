@@ -86,7 +86,6 @@
 				Domain/Entity/ScoreBoard.swift,
 				Domain/Entity/Team.swift,
 				Domain/Entity/TeamRank.swift,
-				Domain/Interface/HighlightServiceInterface.swift,
 				Domain/Interface/MatchServiceInterface.swift,
 				Domain/Interface/NewsServiceInterface.swift,
 				Domain/Interface/RankServiceInterface.swift,
