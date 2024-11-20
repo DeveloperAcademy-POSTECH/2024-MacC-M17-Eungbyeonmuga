@@ -109,33 +109,30 @@ let normalizedTerms: [String: String] = [
     "고의사구": "고의 4구"
 ]
 
-/// 옳은 용어로 반환
-func getTermDescription(videoTranscript: VideoTranscript) -> TranscriptItem? {
-    guard let term = videoTranscript.transcript.first?.text,
-          let start = videoTranscript.transcript.first?.start else {
-        return nil
-    }
+func getTermDescription(videoTranscript: VideoTranscript) -> [TranscriptItem]? {
+    var transcriptItems: [TranscriptItem] = []
     
-    var description: String?
-    
-    for definedTerm in termDictionary.keys {
-        if term.contains(definedTerm) {
-            description = termDictionary[definedTerm]
-            if let description = description {
-                return TranscriptItem(id: UUID(), text: definedTerm, description: description, start: start)
-            }
-        }
-    }
-    
-    for normalizedTerm in normalizedTerms.keys {
-        if term.contains(normalizedTerm) {
-            let originalTerm = normalizedTerms[normalizedTerm] ?? normalizedTerm
-            description = termDictionary[originalTerm]
-            if let description = description {
-                return TranscriptItem(id: UUID(), text: originalTerm, description: description, start: start)
-            }
-        }
-    }
-    return nil
-}
+    for transcript in videoTranscript.transcript {
+        let term = transcript.text
+        let start = transcript.start
 
+        for definedTerm in termDictionary.keys {
+            if term.contains(definedTerm) {
+                if let description = termDictionary[definedTerm] {
+                    let item = TranscriptItem(id: UUID(), text: definedTerm, description: description, start: start)
+                    transcriptItems.append(item)
+                }
+            }
+        }
+        for normalizedTerm in normalizedTerms.keys {
+            if term.contains(normalizedTerm) {
+                let originalTerm = normalizedTerms[normalizedTerm] ?? normalizedTerm
+                if let description = termDictionary[originalTerm] {
+                    let item = TranscriptItem(id: UUID(), text: originalTerm, description: description, start: start)
+                    transcriptItems.append(item)
+                }
+            }
+        }
+    }
+    return transcriptItems.isEmpty ? nil : transcriptItems
+}
