@@ -75,6 +75,8 @@ private struct GameInfo: View {
                 Text("\(awayScore)")
                     .font(.CustomTitle.customTitle1)
                     .foregroundColor(awayScore < homeScore ? .white40 : .white0)
+                    .frame(width: 48)
+                    .multilineTextAlignment(.center)
                     .padding(.leading, 8)
                 
                 Spacer()
@@ -82,6 +84,8 @@ private struct GameInfo: View {
                 Text("\(homeScore)")
                     .font(.CustomTitle.customTitle1)
                     .foregroundColor(homeScore < awayScore ? .white40 : .white0)
+                    .frame(width: 48)
+                    .multilineTextAlignment(.center)
                     .padding(.trailing, 8)
                 
                 VStack(spacing: 4) {
