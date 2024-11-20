@@ -9,7 +9,6 @@ import SwiftUI
 import SwiftData
 
 struct SavedTermsView: View {
-    @Environment(TermUseCase.self) private var termUseCase
     @Environment(PathModel.self) private var pathModel
     @Environment(\.modelContext) var modelContext
     
@@ -115,6 +114,5 @@ private struct NoSavedTermsView: View {
 
 #Preview {
     SavedTermsView()
-        .environment(PreviewHelper.mockTermUseCase)
         .environment(PathModel())
 }

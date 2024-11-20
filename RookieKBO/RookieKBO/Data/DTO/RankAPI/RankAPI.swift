@@ -9,30 +9,27 @@ import Foundation
 
 
 struct FetchRanksResponse: Decodable {
-    let ranks: [Ranks]
+    let teamInfoList: [TeamInfoList]
     
-    struct Ranks: Decodable {
+    struct TeamInfoList: Decodable {
         let rank: String
-        let team: String
-        let games: String
-        let wins: String
-        let draws: String
-        let losses: String
-        let win_rate: String
-        let points_for: String
-        let points_against: String
+        let name: String
+        let numberOfWins: String
+        let numberOfDraws: String
+        let numberOfLosses: String
+        let winningRate: String
     }
     
     func toRanks() -> Result<[TeamRank], NetworkError> {
-        let teamRanks = ranks.map { rank in
+        let teamRanks = teamInfoList.map { rank in
             TeamRank(
                 id: UUID(),
                 rank: rank.rank,
-                team: rank.team,
-                wins: rank.wins,
-                draws: rank.draws,
-                losses: rank.losses,
-                winRate: rank.win_rate
+                team: rank.name,
+                wins: rank.numberOfWins,
+                draws: rank.numberOfDraws,
+                losses: rank.numberOfLosses,
+                winRate: rank.winningRate
             )
         }
         return .success(teamRanks)

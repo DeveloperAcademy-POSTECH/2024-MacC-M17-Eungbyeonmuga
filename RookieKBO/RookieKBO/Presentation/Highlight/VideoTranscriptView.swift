@@ -11,7 +11,6 @@ import SwiftData
 
 struct VideoTranscriptView: View {
     
-    @Environment(TermUseCase.self) private var termUseCase
     @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(HighlightUseCase.self) private var highlightUseCase
@@ -20,7 +19,7 @@ struct VideoTranscriptView: View {
     @Query var savedTermEntry: [TermEntry]
     
     @State private var searchText = ""
-    @State private var playingItemId: UUID?
+    @State private var playingItemId: String = ""
     @State private var isSearchActive = false
     @State private var isPlaying: Bool = false
     @State private var isSaved: Bool = false
@@ -28,15 +27,23 @@ struct VideoTranscriptView: View {
     @State private var currentPlaybackTime: TimeInterval = 0
     @State private var isShowToastMessage: Bool = false
     @State private var toastMessage: String = ""
+    @State private var currentVideoId: String = ""
     
+    @State private var youtubePlayer: YouTubePlayer
     
-    private var youtubePlayer: YouTubePlayer {
-        YouTubePlayer( source: .url("https://www.youtube.com/watch?v=\(highlightUseCase.state.selectedHighlight?.videoId ?? "")"),
-                       configuration: YouTubePlayer.Configuration(autoPlay: true))
+    init() {
+        _youtubePlayer = State(initialValue: YouTubePlayer(
+            source: .url(""),
+            configuration: YouTubePlayer.Configuration(autoPlay: true)
+        ))
+    }
+    
+    private var filteredTranscript: [TranscriptItem]? {
+        highlightUseCase.state.filterTranscript
     }
     
     private var currentTranscript: VideoTranscript? {
-        if let videoTranscript = termUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
+        if let videoTranscript = highlightUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
             return videoTranscript
         } else {
             print("자막 생성 실패")
@@ -48,17 +55,15 @@ struct VideoTranscriptView: View {
     
     /// 재생될 때 업데이트 하는 함수
     private func updateIsPlaying(for time: TimeInterval) {
-        let matchingItems = currentTranscript?.transcript.filter { transcriptItem in
-            abs(transcriptItem.start - time) <= 1.0
+        guard let currentTranscript = filteredTranscript else { return }
+        
+        let matchingItems = currentTranscript.filter { transcriptItem in
+            abs(transcriptItem.start - time) <= 2.0
         }
         
-        if let matchingItem = matchingItems?.first {
-            if termDictionary[matchingItem.text] != nil {
-                playingItemId = matchingItem.id
-                isPlaying = true
-            } else {
-                isPlaying = false
-            }
+        if let matchingItem = matchingItems.first {
+            playingItemId = matchingItem.id
+            isPlaying = true
         } else {
             isPlaying = false
         }
@@ -104,7 +109,7 @@ struct VideoTranscriptView: View {
                     isPlaying: Binding(
                         get: { playingItemId == transcriptItem.id },
                         set: { isPlaying in
-                            playingItemId = isPlaying ? transcriptItem.id : nil
+                            playingItemId = isPlaying ? transcriptItem.id : ""
                         }
                     ),
                     searchText: searchText,
@@ -127,7 +132,6 @@ struct VideoTranscriptView: View {
     
     var body: some View {
         ZStack {
-            
             // 상단 배경
             Color(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary)
                 .ignoresSafeArea(edges: .top)
@@ -153,7 +157,6 @@ struct VideoTranscriptView: View {
                             }
                         }
                 }
-                
                 if isSearchActive {
                     searchContent
                 } else {
@@ -161,16 +164,27 @@ struct VideoTranscriptView: View {
                 }
             }
             .onReceive(timer) { _ in
-                youtubePlayer.getCurrentTime { result in
-                    switch result {
-                    case .success(let time):
-                        currentPlaybackTime = time.value
-                        updateIsPlaying(for: currentPlaybackTime)
-                    case .failure(let error):
-                        print("재생 시간 가져오는 에러다 짜식아 \(error)")
+                if youtubePlayer.isPlaying {
+                    youtubePlayer.getCurrentTime { result in
+                        switch result {
+                        case .success(let time):
+                            currentPlaybackTime = time.value
+                            updateIsPlaying(for: currentPlaybackTime)
+                        case .failure(let error):
+                            print("재생 시간 가져오는 에러다 짜식아 \(error.localizedDescription)")
+                        }
                     }
+                } else {
+                    print("플레이어가 재생되지 않음")
                 }
             }
+            .onAppear {
+                if let videoUrl = highlightUseCase.state.videoUrl {
+                    youtubePlayer.source = .url(videoUrl)
+                    youtubePlayer.play()
+                }
+            }
+            
         }
         .navigationBarBackButtonHidden()
     }
@@ -212,71 +226,12 @@ struct VideoTranscriptView: View {
                         Spacer()
                             .frame(height: 16)
                         
-                        ForEach(currentTranscript?.transcript.sorted(by: { $0.start < $1.start }) ?? [], id: \.id) { transcriptItem in
-                            if let description = getTermDescription(for: transcriptItem.text), !description.isEmpty {
-                                let normalizedTerm = description.keys.first!
-                                
-                                let descriptionText = description[normalizedTerm]!
-                                
-                                let isTermSaved = isTermSaved(term: normalizedTerm)
-                                
-                                TermRow(
-                                    isPlaying: Binding(
-                                        get: { playingItemId == transcriptItem.id },
-                                        set: { isPlaying in
-                                            playingItemId = isPlaying ? transcriptItem.id : nil
-                                            if isPlaying {
-                                                withAnimation {
-                                                    scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
-                                                }
-                                            }
-                                        }
-                                    ),
-                                    isSaved: Binding(
-                                        get: { isTermSaved },
-                                        set: { newValue in
-                                            if newValue {
-                                                createTermEntry(term: normalizedTerm, definition: descriptionText)
-                                            } else {
-                                                deleteTermEntry(term: normalizedTerm)
-                                            }
-                                        }
-                                    ),
-                                    term: normalizedTerm,
-                                    description: descriptionText,
-                                    time: transcriptItem.start
-                                )
-                                .id(transcriptItem.id)
-                                .simultaneousGesture(
-                                    TapGesture()
-                                        .onEnded {
-                                            youtubePlayer.seek(
-                                                to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
-                                                allowSeekAhead: true
-                                            )
-                                        }
-                                )
-                                .padding(.bottom, 8)
-                                .padding(.horizontal, 16)
-                                .onAppear {
-                                    if playingItemId == transcriptItem.id {
-                                        withAnimation {
-                                            scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
-                                        }
-                                    }
-                                }
-                                .onChange(of: playingItemId) {
-                                    if let playingItemId {
-                                        withAnimation {
-                                            scrollProxy.scrollTo(playingItemId, anchor: .top)
-                                        }
-                                    }
-                                }
-                            } else {
-                                EmptyView()
-                            }
+                        ForEach(filteredTranscript?.sorted(by: { $0.start < $1.start }) ?? [], id: \.id) { transcriptItem in
+                            termRow(
+                                for: transcriptItem,
+                                scrollProxy: scrollProxy
+                            )
                         }
-                        
                     }
                 }
                 
@@ -305,7 +260,68 @@ struct VideoTranscriptView: View {
         }
     }
     
-    
+    private func termRow(for transcriptItem: TranscriptItem, scrollProxy: ScrollViewProxy) -> some View {
+        let isTermSaved = isTermSaved(term: transcriptItem.text)
+        
+        return TermRow(
+            isPlaying:
+                Binding(
+                    get: {
+                        playingItemId == transcriptItem.id && isPlaying
+                    },
+                    set: { isPlaying in
+                        playingItemId = isPlaying ? transcriptItem.id : ""
+                        
+                        if isPlaying {
+                            withAnimation {
+                                scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+                            }
+                        }
+                    }
+                ),
+            isSaved: Binding(
+                get: { isTermSaved },
+                set: { newValue in
+                    if newValue {
+                        createTermEntry(
+                            term: transcriptItem.text,
+                            definition: transcriptItem.description ?? ""
+                        )
+                    } else {
+                        deleteTermEntry(term: transcriptItem.text)
+                    }
+                }
+            ),
+            term: transcriptItem.text,
+            description: transcriptItem.description ?? "",
+            time: transcriptItem.start
+        )
+        .id(transcriptItem.id)
+        .simultaneousGesture(
+            TapGesture()
+                .onEnded {
+                    youtubePlayer.seek(
+                        to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                        allowSeekAhead: true
+                    )
+                }
+        )
+        .padding(.horizontal, 16)
+        .onAppear {
+            if playingItemId == transcriptItem.id {
+                withAnimation {
+                    scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+                }
+            }
+        }
+        .onChange(of: playingItemId) { newValue in
+            if newValue == transcriptItem.id {
+                withAnimation {
+                    scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+                }
+            }
+        }
+    }
 }
 
 // MARK: - TopView
@@ -415,10 +431,8 @@ private struct SearchBar: View {
     }
 }
 
-
 #Preview {
     VideoTranscriptView()
-        .environment(PreviewHelper.mockTermUseCase)
         .environment(PathModel())
         .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
         .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))

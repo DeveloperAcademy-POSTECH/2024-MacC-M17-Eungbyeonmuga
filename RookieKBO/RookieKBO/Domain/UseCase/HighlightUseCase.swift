@@ -31,6 +31,8 @@ extension HighlightUseCase {
         var HighlightInfo: [Highlight]
         var selectedDate: Date?
         var selectedHighlight: Highlight?
+        var videoUrl: String?
+        var filterTranscript: [TranscriptItem]?
     }
 }
 
@@ -57,10 +59,36 @@ extension HighlightUseCase {
         highlightService.extractHomeAway(from: title)
     }
     
-    // 선택한 하이라이트 영상 정보 업데이트
+    /// 선택한 하이라이트 영상 정보 업데이트
     func updateSelectedeHighlight(highlight: Highlight) {
         var currentHighlight = highlight
         currentHighlight.title = extractHomeAway(from: highlight.title)
         state.selectedHighlight = currentHighlight
+    }
+    
+    /// 선택한 url 업데이트
+    func updateVideoUrl() {
+        let videoId = state.selectedHighlight?.videoId
+        state.videoUrl = "https://www.youtube.com/watch?v=\(videoId ?? "")"
+    }
+    
+    /// txt 파일에서 자막 가져오는 함수
+    func loadTranscript(from filename: String) -> VideoTranscript? {
+        highlightService.loadTranscript(from: filename)
+    }
+    
+    /// 필터링 한 자막 가져오는 함수
+    func filterData() {
+        if let videoTranscript = loadTranscript(from: state.selectedHighlight?.videoId ?? "") {
+            if let filteredTranscript = getTermDescription(videoTranscript: videoTranscript) {
+                state.filterTranscript = filteredTranscript
+            } else {
+                print("필터 오류남")
+                state.filterTranscript = []
+            }
+        } else {
+            print("비디오 자막 로드 실패")
+            state.filterTranscript = []
+        }
     }
 }

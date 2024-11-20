@@ -24,15 +24,15 @@ extension APIs.RookieKBO {
     }
     
     /// Rank  API
-    enum FastAPI: RawRepresentable, API {
+    enum Teams: RawRepresentable, API {
 
-        static let baseUrl: URL = APIs.RookieKBO.baseURL.appendingPathComponent("fast-apis")
+        static let baseUrl: URL = APIs.RookieKBO.baseURL.appendingPathComponent("teams")
         
         case fetchRanks // 팀 랭킹 조회
         
         var rawValue: RawValue {
             switch self {
-            case .fetchRanks: return "/rankings"
+            case .fetchRanks: return "/rank"
             }
         }
     }
