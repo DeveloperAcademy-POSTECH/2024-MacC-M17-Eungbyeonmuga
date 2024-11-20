@@ -443,6 +443,7 @@ private struct SetCalendarView: View {
             DatePicker(
                 "경기 날짜 선택",
                 selection: $currentDate,
+                in: Date.regularSeasonStart...Date.postSeasonEnd,
                 displayedComponents: .date
             )
             .datePickerStyle(.graphical)

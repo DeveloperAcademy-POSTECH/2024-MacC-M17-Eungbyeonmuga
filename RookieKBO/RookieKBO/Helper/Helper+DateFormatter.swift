@@ -7,25 +7,27 @@
 
 import Foundation
 
+extension DateFormatter {
+    static func customFormatter(format: String) -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter
+    }
+}
+
 extension Date {
     func toTimeString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        return dateFormatter.string(from: self)
+        return DateFormatter.customFormatter(format: "HH:mm").string(from: self)
     }
     
     func toMonthDayString() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM.dd"
-        return formatter.string(from: self)
+        return DateFormatter.customFormatter(format: "MM.dd").string(from: self)
     }
     
     func formattedString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "M월 d일 HH:mm"
-        
-        return dateFormatter.string(from: self)
+        let formatter = DateFormatter.customFormatter(format: "M월 d일 HH:mm")
+        formatter.locale = Locale(identifier: "ko_KR")
+        return formatter.string(from: self)
     }
     
     static var today: Date {
@@ -34,31 +36,21 @@ extension Date {
     }
     
     func toFormattedString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd"
-        return dateFormatter.string(from: self)
+        return DateFormatter.customFormatter(format: "yyyyMMdd").string(from: self)
     }
     
     func fromFormattedString(_ dateString: String) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd"
-        return dateFormatter.date(from: dateString)
+        return DateFormatter.customFormatter(format: "yyyyMMdd").date(from: dateString)
     }
     
     func fromStringToDate(_ dateString: String) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.date(from: dateString)
+        return DateFormatter.customFormatter(format: "yyyy-MM-dd").date(from: dateString)
     }
     
     /// 개막일까지 남은 기간 반환
     func getDdayToOpeningDate() -> String {
         let calendar = Calendar.current
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
-        
-        // 개막일 설정 (2025년 3월 22일)
-        guard let openingDate = formatter.date(from: "2025/03/22") else {
+        guard let openingDate = DateFormatter.customFormatter(format: "yyyy/MM/dd").date(from: "2025/03/22") else {
             return "데이트 타입 오류"
         }
         
@@ -77,22 +69,27 @@ extension Date {
         }
     }
     
+    static var regularSeasonStart: Date {
+        return DateFormatter.customFormatter(format: "yyyy/MM/dd").date(from: "2024/03/23") ?? Date()
+    }
+    
+    static var regularSeasonEnd: Date {
+        return DateFormatter.customFormatter(format: "yyyy/MM/dd").date(from: "2024/10/01") ?? Date()
+    }
+    
+    static var postSeasonStart: Date {
+        return DateFormatter.customFormatter(format: "yyyy/MM/dd").date(from: "2024/10/02") ?? Date()
+    }
+    
+    static var postSeasonEnd: Date {
+        return DateFormatter.customFormatter(format: "yyyy/MM/dd").date(from: "2024/10/29") ?? Date()
+    }
+    
     /// 포스트 시즌 및 정규 시즌 판별
     func getSeasonType() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
-        
-        guard let regularSeasonStart = formatter.date(from: "2024/03/23"),
-              let regularSeasonEnd = formatter.date(from: "2024/10/01"),
-              let postSeasonStart = formatter.date(from: "2024/10/02"),
-              let postSeasonEnd = formatter.date(from: "2024/10/29")
-        else {
-            return "시즌 판별 오류"
-        }
-        
-        if self >= regularSeasonStart && self <= regularSeasonEnd {
+        if self >= Date.regularSeasonStart && self <= Date.regularSeasonEnd {
             return "정규 시즌"
-        } else if self >= postSeasonStart && self <= postSeasonEnd {
+        } else if self >= Date.postSeasonStart && self <= Date.postSeasonEnd {
             return "포스트 시즌"
         } else {
             return "TODAY"
