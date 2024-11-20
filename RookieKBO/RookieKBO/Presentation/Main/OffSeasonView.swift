@@ -199,9 +199,6 @@ private struct ContentView: View {
     @Environment(NewsUseCase.self) private var newsUseCase
     @Environment(\.openURL) private var openURL
     
-    // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함.
-    let games: [Match] = MockDataBuilderForWidget.mockMatchList
-    
     var currentTeam: Team? { selectTeamUseCase.state.selectedTeam }
     
     // 종료된 우리 팀 경기
@@ -227,51 +224,15 @@ private struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             DateInfoView()
-            
-            if matchUseCase.getSeason() != "TODAY" {
-                HStack(spacing: 0) {
-                    Text(currentTeam?.name == "전체 구단" ? "종료된 경기" : "종료된 우리팀 경기")
-                        .font(.Body.body1)
-                        .foregroundColor(.gray7)
-                    
-                    Spacer()
-                    
-                    Text("스탯티즈 출처")
-                        .font(.Body.body5)
-                        .foregroundColor(.gray5)
-                }
-                .padding(.vertical)
-                
-                if myTeamEndGames.isEmpty && myTeamCancelGames.isEmpty {
-                    VStack(spacing: 0) {
-                        Image(selectTeamUseCase.state.selectedTeam?.image ?? "allTeamUnder")
-                            .resizable()
-                            .frame(width: 96, height: 96)
-                        
-                        Text("우리팀 경기가 없었어요!")
-                            .font(.Head.head5)
-                            .foregroundColor(.gray5)
-                            .padding(.vertical)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(RoundedRectangle(cornerRadius: 24)
-                        .fill(.white0))
-                    
-                } else {
-                    ForEach(myTeamEndGames) { game in
-                        EndGameInfo(endGameInfo: game)
-                            .padding(.bottom, 4)
-                    }
-                    
-                    ForEach(myTeamCancelGames) { game in
-                        CancelGameInfo(cancelGameInfo: game)
-                            .padding(.bottom, 4)
-                    }
-                }
-                
-                if currentTeam?.name != "전체 구단" && (!otherTeamEndGames.isEmpty || !otherTeamCancelGames.isEmpty) {
+            // 로딩 중일 때 표시할 뷰
+            if matchUseCase.isLoading {
+                ProgressView()
+                    .padding(.vertical, 40)
+                    .background(.gray1)
+            } else {
+                if matchUseCase.getSeason() != "TODAY" {
                     HStack(spacing: 0) {
-                        Text("종료된 다른팀 경기")
+                        Text(currentTeam?.name == "전체 구단" ? "종료된 경기" : "종료된 우리팀 경기")
                             .font(.Body.body1)
                             .foregroundColor(.gray7)
                         
@@ -283,35 +244,77 @@ private struct ContentView: View {
                     }
                     .padding(.vertical)
                     
-                    ForEach(otherTeamEndGames) { game in
-                        EndGameInfo(endGameInfo: game)
-                            .padding(.bottom, 4)
+                    if myTeamEndGames.isEmpty && myTeamCancelGames.isEmpty {
+                        VStack(spacing: 0) {
+                            Image(selectTeamUseCase.state.selectedTeam?.image ?? "allTeamUnder")
+                                .resizable()
+                                .frame(width: 96, height: 96)
+                            
+                            Text("우리팀 경기가 없었어요!")
+                                .font(.Head.head5)
+                                .foregroundColor(.gray5)
+                                .padding(.vertical)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(RoundedRectangle(cornerRadius: 24)
+                            .fill(.white0))
+                        
+                    } else {
+                        ForEach(myTeamEndGames) { game in
+                            EndGameInfo(endGameInfo: game)
+                                .padding(.bottom, 4)
+                        }
+                        
+                        ForEach(myTeamCancelGames) { game in
+                            CancelGameInfo(cancelGameInfo: game)
+                                .padding(.bottom, 4)
+                        }
                     }
                     
-                    ForEach(otherTeamCancelGames) { game in
-                        CancelGameInfo(cancelGameInfo: game)
-                            .padding(.bottom, 4)
+                    if currentTeam?.name != "전체 구단" && (!otherTeamEndGames.isEmpty || !otherTeamCancelGames.isEmpty) {
+                        HStack(spacing: 0) {
+                            Text("종료된 다른팀 경기")
+                                .font(.Body.body1)
+                                .foregroundColor(.gray7)
+                            
+                            Spacer()
+                            
+                            Text("스탯티즈 출처")
+                                .font(.Body.body5)
+                                .foregroundColor(.gray5)
+                        }
+                        .padding(.vertical)
+                        
+                        ForEach(otherTeamEndGames) { game in
+                            EndGameInfo(endGameInfo: game)
+                                .padding(.bottom, 4)
+                        }
+                        
+                        ForEach(otherTeamCancelGames) { game in
+                            CancelGameInfo(cancelGameInfo: game)
+                                .padding(.bottom, 4)
+                        }
                     }
-                }
-            } else {
-                HStack(spacing: 0) {
-                    Text("비시즌 KBO NEWS")
-                        .font(.Body.body1)
-                        .foregroundColor(.gray7)
-                    
-                    Spacer()
-                    
-                    Text("스탯티즈 출처")
-                        .font(.Body.body5)
-                        .foregroundColor(.gray5)
-                }
-                .padding(.vertical)
-                
-                ForEach(newsUseCase.state.totalNews ?? []) { news in
-                    NewsBoard(newsInfo: news) {
-                        openURL(URL(string: news.link)!)
+                } else {
+                    HStack(spacing: 0) {
+                        Text("비시즌 KBO NEWS")
+                            .font(.Body.body1)
+                            .foregroundColor(.gray7)
+                        
+                        Spacer()
+                        
+                        Text("스탯티즈 출처")
+                            .font(.Body.body5)
+                            .foregroundColor(.gray5)
                     }
-                    .padding(.bottom)
+                    .padding(.vertical)
+                    
+                    ForEach(newsUseCase.state.totalNews ?? []) { news in
+                        NewsBoard(newsInfo: news) {
+                            openURL(URL(string: news.link)!)
+                        }
+                        .padding(.bottom)
+                    }
                 }
             }
         }
@@ -320,13 +323,17 @@ private struct ContentView: View {
     }
     
     private func filteredGames(myTeamGames: Bool) -> [Match] {
-        games.filter { game in
+        matchUseCase.matches.filter { game in
             // 모든 게임이 과거 날짜인지 확인
             matchUseCase.isDateInPast(game.startDateTime)
         }
         .filter { game in
             guard let selectedDate = matchUseCase.selectedDate else { return true }
-            return Calendar.current.isDate(game.startDateTime, inSameDayAs: selectedDate)
+            // startDateTime에서 4시간 빼서 해당 날짜에 띄우기
+            guard let adjustedStartDateTime = Calendar.current.date(byAdding: .hour, value: -4, to: game.startDateTime) else {
+                return false
+            }
+            return Calendar.current.isDate(adjustedStartDateTime, inSameDayAs: selectedDate)
         }
         .filter { game in
             guard let selectedTeam = selectTeamUseCase.state.selectedTeam else { return false }
@@ -431,18 +438,12 @@ private struct SetCalendarView: View {
     @State private var isValidDate = false
     @State private var calendarColor: Color = .brandPrimary
     
-    // TODO: API 연결 이후 삭제 예정 -> UseCase 사용해서 State로 저장해야함
-    let matchInfo = MockDataBuilderForWidget.mockMatchList
-    
-    private var matchingMatchs: [Match] {
-        matchUseCase.filterMatches(for: currentDate, in: matchInfo)
-    }
-    
     var body: some View {
         VStack(spacing: 0) {
             DatePicker(
                 "경기 날짜 선택",
                 selection: $currentDate,
+                in: Date.regularSeasonStart...Date.postSeasonEnd,
                 displayedComponents: .date
             )
             .datePickerStyle(.graphical)
@@ -453,6 +454,11 @@ private struct SetCalendarView: View {
             
             if isValidDate {
                 Button {
+                    Task {
+                        matchUseCase.isLoadingToggle()
+                        await matchUseCase.fetchMatches(date: currentDate.toFormattedString())
+                        matchUseCase.isLoadingToggle()
+                    }
                     matchUseCase.fetchSelectedDate(currentDate)
                     presentationMode.wrappedValue.dismiss()
                 } label: {
@@ -489,10 +495,10 @@ private struct SetCalendarView: View {
         .onAppear {
             calendarColor = Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary
             currentDate = matchUseCase.selectedDate ?? Date()
-            isValidDate = matchUseCase.isValidDate(currentDate, from: matchInfo)
+            isValidDate = matchUseCase.isValidDate(currentDate)
         }
         .onChange(of: currentDate) { newDate in
-            isValidDate = matchUseCase.isValidDate(newDate, from: matchInfo)
+            isValidDate = matchUseCase.isValidDate(currentDate)
         }
     }
 }

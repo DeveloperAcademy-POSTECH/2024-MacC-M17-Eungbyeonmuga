@@ -1,14 +1,14 @@
+////
+////  WidgetEndGame.swift
+////  RookieKBOWidgetExtension
+////
+////  Created by crownjoe on 10/16/24.
+////
 //
-//  WidgetEndGame.swift
-//  RookieKBOWidgetExtension
+//import WidgetKit
+//import SwiftUI
 //
-//  Created by crownjoe on 10/16/24.
 //
-
-import WidgetKit
-import SwiftUI
-
-
 //struct WidgetEndGame: View {
 //    var entry: Provider.Entry
 //    var currentMatch: Match? { entry.match }

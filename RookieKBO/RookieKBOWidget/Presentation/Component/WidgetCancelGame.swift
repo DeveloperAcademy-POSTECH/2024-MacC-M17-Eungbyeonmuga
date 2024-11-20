@@ -1,14 +1,14 @@
+////
+////  WidgetCancelGame.swift
+////  RookieKBOWidgetExtension
+////
+////  Created by crownjoe on 10/16/24.
+////
 //
-//  WidgetCancelGame.swift
-//  RookieKBOWidgetExtension
+//import WidgetKit
+//import SwiftUI
 //
-//  Created by crownjoe on 10/16/24.
 //
-
-import WidgetKit
-import SwiftUI
-
-
 //struct WidgetCancelGame: View {
 //    var entry: Provider.Entry
 //    var currentMatch: Match? { entry.match }

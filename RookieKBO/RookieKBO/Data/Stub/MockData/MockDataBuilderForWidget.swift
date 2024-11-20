@@ -472,4 +472,34 @@ struct MockDataBuilderForWidget {
             )
         ]
     }
+    
+    /// 특정 날짜를 `Date`로 변환하는 함수
+    static func makeDate(year: Int, month: Int, day: Int) -> Date? {
+        return Calendar.current.date(from: DateComponents(year: year, month: month, day: day))
+    }
+
+    /// 주어진 연도와 월, 날짜 배열로 `Date` 배열 생성
+    static func mockTotalGameDate() -> [Date] {
+        let year = 2024
+        let dates = [
+            (3, [23, 24, 26, 27, 28, 29, 30, 31]),
+            (4, [2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 30]),
+            (5, [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25, 26, 28, 29, 30, 31]),
+            (6, [1, 2, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29, 30]),
+            (7, [2, 3, 4, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 30, 31]),
+            (8, [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31]),
+            (9, [1, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]),
+            (10, [1, 2, 3, 5, 6, 8, 9, 11, 13, 14, 15, 17, 18, 19, 21, 22, 23, 25, 26, 28])
+        ]
+        
+        var gameDates: [Date] = []
+        for (month, days) in dates {
+            for day in days {
+                if let date = makeDate(year: year, month: month, day: day) {
+                    gameDates.append(date)
+                }
+            }
+        }
+        return gameDates
+    }
 }

@@ -1,13 +1,13 @@
+////
+////  WidgetPlayingGame.swift
+////  RookieKBOWidgetExtension
+////
+////  Created by crownjoe on 10/16/24.
+////
 //
-//  WidgetPlayingGame.swift
-//  RookieKBOWidgetExtension
+//import WidgetKit
+//import SwiftUI
 //
-//  Created by crownjoe on 10/16/24.
-//
-
-import WidgetKit
-import SwiftUI
-
 //struct WidgetPlayingGame: View {
 //    var entry: Provider.Entry
 //    var currentMatch: Match? { entry.match }

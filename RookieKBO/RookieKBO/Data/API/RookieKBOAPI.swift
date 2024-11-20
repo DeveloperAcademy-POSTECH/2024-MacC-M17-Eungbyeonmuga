@@ -10,7 +10,7 @@ import Foundation
 extension APIs.RookieKBO {
     
     /// Match API
-    enum Matchs: RawRepresentable, API {
+    enum Matches: RawRepresentable, API {
 
         static let baseUrl: URL = APIs.RookieKBO.baseURL.appendingPathComponent("games")
         
