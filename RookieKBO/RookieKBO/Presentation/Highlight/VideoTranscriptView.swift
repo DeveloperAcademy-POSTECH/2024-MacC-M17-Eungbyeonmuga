@@ -41,7 +41,7 @@ struct VideoTranscriptView: View {
     private var filteredTranscript: [TranscriptItem]? {
         highlightUseCase.state.filterTranscript
     }
-
+    
     private var currentTranscript: VideoTranscript? {
         if let videoTranscript = highlightUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
             return videoTranscript
@@ -306,7 +306,7 @@ struct VideoTranscriptView: View {
                     )
                 }
         )
-        .padding(.bottom, 8)
+//        .padding(.bottom, 8)
         .padding(.horizontal, 16)
         .onAppear {
             if playingItemId == transcriptItem.id {
@@ -315,14 +315,14 @@ struct VideoTranscriptView: View {
                 }
             }
         }
-        .onChange(of: playingItemId) {
+        .onChange(of: playingItemId) { newValue in
+            if newValue == transcriptItem.id {
                 withAnimation {
                     scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
                 }
+            }
         }
     }
-
-
 }
 
 // MARK: - TopView
