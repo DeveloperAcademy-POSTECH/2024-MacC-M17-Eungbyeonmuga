@@ -97,7 +97,7 @@ struct RookieKBOWidget: Widget {
             RookieKBOWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("루키베이스 위젯")
+        .configurationDisplayName("RookieBase 위젯")
         .description("곧 다가올 경기 일정부터 하이라이트까지, \n응원 팀의 정보를 한눈에 확인하세요!")
         .supportedFamilies([.systemSmall])
         .contentMarginsDisabled()
