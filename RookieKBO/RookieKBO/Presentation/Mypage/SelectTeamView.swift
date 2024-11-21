@@ -69,7 +69,7 @@ private struct HeaderView: View {
                 if currentSelectTeam == "없음" {
                     Image("titleLogo")
                         .resizable()
-                        .frame(width: 150, height: 40)
+                        .frame(width: 180, height: 32)
                         .padding(.bottom, 18)
                     
                     Text("응원하는 구단을 선택하세요!")
@@ -233,7 +233,7 @@ private struct StartTeam: View {
                
                 
             } label: {
-                Text("루키크보 시작하기")
+                Text("루키베이스 시작하기")
                     .font(.Head.head3)
                     .frame(width: 361, height: 54)
                     .foregroundColor(.white)
