@@ -69,7 +69,7 @@ private struct HeaderView: View {
                 if currentSelectTeam == "없음" {
                     Image("titleLogo")
                         .resizable()
-                        .frame(width: 180, height: 40)
+                        .frame(width: 180, height: 32)
                         .padding(.bottom, 18)
                     
                     Text("응원하는 구단을 선택하세요!")
