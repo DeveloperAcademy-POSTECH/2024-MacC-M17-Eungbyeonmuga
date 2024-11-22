@@ -69,6 +69,26 @@ extension Date {
         }
     }
     
+    static func daysLeftToOpeningDate() -> Int? {
+        let calendar = Calendar.current
+        
+        let timeZone = TimeZone(identifier: "Asia/Seoul")!
+        let now = Date()
+        let localDate = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: now)!
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        formatter.timeZone = timeZone
+        
+        guard let openingDate = formatter.date(from: "2025/03/22") else {
+            return nil
+        }
+        
+        let components = calendar.dateComponents([.day], from: localDate, to: openingDate)
+        
+        return components.day
+    }
+    
     static var regularSeasonStart: Date {
         return DateFormatter.customFormatter(format: "yyyy/MM/dd").date(from: "2024/03/23") ?? Date()
     }
