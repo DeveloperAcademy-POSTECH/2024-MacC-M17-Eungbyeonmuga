@@ -88,11 +88,12 @@ private struct TabBarModifier: ViewModifier {
         content
             .tag(selectedTab)
             .tabItem {
-                VStack {
+                VStack(spacing: 0) {
                     // 선택된 탭에 따라 아이콘 변경
                     Image(currentTab == selectedTab ? "\(selectTeamUseCase.state.selectedTeam?.color ?? "allTeam")\(selectedTab.selectedIcon)" : selectedTab.defaultIcon)
                         .resizable()
                         .frame(width: 32, height: 32)
+                    
                     
                     Text(selectedTab.title)
                         .font(.Caption.caption3b)

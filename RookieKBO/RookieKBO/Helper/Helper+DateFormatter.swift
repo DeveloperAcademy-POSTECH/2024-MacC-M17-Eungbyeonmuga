@@ -105,6 +105,10 @@ extension Date {
         return DateFormatter.customFormatter(format: "yyyy/MM/dd").date(from: "2024/10/29") ?? Date()
     }
     
+    static var newSeasonStart: Date {
+        return DateFormatter.customFormatter(format: "yyyy/MM/dd").date(from: "2025/03/22") ?? Date()
+    }
+    
     /// 포스트 시즌 및 정규 시즌 판별
     func getSeasonType() -> String {
         if self >= Date.regularSeasonStart && self <= Date.regularSeasonEnd {
