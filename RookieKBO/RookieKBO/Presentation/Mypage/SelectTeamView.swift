@@ -47,9 +47,9 @@ struct SelectTeamView: View {
                 StartTeam(selectedTeam: $selectedTeam)
             }
         }
-//        .onAppear {
-//            WidgetCenter.shared.reloadAllTimelines()
-//        }
+        .onAppear {
+            WidgetCenter.shared.reloadAllTimelines()
+        }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
     }

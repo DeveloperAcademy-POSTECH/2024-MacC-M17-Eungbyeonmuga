@@ -51,7 +51,8 @@ enum WidgetMatchResult {
 // 선택한 팀 반환 함수
 func getSelectTeam() -> SelectTeamType {
     let stubSelectTeamService = SelectTeamServiceImpl()
-    guard let selectTeam = stubSelectTeamService.getUserDefaultsTeamObject() else {
+    guard let selectTeam = stubSelectTeamService.getUserDefaultsTeamObject()
+    else {
         return .allType
     }
     
