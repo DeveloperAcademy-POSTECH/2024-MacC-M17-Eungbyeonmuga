@@ -101,25 +101,30 @@ private struct HighlightContentSettingView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @Environment(PathModel.self) private var pathModel
     
     @State private var isShowingSetCalendar = false
     
     var body: some View {
         HStack(spacing: 8) {
-            HStack(spacing: 8) {
-                Image(systemName: "baseball")
-                    .font(.Caption.caption1)
-                
-                Text("전체 구단")
-                    .font(.Body.body1)
+            Button {
+                pathModel.presentSheet(.highlightFilter)
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "baseball")
+                        .font(.Caption.caption1)
+                    
+                    Text("전체 구단")
+                        .font(.Body.body1)
+                }
+                .foregroundColor(.white0)
+                .padding(.vertical, 12)
+                .padding(.horizontal, 20)
+                .background(
+                    RoundedRectangle(cornerRadius: 99)
+                        .fill(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary)
+                )
             }
-            .foregroundColor(.white0)
-            .padding(.vertical, 12)
-            .padding(.horizontal, 20)
-            .background(
-                RoundedRectangle(cornerRadius: 99)
-                    .fill(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary)
-            )
             
             Spacer(minLength: 0)
             

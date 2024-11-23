@@ -41,7 +41,8 @@ struct HighlightTeamFilterView: View {
                     .padding(.bottom)
                 }
             }
-            .padding(.horizontal)
+            .padding()
+            .padding(.top, 32)
             
             Spacer()
             
@@ -68,6 +69,8 @@ struct HighlightTeamFilterView: View {
                 }
             }
         }
+        .presentationDragIndicator(.visible)
+        .presentationDetents([.height(560)])
         .onAppear {
             filterColor = Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary
             selectedTeam = selectTeamUseCase.state.selectedTeam
