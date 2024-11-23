@@ -46,14 +46,14 @@ struct DdayView: View {
                 ZStack {
                     Image(.dayIcon)
                     
-                    if let teamImage = teamImage(for: currentTeam?.name ?? "") {
+                    if let teamImage = convertUIImage(for: currentTeam?.image ?? "allTeamUnder") {
                         Image(uiImage: teamImage)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 120, height: 120)
                             .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
                     } else {
-                        Image("allTeam")
+                        Image("allTeamUnder")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 120, height: 120)
