@@ -131,7 +131,7 @@ private struct OffSeasonInfoView: View {
                 }
                 // 버튼으로 바꾸기
                 .onTapGesture {
-                    pathModel.presentSheet(.teamRanking)
+                    pathModel.presentSheet(.dDaySheet)
                 }
                 .font(.Body.body1)
                 .foregroundColor(.white0)

@@ -18,14 +18,18 @@ struct DdayView: View {
             DdayInfo()
             
             VStack(alignment: .leading, spacing: 0) {
-                Text("2025 KBO 리그")
-                    .font(.Body.body1)
-                    .foregroundColor(.white0)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
-                    .background(Color.teamColor(for: currentTeam?.color ?? ""))
-                    .cornerRadius(99)
-                    .padding(.bottom, 20)
+                HStack {
+                    Text("2025 KBO 리그")
+                        .font(.Body.body1)
+                        .foregroundColor(.white0)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
+                        .background(Color.teamColor(for: currentTeam?.color ?? ""))
+                        .cornerRadius(99)
+                        .padding(.bottom, 20)
+                    
+                    Spacer()
+                }
                 
                 Text("개막까지 \(Date.daysLeftToOpeningDate() ?? 0)일 남았어요!")
                     .font(.Head.head4b)
@@ -61,6 +65,7 @@ struct DdayView: View {
                 .padding(.bottom, 12)
                 
                 DdayProgressView()
+                    .padding(.horizontal, 16)
                     .padding(.bottom, 24)
                 
                 Text("2025년 3월 22일 개막 예정")
@@ -73,13 +78,14 @@ struct DdayView: View {
                     .foregroundColor(.gray7)
                     .padding(.leading, 73)
             }
+            .frame(maxWidth: .infinity)
             .padding(.all, 12)
             .background(.gray2)
             .cornerRadius(18)
         }
-//        .padding(.horizontal, 16)
         .padding(.vertical, 54)
-        .presentationDetents([.fraction(0.6)])
+        .padding(.horizontal, 16)
+        .presentationDetents([.fraction(0.7)])
         .presentationDragIndicator(.visible)
     }
 }
@@ -92,7 +98,6 @@ private struct DdayInfo: View {
             .font(.CustomTitle.customTitle2)
             .padding(.bottom, 16)
             .foregroundColor(.gray7)
-            .padding(.leading, 16)
     }
 }
 
@@ -111,13 +116,13 @@ private struct DdayProgressView: View {
     var remainingDuration: TimeInterval {
         endDate.timeIntervalSince(currentDate)
     }
-
+    
     var progress: Double {
         return max(0, min(1, (totalDuration - remainingDuration) / totalDuration))
     }
     
     var body: some View {
-            ProgressBar(progress: progress)
+        ProgressBar(progress: progress)
     }
 }
 
@@ -131,32 +136,35 @@ private struct ProgressBar: View {
     var progress: Double
     
     var body: some View {
-        ZStack(alignment: .leading) {
-            RoundedRectangle(cornerRadius: 99)
-                .fill(Color.teamColor(for: currentTeam?.color ?? "") ?? .brandPrimary)
-                .opacity(0.2)
-            
-            RoundedRectangle(cornerRadius: 99)
-                .fill(Color.teamColor(for: currentTeam?.color ?? "") ?? .brandPrimary)
-                .frame(width: CGFloat(progress) * 297)
-
-            ZStack {
-                Image(.speechBubble)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 48, height: 30)
-                    .position(x: CGFloat(progress) * 297, y: -20)
-                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 99)
+                    .fill(Color.teamColor(for: currentTeam?.color ?? "") ?? .brandPrimary)
+                    .opacity(0.2)
                 
-                Text("D-\(Date.daysLeftToOpeningDate() ?? 0)")
-                    .font(.Caption.caption1)
-                    .padding(.horizontal, 7)
-                    .padding(.vertical, 6)
-                    .foregroundColor(.gray7)
-                    .position(x: CGFloat(progress) * 297, y: -22)
+                RoundedRectangle(cornerRadius: 99)
+                    .fill(Color.teamColor(for: currentTeam?.color ?? "") ?? .brandPrimary)
+                    .frame(width: CGFloat(progress) * geometry.size.width)
+                
+                ZStack {
+                    Image(.speechBubble)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 64, height: 38)
+                        .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
+                        .position(x: CGFloat(progress) * geometry.size.width, y: -22)
+                    
+                    Text("D-\(Date.daysLeftToOpeningDate() ?? 0)")
+                        .font(.Body.body1)
+                        .padding(.horizontal, 7)
+                        .padding(.vertical, 6)
+                        .foregroundColor(.gray7)
+                        .position(x: CGFloat(progress) * geometry.size.width, y: -24)
+                }
             }
+            .frame(width: geometry.size.width, height: 16)
         }
-        .frame(width: 297, height: 16)
+        .frame(height: 16)
     }
 }
 
