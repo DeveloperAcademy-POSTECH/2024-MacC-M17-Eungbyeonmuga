@@ -41,6 +41,8 @@ extension PathModel {
         switch sheet {
         case .teamRanking:
             TeamRanksListView()
+        case .dDaySheet:
+            DdayView()
         }
     }
 }

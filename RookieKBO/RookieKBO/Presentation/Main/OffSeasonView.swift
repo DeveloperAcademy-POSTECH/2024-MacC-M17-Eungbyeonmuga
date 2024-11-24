@@ -129,6 +129,10 @@ private struct OffSeasonInfoView: View {
                         .frame(width: 2, height: 16)
                     Text((Date().getDdayToOpeningDate()))
                 }
+                // 버튼으로 바꾸기
+                .onTapGesture {
+                    pathModel.presentSheet(.dDaySheet)
+                }
                 .font(.Body.body1)
                 .foregroundColor(.white0)
                 .padding(.vertical, 12)
