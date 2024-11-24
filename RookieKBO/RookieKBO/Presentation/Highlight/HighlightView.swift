@@ -114,7 +114,7 @@ private struct HighlightContentSettingView: View {
                     Image(systemName: "baseball")
                         .font(.Caption.caption1)
                     
-                    Text("전체 구단")
+                    Text(highlightUseCase.state.selectedTeamName ?? "전체 구단")
                         .font(.Body.body1)
                 }
                 .foregroundColor(.white0)
@@ -122,7 +122,7 @@ private struct HighlightContentSettingView: View {
                 .padding(.horizontal, 20)
                 .background(
                     RoundedRectangle(cornerRadius: 99)
-                        .fill(Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary)
+                        .fill(Color.teamColor(for: highlightUseCase.state.selectedTeamName ?? "") ?? .brandPrimary)
                 )
             }
             

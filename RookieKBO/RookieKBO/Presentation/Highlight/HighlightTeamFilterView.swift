@@ -30,7 +30,7 @@ struct HighlightTeamFilterView: View {
                                 .resizable()
                                 .frame(width: 40, height: 40)
                                 .offset(y: -4)
-                            Text(team.name.split(separator: " ")[0])
+                            Text(team.name.split(separator: " ")[0] == "전체" ? "전체 구단" : team.name.split(separator: " ")[0])
                                 .font(.Head.head4b)
                                 .foregroundColor(.white0)
                                 .frame(width: 88, height: 20)
@@ -48,7 +48,7 @@ struct HighlightTeamFilterView: View {
             
             Spacer()
             
-            if selectedTeam?.name != selectTeamUseCase.state.selectedTeam?.name {
+            if selectedTeam?.name.split(separator: " ")[0] ?? "전체" != highlightUseCase.state.selectedTeamName ?? "전체" {
                 Button {
                     if let teamName = selectedTeam?.name.split(separator: " ")[0] {
                         highlightUseCase.fecthSelectedTeam(String(teamName))
@@ -78,7 +78,13 @@ struct HighlightTeamFilterView: View {
         .presentationDetents([.height(560)])
         .onAppear {
             filterColor = Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary
-            selectedTeam = selectTeamUseCase.state.selectedTeam
+            // 기존 선택된 팀 설정
+            if let selectedTeamName = highlightUseCase.state.selectedTeamName {
+                selectedTeam = selectTeamUseCase.state.teams.first { $0.name.split(separator: " ")[0] == selectedTeamName }
+            } else {
+                // 선택된 팀이 없을 경우 전체 구단 활성화
+                selectedTeam = selectTeamUseCase.state.teams.first { $0.name.split(separator: " ")[0] == "전체" }
+            }
         }
     }
 }
@@ -87,4 +93,5 @@ struct HighlightTeamFilterView: View {
 #Preview {
     HighlightTeamFilterView()
         .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
+        .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
 }
