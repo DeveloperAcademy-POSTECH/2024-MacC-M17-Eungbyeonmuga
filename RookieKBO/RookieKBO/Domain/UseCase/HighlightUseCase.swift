@@ -29,6 +29,7 @@ extension HighlightUseCase {
     
     struct State {
         var HighlightInfo: [Highlight]
+        var selectedTeamName: String?
         var selectedDate: Date?
         var selectedHighlight: Highlight?
         var videoUrl: String?
@@ -44,14 +45,18 @@ extension HighlightUseCase {
         state.selectedDate = selectedDate
     }
     
+    func fecthSelectedTeam(_ selectedTeamName: String?) {
+        state.selectedTeamName = selectedTeamName
+    }
+    
     // 유효한 날짜인지 확인
     func isValidDate(_ date: Date, from highlightInfo: [Highlight]) -> Bool {
         highlightService.isValidDate(date, from: highlightInfo)
     }
     
     // 해당 날짜에 맞는 Highlight 매칭
-    func filterHighlights(for selectedDate: Date, in highlightInfo: [Highlight]) -> [Highlight] {
-        highlightService.filterHighlights(for: selectedDate, in: highlightInfo)
+    func filterHighlights(for selectedDate: Date?, teamName: String?, in highlightInfo: [Highlight]) -> [Highlight] {
+        highlightService.filterHighlights(for: selectedDate, teamName: teamName, in: highlightInfo)
     }
     
     // 특정 단어 추출

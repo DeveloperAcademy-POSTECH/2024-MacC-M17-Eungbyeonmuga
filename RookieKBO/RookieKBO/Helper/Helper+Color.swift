@@ -11,15 +11,15 @@ extension Color {
     
     static func teamColor(for name: String) -> Color? {
         switch name.lowercased() {
-        case "ssg":
+        case "ssg", "SSG":
             return .ssg
-        case "kia":
+        case "kia", "KIA":
             return .kia
-        case "kt":
+        case "kt", "KT":
             return .kt
-        case "lg":
+        case "lg", "LG":
             return .lg
-        case "nc":
+        case "nc", "NC":
             return .nc
         case "doosan", "두산":
             return .doosan
@@ -31,7 +31,7 @@ extension Color {
             return .kiwoom
         case "hanwha", "한화":
             return .hanwha
-        case "allTeam":
+        case "allTeam", "전체":
             return .brandPrimary
         default:
             return .brandPrimary
