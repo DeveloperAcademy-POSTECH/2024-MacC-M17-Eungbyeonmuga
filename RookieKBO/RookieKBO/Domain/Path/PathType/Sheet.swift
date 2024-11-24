@@ -11,7 +11,7 @@ enum Sheet: Identifiable, Hashable {
     
     // 트랙
     case teamRanking
-    case highlightFilter
+    case highlightTeamFilter
     
     var id: Self { self }
 }

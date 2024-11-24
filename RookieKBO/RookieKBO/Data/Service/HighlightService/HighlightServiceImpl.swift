@@ -14,12 +14,22 @@ final class HighlightServiceImpl: HighlightServiceInterface {
         return validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: date) })
     }
     
-    func filterHighlights(for selectedDate: Date, in highlightInfo: [Highlight]) -> [Highlight] {
+    func filterHighlights(for selectedDate: Date?, teamName: String?, in highlightInfo: [Highlight]) -> [Highlight] {
         highlightInfo.filter {
-            guard let date = Date().fromStringToDate($0.date) else {
-                return false
+            // 날짜 필터링 조건
+            var isDateMatch = true
+            if let selectedDate = selectedDate,
+               let date = Date().fromStringToDate($0.date) {
+                isDateMatch = Calendar.current.isDate(date, inSameDayAs: selectedDate)
             }
-            return Calendar.current.isDate(date, inSameDayAs: selectedDate)
+
+            // 팀 이름 필터링 조건
+            var isTeamMatch = true
+            if let teamName = teamName, teamName != "전체" {
+                isTeamMatch = $0.title.contains(teamName)
+            }
+
+            return isDateMatch && isTeamMatch
         }
     }
     

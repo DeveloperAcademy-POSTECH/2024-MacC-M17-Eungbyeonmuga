@@ -37,10 +37,10 @@ private struct HighlightContentView: View {
     @Environment(PathModel.self) private var pathModel
     
     private var filteredHighlights: [Highlight] {
-        guard let selectedDate = highlightUseCase.state.selectedDate else {
-            return highlightUseCase.state.HighlightInfo
-        }
-        return highlightUseCase.filterHighlights(for: selectedDate, in: highlightUseCase.state.HighlightInfo)
+        let selectedTeam = highlightUseCase.state.selectedTeamName
+        let selectedDate = highlightUseCase.state.selectedDate
+        
+        return highlightUseCase.filterHighlights(for: selectedDate, teamName: selectedTeam, in: highlightUseCase.state.HighlightInfo)
     }
     
     var body: some View {
@@ -108,7 +108,7 @@ private struct HighlightContentSettingView: View {
     var body: some View {
         HStack(spacing: 8) {
             Button {
-                pathModel.presentSheet(.highlightFilter)
+                pathModel.presentSheet(.highlightTeamFilter)
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "baseball")
@@ -194,7 +194,7 @@ private struct SetCalendarView: View {
     @State private var calendarColor: Color = .brandPrimary
     
     private var matchingHighlights: [Highlight] {
-        highlightUseCase.filterHighlights(for: currentDate, in: highlightUseCase.state.HighlightInfo)
+        highlightUseCase.filterHighlights(for: currentDate, teamName: highlightUseCase.state.selectedTeamName, in: highlightUseCase.state.HighlightInfo)
     }
     
     var body: some View {

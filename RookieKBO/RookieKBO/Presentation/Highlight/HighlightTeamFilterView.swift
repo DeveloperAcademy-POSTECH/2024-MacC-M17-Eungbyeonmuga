@@ -10,6 +10,8 @@ import SwiftUI
 struct HighlightTeamFilterView: View {
     
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @Environment(HighlightUseCase.self) private var highlightUseCase
+    @Environment(\.presentationMode) var presentationMode
     
     @State private var filterColor: Color = .brandPrimary
     @State private var selectedTeam: Team?
@@ -48,7 +50,10 @@ struct HighlightTeamFilterView: View {
             
             if selectedTeam?.name != selectTeamUseCase.state.selectedTeam?.name {
                 Button {
-                    // TODO: 해당 팀의 하이라이트만 표시
+                    if let teamName = selectedTeam?.name.split(separator: " ")[0] {
+                        highlightUseCase.fecthSelectedTeam(String(teamName))
+                    }
+                    presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("이 팀의 하이라이트만 볼래요!")
                         .font(.Head.head3)
