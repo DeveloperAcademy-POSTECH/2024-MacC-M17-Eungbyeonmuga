@@ -43,6 +43,8 @@ extension PathModel {
             TeamRanksListView()
         case .highlightTeamFilter:
             HighlightTeamFilterView()
+        case .dDaySheet:
+            DdayView()
         }
     }
 }

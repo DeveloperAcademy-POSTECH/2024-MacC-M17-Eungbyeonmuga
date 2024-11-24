@@ -12,6 +12,7 @@ enum Sheet: Identifiable, Hashable {
     // 트랙
     case teamRanking
     case highlightTeamFilter
+    case dDaySheet
     
     var id: Self { self }
 }
