@@ -11,6 +11,10 @@ struct OnboardingView: View {
     
     @State private var processGauge: Double = 0.2
     @State private var isAnimating: Bool = false
+    @State private var isTextVisible: Bool = true
+    @State private var textScale: CGFloat = 1.0
+    
+    let bubbleScript = ["환영합니다!", "응원하는 팀을 선택해요", "우리 팀 기준의 경기 정보를 확인해요", "위젯으로 간편하게 확인해요", "하이라이트 영상과 함께 용어를 학습해요"]
     
     var body: some View {
         ZStack {
@@ -54,20 +58,29 @@ struct OnboardingView: View {
                 .padding(.trailing)
                 
                 ZStack {
-                    Image(systemName: "bubble.middle.bottom.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 42)
-                        .foregroundColor(.white0)
+//                    Image(systemName: "bubble.middle.bottom.fill")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(height: 42)
+//                        .foregroundColor(.white0)
+//                        .scaleEffect(textScale)
+//                        .opacity(isTextVisible ? 1.0 : 0.0)
+//                        .animation(.easeInOut(duration: 0.5), value: textScale)
+//                        .animation(.easeInOut(duration: 0.5), value: isTextVisible)
                     
                     VStack(spacing: 0){
-                        Text("환영합니다!")
+                        Text(bubbleScript[(Int(processGauge * 5) - 1)])
+                            .animation(.none)
                             .font(.Body.body1)
                             .foregroundColor(.gray7)
                             .padding(.horizontal, 20)
                             .frame(height: 36)
                             .background(RoundedRectangle(cornerRadius: 10)
                                 .fill(.white0))
+                            .scaleEffect(textScale)
+                            .opacity(isTextVisible ? 1.0 : 0.0)
+                            .animation(.easeInOut(duration: 0.5), value: textScale)
+                            .animation(.easeInOut(duration: 0.5), value: isTextVisible)
                         
                         
                         Spacer(minLength: 0)
@@ -110,11 +123,19 @@ struct OnboardingView: View {
                                 if !isAnimating {
                                     isAnimating = true
                                     withAnimation(.easeInOut(duration: 1.0)) {
-                                        processGauge -= 0.2
+                                        textScale = 0.5
+                                        isTextVisible = false
                                     }
                                     
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                        isAnimating = false
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        processGauge -= 0.2
+                                        textScale = 1.2
+                                        
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                            textScale = 1.0
+                                            isAnimating = false
+                                            isTextVisible = true
+                                        }
                                     }
                                 }
                             } label: {
@@ -143,11 +164,19 @@ struct OnboardingView: View {
                                 if !isAnimating {
                                     isAnimating = true
                                     withAnimation(.easeInOut(duration: 1.0)) {
-                                        processGauge += 0.2
+                                        textScale = 0.5
+                                        isTextVisible = false
                                     }
                                     
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                        isAnimating = false
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        textScale = 1.2
+                                        processGauge += 0.2
+                                        
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                            textScale = 1.0
+                                            isAnimating = false
+                                            isTextVisible = true
+                                        }
                                     }
                                 }
                             } label: {
