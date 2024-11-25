@@ -61,7 +61,7 @@ private struct GameInfoView: View {
                             Image(.titleLogoWhite)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 75)
+                                .frame(width: 90)
                             
                             Spacer()
                         }
@@ -103,6 +103,7 @@ private struct HeaderView: View {
                 Spacer()
             }
             .padding()
+            .padding(.top, -8)
         }
         .background(Color.teamColor(for: currentTeam?.color ?? ""))
     }
