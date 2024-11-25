@@ -13,8 +13,10 @@ struct OnboardingView: View {
     @State private var isAnimating: Bool = false
     @State private var isTextVisible: Bool = true
     @State private var textScale: CGFloat = 1.0
+    @State private var currentImageIndex: Int = 0
     
     let bubbleScript = ["환영합니다!", "응원하는 팀을 선택해요", "우리 팀 기준의 경기 정보를 확인해요", "위젯으로 간편하게 확인해요", "하이라이트 영상과 함께 용어를 학습해요"]
+    let onboardingImage = ["onboarding1", "onboarding2", "onboarding3", "onboarding4", "onboarding5"]
     
     var body: some View {
         ZStack {
@@ -89,10 +91,20 @@ struct OnboardingView: View {
                 .frame(height: 42)
                 .padding(24)
                 
-                Image("onboarding1")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 223)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 20) {
+                        ForEach(0..<onboardingImage.count, id: \.self) { index in
+                            Image(onboardingImage[index])
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 223)
+                                .padding(.horizontal, (UIScreen.main.bounds.width - 223) / 2)
+                        }
+                    }
+                    .offset(x: CGFloat(currentImageIndex) * -(UIScreen.main.bounds.width + 20))
+                    .animation(.easeInOut(duration: 0.5), value: currentImageIndex)
+                }
+                .disabled(true)
                 
                 Spacer()
             }
@@ -130,6 +142,7 @@ struct OnboardingView: View {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                         processGauge -= 0.2
                                         textScale = 1.2
+                                        currentImageIndex = currentImageIndex - 1
                                         
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                             textScale = 1.0
@@ -171,6 +184,7 @@ struct OnboardingView: View {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                         textScale = 1.2
                                         processGauge += 0.2
+                                        currentImageIndex = currentImageIndex + 1
                                         
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                             textScale = 1.0
