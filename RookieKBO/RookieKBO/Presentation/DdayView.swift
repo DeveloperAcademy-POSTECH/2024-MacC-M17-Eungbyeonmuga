@@ -79,13 +79,13 @@ struct DdayView: View {
                     .padding(.leading, 73)
             }
             .frame(maxWidth: .infinity)
-            .padding(.all, 12)
+            .padding()
             .background(.gray2)
             .cornerRadius(18)
         }
-        .padding(.vertical, 54)
+        .padding(.vertical, 48)
         .padding(.horizontal, 16)
-        .presentationDetents([.fraction(0.7)])
+        .presentationDetents([.fraction(0.68)])
         .presentationDragIndicator(.visible)
     }
 }
