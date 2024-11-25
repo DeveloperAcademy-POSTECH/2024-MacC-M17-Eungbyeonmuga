@@ -74,8 +74,14 @@ struct OnboardingView: View {
                     }
                 }
                 .frame(height: 42)
+                .padding(24)
                 
-                // Image
+                Image("onboarding1")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 223)
+                
+                Spacer()
             }
             
             VStack(spacing: 0) {
