@@ -86,11 +86,14 @@ struct SavedTermsView: View {
 }
 
 private struct NoSavedTermsView: View {
+    
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             Spacer()
             
-            Image(.allTeamUnder)
+            Image(selectTeamUseCase.state.selectedTeam?.image ?? "allTeamUnder")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 160, height: 160)
