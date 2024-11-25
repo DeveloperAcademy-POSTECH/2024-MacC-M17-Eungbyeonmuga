@@ -31,6 +31,7 @@ struct TeamRanksListView: View {
                 }
             }
         }
+        .padding(.vertical)
         .presentationDetents([.fraction(0.985)])
         .presentationDragIndicator(.visible)
     }

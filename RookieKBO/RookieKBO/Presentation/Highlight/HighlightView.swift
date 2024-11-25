@@ -34,6 +34,7 @@ struct HighlightView: View {
 private struct HighlightContentView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(PathModel.self) private var pathModel
     
     private var filteredHighlights: [Highlight] {
@@ -52,19 +53,42 @@ private struct HighlightContentView: View {
                     HighlightHeaderDetailView()
                     HighlightContentSettingView()
                     
-                    ForEach(filteredHighlights, id: \.self) { info in
-                        HighlightContent(videoInfo: info) {
-                            highlightUseCase.updateSelectedeHighlight(highlight: info)
-                            highlightUseCase.updateVideoUrl()
-                            highlightUseCase.filterData()
-                            pathModel.push(.videoTranscript)
+                    if filteredHighlights.isEmpty {
+                        VStack(alignment: .center, spacing: 0) {
+                            Spacer()
+                            
+                            Image(selectTeamUseCase.state.selectedTeam?.image ?? "allTeamUnder")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 160, height: 160)
+                                .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
+                                .padding(.bottom, 16)
+                            
+                            Text("해당 구단의\n영상이 없어요!")
+                                .font(.Head.head5)
+                                .foregroundColor(.gray6)
+                                .multilineTextAlignment(.center)
+                                .padding(.bottom, 8)
+                            
+                            Spacer()
                         }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
+                        .frame(height: UIScreen.main.bounds.height * 0.5)
+                        
+                    } else {
+                        ForEach(filteredHighlights, id: \.self) { info in
+                            HighlightContent(videoInfo: info) {
+                                highlightUseCase.updateSelectedeHighlight(highlight: info)
+                                highlightUseCase.updateVideoUrl()
+                                highlightUseCase.filterData()
+                                pathModel.push(.videoTranscript)
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                        }
+                        
+                        Spacer()
+                            .frame(height: 24)
                     }
-                    
-                    Spacer()
-                        .frame(height: 24)
                 }
             }
             .background(.gray1)
