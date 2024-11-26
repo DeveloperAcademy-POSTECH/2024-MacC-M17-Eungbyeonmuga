@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF6276092CF55AF300C7B4C9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = DF6276082CF55AF300C7B4C9 /* Lottie */; };
 		DFC005A32CB8D40F007C96BE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC005A22CB8D40F007C96BE /* WidgetKit.framework */; };
 		DFC005A52CB8D40F007C96BE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC005A42CB8D40F007C96BE /* SwiftUI.framework */; };
 		DFC005B62CB8D410007C96BE /* RookieKBOWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DFC005A02CB8D40F007C96BE /* RookieKBOWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -142,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFE5EDAE2CDCB98B009A7BA3 /* YouTubePlayerKit in Frameworks */,
+				DF6276092CF55AF300C7B4C9 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +203,7 @@
 			name = RookieKBO;
 			packageProductDependencies = (
 				DFE5EDAD2CDCB98B009A7BA3 /* YouTubePlayerKit */,
+				DF6276082CF55AF300C7B4C9 /* Lottie */,
 			);
 			productName = RookieKBO;
 			productReference = DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */;
@@ -257,6 +260,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				DFE5EDAC2CDCB98B009A7BA3 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+				DFD731832CF55A0100402801 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DF20BB772CAED5DC00F88298;
@@ -612,6 +616,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DFD731832CF55A0100402801 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
+			};
+		};
 		DFE5EDAC2CDCB98B009A7BA3 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit";
@@ -623,6 +635,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DF6276082CF55AF300C7B4C9 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DFD731832CF55A0100402801 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
 		DFE5EDAD2CDCB98B009A7BA3 /* YouTubePlayerKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DFE5EDAC2CDCB98B009A7BA3 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
