@@ -195,6 +195,7 @@ struct VideoTranscriptView: View {
             if searchText.isEmpty {
                 termContent
             } else {
+                // 중복 해결 + 홈런 => 솔로 홈런 등등 검색 기능
                 let filteredItems = currentTranscript?.transcript.filter {
                     $0.text.lowercased().contains(searchText.lowercased())
                 }
@@ -272,7 +273,7 @@ struct VideoTranscriptView: View {
     
     private func termRow(for transcriptItem: TranscriptItem, scrollProxy: ScrollViewProxy) -> some View {
         let isTermSaved = isTermSaved(term: transcriptItem.text)
-        
+
         return TermRow(
             isPlaying:
                 Binding(
@@ -280,12 +281,13 @@ struct VideoTranscriptView: View {
                         playingItemId == transcriptItem.id && isPlaying
                     },
                     set: { isPlaying in
-                        playingItemId = isPlaying ? transcriptItem.id : ""
-                        
                         if isPlaying {
+                            playingItemId = transcriptItem.id
                             withAnimation {
                                 scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
                             }
+                        } else {
+                            playingItemId = ""
                         }
                     }
                 ),
@@ -307,7 +309,8 @@ struct VideoTranscriptView: View {
             time: transcriptItem.start
         )
         .id(transcriptItem.id)
-        .simultaneousGesture(
+        .padding(.horizontal, 16)
+        .gesture(
             TapGesture()
                 .onEnded {
                     youtubePlayer.seek(
@@ -316,7 +319,6 @@ struct VideoTranscriptView: View {
                     )
                 }
         )
-        .padding(.horizontal, 16)
         .onAppear {
             if playingItemId == transcriptItem.id {
                 withAnimation {
@@ -332,6 +334,7 @@ struct VideoTranscriptView: View {
             }
         }
     }
+
 }
 
 // MARK: - TopView

@@ -58,9 +58,6 @@ struct TermRow: View {
                 .stroke(isPlaying ? Color.brandPrimaryGd : Color.gray2, lineWidth: 2)
         )
         .padding(.top, 8)
-        .onTapGesture {
-            isPlaying.toggle()
-        }
     }
 }
 
