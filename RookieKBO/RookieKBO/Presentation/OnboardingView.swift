@@ -126,9 +126,9 @@ struct OnboardingView: View {
                     
                     ZStack {
                         HStack(spacing: 0) {
-                            Button {
+                            ScalableButton {
                                 isAnimating = true
-                                withAnimation(.easeInOut(duration: 0.2)) {
+                                withAnimation(.easeInOut(duration: 0.4)) {
                                     processGauge -= 0.2
                                 }
                                 currentImageIndex -= 1
@@ -158,12 +158,12 @@ struct OnboardingView: View {
                             
                             Spacer(minLength: 0)
                             
-                            Button {
+                            ScalableButton {
                                 if processGauge == 1.0 {
                                     // TODO: 메인 뷰로 이동
                                 } else {
                                     isAnimating = true
-                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                    withAnimation(.easeInOut(duration: 0.4)) {
                                         processGauge += 0.2
                                     }
                                     currentImageIndex += 1
