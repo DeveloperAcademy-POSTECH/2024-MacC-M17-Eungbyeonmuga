@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OnboardingView: View {
     
+    @Environment(PathModel.self) private var pathModel
+    
     @State private var processGauge: Double = 0.2
     @State private var isAnimating: Bool = false
     @State private var currentImageIndex: Int = 0
@@ -53,7 +55,8 @@ struct OnboardingView: View {
                     Spacer()
                     
                     Button {
-                        // TODO: 온보딩 스킵
+                        UserDefaults.standard.set(true, forKey: "NotFirstRun")
+                        pathModel.push(.selectTeam)
                     } label: {
                         Text("skip")
                             .font(.Head.head5)
@@ -160,7 +163,8 @@ struct OnboardingView: View {
                             
                             ScalableButton {
                                 if processGauge == 1.0 {
-                                    // TODO: 메인 뷰로 이동
+                                    UserDefaults.standard.set(true, forKey: "NotFirstRun")
+                                    pathModel.push(.selectTeam)
                                 } else {
                                     isAnimating = true
                                     withAnimation(.easeInOut(duration: 0.4)) {
