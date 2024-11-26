@@ -10,15 +10,31 @@ import SwiftUI
 struct InitialScreenView: View {
     
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @State private var showSplash: Bool = true
     
     var body: some View {
-        if selectTeamUseCase.state.selectedTeam == nil {
-            SelectTeamScreenView()
-        } else {
-            TeamScreenView()
+        VStack {
+            if showSplash {
+                SplashView()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation {
+                                showSplash = false
+                            }
+                        }
+                    }
+            } else {
+                if selectTeamUseCase.state.selectedTeam == nil {
+                    SelectTeamScreenView()
+                } else {
+                    TeamScreenView()
+                }
+            }
         }
+        .transition(.opacity) 
     }
 }
+
 
 private struct SelectTeamScreenView: View {
     

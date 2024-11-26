@@ -42,12 +42,12 @@ struct VideoTranscriptView: View {
         highlightUseCase.state.filterTranscript
     }
     
-    private var currentTranscript: VideoTranscript? {
+    private var currentTranscript: VideoTranscript {
         if let videoTranscript = highlightUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
             return videoTranscript
         } else {
             print("자막 생성 실패")
-            return nil
+            return VideoTranscript(videoId: "", transcript: [])
         }
     }
     
@@ -195,9 +195,7 @@ struct VideoTranscriptView: View {
             if searchText.isEmpty {
                 termContent
             } else {
-                let filteredItems = currentTranscript?.transcript.filter {
-                    $0.text.lowercased().contains(searchText.lowercased())
-                }
+                let filteredItems = filterItems(by: searchText, videoTranscript: currentTranscript)
                 
                 if filteredItems?.isEmpty == true {
                     noSearchResults
@@ -222,11 +220,21 @@ struct VideoTranscriptView: View {
         ScrollViewReader { scrollProxy in
             ZStack {
                 ScrollView {
-                    VStack {
+                    LazyVStack {
                         Spacer()
                             .frame(height: 16)
-                        
-                        ForEach(filteredTranscript?.sorted(by: { $0.start < $1.start }) ?? [], id: \.id) { transcriptItem in
+
+                        var dupliacteIds = Set<String>()
+                        let uniqueTranscriptItems = (filteredTranscript ?? []).filter { item in
+                            if dupliacteIds.contains(item.id) {
+                                return false
+                            } else {
+                                dupliacteIds.insert(item.id)
+                                return true
+                            }
+                        }
+
+                        ForEach(uniqueTranscriptItems.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
                             termRow(
                                 for: transcriptItem,
                                 scrollProxy: scrollProxy
@@ -262,7 +270,7 @@ struct VideoTranscriptView: View {
     
     private func termRow(for transcriptItem: TranscriptItem, scrollProxy: ScrollViewProxy) -> some View {
         let isTermSaved = isTermSaved(term: transcriptItem.text)
-        
+
         return TermRow(
             isPlaying:
                 Binding(
@@ -270,12 +278,13 @@ struct VideoTranscriptView: View {
                         playingItemId == transcriptItem.id && isPlaying
                     },
                     set: { isPlaying in
-                        playingItemId = isPlaying ? transcriptItem.id : ""
-                        
                         if isPlaying {
+                            playingItemId = transcriptItem.id
                             withAnimation {
                                 scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
                             }
+                        } else {
+                            playingItemId = ""
                         }
                     }
                 ),
@@ -297,7 +306,8 @@ struct VideoTranscriptView: View {
             time: transcriptItem.start
         )
         .id(transcriptItem.id)
-        .simultaneousGesture(
+        .padding(.horizontal, 16)
+        .gesture(
             TapGesture()
                 .onEnded {
                     youtubePlayer.seek(
@@ -306,7 +316,6 @@ struct VideoTranscriptView: View {
                     )
                 }
         )
-        .padding(.horizontal, 16)
         .onAppear {
             if playingItemId == transcriptItem.id {
                 withAnimation {
@@ -322,6 +331,7 @@ struct VideoTranscriptView: View {
             }
         }
     }
+
 }
 
 // MARK: - TopView
