@@ -42,12 +42,12 @@ struct VideoTranscriptView: View {
         highlightUseCase.state.filterTranscript
     }
     
-    private var currentTranscript: VideoTranscript? {
+    private var currentTranscript: VideoTranscript {
         if let videoTranscript = highlightUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
             return videoTranscript
         } else {
             print("자막 생성 실패")
-            return nil
+            return VideoTranscript(videoId: "", transcript: [])
         }
     }
     
@@ -195,10 +195,7 @@ struct VideoTranscriptView: View {
             if searchText.isEmpty {
                 termContent
             } else {
-                // 중복 해결 + 홈런 => 솔로 홈런 등등 검색 기능
-                let filteredItems = currentTranscript?.transcript.filter {
-                    $0.text.lowercased().contains(searchText.lowercased())
-                }
+                let filteredItems = filterItems(by: searchText, videoTranscript: currentTranscript)
                 
                 if filteredItems?.isEmpty == true {
                     noSearchResults

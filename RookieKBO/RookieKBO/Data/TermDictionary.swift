@@ -138,3 +138,15 @@ func getTermDescription(videoTranscript: VideoTranscript) -> [TranscriptItem]? {
     }
     return transcriptItems.isEmpty ? nil : transcriptItems
 }
+
+func filterItems(by searchText: String, videoTranscript: VideoTranscript) -> [TranscriptItem]? {
+    return videoTranscript.transcript
+        .filter { $0.text.lowercased().contains(searchText.lowercased()) }
+        .map { item in
+            var modifiedItem = item
+            modifiedItem.id = "\(item.start)_\(item.text.hashValue)"
+            return modifiedItem
+        }
+}
+
+
