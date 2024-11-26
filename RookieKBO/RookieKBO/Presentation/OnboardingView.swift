@@ -11,8 +11,6 @@ struct OnboardingView: View {
     
     @State private var processGauge: Double = 0.2
     @State private var isAnimating: Bool = false
-    @State private var isTextVisible: Bool = true
-    @State private var textScale: CGFloat = 1.0
     @State private var currentImageIndex: Int = 0
     
     let bubbleScript = ["환영합니다!", "응원하는 팀을 선택해요", "우리 팀 기준의 경기 정보를 확인해요", "위젯으로 간편하게 확인해요", "하이라이트 영상과 함께 용어를 학습해요"]
@@ -45,6 +43,7 @@ struct OnboardingView: View {
                     }
                 }
                 .padding()
+                .padding(.top, -8)
                 
                 HStack(spacing: 0) {
                     Spacer()
@@ -59,50 +58,42 @@ struct OnboardingView: View {
                 }
                 .padding(.trailing)
                 
-                ZStack {
-//                    Image(systemName: "bubble.middle.bottom.fill")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(height: 42)
-//                        .foregroundColor(.white0)
-//                        .scaleEffect(textScale)
-//                        .opacity(isTextVisible ? 1.0 : 0.0)
-//                        .animation(.easeInOut(duration: 0.5), value: textScale)
-//                        .animation(.easeInOut(duration: 0.5), value: isTextVisible)
-                    
-                    VStack(spacing: 0){
-                        Text(bubbleScript[(Int(processGauge * 5) - 1)])
-                            .animation(.none)
-                            .font(.Body.body1)
-                            .foregroundColor(.gray7)
-                            .padding(.horizontal, 20)
-                            .frame(height: 36)
-                            .background(RoundedRectangle(cornerRadius: 10)
-                                .fill(.white0))
-                            .scaleEffect(textScale)
-                            .opacity(isTextVisible ? 1.0 : 0.0)
-                            .animation(.easeInOut(duration: 0.5), value: textScale)
-                            .animation(.easeInOut(duration: 0.5), value: isTextVisible)
-                        
-                        
-                        Spacer(minLength: 0)
-                    }
-                }
-                .frame(height: 42)
-                .padding(24)
-                
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 20) {
+                    HStack(spacing: 0) {
                         ForEach(0..<onboardingImage.count, id: \.self) { index in
-                            Image(onboardingImage[index])
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 223)
-                                .padding(.horizontal, (UIScreen.main.bounds.width - 223) / 2)
+                            VStack(alignment: .center, spacing: 0) {
+                                ZStack {
+                                    Image(systemName: "bubble.middle.bottom.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 42)
+                                        .foregroundColor(.white0)
+                                    
+                                    VStack(spacing: 0) {
+                                        Text(bubbleScript[index])
+                                            .animation(.none)
+                                            .font(.Body.body1)
+                                            .foregroundColor(.gray7)
+                                            .padding(.horizontal, 20)
+                                            .frame(height: 36)
+                                            .background(RoundedRectangle(cornerRadius: 10)
+                                                .fill(.white0))
+                                        
+                                        Spacer(minLength: 0)
+                                    }
+                                }
+                                .frame(width: UIScreen.main.bounds.width, height: 42)
+                                .padding(.vertical, 24)
+                                
+                                Image(onboardingImage[index])
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 223)
+                            }
                         }
                     }
-                    .offset(x: CGFloat(currentImageIndex) * -(UIScreen.main.bounds.width + 20))
-                    .animation(.easeInOut(duration: 0.5), value: currentImageIndex)
+                    .offset(x: CGFloat(currentImageIndex) * -(UIScreen.main.bounds.width))
+                    .animation(.easeInOut(duration: 0.8), value: currentImageIndex)
                 }
                 .disabled(true)
                 
@@ -134,21 +125,13 @@ struct OnboardingView: View {
                             Button {
                                 if !isAnimating {
                                     isAnimating = true
-                                    withAnimation(.easeInOut(duration: 1.0)) {
-                                        textScale = 0.5
-                                        isTextVisible = false
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        processGauge -= 0.2
                                     }
+                                    currentImageIndex -= 1
                                     
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        processGauge -= 0.2
-                                        textScale = 1.2
-                                        currentImageIndex = currentImageIndex - 1
-                                        
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                            textScale = 1.0
-                                            isAnimating = false
-                                            isTextVisible = true
-                                        }
+                                        isAnimating = false
                                     }
                                 }
                             } label: {
@@ -171,26 +154,18 @@ struct OnboardingView: View {
                         
                         HStack(spacing: 0) {
                             
-                            Spacer()
+                            Spacer(minLength: 0)
                             
                             Button {
                                 if !isAnimating {
                                     isAnimating = true
-                                    withAnimation(.easeInOut(duration: 1.0)) {
-                                        textScale = 0.5
-                                        isTextVisible = false
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        processGauge += 0.2
                                     }
+                                    currentImageIndex += 1
                                     
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        textScale = 1.2
-                                        processGauge += 0.2
-                                        currentImageIndex = currentImageIndex + 1
-                                        
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                            textScale = 1.0
-                                            isAnimating = false
-                                            isTextVisible = true
-                                        }
+                                        isAnimating = false
                                     }
                                 }
                             } label: {
