@@ -115,8 +115,6 @@ func getTermDescription(videoTranscript: VideoTranscript) -> [TranscriptItem]? {
     for transcript in videoTranscript.transcript {
         let term = transcript.text
         let start = transcript.start
-
-        // 고정된 ID 생성: term + start 값을 결합하여 ID 생성
         let fixedId = "\(term)-\(start)"
 
         for definedTerm in termDictionary.keys {

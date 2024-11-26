@@ -222,11 +222,21 @@ struct VideoTranscriptView: View {
         ScrollViewReader { scrollProxy in
             ZStack {
                 ScrollView {
-                    VStack {
+                    LazyVStack {
                         Spacer()
                             .frame(height: 16)
-                        
-                        ForEach(filteredTranscript?.sorted(by: { $0.start < $1.start }) ?? [], id: \.id) { transcriptItem in
+
+                        var dupliacteIds = Set<String>()
+                        let uniqueTranscriptItems = (filteredTranscript ?? []).filter { item in
+                            if dupliacteIds.contains(item.id) {
+                                return false
+                            } else {
+                                dupliacteIds.insert(item.id)
+                                return true
+                            }
+                        }
+
+                        ForEach(uniqueTranscriptItems.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
                             termRow(
                                 for: transcriptItem,
                                 scrollProxy: scrollProxy
