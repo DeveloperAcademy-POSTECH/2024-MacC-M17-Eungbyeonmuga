@@ -44,10 +44,17 @@ private struct SelectTeamScreenView: View {
         @Bindable var pathModel = pathModel
         
         NavigationStack(path: $pathModel.path) {
-            pathModel.build(.selectTeam)
-                .navigationDestination(for: Screen.self) { screen in
-                    pathModel.build(screen)
-                }
+            if !UserDefaults.standard.bool(forKey: "NotFirstRun") {
+                pathModel.build(.onboarding)
+                    .navigationDestination(for: Screen.self) { screen in
+                        pathModel.build(screen)
+                    }
+            } else {
+                pathModel.build(.selectTeam)
+                    .navigationDestination(for: Screen.self) { screen in
+                        pathModel.build(screen)
+                    }
+            }
         }
     }
 }

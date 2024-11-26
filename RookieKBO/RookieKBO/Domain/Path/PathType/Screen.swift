@@ -11,6 +11,7 @@ enum Screen: Identifiable, Hashable {
     
     var id: Self { self }
     
+    case onboarding
     case selectTeam
     case myTeamGameInfo
     case allGameInfo

@@ -13,7 +13,6 @@ struct RookieKBOApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            SplashView()
             InitialScreenView()
                 .environment(PathModel())
                 .environment(MatchUseCase(matchService: MatchServiceImpl()))

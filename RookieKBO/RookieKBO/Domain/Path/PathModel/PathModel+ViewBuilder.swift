@@ -15,6 +15,8 @@ extension PathModel {
     @ViewBuilder
     func build(_ screen: Screen) -> some View {
         switch screen {
+        case .onboarding:
+            OnboardingView()
         case .selectTeam:
             SelectTeamView()
         case .myTeamGameInfo:
