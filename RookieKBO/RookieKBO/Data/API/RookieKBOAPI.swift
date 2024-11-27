@@ -36,4 +36,18 @@ extension APIs.RookieKBO {
             }
         }
     }
+    
+    /// News  API
+    enum News: RawRepresentable, API {
+
+        static let baseUrl: URL = APIs.RookieKBO.tempUrl.appendingPathComponent("news")
+        
+        case fetchNews// 팀 랭킹 조회
+        
+        var rawValue: RawValue {
+            switch self {
+            case .fetchNews: return ""
+            }
+        }
+    }
 }
