@@ -14,9 +14,10 @@ final class NewsRepository {
     /// 뉴스 정보를 패치합니다.
     func fetchNews() async -> Result<FetchNewsResponse, Error> {
         let url = APIs.RookieKBO.News.fetchNews.url
-        let response: Result<BaseResponse<FetchNewsResponse>, Error> = await client.get(url: url)
+        let response: Result<FetchNewsResponse, Error> = await client.get(url: url)
+        // 수정
         do {
-            return try .success(response.get().result)
+            return try .success(response.get())
         } catch {
             return .failure(error)
         }

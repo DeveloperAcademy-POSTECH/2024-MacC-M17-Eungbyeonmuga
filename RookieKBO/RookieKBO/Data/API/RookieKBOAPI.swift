@@ -42,7 +42,7 @@ extension APIs.RookieKBO {
 
         static let baseUrl: URL = APIs.RookieKBO.tempUrl.appendingPathComponent("news")
         
-        case fetchNews// 팀 랭킹 조회
+        case fetchNews
         
         var rawValue: RawValue {
             switch self {

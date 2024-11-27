@@ -8,9 +8,9 @@
 import Foundation
 
 struct FetchNewsResponse: Decodable {
-    let articles: [Article]
+    let newsLinks: [NewsLink]
     
-    struct Article: Decodable {
+    struct NewsLink: Decodable {
         let title: String
         let imageUrl: String
         let publisher: String
@@ -18,7 +18,7 @@ struct FetchNewsResponse: Decodable {
     }
     
     func toNews() -> Result<[News], NetworkError> {
-        let todayNews = articles.map { article in
+        let todayNews = newsLinks.map { article in
             News(
                 title: article.title,
                 imageUrl: article.imageUrl,

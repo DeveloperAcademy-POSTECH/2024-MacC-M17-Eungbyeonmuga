@@ -103,32 +103,49 @@ struct VideoTranscriptView: View {
     
     /// 검색 결과로 뷰를 그리는 함수
     private func searchResultsView(_ items: [TranscriptItem]) -> some View {
-        ScrollView {
-            ForEach(items.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
-                SearchResultRow(
-                    isPlaying: Binding(
-                        get: { playingItemId == transcriptItem.id },
-                        set: { isPlaying in
-                            playingItemId = isPlaying ? transcriptItem.id : ""
+        ScrollViewReader { scrollProxy in
+            ScrollView {
+                ForEach(items.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
+                    SearchResultRow(
+                        isPlaying: Binding(
+                            get: { playingItemId == transcriptItem.id },
+                            set: { isPlaying in
+                                playingItemId = isPlaying ? transcriptItem.id : ""
+                            }
+                        ),
+                        searchText: searchText,
+                        time: transcriptItem.start
+                    )
+                    .simultaneousGesture(
+                        TapGesture()
+                            .onEnded {
+                                youtubePlayer.seek(
+                                    to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                                    allowSeekAhead: true
+                                )
+                            }
+                    )
+                    .padding(.bottom, 8)
+                    .padding(.horizontal, 16)
+                    .onAppear {
+                        if playingItemId == transcriptItem.id {
+                            withAnimation {
+                                scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+                            }
                         }
-                    ),
-                    searchText: searchText,
-                    time: transcriptItem.start
-                )
-                .simultaneousGesture(
-                    TapGesture()
-                        .onEnded {
-                            youtubePlayer.seek(
-                                to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
-                                allowSeekAhead: true
-                            )
-                        }
-                )
-                .padding(.bottom, 8)
-                .padding(.horizontal, 16)
+                    }
+                }
+            }
+            .onChange(of: playingItemId) { newValue in
+                if let selectedItem = items.first(where: { $0.id == newValue }) {
+                    withAnimation {
+                        scrollProxy.scrollTo(selectedItem.id, anchor: .top)
+                    }
+                }
             }
         }
     }
+
     
     var body: some View {
         ZStack {
