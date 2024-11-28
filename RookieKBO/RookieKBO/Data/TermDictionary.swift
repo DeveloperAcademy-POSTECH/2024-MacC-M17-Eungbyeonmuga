@@ -109,10 +109,11 @@ let normalizedTerms: [String: String] = [
     "고의사구": "고의 4구"
 ]
 
-func getTermDescription(videoTranscript: VideoTranscript) -> [TranscriptItem]? {
+/// 예외처리 및 자막에서 용어 변환 함수
+func getTermDescription(networkTranscript: NetworkTranscript) -> [TranscriptItem]? {
     var transcriptItems: [TranscriptItem] = []
     
-    for transcript in videoTranscript.transcript {
+    for transcript in networkTranscript.videoTranscript {
         let term = transcript.text
         let start = transcript.start
         let fixedId = "\(term)-\(start)"
@@ -139,8 +140,9 @@ func getTermDescription(videoTranscript: VideoTranscript) -> [TranscriptItem]? {
     return transcriptItems.isEmpty ? nil : transcriptItems
 }
 
-func filterItems(by searchText: String, videoTranscript: VideoTranscript) -> [TranscriptItem]? {
-    return videoTranscript.transcript
+/// 검색한 자막 필터링 함수
+func filterItems(by searchText: String, networkTranscript: NetworkTranscript) -> [VideoTranscriptItem]? {
+    return networkTranscript.videoTranscript
         .filter { $0.text.lowercased().contains(searchText.lowercased()) }
         .map { item in
             var modifiedItem = item
@@ -148,5 +150,3 @@ func filterItems(by searchText: String, videoTranscript: VideoTranscript) -> [Tr
             return modifiedItem
         }
 }
-
-

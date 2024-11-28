@@ -50,4 +50,18 @@ extension APIs.RookieKBO {
             }
         }
     }
+    
+    /// Subtitle  API
+    enum Subtitle: RawRepresentable, API {
+
+        static let baseUrl: URL = APIs.RookieKBO.baseURL.appendingPathComponent("subtitles")
+        
+        case fetchSubtitle
+        
+        var rawValue: RawValue {
+            switch self {
+            case .fetchSubtitle: return ""
+            }
+        }
+    }
 }
