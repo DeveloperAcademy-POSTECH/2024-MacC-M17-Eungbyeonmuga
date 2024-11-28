@@ -24,7 +24,9 @@ struct ScalableButton<Label: View>: View {
                     scaleValue = 1.0
                 }
             }
-            action()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                action()
+            }
         } label: {
             label()
                 .scaleEffect(scaleValue)

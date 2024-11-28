@@ -76,7 +76,7 @@ private struct SettingView: View {
     var body: some View {
         VStack(spacing: 0) {
             
-            Button {
+            ScalableButton {
                 pathModel.push(.savedTerms)
             } label: {
                 HStack(spacing: 0) {
@@ -113,7 +113,7 @@ private struct SettingView: View {
                 .padding(.vertical, 8)
             }
             
-            Button {
+            ScalableButton {
                 pathModel.push(.selectTeam)
             } label: {
                 HStack(spacing: 0) {

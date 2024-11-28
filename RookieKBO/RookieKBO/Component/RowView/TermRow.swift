@@ -34,21 +34,18 @@ struct TermRow: View {
                 
                 Spacer()
                 
-                Group {
-                    isSaved ?
-                    Image(.iconFullbookmark) :
-                    Image(.iconBookmark)
-                }
-                .padding(.leading, 8)
-                .onTapGesture {
+                ScalableButton {
                     isSaved.toggle()
+                } label: {
+                    Image(isSaved ? .iconFullbookmark : .iconBookmark)
+                        .padding(.leading, 8)
                 }
             }
             Text(description.forceCharWrapping)
-                    .font(.Body.body2)
-                    .foregroundColor(.gray7)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .lineLimit(nil)
+                .font(.Body.body2)
+                .foregroundColor(.gray7)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .lineLimit(nil)
         }
         .padding(.all, 16)
         .background(.white0)
