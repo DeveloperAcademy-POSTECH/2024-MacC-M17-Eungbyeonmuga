@@ -163,12 +163,19 @@ struct VideoTranscriptView: View {
                 if isSearchActive {
                     SearchBar(text: $searchText)
                 } else {
-                    TermInfoRow()
-                        .onTapGesture {
-                            withAnimation {
-                                isSearchActive.toggle()
+                    if (filteredTranscript ?? []).isEmpty {
+                        
+                        NoTranscriptView()
+                            .padding(.top, 100)
+                        
+                    } else {
+                        TermInfoRow()
+                            .onTapGesture {
+                                withAnimation {
+                                    isSearchActive.toggle()
+                                }
                             }
-                        }
+                    }
                 }
                 if isSearchActive {
                     searchContent
@@ -451,6 +458,38 @@ private struct SearchBar: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
         .background(.gray2)
+    }
+}
+
+// MARK: - NoTranscriptView
+
+private struct NoTranscriptView: View {
+    
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 0) {
+            Spacer()
+            
+            Image(selectTeamUseCase.state.selectedTeam?.image ?? "allTeamUnder")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 160, height: 160)
+                .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 0)
+                .padding(.bottom, 16)
+            
+            Text("업데이트 될")
+                .font(.Head.head5)
+                .foregroundColor(.gray6)
+                .padding(.bottom, 8)
+            
+            Text("예정이에요!")
+                .font(.Head.head5)
+                .foregroundColor(.gray6)
+            
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
     }
 }
 

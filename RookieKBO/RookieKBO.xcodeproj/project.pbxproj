@@ -83,7 +83,6 @@
 				Domain/Entity/Highlight.swift,
 				Domain/Entity/HomeAndAway.swift,
 				Domain/Entity/Match.swift,
-				Domain/Entity/NetworkTranscript.swift,
 				Domain/Entity/News.swift,
 				Domain/Entity/ScoreBoard.swift,
 				Domain/Entity/Team.swift,
@@ -92,7 +91,6 @@
 				Domain/Interface/NewsServiceInterface.swift,
 				Domain/Interface/RankServiceInterface.swift,
 				Domain/Interface/SelectTeamServiceInterface.swift,
-				Domain/Interface/TranscriptServiceInterface.swift,
 				Domain/UseCase/MatchUseCase.swift,
 				"Helper/Helper+Color.swift",
 				"Helper/Helper+DateFormatter.swift",
@@ -104,6 +102,7 @@
 				"Helper/Helper+UserDefaults.swift",
 				"Helper/Preview/Helper+WidgetPreview.swift",
 				Helper/TimeStamp.swift,
+				Helper/UINavigationController.swift,
 				Resource/Assets/Colors.xcassets,
 				"Resource/Fonts/Pretendard-Black.ttf",
 				"Resource/Fonts/Pretendard-Bold.ttf",
@@ -463,7 +462,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-
 				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
