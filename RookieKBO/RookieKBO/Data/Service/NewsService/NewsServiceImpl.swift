@@ -11,7 +11,7 @@ final class NewsServiceImpl: NewsServiceInterface {
     
     private let newsRepository = NewsRepository()
     
-    /// 팀 순위를 불러옵니다.
+    /// 뉴스를 불러옵니다.
     func fetchNews() async -> Result<[News], Error> {
         let result = await newsRepository.fetchNews()
         switch result {
