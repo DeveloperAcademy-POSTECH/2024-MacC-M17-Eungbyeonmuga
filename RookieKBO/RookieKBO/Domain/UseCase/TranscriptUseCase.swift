@@ -60,6 +60,7 @@ extension TranscriptUseCase {
     // 서버 자막 업데이트
     func updateNetworkTranscript(from networkTranscript: NetworkTranscript) {
         state.networkTranscript = networkTranscript
+        updateFilterTranscript()
     }
     
     // 필터링 한 자막 업데이트

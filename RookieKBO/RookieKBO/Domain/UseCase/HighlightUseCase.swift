@@ -33,7 +33,6 @@ extension HighlightUseCase {
         var selectedDate: Date?
         var selectedHighlight: Highlight?
         var videoUrl: String?
-//        var filterTranscript: [TranscriptItem]?
     }
 }
 
@@ -76,24 +75,4 @@ extension HighlightUseCase {
         let videoId = state.selectedHighlight?.videoId
         state.videoUrl = "https://www.youtube.com/watch?v=\(videoId ?? "")"
     }
-    
-//    /// txt 파일에서 자막 가져오는 함수
-//    func loadTranscript(from filename: String) -> VideoTranscript? {
-//        highlightService.loadTranscript(from: filename)
-//    }
-//    
-//    /// 필터링 한 자막 가져오는 함수
-//    func filterData() {
-//        if let videoTranscript = loadTranscript(from: state.selectedHighlight?.videoId ?? "") {
-//            if let filteredTranscript = getTermDescription(videoTranscript: videoTranscript) {
-//                state.filterTranscript = filteredTranscript
-//            } else {
-//                print("필터 오류남")
-//                state.filterTranscript = []
-//            }
-//        } else {
-//            print("비디오 자막 로드 실패")
-//            state.filterTranscript = []
-//        }
-//    }
 }
