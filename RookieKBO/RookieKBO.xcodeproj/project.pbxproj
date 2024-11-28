@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4262E88C2CF5EB2E00856708 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4262E88B2CF5EB2E00856708 /* Lottie */; };
+		DF6276092CF55AF300C7B4C9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = DF6276082CF55AF300C7B4C9 /* Lottie */; };
 		DFC005A32CB8D40F007C96BE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC005A22CB8D40F007C96BE /* WidgetKit.framework */; };
 		DFC005A52CB8D40F007C96BE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC005A42CB8D40F007C96BE /* SwiftUI.framework */; };
 		DFC005B62CB8D410007C96BE /* RookieKBOWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DFC005A02CB8D40F007C96BE /* RookieKBOWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -145,7 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFE5EDAE2CDCB98B009A7BA3 /* YouTubePlayerKit in Frameworks */,
-				4262E88C2CF5EB2E00856708 /* Lottie in Frameworks */,
+				DF6276092CF55AF300C7B4C9 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,7 +205,7 @@
 			name = RookieKBO;
 			packageProductDependencies = (
 				DFE5EDAD2CDCB98B009A7BA3 /* YouTubePlayerKit */,
-				4262E88B2CF5EB2E00856708 /* Lottie */,
+				DF6276082CF55AF300C7B4C9 /* Lottie */,
 			);
 			productName = RookieKBO;
 			productReference = DF473BDC2CB4D2BD00FE9E06 /* RookieKBO.app */;
@@ -262,7 +262,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				DFE5EDAC2CDCB98B009A7BA3 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
-				4262E88A2CF5EA7F00856708 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				DFD731832CF55A0100402801 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DF20BB772CAED5DC00F88298;
@@ -463,7 +463,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -502,7 +503,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rookiekbo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -618,7 +619,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4262E88A2CF5EA7F00856708 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		DFD731832CF55A0100402801 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
 			requirement = {
@@ -637,9 +638,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4262E88B2CF5EB2E00856708 /* Lottie */ = {
+		DF6276082CF55AF300C7B4C9 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4262E88A2CF5EA7F00856708 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = DFD731832CF55A0100402801 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
 		};
 		DFE5EDAD2CDCB98B009A7BA3 /* YouTubePlayerKit */ = {
