@@ -35,6 +35,7 @@ private struct HighlightContentView: View {
     
     @Environment(HighlightUseCase.self) private var highlightUseCase
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
+    @Environment(TranscriptUseCase.self) private var transcriptUseCase
     @Environment(PathModel.self) private var pathModel
     
     private var filteredHighlights: [Highlight] {
@@ -79,7 +80,9 @@ private struct HighlightContentView: View {
                             HighlightContent(videoInfo: info) {
                                 highlightUseCase.updateSelectedeHighlight(highlight: info)
                                 highlightUseCase.updateVideoUrl()
-                                highlightUseCase.filterData()
+                                Task {
+                                    await transcriptUseCase.fetchTranscript(videoId: info.videoId)
+                                }
                                 pathModel.push(.videoTranscript)
                             }
                             .padding(.horizontal, 16)

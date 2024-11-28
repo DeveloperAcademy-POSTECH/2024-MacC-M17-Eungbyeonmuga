@@ -20,6 +20,7 @@ struct RookieKBOApp: App {
                 .environment(HighlightUseCase(highlightService: HighlightServiceImpl()))
                 .environment(RankUseCase(rankService: RankServiceImpl()))
                 .environment(NewsUseCase(newsService: NewsServiceImpl()))
+                .environment(TranscriptUseCase(transcriptService: TranscriptServiceImpl()))
                 .modelContainer(for: TermEntry.self)
         }
     }

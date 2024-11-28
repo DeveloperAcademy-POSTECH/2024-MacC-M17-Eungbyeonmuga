@@ -14,6 +14,7 @@ struct VideoTranscriptView: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     @Environment(HighlightUseCase.self) private var highlightUseCase
+    @Environment(TranscriptUseCase.self) private var transcriptUseCase
     @Environment(\.modelContext) var modelContext
     
     @Query var savedTermEntry: [TermEntry]
@@ -39,16 +40,11 @@ struct VideoTranscriptView: View {
     }
     
     private var filteredTranscript: [TranscriptItem]? {
-        highlightUseCase.state.filterTranscript
+        transcriptUseCase.state.filterTranscript
     }
     
-    private var currentTranscript: VideoTranscript {
-        if let videoTranscript = highlightUseCase.loadTranscript(from: highlightUseCase.state.selectedHighlight?.videoId ?? "") {
-            return videoTranscript
-        } else {
-            print("자막 생성 실패")
-            return VideoTranscript(videoId: "", transcript: [])
-        }
+    private var currentTranscript: NetworkTranscript {
+        transcriptUseCase.state.networkTranscript
     }
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -102,33 +98,50 @@ struct VideoTranscriptView: View {
     }
     
     /// 검색 결과로 뷰를 그리는 함수
-    private func searchResultsView(_ items: [TranscriptItem]) -> some View {
-        ScrollView {
-            ForEach(items.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
-                SearchResultRow(
-                    isPlaying: Binding(
-                        get: { playingItemId == transcriptItem.id },
-                        set: { isPlaying in
-                            playingItemId = isPlaying ? transcriptItem.id : ""
+    private func searchResultsView(_ items: [VideoTranscriptItem]) -> some View {
+        ScrollViewReader { scrollProxy in
+            ScrollView {
+                ForEach(items.sorted(by: { $0.start < $1.start }), id: \.id) { transcriptItem in
+                    SearchResultRow(
+                        isPlaying: Binding(
+                            get: { playingItemId == transcriptItem.id },
+                            set: { isPlaying in
+                                playingItemId = isPlaying ? transcriptItem.id : ""
+                            }
+                        ),
+                        searchText: searchText,
+                        time: transcriptItem.start
+                    )
+                    .simultaneousGesture(
+                        TapGesture()
+                            .onEnded {
+                                youtubePlayer.seek(
+                                    to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
+                                    allowSeekAhead: true
+                                )
+                            }
+                    )
+                    .padding(.bottom, 8)
+                    .padding(.horizontal, 16)
+                    .onAppear {
+                        if playingItemId == transcriptItem.id {
+                            withAnimation {
+                                scrollProxy.scrollTo(transcriptItem.id, anchor: .top)
+                            }
                         }
-                    ),
-                    searchText: searchText,
-                    time: transcriptItem.start
-                )
-                .simultaneousGesture(
-                    TapGesture()
-                        .onEnded {
-                            youtubePlayer.seek(
-                                to: Measurement(value: transcriptItem.start, unit: UnitDuration.seconds),
-                                allowSeekAhead: true
-                            )
-                        }
-                )
-                .padding(.bottom, 8)
-                .padding(.horizontal, 16)
+                    }
+                }
+            }
+            .onChange(of: playingItemId) { newValue in
+                if let selectedItem = items.first(where: { $0.id == newValue }) {
+                    withAnimation {
+                        scrollProxy.scrollTo(selectedItem.id, anchor: .top)
+                    }
+                }
             }
         }
     }
+
     
     var body: some View {
         ZStack {
@@ -195,7 +208,7 @@ struct VideoTranscriptView: View {
             if searchText.isEmpty {
                 termContent
             } else {
-                let filteredItems = filterItems(by: searchText, videoTranscript: currentTranscript)
+                let filteredItems = filterItems(by: searchText, networkTranscript: currentTranscript)
                 
                 if filteredItems?.isEmpty == true {
                     noSearchResults

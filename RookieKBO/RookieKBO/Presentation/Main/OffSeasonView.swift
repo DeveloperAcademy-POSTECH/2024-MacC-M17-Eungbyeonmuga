@@ -325,6 +325,11 @@ private struct ContentView: View {
         }
         .padding()
         .background(.gray1)
+        .onAppear {
+            Task {
+                await newsUseCase.fetchNews()
+            }
+        }
     }
     
     private func filteredGames(myTeamGames: Bool) -> [Match] {

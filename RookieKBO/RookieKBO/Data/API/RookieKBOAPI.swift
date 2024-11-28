@@ -36,4 +36,32 @@ extension APIs.RookieKBO {
             }
         }
     }
+    
+    /// News  API
+    enum News: RawRepresentable, API {
+
+        static let baseUrl: URL = APIs.RookieKBO.tempUrl.appendingPathComponent("news")
+        
+        case fetchNews
+        
+        var rawValue: RawValue {
+            switch self {
+            case .fetchNews: return ""
+            }
+        }
+    }
+    
+    /// Subtitle  API
+    enum Subtitle: RawRepresentable, API {
+
+        static let baseUrl: URL = APIs.RookieKBO.baseURL.appendingPathComponent("subtitles")
+        
+        case fetchSubtitle
+        
+        var rawValue: RawValue {
+            switch self {
+            case .fetchSubtitle: return ""
+            }
+        }
+    }
 }

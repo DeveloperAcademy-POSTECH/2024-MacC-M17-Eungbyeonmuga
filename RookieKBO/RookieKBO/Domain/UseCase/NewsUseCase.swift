@@ -13,9 +13,11 @@ final class NewsUseCase {
     private let newsService: NewsServiceInterface
     
     private(set) var state: State
+    private(set) var news: [News]
     
     init(newsService: NewsServiceInterface) {
         self.newsService = newsService
+        self.news = []
         self.state = State(
             totalNews: newsService.fetchMockTotalNews()
         )
@@ -35,5 +37,22 @@ extension NewsUseCase {
 
 extension NewsUseCase {
     
-    // 함수 작성..
+    // 서버에서 뉴스를 받아오는 함수
+    func fetchNews() async -> [News] {
+        let result = await newsService.fetchNews()
+        switch result {
+        case .success(let fetchedNews):
+            self.news = fetchedNews
+            updateNews(from: fetchedNews)
+            return fetchedNews
+        case .failure(let error):
+            print(error)
+            return []
+        }
+    }
+    
+    // state에 업데이트 함수
+    func updateNews(from news: [News]) {
+        state.totalNews = news
+    }
 }
