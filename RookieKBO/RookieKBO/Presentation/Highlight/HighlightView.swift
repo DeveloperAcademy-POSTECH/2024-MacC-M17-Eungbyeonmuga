@@ -163,7 +163,7 @@ private struct HighlightContentSettingView: View {
                 }
             }
             
-            Button {
+            ScalableButton {
                 isShowingSetCalendar = true
             } label: {
                 HStack(spacing: 8) {

@@ -390,7 +390,7 @@ private struct DateInfoView: View {
                 .padding(.trailing, 8)
             }
             
-            Button {
+            ScalableButton {
                 isShowingSetCalendar = true
             } label: {
                 HStack(spacing: 8) {
