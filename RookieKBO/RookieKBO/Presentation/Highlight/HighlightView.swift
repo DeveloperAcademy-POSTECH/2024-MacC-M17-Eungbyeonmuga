@@ -26,6 +26,11 @@ struct HighlightView: View {
             HighlightContentView()
                 .clipped()
         }
+        .onAppear {
+            Task {
+                await highlightUseCase.fetchHighlight()
+            }
+        }
     }
 }
 

@@ -64,4 +64,18 @@ extension APIs.RookieKBO {
             }
         }
     }
+    
+    /// Highlight  API
+    enum Highlight: RawRepresentable, API {
+
+        static let baseUrl: URL = APIs.RookieKBO.baseURL.appendingPathComponent("highlight//")
+        
+        case fetchHighlight
+        
+        var rawValue: RawValue {
+            switch self {
+            case .fetchHighlight: return ""
+            }
+        }
+    }
 }

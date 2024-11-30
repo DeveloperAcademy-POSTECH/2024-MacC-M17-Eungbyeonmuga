@@ -8,6 +8,7 @@
 import Foundation
 
 protocol HighlightServiceInterface {
+    func fetchHighlight() async -> Result<[Highlight], Error>
     func isValidDate(_ date: Date, from highlightInfo: [Highlight]) -> Bool
     func filterHighlights(for selectedDate: Date?, teamName: String?, in highlightInfo: [Highlight]) -> [Highlight]
     func extractHomeAway(from title: String) -> String
