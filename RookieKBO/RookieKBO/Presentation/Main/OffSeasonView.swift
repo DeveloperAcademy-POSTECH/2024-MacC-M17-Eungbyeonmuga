@@ -124,24 +124,24 @@ private struct OffSeasonInfoView: View {
             Spacer(minLength: 133)
             
             HStack(spacing: 8) {
-                HStack(spacing: 8) {
-                    Text("KBO 개막")
-                    Rectangle()
-                        .frame(width: 2, height: 16)
-                    Text((Date().getDdayToOpeningDate()))
-                }
-                // 버튼으로 바꾸기
-                .onTapGesture {
+                ScalableButton {
                     pathModel.presentSheet(.dDaySheet)
+                } label: {
+                    HStack(spacing: 8) {
+                        Text("KBO 개막")
+                        Rectangle()
+                            .frame(width: 2, height: 16)
+                        Text((Date().getDdayToOpeningDate()))
+                    }
+                    .font(.Body.body1)
+                    .foregroundColor(.white0)
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 20)
+                    .background(RoundedRectangle(cornerRadius: 16)
+                        .fill(Color.teamGdColor(for: currentTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
                 }
-                .font(.Body.body1)
-                .foregroundColor(.white0)
-                .padding(.vertical, 12)
-                .padding(.horizontal, 20)
-                .background(RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.teamGdColor(for: currentTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
                 
-                Button {
+                ScalableButton {
                     pathModel.presentSheet(.teamRanking)
                 } label: {
                     HStack(spacing: 8) {
@@ -384,7 +384,7 @@ private struct DateInfoView: View {
             Spacer(minLength: 0)
             
             if matchUseCase.selectedDate != nil {
-                Button {
+                ScalableButton {
                     matchUseCase.fetchSelectedDate(nil)
                 } label: {
                     Image(systemName: "arrow.counterclockwise.circle.fill")
@@ -395,7 +395,7 @@ private struct DateInfoView: View {
                 .padding(.trailing, 8)
             }
             
-            Button {
+            ScalableButton {
                 isShowingSetCalendar = true
             } label: {
                 HStack(spacing: 8) {
@@ -463,7 +463,7 @@ private struct SetCalendarView: View {
             Spacer()
             
             if isValidDate {
-                Button {
+                ScalableButton {
                     Task {
                         matchUseCase.isLoadingToggle()
                         await matchUseCase.fetchMatches(date: currentDate.toFormattedString())

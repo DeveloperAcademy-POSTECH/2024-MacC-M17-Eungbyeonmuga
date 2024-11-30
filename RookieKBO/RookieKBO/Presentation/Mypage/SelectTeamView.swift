@@ -135,7 +135,7 @@ private struct SelectTeamListView: View {
         ScrollView {
             LazyVGrid(columns: columns) {
                 ForEach(selectTeamUseCase.state.teams) { team in
-                    Button {
+                    ScalableButton {
                         if selectedTeam == team {
                             selectedTeam = nil
                         } else {
@@ -219,7 +219,7 @@ private struct StartTeam: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
-            Button {
+            ScalableButton {
                 if let selectedTeam = selectedTeam {
                     selectTeamUseCase.updateUserDefaultsTeamObject(selectedTeam)
                     

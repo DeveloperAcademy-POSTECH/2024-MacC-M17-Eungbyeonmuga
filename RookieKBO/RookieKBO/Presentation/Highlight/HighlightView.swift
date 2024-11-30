@@ -134,14 +134,14 @@ private struct HighlightContentSettingView: View {
     
     var body: some View {
         HStack(spacing: 8) {
-            Button {
+            ScalableButton {
                 pathModel.presentSheet(.highlightTeamFilter)
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "baseball")
                         .font(.Caption.caption1)
                     
-                    Text(highlightUseCase.state.selectedTeamName ?? "전체 구단")
+                    Text((highlightUseCase.state.selectedTeamName == nil || highlightUseCase.state.selectedTeamName == "전체" ? "전체 구단" : highlightUseCase.state.selectedTeamName)!)
                         .font(.Body.body1)
                 }
                 .foregroundColor(.white0)
@@ -156,7 +156,7 @@ private struct HighlightContentSettingView: View {
             Spacer(minLength: 0)
             
             if highlightUseCase.state.selectedDate != nil {
-                Button {
+                ScalableButton {
                     highlightUseCase.fetchSelectedDate(nil)
                 } label: {
                     Image(systemName: "arrow.counterclockwise.circle.fill")
@@ -166,7 +166,7 @@ private struct HighlightContentSettingView: View {
                 }
             }
             
-            Button {
+            ScalableButton {
                 isShowingSetCalendar = true
             } label: {
                 HStack(spacing: 8) {
@@ -239,9 +239,9 @@ private struct SetCalendarView: View {
             Spacer()
             
             if isValidDate {
-                Button {
-                    highlightUseCase.fetchSelectedDate(currentDate)
-                    presentationMode.wrappedValue.dismiss()
+                ScalableButton {
+                        highlightUseCase.fetchSelectedDate(currentDate)
+                        presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("이 날의 경기 정보를 볼래요!")
                         .font(.Head.head3)
@@ -315,7 +315,7 @@ private struct HighlightContent: View {
     let tapAction: () -> Void
     
     var body: some View {
-        Button {
+        ScalableButton {
             tapAction()
         } label: {
             ZStack {

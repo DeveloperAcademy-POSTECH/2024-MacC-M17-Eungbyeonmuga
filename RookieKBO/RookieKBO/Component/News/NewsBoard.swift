@@ -13,7 +13,7 @@ struct NewsBoard: View {
     let tapAction: () -> Void
     
     var body: some View {
-        Button {
+        ScalableButton {
             tapAction()
         } label: {
             ZStack {

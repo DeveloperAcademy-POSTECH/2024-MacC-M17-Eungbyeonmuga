@@ -22,7 +22,7 @@ struct HighlightTeamFilterView: View {
         VStack {
             LazyVGrid(columns: columns) {
                 ForEach(selectTeamUseCase.state.teams) { team in
-                    Button {
+                    ScalableButton {
                         selectedTeam = team
                     } label: {
                         HStack(spacing: 4) {
@@ -49,7 +49,7 @@ struct HighlightTeamFilterView: View {
             Spacer()
             
             if selectedTeam?.name.split(separator: " ")[0] ?? "전체" != highlightUseCase.state.selectedTeamName ?? "전체" {
-                Button {
+                ScalableButton {
                     if let teamName = selectedTeam?.name.split(separator: " ")[0] {
                         highlightUseCase.fecthSelectedTeam(String(teamName))
                     }
