@@ -9,6 +9,25 @@ import Foundation
 
 final class HighlightServiceImpl: HighlightServiceInterface {
     
+    private let highlightRepository = HighlightRepository()
+    
+    /// 하이라이트 정보를 불러옵니다.
+    func fetchHighlight() async -> Result<[Highlight], Error> {
+        let result = await highlightRepository.fetchHighlight()
+        switch result {
+        case .success(let fetchHighlightResponse):
+            let highlightResult = fetchHighlightResponse.toHighlight()
+            switch highlightResult {
+            case .success(let highlights):
+                return .success(highlights)
+            case .failure(let error):
+                return .failure(error)
+            }
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
     func isValidDate(_ date: Date, from highlightInfo: [Highlight]) -> Bool {
         let validDates = highlightInfo.compactMap { Date().fromStringToDate($0.date) }
         return validDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: date) })

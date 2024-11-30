@@ -40,6 +40,19 @@ extension HighlightUseCase {
 
 extension HighlightUseCase {
     
+    // 서버에서 하이라이트 정보를 받아오는 함수
+    func fetchHighlight() async -> [Highlight] {
+        let result = await highlightService.fetchHighlight()
+        switch result {
+        case .success(let fetchedHighlights):
+            self.state.HighlightInfo = fetchedHighlights
+            return fetchedHighlights
+        case .failure(let error):
+            print(error)
+            return []
+        }
+    }
+    
     func fetchSelectedDate(_ selectedDate: Date?) {
         state.selectedDate = selectedDate
     }
