@@ -87,6 +87,12 @@ struct DdayView: View {
         .padding(.horizontal, 16)
         .presentationDetents([.fraction(0.68)])
         .presentationDragIndicator(.visible)
+        .onAppear {
+            selectTeamUseCase.isSheetToggle()
+        }
+        .onDisappear {
+            selectTeamUseCase.isSheetToggle()
+        }
     }
 }
 

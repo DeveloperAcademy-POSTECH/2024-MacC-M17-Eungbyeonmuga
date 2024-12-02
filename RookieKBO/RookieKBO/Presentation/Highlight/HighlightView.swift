@@ -157,6 +157,7 @@ private struct HighlightContentSettingView: View {
                         .fill(Color.teamColor(for: highlightUseCase.state.selectedTeamName ?? "") ?? .brandPrimary)
                 )
             }
+            .disabled(selectTeamUseCase.isSheet)
             
             Spacer(minLength: 0)
             
@@ -202,6 +203,7 @@ private struct HighlightContentSettingView: View {
                     }
                 )
             }
+            .disabled(selectTeamUseCase.isSheet)
         }
         .padding(.top, 8)
         .padding()
@@ -282,9 +284,13 @@ private struct SetCalendarView: View {
             calendarColor = Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary
             currentDate = highlightUseCase.state.selectedDate ?? Date()
             isValidDate = highlightUseCase.isValidDate(currentDate, from: highlightUseCase.state.HighlightInfo)
+            selectTeamUseCase.isSheetToggle()
         }
         .onChange(of: currentDate) { newDate in
             isValidDate = highlightUseCase.isValidDate(newDate, from: highlightUseCase.state.HighlightInfo)
+        }
+        .onDisappear {
+            selectTeamUseCase.isSheetToggle()
         }
     }
 }

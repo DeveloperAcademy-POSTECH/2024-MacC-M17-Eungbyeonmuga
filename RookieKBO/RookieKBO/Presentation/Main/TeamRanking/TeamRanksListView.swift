@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct TeamRanksListView: View {
+    
     @Environment(RankUseCase.self) private var rankUseCase
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     var body: some View {
         VStack(spacing: 0) {
@@ -34,6 +36,12 @@ struct TeamRanksListView: View {
         .padding(.vertical)
         .presentationDetents([.fraction(0.985)])
         .presentationDragIndicator(.visible)
+        .onAppear {
+            selectTeamUseCase.isSheetToggle()
+        }
+        .onDisappear {
+            selectTeamUseCase.isSheetToggle()
+        }
     }
 }
 
@@ -95,4 +103,5 @@ private struct RankInfo: View {
 #Preview {
     TeamRanksListView()
         .environment(RankUseCase(rankService: RankServiceImpl()))
+        .environment(SelectTeamUseCase(selectTeamService: SelectTeamServiceImpl()))
 }
