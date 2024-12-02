@@ -13,7 +13,8 @@ final class SelectTeamUseCase {
     private let selectTeamService: SelectTeamServiceInterface
     
     private(set) var state: State
-    
+    private(set) var isSheet: Bool = false
+
     init(selectTeamService: SelectTeamServiceInterface) {
         self.selectTeamService = selectTeamService
         
@@ -53,5 +54,10 @@ extension SelectTeamUseCase {
     /// 선택한 응원 팀 조회
     func getUserDefaultsTeamObject() -> Team? {
         return selectTeamService.getUserDefaultsTeamObject()
+    }
+    
+    /// sheet가 올라가있는지 판단
+    func isSheetToggle() {
+        return isSheet.toggle()
     }
 }

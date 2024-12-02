@@ -140,6 +140,7 @@ private struct OffSeasonInfoView: View {
                     .background(RoundedRectangle(cornerRadius: 16)
                         .fill(Color.teamGdColor(for: currentTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
                 }
+                .disabled(selectTeamUseCase.isSheet)
                 
                 ScalableButton {
                     pathModel.presentSheet(.teamRanking)
@@ -177,6 +178,7 @@ private struct OffSeasonInfoView: View {
                     .background(RoundedRectangle(cornerRadius: 16)
                         .fill(Color.teamGdColor(for: currentTeam?.color ?? "") ?? .brandPrimaryGd).opacity(0.8))
                 }
+                .disabled(selectTeamUseCase.isSheet)
                 
                 Spacer(minLength: 0)
             }
@@ -365,6 +367,7 @@ private struct ContentView: View {
 private struct DateInfoView: View {
     
     @Environment(MatchUseCase.self) private var matchUseCase
+    @Environment(SelectTeamUseCase.self) private var selectTeamUseCase
     
     @State private var isShowingSetCalendar = false
     
@@ -426,6 +429,7 @@ private struct DateInfoView: View {
                     }
                 )
             }
+            .disabled(selectTeamUseCase.isSheet)
         }
         .padding(.bottom, 8)
         .sheet(isPresented: $isShowingSetCalendar) {
@@ -506,9 +510,13 @@ private struct SetCalendarView: View {
             calendarColor = Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary
             currentDate = matchUseCase.selectedDate ?? Date()
             isValidDate = matchUseCase.isValidDate(currentDate)
+            selectTeamUseCase.isSheetToggle()
         }
         .onChange(of: currentDate) { newDate in
             isValidDate = matchUseCase.isValidDate(currentDate)
+        }
+        .onDisappear {
+            selectTeamUseCase.isSheetToggle()
         }
     }
 }

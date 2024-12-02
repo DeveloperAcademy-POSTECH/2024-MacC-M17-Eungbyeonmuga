@@ -78,6 +78,7 @@ struct HighlightTeamFilterView: View {
         .presentationDetents([.height(560)])
         .onAppear {
             filterColor = Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary
+            selectTeamUseCase.isSheetToggle()
             // 기존 선택된 팀 설정
             if let selectedTeamName = highlightUseCase.state.selectedTeamName {
                 selectedTeam = selectTeamUseCase.state.teams.first { $0.name.split(separator: " ")[0] == selectedTeamName }
@@ -85,6 +86,9 @@ struct HighlightTeamFilterView: View {
                 // 선택된 팀이 없을 경우 전체 구단 활성화
                 selectedTeam = selectTeamUseCase.state.teams.first { $0.name.split(separator: " ")[0] == "전체" }
             }
+        }
+        .onDisappear {
+            selectTeamUseCase.isSheetToggle()
         }
     }
 }
