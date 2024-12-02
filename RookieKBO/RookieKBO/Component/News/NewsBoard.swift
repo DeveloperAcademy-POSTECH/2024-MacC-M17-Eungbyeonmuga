@@ -18,13 +18,21 @@ struct NewsBoard: View {
         } label: {
             ZStack {
                 VStack(spacing: 0) {
-                    AsyncImage(url: URL(string: newsInfo.imageUrl)) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(height: 208)
-                    } placeholder: {
-                        ProgressView()
+                    if let highQualityUrl = highQualityImageUrl(from: newsInfo.imageUrl),
+                       let url = URL(string: highQualityUrl) {
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(height: 208)
+                            
+                        } placeholder: {
+                            ProgressView()
+                                .frame(height: 208)
+                        }
+                    } else {
+                        // 기본 플레이스홀더
+                        Color.gray
                             .frame(height: 208)
                     }
                 }
@@ -38,13 +46,19 @@ struct NewsBoard: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .multilineTextAlignment(.leading)
                         .padding(12)
-                        .frame(maxWidth: .infinity)
                         .background(.white0)
                 }
             }
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .frame(height: 208)
         }
+    }
+
+    
+    private func highQualityImageUrl(from urlString: String) -> String? {
+        guard let url = URL(string: urlString) else { return nil }
+        let highQualityPath = urlString.replacingOccurrences(of: "/l_", with: "/c_")
+        return highQualityPath
     }
 }
 
