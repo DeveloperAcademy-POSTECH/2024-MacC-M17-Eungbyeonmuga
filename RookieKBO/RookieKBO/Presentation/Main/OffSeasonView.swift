@@ -316,7 +316,7 @@ private struct ContentView: View {
                     }
                     .padding(.vertical)
                     
-                    if newsUseCase.news.isEmpty {
+                    if newsUseCase.state.totalNews.isEmpty {
                         Spacer()
                         ProgressView()
                             .tint(Color.teamColor(for: currentTeam?.color ?? "allTeam"))

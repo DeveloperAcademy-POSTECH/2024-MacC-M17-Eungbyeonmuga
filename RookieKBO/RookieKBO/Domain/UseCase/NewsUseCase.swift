@@ -19,7 +19,7 @@ final class NewsUseCase {
         self.newsService = newsService
         self.news = []
         self.state = State(
-            totalNews: newsService.fetchMockTotalNews()
+            totalNews: []
         )
     }
 }
