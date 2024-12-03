@@ -516,7 +516,7 @@ private struct SetCalendarView: View {
         .padding()
         .onAppear {
             calendarColor = Color.teamColor(for: selectTeamUseCase.state.selectedTeam?.color ?? "") ?? .brandPrimary
-            currentDate = matchUseCase.selectedDate ?? Date()
+            currentDate = matchUseCase.selectedDate ?? Date.postSeasonEnd
             isValidDate = matchUseCase.isValidDate(currentDate)
             selectTeamUseCase.isSheetToggle()
         }
