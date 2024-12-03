@@ -102,7 +102,7 @@ extension Date {
     }
     
     static var postSeasonEnd: Date {
-        return DateFormatter.customFormatter(format: "yyyy/MM/dd").date(from: "2024/10/29") ?? Date()
+        return DateFormatter.customFormatter(format: "yyyy/MM/dd").date(from: "2024/10/28") ?? Date()
     }
     
     static var newSeasonStart: Date {
