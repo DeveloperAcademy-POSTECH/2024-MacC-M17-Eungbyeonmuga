@@ -19,23 +19,23 @@ struct NewsBoard: View {
             ZStack {
                 VStack(spacing: 0) {
                     if let highQualityUrl = highQualityImageUrl(from: newsInfo.imageUrl),
-                       let url = URL(string: highQualityUrl) {
-                        AsyncImage(url: url) { image in
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(height: 208)
-                            
-                        } placeholder: {
-                            ProgressView()
-                                .frame(height: 208)
+                       !highQualityUrl.isEmpty {
+                        AsyncImage(url: URL(string: highQualityUrl)) { phase in
+                            if let image = phase.image {
+                                image
+                                    .resizable()
+                                    .aspectRatio(1, contentMode: .fill)
+                                    .clipShape(Rectangle())
+                                    .cornerRadius(14)
+                            } else {
+                                ProgressView()
+                                    .tint(.white)
+                            }
                         }
-                    } else {
-                        // 기본 플레이스홀더
-                        Color.gray
-                            .frame(height: 208)
+                        .frame(height: 208)
                     }
                 }
+                
                 VStack(spacing: 0) {
                     Spacer()
                     
@@ -50,10 +50,8 @@ struct NewsBoard: View {
                 }
             }
             .clipShape(RoundedRectangle(cornerRadius: 16))
-            .frame(height: 208)
         }
     }
-
     
     private func highQualityImageUrl(from urlString: String) -> String? {
         guard let url = URL(string: urlString) else { return nil }
@@ -61,6 +59,8 @@ struct NewsBoard: View {
         return highQualityPath
     }
 }
+
+
 
 #Preview {
     NewsBoard(newsInfo: MockDataBuilder.mockNews) {

@@ -441,7 +441,6 @@ private struct DateInfoView: View {
         .padding(.bottom, 8)
         .sheet(isPresented: $isShowingSetCalendar) {
             SetCalendarView()
-            SetCalendarView()
                 .presentationDragIndicator(.visible)
                 .presentationDetents([.height(535)])
         }
