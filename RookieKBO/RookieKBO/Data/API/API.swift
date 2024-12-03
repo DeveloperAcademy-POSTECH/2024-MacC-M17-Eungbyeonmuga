@@ -16,6 +16,5 @@ protocol API {
 enum APIs {
     enum RookieKBO {
         static let baseURL = URL(string: Config.baseURL)!
-        static let tempUrl = URL(string: Config.tempURL)!
     }
 }

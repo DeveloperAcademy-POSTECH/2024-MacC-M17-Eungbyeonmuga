@@ -294,12 +294,12 @@ private struct ContentView: View {
                         
                         ForEach(otherTeamEndGames) { game in
                             EndGameInfo(endGameInfo: game)
-                                .padding(.bottom, 4)
+                                .padding(.bottom, 8)
                         }
                         
                         ForEach(otherTeamCancelGames) { game in
                             CancelGameInfo(cancelGameInfo: game)
-                                .padding(.bottom, 4)
+                                .padding(.bottom, 8)
                         }
                     }
                 } else {
@@ -316,11 +316,18 @@ private struct ContentView: View {
                     }
                     .padding(.vertical)
                     
-                    ForEach(newsUseCase.state.totalNews[0..<4]) { news in
-                        NewsBoard(newsInfo: news) {
-                            openURL(URL(string: news.link)!)
+                    if newsUseCase.news.isEmpty {
+                        Spacer()
+                        ProgressView()
+                            .tint(Color.teamColor(for: currentTeam?.color ?? "allTeam"))
+                        Spacer()
+                    } else {
+                        ForEach(newsUseCase.state.totalNews[0..<4]) { news in
+                            NewsBoard(newsInfo: news) {
+                                openURL(URL(string: news.link)!)
+                            }
+                            .padding(.bottom)
                         }
-                        .padding(.bottom)
                     }
                 }
             }
@@ -433,6 +440,7 @@ private struct DateInfoView: View {
         }
         .padding(.bottom, 8)
         .sheet(isPresented: $isShowingSetCalendar) {
+            SetCalendarView()
             SetCalendarView()
                 .presentationDragIndicator(.visible)
                 .presentationDetents([.height(535)])
