@@ -316,7 +316,7 @@ private struct ContentView: View {
                     }
                     .padding(.vertical)
                     
-                    ForEach(newsUseCase.state.totalNews ?? []) { news in
+                    ForEach(newsUseCase.state.totalNews[0..<4]) { news in
                         NewsBoard(newsInfo: news) {
                             openURL(URL(string: news.link)!)
                         }

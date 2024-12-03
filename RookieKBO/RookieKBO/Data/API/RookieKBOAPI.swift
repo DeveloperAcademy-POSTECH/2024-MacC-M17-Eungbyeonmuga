@@ -40,7 +40,7 @@ extension APIs.RookieKBO {
     /// News  API
     enum News: RawRepresentable, API {
 
-        static let baseUrl: URL = APIs.RookieKBO.tempUrl.appendingPathComponent("news")
+        static let baseUrl: URL = APIs.RookieKBO.baseURL.appendingPathComponent("news//")
         
         case fetchNews
         
