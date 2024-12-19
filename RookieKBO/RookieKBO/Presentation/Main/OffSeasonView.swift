@@ -185,15 +185,15 @@ private struct OffSeasonInfoView: View {
             .padding(.horizontal)
             .padding(.bottom, 24)
         }
-//        .onAppear {
-//            Task {
+        .onAppear {
+            Task {
 //                await rankUseCase.fetchRanks()
-//                rankUseCase.startTimer()
-//            }
-//        }
-//        .onDisappear {
-//            rankUseCase.stopTimer()
-//        }
+                rankUseCase.startTimer()
+            }
+        }
+        .onDisappear {
+            rankUseCase.stopTimer()
+        }
     }
 }
 
