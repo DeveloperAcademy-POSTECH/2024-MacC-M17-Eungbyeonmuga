@@ -761,46 +761,28 @@ struct MockDataBuilder {
     static var mockEntireNews: [News] {
         return [
             News(
-                title: "'김도영 펄펄 날다' 그랜드슬램→호수비 2회→솔로포 5타점 대폭발!…류중일호 쿠바에 8-4 승리, 슈퍼라운드 위한 첫발 디뎠다 [MD타이베이]",
-                imageUrl: "https://static-cdn.sporki.com/news/mydaily/202411/2378328/l_2024110118585792408_l.jpg",
-                publisher: "마이데일리",
-                link: "https://sporki.com/kbaseball/news/2037531"
+                title: "[공식발표] '특급 마무리' 조상우 KIA 간다, 키움과 2026 신인 1·4R 지명권+10억 트레이드",
+                imageUrl: "https://static-cdn.sporki.com/news/edailym/202412/2459019/l_isp20240702000499.800x.8.jpg",
+                publisher: "일간스포츠",
+                link: "https://sporki.com/kbaseball/news/2101477"
             ),
             News(
-                title: "‘만루포+솔로포+미친 수비’ 김도영의 국제무대 대관식…대만 쇼크 극복! 한국, 쿠바 8-4 제압→프리미어12 첫 승 [프리미어12 리뷰]",
-                imageUrl: "https://static-cdn.sporki.com/news/osen/202411/2378369/l_202411142050775543_6735f0951110d.jpg",
-                publisher: "OSEN",
-                link: "https://sporki.com/kbaseball/news/2037533"
-            ),
-            News(
-                title: "류중일 감독 결단! 김도영-박동원 빼고 '왼손 타자 7명' 전원 출격…반드시 이겨야 한다 '한일전' 슈퍼라운드 진출과 자존심 싸움을 위해 [타이베이 현장]",
-                imageUrl: "https://static-cdn.sporki.com/news/xports/202411/2380840/l_1731662811591448.jpg",
+                title: "KIA 조상우 영입 '초대박 빅딜 터졌다!'…1R·4R 지명권+현금 10억 키움에 내줬다→\"불펜 보강 필요\" [공식발표]",
+                imageUrl: "https://static-cdn.sporki.com/news/xports/202412/2459226/l_1734586662739937.jpg",
                 publisher: "엑스포츠뉴스",
-                link: "https://sporki.com/kbaseball/news/2039098"
+                link: "https://sporki.com/kbaseball/news/2101637"
             ),
             News(
-                title: "야구 취미반 학생, 한일전 선발 맡다…선동열의 남자, 새로운 日킬러 될까 “패기 있게 던질 것” [오!쎈 타이베이]",
-                imageUrl: "https://static-cdn.sporki.com/news/osen/202411/2379638/l_202411150948774357_6736a30cab7f8.jpg",
+                title: "[공식발표] 두산, 외국인 투수 잭 로그 영입…해치와 계약 해지",
+                imageUrl: "https://static-cdn.sporki.com/news/edailym/202412/2458899/l_isp20241219000111.800x.0.jpg",
+                publisher: "일간스포츠",
+                link: "https://sporki.com/kbaseball/news/2101379"
+            ),
+            News(
+                title: "‘565억원 폭발!’ 뜨거운 FA 대박 끝나니 추운 겨울 찾아왔다, FA 미아 위기 6인방…결국 내년으로 넘어가나",
+                imageUrl: "https://static-cdn.sporki.com/news/osen/202412/2458443/l_202412190236778648_676308f8e1fe2.jpg",
                 publisher: "OSEN",
-                link: "https://sporki.com/kbaseball/news/2038498"
-            ),
-            News(
-                title: "[속보] '김도영 홈런 2방' 한국, 쿠바 꺾고 프리미어12 첫승…'1승1패'",
-                imageUrl: "https://static-cdn.sporki.com/news/newsone/202411/2378322/l_2024-11-14T221635_5601038_sports_6986306.jpg",
-                publisher: "뉴스1",
-                link: "https://sporki.com/kbaseball/news/2037526"
-            ),
-            News(
-                title: "'쿠바 격파' 류중일 감독 활짝 웃었다…\"곽빈 호투, 김도영에게 찬스 살린 게 결정적…한일전 최승용\"",
-                imageUrl: "https://static-cdn.sporki.com/news/spotv/202411/2378454/l_714949_1126387_39.jpg",
-                publisher: "스포티비뉴스",
-                link: "https://sporki.com/kbaseball/news/2037629"
-            ),
-            News(
-                title: "예상치 못한 ‘김도영 쇼케이스’… 국제 경쟁력 스텝 밟기 시작했다",
-                imageUrl: "https://static-cdn.sporki.com/news/sportsworld/202411/2379285/l_20241115500824.jpg",
-                publisher: "스포츠월드",
-                link: "https://sporki.com/kbaseball/news/2038000"
+                link: "https://sporki.com/kbaseball/news/2100999"
             )
         ]
     }

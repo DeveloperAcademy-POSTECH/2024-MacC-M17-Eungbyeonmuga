@@ -21,10 +21,10 @@ final class RankUseCase {
     
     init(rankService: RankServiceInterface) {
         self.rankService = rankService
-        self.ranks = []
+        self.ranks = MockDataBuilder.mockTeamRanks
         self.currentRankIndex = 0
         self.state = State(
-            teamRanks: nil,
+            teamRanks: MockDataBuilder.mockTeamRanks,
             currentRank: nil
         )
     }

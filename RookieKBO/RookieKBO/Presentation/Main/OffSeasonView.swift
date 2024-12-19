@@ -185,15 +185,15 @@ private struct OffSeasonInfoView: View {
             .padding(.horizontal)
             .padding(.bottom, 24)
         }
-        .onAppear {
-            Task {
-                await rankUseCase.fetchRanks()
-                rankUseCase.startTimer()
-            }
-        }
-        .onDisappear {
-            rankUseCase.stopTimer()
-        }
+//        .onAppear {
+//            Task {
+//                await rankUseCase.fetchRanks()
+//                rankUseCase.startTimer()
+//            }
+//        }
+//        .onDisappear {
+//            rankUseCase.stopTimer()
+//        }
     }
 }
 
@@ -257,7 +257,7 @@ private struct ContentView: View {
                                 .resizable()
                                 .frame(width: 96, height: 96)
                             
-                            Text("우리팀 경기가 없었어요!")
+                            Text(currentTeam?.name == "전체 구단" ? "경기가 없었어요!" : "우리팀 경기가 없었어요!")
                                 .font(.Head.head5)
                                 .foregroundColor(.gray5)
                                 .padding(.vertical)
@@ -334,11 +334,11 @@ private struct ContentView: View {
         }
         .padding()
         .background(.gray1)
-        .onAppear {
-            Task {
-                await newsUseCase.fetchNews()
-            }
-        }
+//        .onAppear {
+//            Task {
+//                await newsUseCase.fetchNews()
+//            }
+//        }
     }
     
     private func filteredGames(myTeamGames: Bool) -> [Match] {
