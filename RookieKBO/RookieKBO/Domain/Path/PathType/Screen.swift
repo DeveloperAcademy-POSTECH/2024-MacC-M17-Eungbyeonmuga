@@ -13,8 +13,6 @@ enum Screen: Identifiable, Hashable {
     
     case onboarding
     case selectTeam
-    case myTeamGameInfo
-    case allGameInfo
     case highlight
     case videoTranscript
     case myPage

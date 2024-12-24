@@ -19,10 +19,6 @@ extension PathModel {
             OnboardingView()
         case .selectTeam:
             SelectTeamView()
-        case .myTeamGameInfo:
-            MyTeamGameInfoView()
-        case .allGameInfo:
-            AllGameInfoView()
         case .highlight:
             HighlightView()
         case .videoTranscript:
