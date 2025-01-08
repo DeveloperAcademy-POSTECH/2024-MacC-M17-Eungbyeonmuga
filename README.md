@@ -12,10 +12,15 @@ RookieBase로 야구를 더 쉽게 즐겨보세요!
   RookieBase - 한국 야구, 쉽게 즐기자!
 </a>
 
+
 ## Team_EBMG ⚾️
-| <img src="https://github.com/OhMyungJin.png" width="200px" /> <br/> 오명진<br/>([@OhMyungJin](https://github.com/OhMyungJin)) | <img src="https://github.com/crownjoe.png" width="200px" /> <br/> 조세연<br/>([@crownjoe](https://github.com/crownjoe)) |
-|:---------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------:|
-|                                                      `iOS Developer`                                                      |                                                         `iOS Developer`                                                           |
+
+| <img src="https://github.com/Ahnhyerim.png" width="200px" /> <br/> 안혜림<br/>([@Ahnhyerim](https://github.com/Ahnhyerim)) | <img src="https://github.com/Aengzii.png" width="200px" /> <br/> 이윤지<br/>([@Aengzii](https://github.com/Aengzii)) | <img src="https://github.com/OhMyungJin.png" width="200px" /> <br/> 오명진<br/>([@OhMyungJin](https://github.com/OhMyungJin)) | <img src="https://github.com/crownjoe.png" width="200px" /> <br/> 조세연<br/>([@crownjoe](https://github.com/crownjoe)) | <img src="https://github.com/kyxxgsoo.png" width="200px" /> <br/> 이경수<br/>([@kyxxgsoo](https://github.com/kyxxgsoo)) |
+|:---------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------:|
+|                                                      `Product Designer`                                                      |                                                         `Graphic Designer`                                                           |                                                      `Frontend Developer`                                                      |                                                         `Frontend Developer`                                                           |                                                      `BackEnd Developer`                                                      |
+                                                      
+
+<br>
 
 ## Tech Stack 🛠️
 <div style="display:flex; flex-direction:column; gap:20px;">
@@ -44,6 +49,8 @@ RookieBase로 야구를 더 쉽게 즐겨보세요!
   </div>
 </div>
 
+<br>
+
 ## Preview 🧢
 <table style="width:100%; border-collapse:collapse; text-align:center;">
   <tr>
@@ -71,6 +78,8 @@ RookieBase로 야구를 더 쉽게 즐겨보세요!
     </td>
   </tr>
 </table>
+
+<br>
 
 ## Module & Package Convention 📄
 ```
